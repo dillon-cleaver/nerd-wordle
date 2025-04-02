@@ -75,5 +75,4 @@ const WORDS = [
   "VIRUS",
   "EMAIL",
 ];
-
-export default WORDS;
+export { WORDS };

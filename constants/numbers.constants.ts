@@ -1,0 +1,3 @@
+const NUMBER_OF_GUESSES = 6;
+
+export { NUMBER_OF_GUESSES };
