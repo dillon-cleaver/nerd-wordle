@@ -5,8 +5,8 @@ import { sample } from "../utils/sample";
 import { WORDS } from "../constants/words.constants";
 import { NUMBER_OF_GUESSES } from "../constants/numbers.constants";
 import GuessGrid from "./GuessGrid";
-import GuessInput from "./GuessInput";
 import GameBanner from "./GameBanner";
+import Keyboard from "./Keyboard";
 
 // Pick a random word on every page load.
 const answer = sample(WORDS as string[]);
@@ -40,20 +40,28 @@ const Game = ({}: GameProps) => {
     });
   }
 
+  function handleKeyPress(key: string) {
+    if (gameStatus !== "running") return;
+
+    if (key === "ENTER") {
+      handleSubmitGuess();
+    } else if (key === "⌫") {
+      setTentativeGuess((prev) => prev.slice(0, -1));
+    } else if (tentativeGuess.length < 5) {
+      setTentativeGuess((prev) => prev + key);
+    }
+  }
+
   return (
     <View style={styles.container}>
       <GuessGrid
         guesses={guesses}
         answer={answer}
         numGuesses={NUMBER_OF_GUESSES}
+        tentativeGuess={tentativeGuess}
       />
 
-      <GuessInput
-        gameStatus={gameStatus}
-        tentativeGuess={tentativeGuess}
-        onGuessChange={setTentativeGuess}
-        onSubmit={handleSubmitGuess}
-      />
+      <Keyboard guesses={guesses} answer={answer} onKeyPress={handleKeyPress} />
 
       <GameBanner
         gameStatus={gameStatus}

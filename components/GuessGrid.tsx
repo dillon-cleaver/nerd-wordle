@@ -6,35 +6,54 @@ type GuessGridProps = {
   guesses: string[];
   answer: string;
   numGuesses: number;
+  tentativeGuess: string;
 };
 
-const GuessGrid = ({ guesses, answer, numGuesses }: GuessGridProps) => {
+const GuessGrid = ({
+  guesses,
+  answer,
+  numGuesses,
+  tentativeGuess,
+}: GuessGridProps) => {
   return (
     <View style={styles.guessResults}>
-      {range(0, numGuesses).map((item) => (
-        <View key={item} style={styles.guessRow}>
-          {range(0, 5).map((letterIndex) => {
-            const guess = guesses[item] || "";
-            const letter = guess[letterIndex] || "";
-            const isCorrect = letter === answer[letterIndex];
-            const isPresent = answer.includes(letter);
+      {range(0, numGuesses).map((item) => {
+        // If this is the current row and we have a tentative guess, show it
+        const currentGuess =
+          item === guesses.length ? tentativeGuess : guesses[item] || "";
+        const isCurrentGuess = item === guesses.length;
 
-            return (
-              <View
-                key={letterIndex}
-                style={[
-                  styles.letterBox,
-                  isCorrect && styles.correct,
-                  !isCorrect && isPresent && styles.present,
-                  !isCorrect && !isPresent && letter && styles.absent,
-                ]}
-              >
-                <Text style={styles.letter}>{letter}</Text>
-              </View>
-            );
-          })}
-        </View>
-      ))}
+        return (
+          <View key={item} style={styles.guessRow}>
+            {range(0, 5).map((letterIndex) => {
+              const letter = currentGuess[letterIndex] || "";
+              const isCorrect = letter === answer[letterIndex];
+              const isPresent = answer.includes(letter);
+
+              return (
+                <View
+                  key={letterIndex}
+                  style={[
+                    styles.letterBox,
+                    !isCurrentGuess && isCorrect && styles.correct,
+                    !isCurrentGuess &&
+                      !isCorrect &&
+                      isPresent &&
+                      styles.present,
+                    !isCurrentGuess &&
+                      !isCorrect &&
+                      !isPresent &&
+                      letter &&
+                      styles.absent,
+                  ]}
+                >
+                  <Text style={styles.letter}>{letter}</Text>
+                </View>
+              );
+            })}
+          </View>
+        );
+      })}
     </View>
   );
 };
