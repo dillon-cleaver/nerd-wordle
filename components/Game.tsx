@@ -1,9 +1,8 @@
-import * as React from "react";
 import { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { sample } from "../utils/sample";
-import { WORDS } from "../constants/words.constants";
-import { NUMBER_OF_GUESSES } from "../constants/numbers.constants";
+import { WORDS } from "../constants/words";
+import { NUMBER_OF_GUESSES } from "../constants/numbers";
 import GuessGrid from "./GuessGrid";
 import GameBanner from "./GameBanner";
 import Keyboard from "./Keyboard";
