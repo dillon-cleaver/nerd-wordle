@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "nerd-wordle",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -31,6 +31,18 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Bitter-Regular.ttf",
+            "./assets/fonts/Bitter-Bold.ttf",
+            "./assets/fonts/Bitter-Italic.ttf",
+            "./assets/fonts/Bitter-BoldItalic.ttf",
+            "./assets/fonts/Bitter-Medium.ttf"
+          ]
         }
       ]
     ],
