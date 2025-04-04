@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { sample } from "../utils/sample";
 import { WORDS } from "../constants/words";
@@ -7,15 +7,16 @@ import GuessGrid from "./GuessGrid";
 import GameBanner from "./GameBanner";
 import Keyboard from "./Keyboard";
 
-// Pick a random word on every page load.
-const answer = sample(WORDS as string[]);
-// To make debugging easier, we'll log the solution in the console.
-console.info({ answer });
-
 type GameProps = {};
 
 const Game = ({}: GameProps) => {
-  // "won" | "running" | "lost"
+  const [answer] = useState(() => sample(WORDS as string[]));
+
+  // Log the answer in a useEffect to ensure it only logs in the browser
+  useEffect(() => {
+    console.info({ answer });
+  }, [answer]);
+
   const [gameStatus, setGameStatus] = useState<"won" | "running" | "lost">(
     "running"
   );

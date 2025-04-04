@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, ViewStyle } from "react-native";
 import { range } from "../utils/range";
 import { borderRadius, colors } from "@/constants/styles";
 
@@ -27,26 +27,28 @@ const GuessGrid = ({
           <View key={item} style={styles.guessRow}>
             {range(0, 5).map((letterIndex) => {
               const letter = currentGuess[letterIndex] || "";
+
+              // Simple direct comparison for correct position
               const isCorrect = letter === answer[letterIndex];
-              const isPresent = answer.includes(letter);
+
+              // Check if letter is present but not correct
+              const isPresent =
+                !isCorrect && letter !== "" && answer.includes(letter);
+
+              // Determine cell style
+              const cellStyle: ViewStyle[] = [styles.letterBox];
+              if (!isCurrentGuess && letter) {
+                if (isCorrect) {
+                  cellStyle.push(styles.correct as ViewStyle);
+                } else if (isPresent) {
+                  cellStyle.push(styles.present as ViewStyle);
+                } else {
+                  cellStyle.push(styles.absent as ViewStyle);
+                }
+              }
 
               return (
-                <View
-                  key={letterIndex}
-                  style={[
-                    styles.letterBox,
-                    !isCurrentGuess && isCorrect && styles.correct,
-                    !isCurrentGuess &&
-                      !isCorrect &&
-                      isPresent &&
-                      styles.present,
-                    !isCurrentGuess &&
-                      !isCorrect &&
-                      !isPresent &&
-                      letter &&
-                      styles.absent,
-                  ]}
-                >
+                <View key={letterIndex} style={cellStyle}>
                   <Text style={styles.letter}>{letter}</Text>
                 </View>
               );
