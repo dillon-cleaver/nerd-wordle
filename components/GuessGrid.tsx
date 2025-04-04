@@ -1,5 +1,6 @@
 import { View, StyleSheet, Text } from "react-native";
 import { range } from "../utils/range";
+import { borderRadius, colors } from "@/constants/styles";
 
 type GuessGridProps = {
   guesses: string[];
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
   },
   guessRow: {
     flexDirection: "row",
-    marginBottom: 8,
+    marginBottom: 4,
   },
   letterBox: {
     width: 50,
@@ -75,10 +76,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 4,
+    borderRadius: borderRadius.sm,
   },
   letter: {
+    fontFamily: "Bitter-Bold",
     fontSize: 24,
-    fontWeight: "bold",
+    color: colors.text.primary,
   },
   correct: {
     backgroundColor: "#6aaa64",

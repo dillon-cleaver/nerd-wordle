@@ -59,17 +59,27 @@ export const colors = {
 
   // Background colors
   background: {
-    default: "#FFFFFF", // Dillon's WHITE
     paper: "#F1FAEE", // Dillon's LIGHT
     dark: "#1D3557", // Dillon's DARK
   },
 
   // Text colors
   text: {
-    primary: "#323241", // Dillon's DARK_GRAY
+    primary: "#F1FAEE", // Dillon's LIGHT
     secondary: "#7C7D86", // Generated for hierarchy
     disabled: "#CACBD4", // Dillon's MEDIUM_GRAY
     hint: "#9697A0", // Generated for hierarchy
+  },
+} as const;
+
+// Font families
+export const fonts = {
+  bitter: {
+    regular: "Bitter-Regular",
+    bold: "Bitter-Bold",
+    italic: "Bitter-Italic",
+    boldItalic: "Bitter-BoldItalic",
+    medium: "Bitter-Medium",
   },
 } as const;
 
