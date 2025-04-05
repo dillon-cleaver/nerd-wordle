@@ -6,6 +6,7 @@ import { NUMBER_OF_GUESSES } from "../constants/numbers";
 import GuessGrid from "./GuessGrid";
 import GameBanner from "./GameBanner";
 import Keyboard from "./Keyboard";
+import { BaseSafeAreaView } from "./base/BaseSafeAreaView";
 
 type GameProps = {};
 
@@ -53,7 +54,7 @@ const Game = ({}: GameProps) => {
   }
 
   return (
-    <View style={styles.container}>
+    <BaseSafeAreaView addStyles={styles.container}>
       <GuessGrid
         guesses={guesses}
         answer={answer}
@@ -68,7 +69,7 @@ const Game = ({}: GameProps) => {
         numGuesses={guesses.length}
         answer={answer}
       />
-    </View>
+    </BaseSafeAreaView>
   );
 };
 
@@ -76,9 +77,7 @@ export default Game;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 32,
   },
 });
