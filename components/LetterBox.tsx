@@ -1,11 +1,12 @@
 import { View, StyleSheet, Text, StyleProp, ViewStyle } from "react-native";
-import { borderRadius, colors } from "@/constants/styles";
+import { borderRadius, colors, fontSize } from "@/constants/styles";
 
 export type LetterBoxProps = {
   letter: string;
   isCorrect: boolean;
   isPresent: boolean;
   isCurrentGuess: boolean;
+  invalidWord: boolean;
 };
 
 const LetterBox = ({
@@ -13,8 +14,8 @@ const LetterBox = ({
   isCorrect,
   isPresent,
   isCurrentGuess,
+  invalidWord,
 }: LetterBoxProps) => {
-  // Use StyleProp<ViewStyle> for the combined styles
   const cellStyles: StyleProp<ViewStyle> = [styles.letterBox];
 
   if (!isCurrentGuess && letter) {
@@ -25,6 +26,10 @@ const LetterBox = ({
     } else {
       cellStyles.push(styles.absent);
     }
+  }
+
+  if (invalidWord) {
+    cellStyles.push(styles.invalid);
   }
 
   return (
@@ -41,27 +46,31 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderWidth: 2,
-    borderColor: "#ccc",
+    borderColor: colors.neutral.lightGray,
     justifyContent: "center",
     alignItems: "center",
-    margin: 4,
     borderRadius: borderRadius.sm,
   },
   letter: {
     fontFamily: "Bitter-Bold",
-    fontSize: 24,
-    color: colors.text.primary,
+    fontSize: fontSize.title.large,
+    color: colors.neutral.white,
   },
   correct: {
-    backgroundColor: "#6aaa64",
-    borderColor: "#6aaa64",
+    backgroundColor: colors.secondary.main,
+    borderColor: colors.secondary.main,
   },
   present: {
-    backgroundColor: "#c9b458",
-    borderColor: "#c9b458",
+    backgroundColor: colors.secondary.lighter,
+    borderColor: colors.secondary.lighter,
   },
   absent: {
-    backgroundColor: "#787c7e",
-    borderColor: "#787c7e",
+    backgroundColor: colors.neutral.darkGray,
+    borderColor: colors.neutral.darkGray,
+  },
+  // TODO: Make the "invalid word state less scary/red" --->
+  invalid: {
+    borderColor: colors.semantic.error,
+    backgroundColor: colors.semantic.error,
   },
 });
