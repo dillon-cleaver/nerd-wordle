@@ -1,79 +1,31 @@
-export const colors = {
-  // Primary colors - using the blue palette
+const colors = {
   primary: {
-    main: "#457B9D", // Dillon's BLUE
-    light: "#A8DADC", // Dillon's PALE
-    dark: "#1D3557", // Dillon's DARK
-    contrastText: "#FFFFFF", // Dillon's WHITE
+    main: "#00a09b", // Billiard - Strong and central.
   },
-
-  // Secondary colors - using the red
   secondary: {
-    main: "#E63946", // Dillon's RED
-    light: "#FF6B6B", // Generated lighter red
-    dark: "#C1121F", // Generated darker red
-    contrastText: "#FFFFFF", // Dillon's WHITE
+    main: "#26be95", // Herbal - Complements primary.
+    lighter: "#e3b455", // Cookie Crust - Softer, good for backgrounds or accents.
   },
-
-  // Neutral colors
+  accent: {
+    primary: "#6b33f2", // Meteor Shower -  A vibrant, primary accent.
+    secondary: "#46f7a7", // Illicit Green - Another vibrant accent.
+  },
   neutral: {
-    white: "#FFFFFF", // Dillon's WHITE
-    black: "#000000", // Dillon's BLACK
-    grey: {
-      50: "#F1FAEE", // Dillon's LIGHT
-      100: "#F4F4F8", // Dillon's LIGHT_GRAY
-      200: "#E9E9ED", // Generated for gradient
-      300: "#CACBD4", // Dillon's MEDIUM_GRAY
-      400: "#B0B1BA", // Generated for gradient
-      500: "#9697A0", // Generated for gradient
-      600: "#7C7D86", // Generated for gradient
-      700: "#62636C", // Generated for gradient
-      800: "#484952", // Generated for gradient
-      900: "#323241", // Dillon's DARK_GRAY
-    },
+    darkBlue: "#124763", // Moroccan Blue - Darker neutral, useful for text/backgrounds.
+    darkGreen: "#2c696b", // Atlantis - Another darker neutral.
+    white: "#ffffff",
+    black: "#1e212b",
+    lightGray: "#e9eaf2",
+    darkGray: "#464d5f",
   },
-
-  // Semantic colors
   semantic: {
-    success: {
-      main: "#4CAF50", // Generated success green
-      light: "#81C784", // Generated light success
-      dark: "#388E3C", // Generated dark success
-    },
-    warning: {
-      main: "#FFC107", // Generated warning yellow
-      light: "#FFD54F", // Generated light warning
-      dark: "#FFA000", // Generated dark warning
-    },
-    error: {
-      main: "#E63946", // Dillon's RED
-      light: "#FF6B6B", // Generated lighter red
-      dark: "#C1121F", // Generated darker red
-    },
-    info: {
-      main: "#457B9D", // Dillon's BLUE
-      light: "#A8DADC", // Dillon's PALE
-      dark: "#1D3557", // Dillon's DARK
-    },
-  },
-
-  // Background colors
-  background: {
-    paper: "#F1FAEE", // Dillon's LIGHT
-    dark: "#1D3557", // Dillon's DARK
-  },
-
-  // Text colors
-  text: {
-    primary: "#F1FAEE", // Dillon's LIGHT
-    secondary: "#7C7D86", // Generated for hierarchy
-    disabled: "#CACBD4", // Dillon's MEDIUM_GRAY
-    hint: "#9697A0", // Generated for hierarchy
+    success: "#0a6318", // Overgrown Temple
+    warning: "#ffc107",
+    error: "#d31e13", // Snake Fruit
   },
 } as const;
 
-// Font families
-export const fonts = {
+const fontFamily = {
   bitter: {
     regular: "Bitter-Regular",
     bold: "Bitter-Bold",
@@ -83,11 +35,35 @@ export const fonts = {
   },
 } as const;
 
-// Type for the colors object
-export type Colors = typeof colors;
+const fontSize = {
+  title: {
+    xLarge: 32,
+    large: 24,
+    medium: 18,
+    base: 16,
+  },
+  body: {
+    large: 20,
+    medium: 18,
+    base: 16,
+  },
+};
 
-// Common spacing values
-export const spacing = {
+const lineHeight = {
+  title: {
+    xLarge: 40,
+    large: 32,
+    medium: 24,
+    base: 24,
+  },
+  body: {
+    large: 24,
+    medium: 24,
+    base: 24,
+  },
+};
+
+const spacing = {
   xs: 4,
   sm: 8,
   md: 16,
@@ -96,8 +72,7 @@ export const spacing = {
   xxl: 48,
 } as const;
 
-// Common border radius values
-export const borderRadius = {
+const borderRadius = {
   sm: 4,
   md: 8,
   lg: 16,
@@ -105,36 +80,4 @@ export const borderRadius = {
   round: "50%",
 } as const;
 
-// Common shadow values
-export const shadows = {
-  sm: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: 1.0,
-    elevation: 1,
-  },
-  md: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  lg: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
-    elevation: 8,
-  },
-} as const;
+export { colors, fontFamily, fontSize, lineHeight, spacing, borderRadius };
