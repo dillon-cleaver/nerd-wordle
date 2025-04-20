@@ -86,13 +86,15 @@ const Game = ({}: GameProps) => {
         <Text style={styles.categoryText}>{category}</Text>
       </View>
 
-      <GuessGrid
-        guesses={guesses}
-        answer={answer}
-        numGuesses={NUMBER_OF_GUESSES}
-        tentativeGuess={tentativeGuess}
-        invalidWord={invalidWord}
-      />
+      <View>
+        <GuessGrid
+          guesses={guesses}
+          answer={answer}
+          numGuesses={NUMBER_OF_GUESSES}
+          tentativeGuess={tentativeGuess}
+          invalidWord={invalidWord}
+        />
+      </View>
 
       <Keyboard guesses={guesses} answer={answer} onKeyPress={handleKeyPress} />
 
@@ -112,12 +114,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    gap: 20,
   },
   categoryContainer: {
-    paddingBottom: spacing.lg,
+    // paddingBottom: spacing.lg,
     paddingHorizontal: spacing.md,
     borderRadius: borderRadius.md,
-    backgroundColor: colors.neutral.darkBlue,
+    borderColor: "pink",
+    borderWidth: 2,
+    // backgroundColor: colors.neutral.darkBlue,
   },
   categoryText: {
     color: colors.neutral.white,

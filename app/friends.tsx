@@ -1,10 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
-import {
-  colors,
-  fontFamily,
-  fontSize,
-  lineHeight,
-} from "../../constants/styles";
+import { colors, fontFamily, fontSize, lineHeight } from "../constants/styles";
 
 export default function Friends() {
   return (
@@ -19,7 +14,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colors.primary.main,
+    backgroundColor: colors.neutral.black,
   },
   text: {
     color: colors.neutral.lightGray,

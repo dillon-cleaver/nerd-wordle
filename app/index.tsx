@@ -1,5 +1,5 @@
 import { View, StyleSheet } from "react-native";
-import { colors } from "../../constants/styles";
+import { colors } from "../constants/styles";
 import Game from "@/components/Game";
 
 export default function Index() {
@@ -13,6 +13,6 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.neutral.darkBlue,
+    backgroundColor: colors.neutral.black,
   },
 });

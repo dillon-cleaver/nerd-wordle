@@ -1,6 +1,8 @@
 import { View, StyleSheet, Text, StyleProp, ViewStyle } from "react-native";
 import { borderRadius, colors, fontSize } from "@/constants/styles";
 
+const LETTERBOX_WIDTH_HEIGHT = 56;
+
 export type LetterBoxProps = {
   letter: string;
   isCorrect: boolean;
@@ -43,13 +45,13 @@ export default LetterBox;
 
 const styles = StyleSheet.create({
   letterBox: {
-    width: 50,
-    height: 50,
+    width: LETTERBOX_WIDTH_HEIGHT,
+    height: LETTERBOX_WIDTH_HEIGHT,
     borderWidth: 2,
     borderColor: colors.neutral.lightGray,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: borderRadius.sm,
+    borderRadius: borderRadius.md,
   },
   letter: {
     fontFamily: "Bitter-Bold",
