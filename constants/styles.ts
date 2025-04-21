@@ -1,27 +1,26 @@
 const colors = {
-  primary: {
-    main: "#00a09b", // Billiard - Strong and central.
+  categories: {
+    science: "#3aacd8",
+    fantasyAndSciFi: "#228b22",
+    videoGames: "#e60012",
+    animeAndManga: "#ff69b4",
+    tabletopAndBoardGames: "#d2691e",
+    techAndInternetCulture: "#708090",
   },
-  secondary: {
-    main: "#26be95", // Herbal - Complements primary.
-    lighter: "#e3b455", // Cookie Crust - Softer, good for backgrounds or accents.
-  },
-  accent: {
-    primary: "#6b33f2", // Meteor Shower -  A vibrant, primary accent.
-    secondary: "#46f7a7", // Illicit Green - Another vibrant accent.
+  tiles: {
+    correct: "#26be95",
+    wrongPlace: "#e3b455",
   },
   neutral: {
-    darkBlue: "#124763", // Moroccan Blue - Darker neutral, useful for text/backgrounds.
-    darkGreen: "#2c696b", // Atlantis - Another darker neutral.
     white: "#ffffff",
     black: "#1e212b",
     lightGray: "#e9eaf2",
     darkGray: "#464d5f",
   },
   semantic: {
-    success: "#0a6318", // Overgrown Temple
+    success: "#0a6318",
     warning: "#ffc107",
-    error: "#d31e13", // Snake Fruit
+    error: "#d31e13",
   },
 } as const;
 

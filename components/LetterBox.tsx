@@ -59,12 +59,12 @@ const styles = StyleSheet.create({
     color: colors.neutral.white,
   },
   correct: {
-    backgroundColor: colors.secondary.main,
-    borderColor: colors.secondary.main,
+    backgroundColor: colors.tiles.correct,
+    borderColor: colors.tiles.correct,
   },
   present: {
-    backgroundColor: colors.secondary.lighter,
-    borderColor: colors.secondary.lighter,
+    backgroundColor: colors.tiles.wrongPlace,
+    borderColor: colors.tiles.wrongPlace,
   },
   absent: {
     backgroundColor: colors.neutral.darkGray,

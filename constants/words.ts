@@ -13,6 +13,23 @@ const WORDS = {
     "STARS",
   ],
 
+  science: [
+    "ATOMS",
+    "QUARK",
+    "CELLS",
+    "GENES",
+    "ORBIT",
+    "GAMMA",
+    "HYDRO",
+    "OXIDE",
+    "TESLA",
+    "FLORA",
+    "ASTRO",
+    "MICRO",
+    "POLAR",
+    "DATUM",
+  ],
+
   videoGames: [
     "MARIO",
     "SONIC",
