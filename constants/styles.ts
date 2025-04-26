@@ -32,6 +32,13 @@ const fontFamily = {
     boldItalic: "Bitter-BoldItalic",
     medium: "Bitter-Medium",
   },
+  openSans: {
+    bold: "OpenSans-Bold",
+    extraBoldItalic: "OpenSans-ExtraBoldItalic",
+    italic: "OpenSans-Italic",
+    medium: "OpenSans-Medium",
+    regular: "OpenSans-Regular",
+  },
 } as const;
 
 const fontSize = {

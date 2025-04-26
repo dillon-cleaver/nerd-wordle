@@ -1,16 +1,26 @@
+import {
+  borderRadius,
+  colors,
+  fontFamily,
+  fontSize,
+  spacing,
+} from "@/constants/styles";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 
+const KEY_HEIGHT = 50;
+const KEY_MIN_WIDTH = 32;
+const WIDE_KEY_MIN_WIDTH = 52;
+
+const KEYBOARD_ROWS = [
+  ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+  ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+  ["ENTER", "Z", "X", "C", "V", "B", "N", "M", "BACKSPACE"],
+];
 type KeyboardProps = {
   guesses: string[];
   answer: string;
   onKeyPress: (key: string) => void;
 };
-
-const KEYBOARD_ROWS = [
-  ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-  ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-  ["ENTER", "Z", "X", "C", "V", "B", "N", "M", "⌫"],
-];
 
 const Keyboard = ({ guesses, answer, onKeyPress }: KeyboardProps) => {
   const getKeyStatus = (key: string) => {
@@ -19,11 +29,11 @@ const Keyboard = ({ guesses, answer, onKeyPress }: KeyboardProps) => {
     if (!hasBeenUsed) return null;
 
     // Check if it's correct in any position
-    const isCorrect = guesses.some((guess) => {
-      return guess
+    const isCorrect = guesses.some((guess) =>
+      guess
         .split("")
-        .some((letter, index) => letter === key && key === answer[index]);
-    });
+        .some((letter, index) => letter === key && key === answer[index])
+    );
     if (isCorrect) return "correct";
 
     // Check if it's present but wrong position
@@ -35,12 +45,12 @@ const Keyboard = ({ guesses, answer, onKeyPress }: KeyboardProps) => {
   };
 
   return (
-    <View style={styles.keyboard}>
+    <View style={styles.container}>
       {KEYBOARD_ROWS.map((row, rowIndex) => (
         <View key={rowIndex} style={styles.keyboardRow}>
           {row.map((key, keyIndex) => {
             const status = getKeyStatus(key);
-            const isWideKey = key === "ENTER" || key === "⌫";
+            const isWideKey = key === "ENTER" || key === "BACKSPACE";
 
             return (
               <TouchableOpacity
@@ -54,7 +64,9 @@ const Keyboard = ({ guesses, answer, onKeyPress }: KeyboardProps) => {
                 ]}
                 onPress={() => onKeyPress(key)}
               >
-                <Text style={styles.keyText}>{key}</Text>
+                <Text style={styles.keyText}>
+                  {key === "BACKSPACE" ? "DEL" : key}
+                </Text>
               </TouchableOpacity>
             );
           })}
@@ -67,39 +79,38 @@ const Keyboard = ({ guesses, answer, onKeyPress }: KeyboardProps) => {
 export default Keyboard;
 
 const styles = StyleSheet.create({
-  keyboard: {
-    marginTop: 32,
-    width: "100%",
+  container: {
+    gap: spacing.sm,
   },
   keyboardRow: {
     flexDirection: "row",
+    gap: spacing.xs,
     justifyContent: "center",
-    marginBottom: 8,
   },
   key: {
-    backgroundColor: "#d3d6da",
-    borderRadius: 4,
-    padding: 8,
-    margin: 2,
-    minWidth: 30,
-    height: 50,
+    backgroundColor: colors.neutral.lightGray,
+    borderRadius: borderRadius.sm,
+    padding: spacing.sm,
+    minWidth: KEY_MIN_WIDTH,
+    height: KEY_HEIGHT,
     justifyContent: "center",
     alignItems: "center",
   },
   wideKey: {
-    minWidth: 50,
+    minWidth: WIDE_KEY_MIN_WIDTH,
   },
   keyText: {
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: fontSize.body.base,
+    fontFamily: fontFamily.openSans.bold,
+    color: colors.neutral.black,
   },
   correctKey: {
-    backgroundColor: "#6aaa64",
+    backgroundColor: colors.tiles.correct,
   },
   presentKey: {
-    backgroundColor: "#c9b458",
+    backgroundColor: colors.tiles.wrongPlace,
   },
   absentKey: {
-    backgroundColor: "#787c7e",
+    backgroundColor: colors.neutral.darkGray,
   },
 });

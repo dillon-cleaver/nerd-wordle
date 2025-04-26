@@ -16,6 +16,11 @@ export default function RootLayout() {
     "Bitter-Italic": require("../assets/fonts/Bitter-Italic.ttf"),
     "Bitter-BoldItalic": require("../assets/fonts/Bitter-BoldItalic.ttf"),
     "Bitter-Medium": require("../assets/fonts/Bitter-Medium.ttf"),
+    "OpenSans-Bold": require("../assets/fonts/OpenSans-Bold.ttf"),
+    "OpenSans-ExtraBoldItalic": require("../assets/fonts/OpenSans-ExtraBoldItalic.ttf"),
+    "OpenSans-Italic": require("../assets/fonts/OpenSans-Italic.ttf"),
+    "OpenSans-Medium": require("../assets/fonts/OpenSans-Medium.ttf"),
+    "OpenSans-Regular": require("../assets/fonts/OpenSans-Regular.ttf"),
   });
 
   useEffect(() => {
