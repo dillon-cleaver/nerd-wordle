@@ -5,6 +5,7 @@ import { colors, spacing } from "@/constants/styles";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
 import { FontAwesome } from "@expo/vector-icons";
+import { StatusBar } from "expo-status-bar";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -67,6 +68,7 @@ export default function RootLayout() {
           }}
         />
       </Drawer>
+      <StatusBar networkActivityIndicatorVisible={true} style="light" />
     </GestureHandlerRootView>
   );
 }
