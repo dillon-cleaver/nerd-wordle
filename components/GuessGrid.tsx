@@ -10,7 +10,7 @@ type GuessGridProps = {
   invalidWord: boolean;
 };
 
-const GuessGrid = ({
+export const GuessGrid = ({
   guesses,
   answer,
   numGuesses,
@@ -33,5 +33,3 @@ const GuessGrid = ({
     );
   });
 };
-
-export default GuessGrid;

@@ -1,13 +1,23 @@
 import { useEffect } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { colors, spacing } from "@/constants/styles";
+import {
+  borderRadius,
+  colors,
+  fontFamily,
+  fontSize,
+  lineHeight,
+  spacing,
+} from "@/constants/styles";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
 import { FontAwesome } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
+import { DEVICE_WIDTH } from "@/constants/dimensions";
 
 SplashScreen.preventAutoHideAsync();
+
+const DRAWER_WIDTH = DEVICE_WIDTH * (2 / 3);
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -38,12 +48,18 @@ export default function RootLayout() {
       <Drawer
         screenOptions={{
           headerStyle: {
-            backgroundColor: colors.neutral.black,
+            backgroundColor: colors.neutral.background,
           },
           headerTintColor: colors.neutral.white,
           headerTitle: "NerdWord",
+          headerTitleStyle: {
+            fontFamily: fontFamily.bitter.bold,
+            fontSize: fontSize.title.large,
+            lineHeight: lineHeight.title.large,
+          },
           drawerStyle: {
-            backgroundColor: colors.neutral.black,
+            backgroundColor: colors.neutral.background,
+            width: DRAWER_WIDTH,
           },
           drawerActiveTintColor: colors.neutral.white,
           drawerInactiveTintColor: colors.neutral.white,
@@ -57,6 +73,12 @@ export default function RootLayout() {
           options={{
             title: "Home",
             drawerLabel: "Home",
+            drawerLabelStyle: {
+              fontFamily: fontFamily.bitter.bold,
+              fontSize: fontSize.title.large,
+              lineHeight: lineHeight.title.large,
+            },
+            drawerItemStyle: { borderRadius: borderRadius.md },
             drawerIcon: ({ color }: { color: string }) => (
               <FontAwesome name="home" size={24} color={color} />
             ),
@@ -67,6 +89,12 @@ export default function RootLayout() {
           options={{
             title: "Friends",
             drawerLabel: "Friends",
+            drawerLabelStyle: {
+              fontFamily: fontFamily.bitter.bold,
+              fontSize: fontSize.title.large,
+              lineHeight: lineHeight.title.large,
+            },
+            drawerItemStyle: { borderRadius: borderRadius.md },
             drawerIcon: ({ color }: { color: string }) => (
               <FontAwesome name="users" size={24} color={color} />
             ),

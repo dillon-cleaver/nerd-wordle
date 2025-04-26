@@ -1,4 +1,11 @@
 import { View, StyleSheet, Text } from "react-native";
+import {
+  borderRadius,
+  colors,
+  fontFamily,
+  fontSize,
+  spacing,
+} from "@/constants/styles";
 
 type GameBannerProps = {
   gameStatus: "won" | "running" | "lost";
@@ -6,11 +13,11 @@ type GameBannerProps = {
   answer?: string;
 };
 
-const GameBanner = ({ gameStatus, numGuesses, answer }: GameBannerProps) => {
+export const GameBanner = ({ gameStatus, numGuesses, answer }: GameBannerProps) => {
   if (gameStatus === "running") return null;
 
   return (
-    <View style={styles.banner}>
+    <View style={styles.container}>
       <Text style={styles.bannerText}>
         {gameStatus === "won"
           ? `Congratulations! You won in ${numGuesses} guesses!`
@@ -20,19 +27,15 @@ const GameBanner = ({ gameStatus, numGuesses, answer }: GameBannerProps) => {
   );
 };
 
-export default GameBanner;
-
 const styles = StyleSheet.create({
-  banner: {
-    position: "absolute",
-    top: 32,
-    backgroundColor: "#4CAF50",
-    padding: 16,
-    borderRadius: 8,
+  container: {
+    backgroundColor: colors.semantic.success,
+    padding: spacing.md,
+    borderRadius: borderRadius.md,
   },
   bannerText: {
-    color: "white",
-    fontSize: 18,
-    fontWeight: "bold",
+    color: colors.neutral.white,
+    fontSize: fontSize.title.base,
+    fontFamily: fontFamily.bitter.bold,
   },
 });

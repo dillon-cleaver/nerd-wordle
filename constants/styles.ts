@@ -13,7 +13,8 @@ const colors = {
   },
   neutral: {
     white: "#ffffff",
-    black: "#1e212b",
+    background: "#1e212b",
+    black: "#000000",
     lightGray: "#e9eaf2",
     darkGray: "#464d5f",
   },

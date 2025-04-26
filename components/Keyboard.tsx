@@ -22,7 +22,7 @@ type KeyboardProps = {
   onKeyPress: (key: string) => void;
 };
 
-const Keyboard = ({ guesses, answer, onKeyPress }: KeyboardProps) => {
+export const Keyboard = ({ guesses, answer, onKeyPress }: KeyboardProps) => {
   const getKeyStatus = (key: string) => {
     // Check if the key has been used in any guess
     const hasBeenUsed = guesses.some((guess) => guess.includes(key));
@@ -75,8 +75,6 @@ const Keyboard = ({ guesses, answer, onKeyPress }: KeyboardProps) => {
     </View>
   );
 };
-
-export default Keyboard;
 
 const styles = StyleSheet.create({
   container: {

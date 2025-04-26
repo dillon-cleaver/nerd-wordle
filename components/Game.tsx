@@ -3,9 +3,9 @@ import { View, StyleSheet, Text } from "react-native";
 import { sample } from "../utils/sample";
 import { WORDS, Word, WordCategory } from "../constants/words";
 import { NUMBER_OF_GUESSES } from "../constants/numbers";
-import GuessGrid from "./GuessGrid";
-import GameBanner from "./GameBanner";
-import Keyboard from "./Keyboard";
+import { GuessGrid } from "./GuessGrid";
+import { GameBanner } from "./GameBanner";
+import { Keyboard } from "./Keyboard";
 import { BaseSafeAreaView } from "./base/BaseSafeAreaView";
 import {
   colors,
@@ -17,16 +17,39 @@ import {
 
 type GameProps = {};
 
-const Game = ({}: GameProps) => {
+export const Game = ({}: GameProps) => {
+  // TODO: Use a map / record instead?
+  const convertCategory = (word: WordCategory) => {
+    let convertedCategory = word;
+    switch (convertedCategory) {
+      case "animeAndManga":
+        return "Anime and Manga";
+      case "fantasyAndSciFi":
+        return "Fantasy and Sci-Fi";
+      case "science":
+        return "Science";
+      case "tabletopAndBoardGames":
+        return "Tabletop and Board Games";
+      case "techAndInternetCulture":
+        return "Tech and Internet Culture";
+      case "videoGames":
+        return "Video Games";
+    }
+  };
+
   const [{ category, answer }] = useState(() => {
     const selectedCategory = sample(Object.keys(WORDS)) as WordCategory;
+
+    const convertedCategory = convertCategory(selectedCategory);
+
     return {
-      category: selectedCategory,
+      category: convertedCategory,
       answer: sample([...WORDS[selectedCategory]]),
     };
   });
 
-  // Log the answer in a useEffect to ensure it only logs in the browser
+  console.log(category);
+
   useEffect(() => {
     console.info({ answer, category });
   }, [answer, category]);
@@ -73,7 +96,7 @@ const Game = ({}: GameProps) => {
 
     if (key === "ENTER") {
       handleSubmitGuess();
-    } else if (key === "⌫") {
+    } else if (key === "BACKSPACE") {
       setTentativeGuess((prev) => prev.slice(0, -1));
     } else if (tentativeGuess.length < 5) {
       setTentativeGuess((prev) => prev + key);
@@ -81,52 +104,62 @@ const Game = ({}: GameProps) => {
   }
 
   return (
-    <BaseSafeAreaView addStyles={styles.container}>
-      <View style={styles.categoryContainer}>
-        <Text style={styles.categoryText}>{category}</Text>
-      </View>
-
-      <View>
-        <GuessGrid
+    <BaseSafeAreaView
+      addStyles={styles.container}
+      edges={["bottom", "left", "right"]}
+    >
+      {gameStatus === "running" ? (
+        <View style={styles.categoryTextContainer}>
+          <Text style={styles.categoryText}>{category}</Text>
+        </View>
+      ) : (
+        <View style={styles.categoryTextContainer}>
+          <GameBanner
+            gameStatus={"won"}
+            numGuesses={guesses.length}
+            answer={answer}
+          />
+        </View>
+      )}
+      <View style={styles.gridAndKeyboardContainer}>
+        <View style={styles.gridContainer}>
+          <GuessGrid
+            guesses={guesses}
+            answer={answer}
+            numGuesses={NUMBER_OF_GUESSES}
+            tentativeGuess={tentativeGuess}
+            invalidWord={invalidWord}
+          />
+        </View>
+        <Keyboard
           guesses={guesses}
           answer={answer}
-          numGuesses={NUMBER_OF_GUESSES}
-          tentativeGuess={tentativeGuess}
-          invalidWord={invalidWord}
+          onKeyPress={handleKeyPress}
         />
       </View>
-
-      <Keyboard guesses={guesses} answer={answer} onKeyPress={handleKeyPress} />
-
-      <GameBanner
-        gameStatus={gameStatus}
-        numGuesses={guesses.length}
-        answer={answer}
-      />
     </BaseSafeAreaView>
   );
 };
 
-export default Game;
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 20,
+    justifyContent: "space-between",
+    paddingBottom: spacing.md,
   },
-  categoryContainer: {
-    // paddingBottom: spacing.lg,
-    paddingHorizontal: spacing.md,
-    borderRadius: borderRadius.md,
-    borderColor: "pink",
-    borderWidth: 2,
-    // backgroundColor: colors.neutral.darkBlue,
+  categoryTextContainer: {
+    flex: 1,
+    justifyContent: "center",
+    paddingLeft: spacing.md,
+  },
+  gridContainer: {
+    alignItems: "center",
+  },
+  gridAndKeyboardContainer: {
+    gap: 64,
   },
   categoryText: {
     color: colors.neutral.white,
-    fontSize: fontSize.title.medium,
-    fontFamily: fontFamily.bitter.medium,
+    fontSize: fontSize.title.large,
+    fontFamily: fontFamily.bitter.bold,
   },
 });

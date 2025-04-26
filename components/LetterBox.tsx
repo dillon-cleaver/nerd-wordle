@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   letterBox: {
     width: LETTERBOX_WIDTH_HEIGHT,
     height: LETTERBOX_WIDTH_HEIGHT,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: colors.neutral.lightGray,
     justifyContent: "center",
     alignItems: "center",
@@ -60,15 +60,12 @@ const styles = StyleSheet.create({
   },
   correct: {
     backgroundColor: colors.tiles.correct,
-    borderColor: colors.tiles.correct,
   },
   present: {
     backgroundColor: colors.tiles.wrongPlace,
-    borderColor: colors.tiles.wrongPlace,
   },
   absent: {
-    backgroundColor: colors.neutral.darkGray,
-    borderColor: colors.neutral.darkGray,
+    backgroundColor: colors.neutral.black,
   },
   // TODO: Make the "invalid word state less scary/red" --->
   invalid: {
