@@ -81,11 +81,12 @@ export const Game = ({}: GameProps) => {
 
     const nextGuesses = [...guesses, tentativeGuess as Word];
 
-    /** ──  Hint calculation  ──────────────────────────────
-     * For each letter in the guess that is in the answer but in the wrong spot,
-     * check if it already appears in the correct position elsewhere. If not,
-     * show the correct spot as a hint.
-     */
+    const correctLettersInPlace = guesses
+      .flatMap((guess) =>
+        guess.split("").map((char, i) => (char === answer[i] ? char : null))
+      )
+      .filter(Boolean);
+
     let nextHint: typeof hint = undefined;
     if (
       tentativeGuess !== answer &&
@@ -97,11 +98,12 @@ export const Game = ({}: GameProps) => {
           letter &&
           letter !== answer[i] &&
           answer.includes(letter) &&
-          tentativeGuess.indexOf(letter) !== answer.indexOf(letter);
+          tentativeGuess.indexOf(letter) !== answer.indexOf(letter) &&
+          !correctLettersInPlace.includes(letter); // <== NEW GUARD HERE
 
         if (isMisplaced) {
           nextHint = {
-            row: guesses.length + 1, // row where it should animate
+            row: guesses.length + 1,
             col: answer.indexOf(letter),
             letter,
           };
@@ -114,13 +116,12 @@ export const Game = ({}: GameProps) => {
     setHint(nextHint);
     setTentativeGuess("");
 
-    // Handle win / loss status
     if (tentativeGuess === answer) {
       setGameStatus("won");
-      setHint(undefined); // clear hint on win
+      setHint(undefined);
     } else if (nextGuesses.length >= NUMBER_OF_GUESSES) {
       setGameStatus("lost");
-      setHint(undefined); // clear hint on game over
+      setHint(undefined);
     }
   }
 

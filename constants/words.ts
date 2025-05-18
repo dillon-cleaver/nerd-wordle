@@ -100,6 +100,7 @@ const WORDS = {
     "SHARE",
     "SHALE",
     "TROIS",
+    "REACT",
   ],
 
   fantasyAndSciFi: [
