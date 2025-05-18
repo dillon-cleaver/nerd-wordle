@@ -31,13 +31,14 @@ export const Game = ({}: GameProps) => {
     }
   };
 
-  const [{ category, answer }] = useState(() => {
+  const [{ category, answer, originalCategory }] = useState(() => {
     const selectedCategory = sample(Object.keys(WORDS)) as WordCategory;
 
     const convertedCategory = convertCategory(selectedCategory);
 
     return {
       category: convertedCategory,
+      originalCategory: selectedCategory,
       answer: sample([...WORDS[selectedCategory]]),
     };
   });
@@ -164,12 +165,14 @@ export const Game = ({}: GameProps) => {
             tentativeGuess={tentativeGuess}
             invalidWord={invalidWord}
             hint={hint}
+            category={originalCategory}
           />
         </View>
         <Keyboard
           guesses={guesses}
           answer={answer}
           onKeyPress={handleKeyPress}
+          category={originalCategory}
         />
       </View>
     </BaseSafeAreaView>

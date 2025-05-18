@@ -20,15 +20,32 @@ type KeyboardProps = {
   guesses: string[];
   answer: string;
   onKeyPress: (key: string) => void;
+  category: string;
 };
 
-export const Keyboard = ({ guesses, answer, onKeyPress }: KeyboardProps) => {
+export const Keyboard = ({
+  guesses,
+  answer,
+  onKeyPress,
+  category,
+}: KeyboardProps) => {
+  const tileBackgroundColor =
+    category === "videoGames"
+      ? colors.categories.videoGames
+      : category === "science"
+      ? colors.categories.science
+      : category === "fantasyAndSciFi"
+      ? colors.categories.fantasyAndSciFi
+      : category === "animeAndManga"
+      ? colors.categories.animeAndManga
+      : category === "tabletopAndBoardGames"
+      ? colors.categories.tabletopAndBoardGames
+      : colors.categories.techAndInternetCulture;
+
   const getKeyStatus = (key: string) => {
-    // Check if the key has been used in any guess
     const hasBeenUsed = guesses.some((guess) => guess.includes(key));
     if (!hasBeenUsed) return null;
 
-    // Check if it's correct in any position
     const isCorrect = guesses.some((guess) =>
       guess
         .split("")
@@ -36,11 +53,9 @@ export const Keyboard = ({ guesses, answer, onKeyPress }: KeyboardProps) => {
     );
     if (isCorrect) return "correct";
 
-    // Check if it's present but wrong position
     const isPresent = answer.includes(key);
     if (isPresent) return "present";
 
-    // If used but not correct or present, it's absent
     return "absent";
   };
 
@@ -58,7 +73,9 @@ export const Keyboard = ({ guesses, answer, onKeyPress }: KeyboardProps) => {
                 style={[
                   styles.key,
                   isWideKey && styles.wideKey,
-                  status === "correct" && styles.correctKey,
+                  status === "correct" && {
+                    backgroundColor: tileBackgroundColor,
+                  },
                   status === "present" && styles.presentKey,
                   status === "absent" && styles.absentKey,
                 ]}
@@ -101,9 +118,6 @@ const styles = StyleSheet.create({
     fontSize: fontSize.body.base,
     fontFamily: fontFamily.openSans.bold,
     color: colors.neutral.black,
-  },
-  correctKey: {
-    backgroundColor: colors.tiles.correct,
   },
   presentKey: {
     backgroundColor: colors.tiles.wrongPlace,

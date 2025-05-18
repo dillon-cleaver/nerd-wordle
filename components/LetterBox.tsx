@@ -12,6 +12,7 @@ export type LetterBoxProps = {
   invalidWord: boolean;
   showHint?: boolean;
   hintLetter?: string;
+  category: string;
 };
 
 const LetterBox = ({
@@ -22,12 +23,26 @@ const LetterBox = ({
   invalidWord,
   showHint = false,
   hintLetter = "",
+  category,
 }: LetterBoxProps) => {
   const cellStyles: StyleProp<ViewStyle> = [styles.wrapper];
 
+  const tileBackgroundColor =
+    category === "videoGames"
+      ? colors.categories.videoGames
+      : category === "science"
+      ? colors.categories.science
+      : category === "fantasyAndSciFi"
+      ? colors.categories.fantasyAndSciFi
+      : category === "animeAndManga"
+      ? colors.categories.animeAndManga
+      : category === "tabletopAndBoardGames"
+      ? colors.categories.tabletopAndBoardGames
+      : colors.categories.techAndInternetCulture;
+
   if (!isCurrentGuess && letter) {
     if (isCorrect) {
-      cellStyles.push(styles.correct);
+      cellStyles.push({ backgroundColor: tileBackgroundColor });
     } else if (isPresent) {
       cellStyles.push(styles.present);
     } else {
@@ -46,7 +61,7 @@ const LetterBox = ({
         <>
           <HintOutline
             size={LETTERBOX_WIDTH_HEIGHT}
-            color={colors.tiles.wrongPlace}
+            color={tileBackgroundColor}
             strokeWidth={3}
             duration={900}
           />
@@ -76,9 +91,6 @@ const styles = StyleSheet.create({
     fontFamily: "Bitter-Bold",
     fontSize: fontSize.title.large,
     color: colors.neutral.white,
-  },
-  correct: {
-    backgroundColor: colors.tiles.correct,
   },
   present: {
     backgroundColor: colors.tiles.wrongPlace,

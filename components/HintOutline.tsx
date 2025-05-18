@@ -26,10 +26,8 @@ export const HintOutline = ({
 }: HintOutlineProps) => {
   const progress = useSharedValue(0);
   const r = borderRadius.md;
-  const P = strokeWidth / 2; // half-stroke + padding
+  const P = strokeWidth / 2;
 
-  // Perimeter = 4*(side − 2r) + 2πr  (4 straight edges + 4 quarter-arcs)
-  const perimeter = 4 * (size - 2 * r) + 2 * Math.PI * r;
   const dashLength = strokeWidth * 2;
   const gapLength = strokeWidth * 2;
   const dashCycle = dashLength + gapLength;

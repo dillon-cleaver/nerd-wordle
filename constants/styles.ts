@@ -8,8 +8,7 @@ const colors = {
     techAndInternetCulture: "#708090",
   },
   tiles: {
-    correct: "#26be95",
-    wrongPlace: "#e3b455",
+    wrongPlace: "#DAA520",
   },
   neutral: {
     white: "#ffffff",
@@ -19,8 +18,8 @@ const colors = {
     darkGray: "#464d5f",
   },
   semantic: {
-    success: "#0a6318",
-    warning: "#ffc107",
+    success: "#26be95",
+    warning: "#e3b455",
     error: "#d31e13",
   },
 } as const;

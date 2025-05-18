@@ -13,6 +13,7 @@ export type GuessRowProps = {
     col: number;
     letter: string;
   };
+  category: string;
 };
 
 const GuessRow = ({
@@ -21,16 +22,15 @@ const GuessRow = ({
   isCurrentGuess,
   invalidWord,
   hint,
+  category,
 }: GuessRowProps) => {
   return (
     <View style={styles.guessRow}>
       {range(0, 5).map((letterIndex) => {
         const letter = currentGuess[letterIndex] || "";
 
-        // Simple direct comparison for correct position
         const isCorrect = letter === answer[letterIndex];
 
-        // Check if letter is present but not correct
         const isPresent =
           !isCorrect && letter !== "" && answer.includes(letter);
 
@@ -46,6 +46,7 @@ const GuessRow = ({
               invalidWord={invalidWord}
               showHint={shouldShowHint}
               hintLetter={hint?.letter ?? ""}
+              category={category}
             />
           </View>
         );
