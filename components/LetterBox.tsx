@@ -1,5 +1,6 @@
 import { View, StyleSheet, Text, StyleProp, ViewStyle } from "react-native";
 import { borderRadius, colors, fontSize } from "@/constants/styles";
+import { HintOutline } from "./HintOutline";
 
 const LETTERBOX_WIDTH_HEIGHT = 56;
 
@@ -9,6 +10,8 @@ export type LetterBoxProps = {
   isPresent: boolean;
   isCurrentGuess: boolean;
   invalidWord: boolean;
+  showHint?: boolean;
+  hintLetter?: string;
 };
 
 const LetterBox = ({
@@ -17,8 +20,10 @@ const LetterBox = ({
   isPresent,
   isCurrentGuess,
   invalidWord,
+  showHint = false,
+  hintLetter = "",
 }: LetterBoxProps) => {
-  const cellStyles: StyleProp<ViewStyle> = [styles.letterBox];
+  const cellStyles: StyleProp<ViewStyle> = [styles.wrapper];
 
   if (!isCurrentGuess && letter) {
     if (isCorrect) {
@@ -37,6 +42,19 @@ const LetterBox = ({
   return (
     <View style={cellStyles}>
       <Text style={styles.letter}>{letter}</Text>
+      {showHint && (
+        <>
+          <HintOutline
+            size={LETTERBOX_WIDTH_HEIGHT}
+            color={colors.tiles.wrongPlace}
+            strokeWidth={3}
+            duration={900}
+          />
+          <View style={styles.previewLetterWrapper}>
+            <Text style={styles.previewLetter}>{hintLetter.toUpperCase()}</Text>
+          </View>
+        </>
+      )}
     </View>
   );
 };
@@ -44,7 +62,7 @@ const LetterBox = ({
 export default LetterBox;
 
 const styles = StyleSheet.create({
-  letterBox: {
+  wrapper: {
     width: LETTERBOX_WIDTH_HEIGHT,
     height: LETTERBOX_WIDTH_HEIGHT,
     borderWidth: 1,
@@ -52,6 +70,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: borderRadius.md,
+    position: "relative",
   },
   letter: {
     fontFamily: "Bitter-Bold",
@@ -71,5 +90,19 @@ const styles = StyleSheet.create({
   invalid: {
     borderColor: colors.semantic.error,
     backgroundColor: colors.semantic.error,
+  },
+  previewLetter: {
+    textAlign: "center",
+    fontFamily: "Bitter-Bold",
+    fontSize: fontSize.title.large,
+    color: colors.neutral.white,
+    opacity: 0.4,
+    zIndex: 1,
+  },
+  previewLetterWrapper: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1,
   },
 });

@@ -7,13 +7,7 @@ import { GuessGrid } from "./GuessGrid";
 import { GameBanner } from "./GameBanner";
 import { Keyboard } from "./Keyboard";
 import { BaseSafeAreaView } from "./base/BaseSafeAreaView";
-import {
-  colors,
-  fontSize,
-  fontFamily,
-  borderRadius,
-  spacing,
-} from "../constants/styles";
+import { colors, fontSize, fontFamily, spacing } from "../constants/styles";
 
 type GameProps = {};
 
@@ -60,6 +54,14 @@ export const Game = ({}: GameProps) => {
   const [guesses, setGuesses] = useState<Word[]>([]);
   const [tentativeGuess, setTentativeGuess] = useState("");
   const [invalidWord, setInvalidWord] = useState(false);
+  const [hint, setHint] = useState<
+    | {
+        row: number;
+        col: number;
+        letter: string;
+      }
+    | undefined
+  >(undefined);
 
   function handleSubmitGuess() {
     if (tentativeGuess.length !== 5) return;
@@ -77,18 +79,49 @@ export const Game = ({}: GameProps) => {
       return;
     }
 
-    setGuesses((prevGuesses) => {
-      const nextGuesses = [...prevGuesses, tentativeGuess as Word];
+    const nextGuesses = [...guesses, tentativeGuess as Word];
 
-      if (tentativeGuess === answer) {
-        setGameStatus("won");
-      } else if (nextGuesses.length >= NUMBER_OF_GUESSES) {
-        setGameStatus("lost");
+    /** ──  Hint calculation  ──────────────────────────────
+     * For each letter in the guess that is in the answer but in the wrong spot,
+     * check if it already appears in the correct position elsewhere. If not,
+     * show the correct spot as a hint.
+     */
+    let nextHint: typeof hint = undefined;
+    if (
+      tentativeGuess !== answer &&
+      (guesses.length === 2 || guesses.length === 3)
+    ) {
+      for (let i = 0; i < 5; i++) {
+        const letter = tentativeGuess[i];
+        const isMisplaced =
+          letter &&
+          letter !== answer[i] &&
+          answer.includes(letter) &&
+          tentativeGuess.indexOf(letter) !== answer.indexOf(letter);
+
+        if (isMisplaced) {
+          nextHint = {
+            row: guesses.length + 1, // row where it should animate
+            col: answer.indexOf(letter),
+            letter,
+          };
+          break;
+        }
       }
+    }
 
-      setTentativeGuess("");
-      return nextGuesses;
-    });
+    setGuesses(nextGuesses);
+    setHint(nextHint);
+    setTentativeGuess("");
+
+    // Handle win / loss status
+    if (tentativeGuess === answer) {
+      setGameStatus("won");
+      setHint(undefined); // clear hint on win
+    } else if (nextGuesses.length >= NUMBER_OF_GUESSES) {
+      setGameStatus("lost");
+      setHint(undefined); // clear hint on game over
+    }
   }
 
   function handleKeyPress(key: string) {
@@ -129,6 +162,7 @@ export const Game = ({}: GameProps) => {
             numGuesses={NUMBER_OF_GUESSES}
             tentativeGuess={tentativeGuess}
             invalidWord={invalidWord}
+            hint={hint}
           />
         </View>
         <Keyboard

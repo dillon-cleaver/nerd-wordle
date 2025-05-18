@@ -8,6 +8,17 @@ type GuessGridProps = {
   numGuesses: number;
   tentativeGuess: string;
   invalidWord: boolean;
+  /**
+   * Optional hint data coming from game logic.
+   * `row` – zero‑based row index that should show the hint
+   * `col` – zero‑based column index inside that row
+   * `letter` – the letter to draw in the preview spot
+   */
+  hint?: {
+    row: number;
+    col: number;
+    letter: string;
+  };
 };
 
 export const GuessGrid = ({
@@ -16,11 +27,17 @@ export const GuessGrid = ({
   numGuesses,
   tentativeGuess,
   invalidWord,
+  hint,
 }: GuessGridProps) => {
   return range(0, numGuesses).map((rowIndex) => {
     const currentGuess =
       rowIndex === guesses.length ? tentativeGuess : guesses[rowIndex] || "";
     const isCurrentGuess = rowIndex === guesses.length;
+
+    const hintForThisRow =
+      hint && hint.row === rowIndex
+        ? { col: hint.col, letter: hint.letter }
+        : undefined;
 
     return (
       <GuessRow
@@ -29,6 +46,7 @@ export const GuessGrid = ({
         answer={answer}
         isCurrentGuess={isCurrentGuess}
         invalidWord={invalidWord && isCurrentGuess}
+        hint={hintForThisRow}
       />
     );
   });

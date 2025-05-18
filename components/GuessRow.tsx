@@ -9,6 +9,10 @@ export type GuessRowProps = {
   answer: Word;
   isCurrentGuess: boolean;
   invalidWord: boolean;
+  hint?: {
+    col: number;
+    letter: string;
+  };
 };
 
 const GuessRow = ({
@@ -16,6 +20,7 @@ const GuessRow = ({
   answer,
   isCurrentGuess,
   invalidWord,
+  hint,
 }: GuessRowProps) => {
   return (
     <View style={styles.guessRow}>
@@ -29,6 +34,8 @@ const GuessRow = ({
         const isPresent =
           !isCorrect && letter !== "" && answer.includes(letter);
 
+        const shouldShowHint = !!hint && hint.col === letterIndex;
+
         return (
           <View key={letterIndex} style={styles.letterBox}>
             <LetterBox
@@ -37,6 +44,8 @@ const GuessRow = ({
               isPresent={isPresent}
               isCurrentGuess={isCurrentGuess}
               invalidWord={invalidWord}
+              showHint={shouldShowHint}
+              hintLetter={hint?.letter ?? ""}
             />
           </View>
         );
