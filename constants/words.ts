@@ -101,6 +101,7 @@ const WORDS = {
     "SHALE",
     "TROIS",
     "REACT",
+    "MISTY",
   ],
 
   fantasyAndSciFi: [

@@ -8,40 +8,12 @@ import { GameBanner } from "./GameBanner";
 import { Keyboard } from "./Keyboard";
 import { BaseSafeAreaView } from "./base/BaseSafeAreaView";
 import { colors, fontSize, fontFamily, spacing } from "../constants/styles";
+import { initializeGame } from "@/utils/game";
 
 type GameProps = {};
 
 export const Game = ({}: GameProps) => {
-  // TODO: Use a map / record instead?
-  const convertCategory = (word: WordCategory) => {
-    let convertedCategory = word;
-    switch (convertedCategory) {
-      case "animeAndManga":
-        return "Anime and Manga";
-      case "fantasyAndSciFi":
-        return "Fantasy and Sci-Fi";
-      case "science":
-        return "Science";
-      case "tabletopAndBoardGames":
-        return "Tabletop and Board Games";
-      case "techAndInternetCulture":
-        return "Tech and Internet Culture";
-      case "videoGames":
-        return "Video Games";
-    }
-  };
-
-  const [{ category, answer, originalCategory }] = useState(() => {
-    const selectedCategory = sample(Object.keys(WORDS)) as WordCategory;
-
-    const convertedCategory = convertCategory(selectedCategory);
-
-    return {
-      category: convertedCategory,
-      originalCategory: selectedCategory,
-      answer: sample([...WORDS[selectedCategory]]),
-    };
-  });
+  const [{ category, answer, originalCategory }] = useState(initializeGame);
 
   console.log(category);
 
@@ -67,6 +39,7 @@ export const Game = ({}: GameProps) => {
   function handleSubmitGuess() {
     if (tentativeGuess.length !== 5) return;
 
+    // That flattens all categories, including "common", into a single array — so words like "SLATE" or "AUDIO" can still be guessed.
     const isValidWord = Object.values(WORDS)
       .flat()
       .includes(tentativeGuess as Word);
