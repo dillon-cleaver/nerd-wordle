@@ -199,6 +199,17 @@ const WORDS = {
     "VIRUS",
     "EMAIL",
   ],
+
+  superheroes: [
+    "JOKER",
+    "ROBIN",
+    "BLADE",
+    "FLASH",
+    "BEAST",
+    "SPAWN",
+    "VENOM",
+    "LOGAN",
+  ],
 } as const;
 
 type Word = (typeof WORDS)[keyof typeof WORDS][number];
