@@ -154,11 +154,11 @@ export const Game = ({}: GameProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "space-between",
     paddingBottom: spacing.md,
   },
   categoryTextContainer: {
     flex: 1,
+    maxHeight: 200,
     justifyContent: "center",
     paddingLeft: spacing.md,
   },
