@@ -1,5 +1,4 @@
 {
   "buildCommand": "expo export:web",
-  "outputDirectory": "web-build",
-  "ignoreCommand": "echo 'Skipping ignore'"
+  "outputDirectory": "web-build"
 }
