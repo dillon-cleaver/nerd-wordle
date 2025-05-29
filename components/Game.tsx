@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
-import { sample } from "../utils/sample";
-import { WORDS, Word, WordCategory } from "../constants/words";
+import { WORDS, Word } from "../constants/words";
 import { NUMBER_OF_GUESSES } from "../constants/numbers";
 import { GuessGrid } from "./GuessGrid";
 import { GameBanner } from "./GameBanner";
@@ -9,11 +8,13 @@ import { Keyboard } from "./Keyboard";
 import { BaseSafeAreaView } from "./base/BaseSafeAreaView";
 import { colors, fontSize, fontFamily, spacing } from "../constants/styles";
 import { initializeGame } from "@/utils/game";
+import { useDevice } from "../hooks/useDevice";
 
 type GameProps = {};
 
 export const Game = ({}: GameProps) => {
   const [{ category, answer, originalCategory }] = useState(initializeGame);
+  const { isDesktop } = useDevice();
 
   console.log(category);
 
@@ -111,9 +112,15 @@ export const Game = ({}: GameProps) => {
     }
   }
 
+  const containerStyle = [
+    styles.container,
+    isDesktop && styles.desktopContainer,
+  ];
+
+  // TODO: Add ScrollView or some other solution for smaller screens & mobile browser
   return (
     <BaseSafeAreaView
-      addStyles={styles.container}
+      addStyles={containerStyle}
       edges={["bottom", "left", "right"]}
     >
       {gameStatus === "running" ? (
@@ -156,9 +163,13 @@ const styles = StyleSheet.create({
   container: {
     paddingBottom: spacing.md,
   },
+  desktopContainer: {
+    maxWidth: 600,
+    alignSelf: "center",
+  },
   categoryTextContainer: {
-    flex: 1,
-    maxHeight: 200,
+    minHeight: 100,
+    maxHeight: 400,
     justifyContent: "center",
     paddingLeft: spacing.md,
   },
@@ -166,6 +177,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   gridAndKeyboardContainer: {
+    flex: 1,
+    justifyContent: "space-evenly",
     gap: 64,
   },
   categoryText: {

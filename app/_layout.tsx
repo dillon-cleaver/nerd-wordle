@@ -14,6 +14,7 @@ import { Drawer } from "expo-router/drawer";
 import { FontAwesome } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { DEVICE_WIDTH } from "@/constants/dimensions";
+import { useDevice } from "@/hooks/useDevice";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -32,6 +33,7 @@ export default function RootLayout() {
     "OpenSans-Medium": require("../assets/fonts/OpenSans-Medium.ttf"),
     "OpenSans-Regular": require("../assets/fonts/OpenSans-Regular.ttf"),
   });
+  const { isDesktop } = useDevice();
 
   useEffect(() => {
     if (loaded || error) {
@@ -49,17 +51,23 @@ export default function RootLayout() {
         screenOptions={{
           headerStyle: {
             backgroundColor: colors.neutral.background,
+            // TODO: Border still shows on desktop web
+            borderBottomWidth: 0,
+            elevation: 0,
+            shadowOpacity: 0,
           },
+          headerTitleAlign: "center",
           headerTintColor: colors.neutral.white,
           headerTitle: "NerdWord",
           headerTitleStyle: {
             fontFamily: fontFamily.bitter.bold,
             fontSize: fontSize.title.large,
+            alignItems: "center",
             lineHeight: lineHeight.title.large,
           },
           drawerStyle: {
             backgroundColor: colors.neutral.background,
-            width: DRAWER_WIDTH,
+            width: isDesktop ? 600 : DRAWER_WIDTH,
           },
           drawerActiveTintColor: colors.neutral.white,
           drawerInactiveTintColor: colors.neutral.white,

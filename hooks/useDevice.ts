@@ -1,6 +1,6 @@
 import * as Device from "expo-device";
 
-export const useDeviceInfo = () => {
+export const useDevice = () => {
   const deviceType = Device.deviceType || Device.DeviceType.UNKNOWN;
   const isTablet = deviceType === Device.DeviceType.TABLET;
   const isPhone = deviceType === Device.DeviceType.PHONE;
