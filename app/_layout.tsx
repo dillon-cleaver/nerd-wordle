@@ -17,6 +17,7 @@ import { StatusBar } from "expo-status-bar";
 import { DEVICE_WIDTH } from "@/constants/dimensions";
 import { useDevice } from "@/hooks/useDevice";
 import { useAuthListener } from "@/hooks/useAuthListener";
+import { UserProvider } from "@/context/UserContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -24,7 +25,7 @@ const DRAWER_WIDTH = DEVICE_WIDTH * (2 / 3);
 
 export default function RootLayout() {
   useAuthListener();
-  
+
   const [loaded, error] = useFonts({
     "Bitter-Regular": require("../assets/fonts/Bitter-Regular.ttf"),
     "Bitter-Bold": require("../assets/fonts/Bitter-Bold.ttf"),
@@ -50,70 +51,72 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <Drawer
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: colors.neutral.background,
-            // TODO: Border still shows on desktop web
-            borderBottomWidth: 0,
-            elevation: 0,
-            shadowOpacity: 0,
-          },
-          headerTitleAlign: "center",
-          headerTintColor: colors.neutral.white,
-          headerTitle: "NerdWord",
-          headerTitleStyle: {
-            fontFamily: fontFamily.bitter.bold,
-            fontSize: fontSize.title.large,
-            alignItems: "center",
-            lineHeight: lineHeight.title.large,
-          },
-          drawerStyle: {
-            backgroundColor: colors.neutral.background,
-            width: isDesktop ? 600 : DRAWER_WIDTH,
-          },
-          drawerActiveTintColor: colors.neutral.white,
-          drawerInactiveTintColor: colors.neutral.white,
-          drawerItemStyle: {
-            marginVertical: spacing.xs,
-          },
-        }}
-      >
-        <Drawer.Screen
-          name="index"
-          options={{
-            title: "Home",
-            drawerLabel: "Home",
-            drawerLabelStyle: {
+    <UserProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <Drawer
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: colors.neutral.background,
+              // TODO: Border still shows on desktop web
+              borderBottomWidth: 0,
+              elevation: 0,
+              shadowOpacity: 0,
+            },
+            headerTitleAlign: "center",
+            headerTintColor: colors.neutral.white,
+            headerTitle: "NerdWord",
+            headerTitleStyle: {
               fontFamily: fontFamily.bitter.bold,
               fontSize: fontSize.title.large,
+              alignItems: "center",
               lineHeight: lineHeight.title.large,
             },
-            drawerItemStyle: { borderRadius: borderRadius.md },
-            drawerIcon: ({ color }: { color: string }) => (
-              <FontAwesome name="home" size={24} color={color} />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="friends"
-          options={{
-            title: "Friends",
-            drawerLabel: "Friends",
-            drawerLabelStyle: {
-              fontFamily: fontFamily.bitter.bold,
-              fontSize: fontSize.title.large,
-              lineHeight: lineHeight.title.large,
+            drawerStyle: {
+              backgroundColor: colors.neutral.background,
+              width: isDesktop ? 600 : DRAWER_WIDTH,
             },
-            drawerItemStyle: { borderRadius: borderRadius.md },
-            drawerIcon: ({ color }: { color: string }) => (
-              <FontAwesome name="users" size={24} color={color} />
-            ),
+            drawerActiveTintColor: colors.neutral.white,
+            drawerInactiveTintColor: colors.neutral.white,
+            drawerItemStyle: {
+              marginVertical: spacing.xs,
+            },
           }}
-        />
-      </Drawer>
-      <StatusBar networkActivityIndicatorVisible={true} style="light" />
-    </GestureHandlerRootView>
+        >
+          <Drawer.Screen
+            name="index"
+            options={{
+              title: "Home",
+              drawerLabel: "Home",
+              drawerLabelStyle: {
+                fontFamily: fontFamily.bitter.bold,
+                fontSize: fontSize.title.large,
+                lineHeight: lineHeight.title.large,
+              },
+              drawerItemStyle: { borderRadius: borderRadius.md },
+              drawerIcon: ({ color }: { color: string }) => (
+                <FontAwesome name="home" size={24} color={color} />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name="friends"
+            options={{
+              title: "Friends",
+              drawerLabel: "Friends",
+              drawerLabelStyle: {
+                fontFamily: fontFamily.bitter.bold,
+                fontSize: fontSize.title.large,
+                lineHeight: lineHeight.title.large,
+              },
+              drawerItemStyle: { borderRadius: borderRadius.md },
+              drawerIcon: ({ color }: { color: string }) => (
+                <FontAwesome name="users" size={24} color={color} />
+              ),
+            }}
+          />
+        </Drawer>
+        <StatusBar networkActivityIndicatorVisible={true} style="light" />
+      </GestureHandlerRootView>
+    </UserProvider>
   );
 }
