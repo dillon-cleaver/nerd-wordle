@@ -9,12 +9,14 @@ import { BaseSafeAreaView } from "./base/BaseSafeAreaView";
 import { colors, fontSize, fontFamily, spacing } from "../constants/styles";
 import { initializeGame } from "@/utils/game";
 import { useDevice } from "../hooks/useDevice";
+import { usePlatform } from "@/hooks/usePlatform";
 
 type GameProps = {};
 
 export const Game = ({}: GameProps) => {
   const [{ category, answer, originalCategory }] = useState(initializeGame);
   const { isDesktop } = useDevice();
+  const { isIOS } = usePlatform();
 
   console.log(category);
 
@@ -113,11 +115,10 @@ export const Game = ({}: GameProps) => {
   }
 
   const containerStyle = [
-    styles.container,
+    isIOS && styles.container,
     isDesktop && styles.desktopContainer,
   ];
 
-  // TODO: Add ScrollView or some other solution for smaller screens & mobile browser
   return (
     <BaseSafeAreaView
       addStyles={containerStyle}
@@ -180,6 +181,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-evenly",
     gap: 64,
+    paddingBottom: spacing.lg,
   },
   categoryText: {
     color: colors.neutral.white,

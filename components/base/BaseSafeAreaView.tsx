@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { ScrollView, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import {
   SafeAreaView,
   SafeAreaViewProps,
@@ -23,7 +23,7 @@ export const BaseSafeAreaView = ({
 
   return (
     <SafeAreaView {...rest} edges={edges} style={[styles.container, style]}>
-      {children}
+      <ScrollView showsVerticalScrollIndicator={false}>{children}</ScrollView>
     </SafeAreaView>
   );
 };
@@ -31,6 +31,5 @@ export const BaseSafeAreaView = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: spacing.md,
   },
 });
