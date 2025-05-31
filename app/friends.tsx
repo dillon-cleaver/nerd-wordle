@@ -1,10 +1,14 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
 import { colors, fontFamily, fontSize, lineHeight } from "../constants/styles";
+import { signInWithGoogle } from "@/hooks/useGoogleSignIn";
 
 export default function Friends() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>See your friends scores here</Text>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Button title="Sign in with Google" onPress={signInWithGoogle} />
+      </View>
     </View>
   );
 }

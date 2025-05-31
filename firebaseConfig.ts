@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 
 // Optionally import the services that you want to use
 // import {...} from 'firebase/auth';
@@ -8,7 +9,7 @@ import { initializeApp } from "firebase/app";
 // import {...} from 'firebase/storage';
 
 // Initialize Firebase
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyCFKMe4vTWkUKr83E-T_i7wmrhG7cx29zY",
   authDomain: "nerd-word-cfda3.firebaseapp.com",
   projectId: "nerd-word-cfda3",
@@ -21,3 +22,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // For more information on how to access Firebase in your project,
 // see the Firebase documentation: https://firebase.google.com/docs/web/setup#access-firebase
+export const auth = getAuth(app);
