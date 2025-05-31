@@ -1,4 +1,4 @@
-import "@/firebaseConfig";
+import "@/firebase/firebaseConfig";
 import { useEffect } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -16,12 +16,15 @@ import { FontAwesome } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { DEVICE_WIDTH } from "@/constants/dimensions";
 import { useDevice } from "@/hooks/useDevice";
+import { useAuthListener } from "@/hooks/useAuthListener";
 
 SplashScreen.preventAutoHideAsync();
 
 const DRAWER_WIDTH = DEVICE_WIDTH * (2 / 3);
 
 export default function RootLayout() {
+  useAuthListener();
+  
   const [loaded, error] = useFonts({
     "Bitter-Regular": require("../assets/fonts/Bitter-Regular.ttf"),
     "Bitter-Bold": require("../assets/fonts/Bitter-Bold.ttf"),

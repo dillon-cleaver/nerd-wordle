@@ -2,21 +2,11 @@ import {
   getAuth,
   GoogleAuthProvider,
   signInWithPopup,
-  onAuthStateChanged,
   signOut,
 } from "firebase/auth";
 
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
-
-// Listen for auth state changes and log user info or null
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log("Auth state changed: user signed in:", user);
-  } else {
-    console.log("Auth state changed: no user signed in");
-  }
-});
 
 export function signInWithGoogle() {
   signInWithPopup(auth, provider)
