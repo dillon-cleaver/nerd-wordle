@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Button } from "react-native";
 import { colors, fontFamily, fontSize, lineHeight } from "../constants/styles";
-import { signInWithGoogle } from "@/hooks/useGoogleSignIn";
+import { signInWithGoogle, signOutGoogle } from "@/hooks/useGoogleSignIn";
 
 export default function Friends() {
   return (
@@ -8,6 +8,7 @@ export default function Friends() {
       <Text style={styles.text}>See your friends scores here</Text>
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Button title="Sign in with Google" onPress={signInWithGoogle} />
+        <Button title="Sign out with Google" onPress={signOutGoogle} />
       </View>
     </View>
   );
