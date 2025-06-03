@@ -12,12 +12,18 @@ import {
 } from "@/constants/styles";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
+import {
+  DrawerContentScrollView,
+  DrawerItemList,
+} from "@react-navigation/drawer";
 import { FontAwesome } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { DEVICE_WIDTH } from "@/constants/dimensions";
 import { useDevice } from "@/hooks/useDevice";
 import { useAuthListener } from "@/hooks/useAuthListener";
 import { UserProvider } from "@/context/UserContext";
+import { View } from "react-native";
+import { DrawerSignOutButton } from "@/components/DrawerSignOutButton";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -50,10 +56,28 @@ export default function RootLayout() {
     return null;
   }
 
+  // TODO: Make some components
+
   return (
     <UserProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Drawer
+          drawerContent={(props) => (
+            <DrawerContentScrollView
+              {...props}
+              contentContainerStyle={{
+                flex: 1,
+                justifyContent: "space-between",
+              }}
+            >
+              <View>
+                <DrawerItemList {...props} />
+              </View>
+              <View style={{ paddingVertical: spacing.sm }}>
+                <DrawerSignOutButton />
+              </View>
+            </DrawerContentScrollView>
+          )}
           screenOptions={{
             headerStyle: {
               backgroundColor: colors.neutral.background,

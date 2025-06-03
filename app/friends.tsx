@@ -12,7 +12,7 @@ import {
   lineHeight,
   spacing,
 } from "../constants/styles";
-import { signInWithGoogle, signOutGoogle } from "@/hooks/useGoogleSignIn";
+import { signInWithGoogle } from "@/hooks/useGoogleSignIn";
 import { useUser } from "@/context/UserContext";
 
 export default function Friends() {
@@ -32,9 +32,12 @@ export default function Friends() {
 
   return (
     <View style={styles.container}>
+      <View>
+        <Text style={styles.text}>Welcome, {authUser?.displayName}</Text>
+        <Text style={styles.smallText}>{authUser?.email}</Text>
+      </View>
       <Text style={styles.text}>See your friends scores here</Text>
       <View>
-        <Button title="Sign out with Google" onPress={signOutGoogle} />
         {!authUser && (
           <Button title="Sign in with Google" onPress={signInWithGoogle} />
         )}
@@ -56,5 +59,11 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.bitter.regular,
     fontSize: fontSize.title.large,
     lineHeight: lineHeight.title.large,
+  },
+  smallText: {
+    color: colors.neutral.white,
+    fontFamily: fontFamily.bitter.regular,
+    fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
   },
 });
