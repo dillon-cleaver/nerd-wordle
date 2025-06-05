@@ -13,7 +13,7 @@ import {
   spacing,
 } from "../constants/styles";
 import { signInWithGoogle } from "@/hooks/useGoogleSignIn";
-import { useUser } from "@/context/UserContext";
+import { useUser } from "../hooks/useUser";
 
 export default function Friends() {
   const { authUser, loading, userProfile } = useUser();

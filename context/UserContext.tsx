@@ -16,7 +16,7 @@ type UserContextType = {
   loading: boolean;
 };
 
-const UserContext = createContext<UserContextType>({
+export const UserContext = createContext<UserContextType>({
   authUser: null,
   userProfile: null,
   loading: true,
@@ -53,8 +53,4 @@ export function UserProvider({ children }: { children: ReactNode }) {
       {children}
     </UserContext.Provider>
   );
-}
-
-export function useUser() {
-  return useContext(UserContext);
 }

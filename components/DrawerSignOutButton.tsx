@@ -1,5 +1,5 @@
 import { colors, fontFamily, fontSize } from "@/constants/styles";
-import { useUser } from "@/context/UserContext";
+import { useUser } from "../hooks/useUser";
 import { signInWithGoogle, signOutGoogle } from "@/hooks/useGoogleSignIn";
 import { DrawerItem } from "@react-navigation/drawer";
 import { StyleSheet } from "react-native";
