@@ -1,24 +1,8 @@
-import { WordCategory, Word, WORDS } from "@/constants/words";
 import { createContext, ReactNode, useState, useCallback } from "react";
-import { NUMBER_OF_GUESSES } from "@/constants/numbers";
+import { WordCategory, Word } from "@/constants/words";
 import { initializeGame } from "@/utils/game";
-
-type GameStatus = "won" | "running" | "lost";
-
-type Hint =
-  | {
-      row: number;
-      col: number;
-      letter: string;
-    }
-  | undefined;
-
-type GameState = {
-  // TODO: Consolidate the categories – make them typed!
-  category: string;
-  originalCategory: WordCategory;
-  answer: Word;
-};
+import { handleSubmitGuess, handleKeyPress } from "./game-logic";
+import { GameStatus, Hint, GameState } from "@/types/game";
 
 type GameContextType = {
   gameStatus: GameStatus;
@@ -26,7 +10,6 @@ type GameContextType = {
   tentativeGuess: string;
   invalidWord: boolean;
   hint: Hint;
-  // TODO: Consolidate the categories – make them typed!
   category: string;
   originalCategory: WordCategory;
   answer: Word;
@@ -66,81 +49,24 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [invalidWord, setInvalidWord] = useState(false);
   const [hint, setHint] = useState<Hint>(undefined);
 
-  const handleSubmitGuess = useCallback(() => {
-    if (tentativeGuess.length !== 5) return;
-
-    const isValidWord = Object.values(WORDS)
-      .flat()
-      .includes(tentativeGuess as Word);
-
-    if (!isValidWord) {
-      setInvalidWord(true);
-      setTimeout(() => {
-        setInvalidWord(false);
-        setTentativeGuess("");
-      }, 1500);
-      return;
-    }
-
-    const nextGuesses = [...guesses, tentativeGuess as Word];
-
-    const correctLettersInPlace = guesses
-      .flatMap((guess) =>
-        guess.split("").map((char, i) => (char === answer[i] ? char : null))
-      )
-      .filter(Boolean);
-
-    let nextHint: Hint = undefined;
-    if (
-      tentativeGuess !== answer &&
-      (guesses.length === 2 || guesses.length === 3)
-    ) {
-      for (let i = 0; i < 5; i++) {
-        const letter = tentativeGuess[i];
-        const isMisplaced =
-          letter &&
-          letter !== answer[i] &&
-          answer.includes(letter) &&
-          tentativeGuess.indexOf(letter) !== answer.indexOf(letter) &&
-          !correctLettersInPlace.includes(letter);
-
-        if (isMisplaced) {
-          nextHint = {
-            row: guesses.length + 1,
-            col: answer.indexOf(letter),
-            letter,
-          };
-          break;
-        }
-      }
-    }
-
-    setGuesses(nextGuesses);
-    setHint(nextHint);
-    setTentativeGuess("");
-
-    if (tentativeGuess === answer) {
-      setGameStatus("won");
-      setHint(undefined);
-    } else if (nextGuesses.length >= NUMBER_OF_GUESSES) {
-      setGameStatus("lost");
-      setHint(undefined);
-    }
+  const handleSubmitGuessCallback = useCallback(() => {
+    handleSubmitGuess(tentativeGuess, guesses, answer, {
+      setGuesses,
+      setTentativeGuess,
+      setInvalidWord,
+      setHint,
+      setGameStatus,
+    });
   }, [tentativeGuess, guesses, answer]);
 
-  const handleKeyPress = useCallback(
+  const handleKeyPressCallback = useCallback(
     (key: string) => {
-      if (gameStatus !== "running") return;
-
-      if (key === "ENTER") {
-        handleSubmitGuess();
-      } else if (key === "BACKSPACE") {
-        setTentativeGuess((prev) => prev.slice(0, -1));
-      } else if (tentativeGuess.length < 5) {
-        setTentativeGuess((prev) => prev + key);
-      }
+      handleKeyPress(key, gameStatus, tentativeGuess, {
+        setTentativeGuess,
+        handleSubmitGuess: handleSubmitGuessCallback,
+      });
     },
-    [gameStatus, tentativeGuess, handleSubmitGuess]
+    [gameStatus, tentativeGuess, handleSubmitGuessCallback]
   );
 
   // TODO: Remove before production - development only
@@ -165,8 +91,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         category,
         originalCategory,
         answer,
-        handleKeyPress,
-        handleSubmitGuess,
+        handleKeyPress: handleKeyPressCallback,
+        handleSubmitGuess: handleSubmitGuessCallback,
         // TODO: Remove before production - development only
         resetGame,
       }}

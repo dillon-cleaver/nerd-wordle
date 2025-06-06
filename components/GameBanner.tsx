@@ -13,7 +13,11 @@ type GameBannerProps = {
   answer?: string;
 };
 
-export const GameBanner = ({ gameStatus, numGuesses, answer }: GameBannerProps) => {
+export const GameBanner = ({
+  gameStatus,
+  numGuesses,
+  answer,
+}: GameBannerProps) => {
   if (gameStatus === "running") return null;
 
   return (
