@@ -17,6 +17,10 @@ const convertCategory = (word: WordCategory) => {
       return "Tech and Internet Culture";
     case "videoGames":
       return "Video Games";
+    case "superheroes":
+      return "Superheroes";
+    case "common":
+      break;
   }
 };
 

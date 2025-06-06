@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, ActivityIndicator } from "react-native";
 import { WORDS, Word } from "../constants/words";
 import { NUMBER_OF_GUESSES } from "../constants/numbers";
 import { GuessGrid } from "./GuessGrid";
@@ -10,17 +10,18 @@ import { colors, fontSize, fontFamily, spacing } from "../constants/styles";
 import { initializeGame } from "@/utils/game";
 import { useDevice } from "../hooks/useDevice";
 import { usePlatform } from "@/hooks/usePlatform";
+import { useUser } from "@/hooks/useUser";
 
 type GameProps = {};
 
 export const Game = ({}: GameProps) => {
+  const { loading } = useUser();
   const [{ category, answer, originalCategory }] = useState(initializeGame);
   const { isDesktop } = useDevice();
   const { isIOS } = usePlatform();
 
-  console.log(category);
-
   useEffect(() => {
+    // TODO: Remove before launch
     console.info({ answer, category });
   }, [answer, category]);
 
@@ -118,6 +119,14 @@ export const Game = ({}: GameProps) => {
     isIOS && styles.container,
     isDesktop && styles.desktopContainer,
   ];
+
+  if (loading) {
+    return (
+      <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
+        <ActivityIndicator size={"large"} />
+      </View>
+    );
+  }
 
   return (
     <BaseSafeAreaView
