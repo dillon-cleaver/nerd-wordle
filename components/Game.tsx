@@ -1,8 +1,7 @@
 import { useContext, useEffect } from "react";
 import { View, StyleSheet, Text, ActivityIndicator } from "react-native";
-import { NUMBER_OF_GUESSES } from "../constants/numbers";
-import { GuessGrid } from "./GuessGrid";
 import { GameBanner } from "./GameBanner";
+import { GuessGrid } from "./GuessGrid";
 import { Keyboard } from "./Keyboard";
 import { BaseSafeAreaView } from "./base/BaseSafeAreaView";
 import { colors, fontSize, fontFamily, spacing } from "../constants/styles";
@@ -17,17 +16,7 @@ export const Game = ({}: GameProps) => {
   const { loading } = useUser();
   const { isDesktop } = useDevice();
   const { isIOS } = usePlatform();
-  const {
-    gameStatus,
-    guesses,
-    tentativeGuess,
-    invalidWord,
-    hint,
-    category,
-    originalCategory,
-    answer,
-    handleKeyPress,
-  } = useContext(GameContext);
+  const { gameStatus, guesses, category, answer } = useContext(GameContext);
 
   useEffect(() => {
     console.info({ answer, category });
@@ -66,22 +55,9 @@ export const Game = ({}: GameProps) => {
       )}
       <View style={styles.gridAndKeyboardContainer}>
         <View style={styles.gridContainer}>
-          <GuessGrid
-            guesses={guesses}
-            answer={answer}
-            numGuesses={NUMBER_OF_GUESSES}
-            tentativeGuess={tentativeGuess}
-            invalidWord={invalidWord}
-            hint={hint}
-            category={originalCategory}
-          />
+          <GuessGrid />
         </View>
-        <Keyboard
-          guesses={guesses}
-          answer={answer}
-          onKeyPress={handleKeyPress}
-          category={originalCategory}
-        />
+        <Keyboard />
       </View>
     </BaseSafeAreaView>
   );

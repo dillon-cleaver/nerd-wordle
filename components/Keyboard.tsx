@@ -6,6 +6,8 @@ import {
   spacing,
 } from "@/constants/styles";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { useContext } from "react";
+import { GameContext } from "@/context/GameContext";
 
 const KEY_HEIGHT = 50;
 const KEY_MIN_WIDTH = 32;
@@ -16,29 +18,21 @@ const KEYBOARD_ROWS = [
   ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
   ["ENTER", "Z", "X", "C", "V", "B", "N", "M", "BACKSPACE"],
 ];
-type KeyboardProps = {
-  guesses: string[];
-  answer: string;
-  onKeyPress: (key: string) => void;
-  category: string;
-};
 
-export const Keyboard = ({
-  guesses,
-  answer,
-  onKeyPress,
-  category,
-}: KeyboardProps) => {
+export const Keyboard = () => {
+  const { guesses, answer, handleKeyPress, originalCategory } =
+    useContext(GameContext);
+
   const tileBackgroundColor =
-    category === "videoGames"
+    originalCategory === "videoGames"
       ? colors.categories.videoGames
-      : category === "science"
+      : originalCategory === "science"
       ? colors.categories.science
-      : category === "fantasyAndSciFi"
+      : originalCategory === "fantasyAndSciFi"
       ? colors.categories.fantasyAndSciFi
-      : category === "animeAndManga"
+      : originalCategory === "animeAndManga"
       ? colors.categories.animeAndManga
-      : category === "tabletopAndBoardGames"
+      : originalCategory === "tabletopAndBoardGames"
       ? colors.categories.tabletopAndBoardGames
       : colors.categories.techAndInternetCulture;
 
@@ -79,7 +73,7 @@ export const Keyboard = ({
                   status === "present" && styles.presentKey,
                   status === "absent" && styles.absentKey,
                 ]}
-                onPress={() => onKeyPress(key)}
+                onPress={() => handleKeyPress(key)}
               >
                 <Text style={styles.keyText}>
                   {key === "BACKSPACE" ? "DEL" : key}

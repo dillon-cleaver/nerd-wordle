@@ -1,31 +1,20 @@
 import { range } from "../utils/range";
 import GuessRow from "./GuessRow";
-import { Word } from "@/constants/words";
+import { useContext } from "react";
+import { GameContext } from "@/context/GameContext";
+import { NUMBER_OF_GUESSES } from "@/constants/numbers";
 
-type GuessGridProps = {
-  guesses: Word[];
-  answer: Word;
-  numGuesses: number;
-  tentativeGuess: string;
-  invalidWord: boolean;
-  hint?: {
-    row: number;
-    col: number;
-    letter: string;
-  };
-  category: string;
-};
+export const GuessGrid = () => {
+  const {
+    guesses,
+    answer,
+    tentativeGuess,
+    invalidWord,
+    hint,
+    originalCategory,
+  } = useContext(GameContext);
 
-export const GuessGrid = ({
-  guesses,
-  answer,
-  numGuesses,
-  tentativeGuess,
-  invalidWord,
-  hint,
-  category,
-}: GuessGridProps) => {
-  return range(0, numGuesses).map((rowIndex) => {
+  return range(0, NUMBER_OF_GUESSES).map((rowIndex) => {
     const currentGuess =
       rowIndex === guesses.length ? tentativeGuess : guesses[rowIndex] || "";
     const isCurrentGuess = rowIndex === guesses.length;
@@ -43,7 +32,7 @@ export const GuessGrid = ({
         isCurrentGuess={isCurrentGuess}
         invalidWord={invalidWord && isCurrentGuess}
         hint={hintForThisRow}
-        category={category}
+        category={originalCategory}
       />
     );
   });
