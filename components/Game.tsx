@@ -9,6 +9,7 @@ import { useDevice } from "../hooks/useDevice";
 import { usePlatform } from "@/hooks/usePlatform";
 import { useUser } from "@/hooks/useUser";
 import { GameContext } from "@/context/GameContext";
+import { WordCard } from "./WordCard";
 
 type GameProps = {};
 
@@ -40,24 +41,25 @@ export const Game = ({}: GameProps) => {
       addStyles={containerStyle}
       edges={["bottom", "left", "right"]}
     >
-      {gameStatus === "running" ? (
-        <View style={styles.categoryTextContainer}>
-          <Text style={styles.categoryText}>{category}</Text>
-        </View>
-      ) : (
-        <View style={styles.categoryTextContainer}>
+      <View style={{ flex: 1, gap: 32, paddingHorizontal: 16 }}>
+        {gameStatus === "running" ? (
+          <>
+            {/* <Text style={styles.categoryText}>{category}</Text> */}
+            <WordCard />
+          </>
+        ) : (
           <GameBanner
             gameStatus={gameStatus}
             numGuesses={guesses.length}
             answer={answer}
           />
+        )}
+        <View style={styles.gridAndKeyboardContainer}>
+          <View style={styles.gridContainer}>
+            <GuessGrid />
+          </View>
+          <Keyboard />
         </View>
-      )}
-      <View style={styles.gridAndKeyboardContainer}>
-        <View style={styles.gridContainer}>
-          <GuessGrid />
-        </View>
-        <Keyboard />
       </View>
     </BaseSafeAreaView>
   );
@@ -71,12 +73,6 @@ const styles = StyleSheet.create({
     maxWidth: 600,
     alignSelf: "center",
   },
-  categoryTextContainer: {
-    minHeight: 100,
-    maxHeight: 400,
-    justifyContent: "center",
-    paddingLeft: spacing.md,
-  },
   gridContainer: {
     alignItems: "center",
   },
@@ -85,10 +81,5 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     gap: 64,
     paddingBottom: spacing.lg,
-  },
-  categoryText: {
-    color: colors.neutral.white,
-    fontSize: fontSize.title.large,
-    fontFamily: fontFamily.bitter.bold,
   },
 });
