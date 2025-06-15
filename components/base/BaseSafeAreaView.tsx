@@ -7,6 +7,8 @@ import {
 } from "react-native-safe-area-context";
 import { spacing } from "@/constants/styles";
 
+const BASE_MAX_WIDTH = 600;
+
 type PageTemplateProps = SafeAreaViewProps & {
   children: ReactNode;
   edges?: Edge[];
@@ -19,11 +21,14 @@ export const BaseSafeAreaView = ({
   addStyles,
   ...rest
 }: PageTemplateProps) => {
-  const style = addStyles ? addStyles : null;
-
   return (
-    <SafeAreaView {...rest} edges={edges} style={[styles.container, style]}>
-      <ScrollView showsVerticalScrollIndicator={false}>{children}</ScrollView>
+    <SafeAreaView {...rest} edges={edges} style={[styles.container, addStyles]}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {children}
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -31,5 +36,11 @@ export const BaseSafeAreaView = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  scrollContent: {
+    maxWidth: BASE_MAX_WIDTH,
+    width: "100%",
+    alignSelf: "center",
+    paddingHorizontal: spacing.md,
   },
 });

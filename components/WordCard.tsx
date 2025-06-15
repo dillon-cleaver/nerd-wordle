@@ -17,6 +17,7 @@ type WordCardProps = {};
 
 export const WordCard = ({ ...rest }: WordCardProps) => {
   const { category } = useContext(GameContext);
+
   return (
     <Card addStyles={styles.container}>
       <Card

@@ -1,18 +1,18 @@
-import { View, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { colors } from "../constants/styles";
 import { Game } from "@/components/Game";
+import { BaseSafeAreaView } from "@/components/base/BaseSafeAreaView";
 
 export default function Index() {
   return (
-    <View style={styles.container}>
+    <BaseSafeAreaView addStyles={styles.container}>
       <Game />
-    </View>
+    </BaseSafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: colors.neutral.background,
   },
 });
