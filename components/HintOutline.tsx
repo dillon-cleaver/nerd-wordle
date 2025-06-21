@@ -1,80 +1,38 @@
-import Svg, { Rect } from "react-native-svg";
-import Animated, {
-  useSharedValue,
-  useAnimatedProps,
-  withTiming,
-  withRepeat,
-  Easing,
-} from "react-native-reanimated";
 import { borderRadius } from "@/constants/styles";
 import { useEffect } from "react";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from "react-native-reanimated";
 
-export type HintOutlineProps = {
-  size: number;
+type HintOutlineProps = {
   color: string;
-  strokeWidth: number;
-  duration: number;
 };
 
-const AnimatedRect = Animated.createAnimatedComponent(Rect);
-
-export const HintOutline = ({
-  size,
-  color,
-  strokeWidth,
-  duration,
-}: HintOutlineProps) => {
-  const progress = useSharedValue(0);
-  const r = borderRadius.md;
-  const P = strokeWidth / 2;
-
-  const dashLength = strokeWidth * 2;
-  const gapLength = strokeWidth * 2;
-  const dashCycle = dashLength + gapLength;
+export const HintOutline = ({ color }: HintOutlineProps) => {
+  const strokeWidth = 4;
+  const duration = 900;
+  const animatedScale = useSharedValue(1);
 
   useEffect(() => {
-    progress.value = withRepeat(
-      withTiming(dashCycle, { duration, easing: Easing.linear }),
-      -1,
-      false
-    );
-  }, []);
+    animatedScale.value = withRepeat(withTiming(1.05, { duration }), -1, true);
+  }, [animatedScale, duration]);
 
-  const animatedProps = useAnimatedProps(() => ({
-    strokeDashoffset: -progress.value,
-  }));
+  const outlineStyle = useAnimatedStyle(() => {
+    return {
+      position: "absolute",
+      top: -1,
+      left: -1,
+      right: -1,
+      bottom: -1,
+      transform: [{ scale: animatedScale.value }],
+      borderColor: color,
+      borderWidth: strokeWidth,
+      borderRadius: borderRadius.md,
+    };
+  });
 
-  return (
-    <Svg
-      width={size + P * 2}
-      height={size + P * 2}
-      style={{ position: "absolute", top: -P, left: -P }}
-    >
-      <Rect
-        x={P}
-        y={P}
-        width={size}
-        height={size}
-        rx={r}
-        stroke={color}
-        strokeWidth={strokeWidth}
-        fill="none"
-        strokeOpacity={0.3}
-      />
-      <AnimatedRect
-        x={P}
-        y={P}
-        width={size}
-        height={size}
-        rx={r}
-        stroke={color}
-        strokeWidth={strokeWidth}
-        fill="none"
-        strokeDasharray={[dashLength, gapLength]}
-        animatedProps={animatedProps}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </Svg>
-  );
+  return <Animated.View style={outlineStyle} />;
 };

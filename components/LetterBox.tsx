@@ -2,8 +2,6 @@ import { View, StyleSheet, Text, StyleProp, ViewStyle } from "react-native";
 import { borderRadius, colors, fontSize } from "@/constants/styles";
 import { HintOutline } from "./HintOutline";
 
-const LETTERBOX_WIDTH_HEIGHT = 56;
-
 export type LetterBoxProps = {
   letter: string;
   isCorrect: boolean;
@@ -25,7 +23,7 @@ const LetterBox = ({
   hintLetter = "",
   category,
 }: LetterBoxProps) => {
-  const cellStyles: StyleProp<ViewStyle> = [styles.wrapper];
+  const cellStyles: StyleProp<ViewStyle> = [styles.container];
 
   const tileBackgroundColor =
     category === "videoGames"
@@ -59,12 +57,7 @@ const LetterBox = ({
       <Text style={styles.letter}>{letter}</Text>
       {showHint && (
         <>
-          <HintOutline
-            size={LETTERBOX_WIDTH_HEIGHT}
-            color={tileBackgroundColor}
-            strokeWidth={3}
-            duration={900}
-          />
+          <HintOutline color={tileBackgroundColor} />
           <View style={styles.previewLetterWrapper}>
             <Text style={styles.previewLetter}>{hintLetter.toUpperCase()}</Text>
           </View>
@@ -77,9 +70,9 @@ const LetterBox = ({
 export default LetterBox;
 
 const styles = StyleSheet.create({
-  wrapper: {
-    width: LETTERBOX_WIDTH_HEIGHT,
-    height: LETTERBOX_WIDTH_HEIGHT,
+  container: {
+    flexGrow: 1,
+    aspectRatio: 1,
     borderWidth: 1,
     borderColor: colors.neutral.lightGray,
     justifyContent: "center",
