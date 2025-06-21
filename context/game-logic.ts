@@ -32,10 +32,7 @@ export const handleSubmitGuess = (
     .filter(Boolean);
 
   let nextHint: Hint = undefined;
-  if (
-    tentativeGuess !== answer &&
-    (guesses.length === 2 || guesses.length === 3)
-  ) {
+  if (tentativeGuess !== answer && guesses.length >= 3) {
     for (let i = 0; i < 5; i++) {
       const letter = tentativeGuess[i];
       const isMisplaced =
