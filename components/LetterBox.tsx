@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.neutral.lightGray,
     justifyContent: "center",
+    backgroundColor: colors.tiles.default,
     alignItems: "center",
     borderRadius: borderRadius.md,
     position: "relative",

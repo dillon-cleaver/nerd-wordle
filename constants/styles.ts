@@ -8,6 +8,8 @@ const colors = {
     techAndInternetCulture: "#708090",
   },
   tiles: {
+    // TODO: Revisit this default color
+    default: "#242730",
     wrongPlace: "#DAA520",
   },
   neutral: {
