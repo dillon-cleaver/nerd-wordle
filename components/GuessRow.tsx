@@ -60,8 +60,11 @@ export default GuessRow;
 const styles = StyleSheet.create({
   guessRow: {
     flexDirection: "row",
+    paddingVertical: spacing.xs,
+    gap: spacing.sm,
+    justifyContent: "space-between",
   },
   letterBox: {
-    padding: spacing.xs,
+    flex: 1,
   },
 });
