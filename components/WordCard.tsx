@@ -6,12 +6,13 @@ import {
   fontFamily,
   fontSize,
   lineHeight,
-  spacing,
 } from "@/constants/styles";
 import { useContext } from "react";
 import { GameContext } from "@/context/GameContext";
-
-const CARD_HEIGHT = 120;
+import {
+  WORD_CARD_GUESS_GRID_MAX_WIDTH,
+  WORD_CARD_GUESS_GRID_MIN_WIDTH,
+} from "@/constants/dimensions";
 
 type WordCardProps = {};
 
@@ -20,13 +21,7 @@ export const WordCard = ({ ...rest }: WordCardProps) => {
 
   return (
     <Card addStyles={styles.container}>
-      <Card
-        addStyles={{
-          borderRadius: borderRadius.sm,
-          flex: 1,
-          backgroundColor: colors.categories.science,
-        }}
-      >
+      <Card addStyles={styles.content}>
         <Text style={styles.categoryText}>{category}</Text>
       </Card>
     </Card>
@@ -35,10 +30,16 @@ export const WordCard = ({ ...rest }: WordCardProps) => {
 
 const styles = StyleSheet.create({
   container: {
+    minWidth: WORD_CARD_GUESS_GRID_MIN_WIDTH,
+    maxWidth: WORD_CARD_GUESS_GRID_MAX_WIDTH,
     width: "100%",
-    height: CARD_HEIGHT,
     borderWidth: 2,
     borderColor: colors.neutral.white,
+  },
+  content: {
+    borderRadius: borderRadius.sm,
+    flex: 1,
+    backgroundColor: colors.categories.science,
   },
   categoryText: {
     color: colors.neutral.white,

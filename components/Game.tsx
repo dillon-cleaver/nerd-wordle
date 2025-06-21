@@ -1,12 +1,12 @@
 import { useContext, useEffect } from "react";
-import { View, ActivityIndicator } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { GameBanner } from "./GameBanner";
 import { GuessGrid } from "./GuessGrid";
 import { Keyboard } from "./Keyboard";
 import { BaseSafeAreaView } from "./base/BaseSafeAreaView";
-import { useUser } from "@/hooks/useUser";
 import { GameContext } from "@/context/GameContext";
 import { WordCard } from "./WordCard";
+import { spacing } from "@/constants/styles";
 
 type GameProps = {};
 
@@ -18,27 +18,34 @@ export const Game = ({}: GameProps) => {
   }, []);
 
   return (
-    <BaseSafeAreaView edges={[]}>
-      <View
-        style={{
-          backgroundColor: "purple",
-        }}
-      >
-        {gameStatus === "running" ? (
-          <>
-            {/* <Text style={styles.categoryText}>{category}</Text> */}
-            <WordCard />
-          </>
-        ) : (
-          <GameBanner
-            gameStatus={gameStatus}
-            numGuesses={guesses.length}
-            answer={answer}
-          />
-        )}
-        <GuessGrid />
+    <BaseSafeAreaView>
+      <View style={styles.wrapper}>
+        <View style={styles.container}>
+          {gameStatus === "running" ? (
+            <>
+              <WordCard />
+            </>
+          ) : (
+            <GameBanner
+              gameStatus={gameStatus}
+              numGuesses={guesses.length}
+              answer={answer}
+            />
+          )}
+          <GuessGrid />
+        </View>
         <Keyboard />
       </View>
     </BaseSafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  wrapper: {
+    gap: spacing.xl,
+  },
+  container: {
+    alignItems: "center",
+    gap: spacing.xl,
+  },
+});
