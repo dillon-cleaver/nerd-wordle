@@ -9,9 +9,13 @@ import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { useContext } from "react";
 import { GameContext } from "@/context/GameContext";
 
+// TODO: Clean up this code: make it more modular, etc.
+
 const KEY_HEIGHT = 50;
-const KEY_MIN_WIDTH = 32;
-const WIDE_KEY_MIN_WIDTH = 52;
+const KEY_MIN_WIDTH = 28;
+const KEY_MAX_WIDTH = 32;
+const WIDE_KEY_MIN_WIDTH = 56;
+const WIDE_KEY_MAX_WIDTH = 64;
 
 const KEYBOARD_ROWS = [
   ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
@@ -89,6 +93,7 @@ export const Keyboard = () => {
 
 const styles = StyleSheet.create({
   container: {
+    width: "100%",
     gap: spacing.sm,
   },
   keyboardRow: {
@@ -97,16 +102,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   key: {
+    // TODO: Make a base key component --->
     backgroundColor: colors.neutral.lightGray,
     borderRadius: borderRadius.sm,
-    padding: spacing.sm,
-    minWidth: KEY_MIN_WIDTH,
+    flex: 1,
     height: KEY_HEIGHT,
     justifyContent: "center",
     alignItems: "center",
+    // ^^ include these props in that base
+    minWidth: KEY_MIN_WIDTH,
+    maxWidth: KEY_MAX_WIDTH,
   },
   wideKey: {
     minWidth: WIDE_KEY_MIN_WIDTH,
+    maxWidth: WIDE_KEY_MAX_WIDTH,
   },
   keyText: {
     fontSize: fontSize.body.base,
