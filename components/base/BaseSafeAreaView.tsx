@@ -5,7 +5,6 @@ import {
   SafeAreaViewProps,
   Edge,
 } from "react-native-safe-area-context";
-import { spacing } from "@/constants/styles";
 
 const BASE_MAX_WIDTH = 600;
 
@@ -41,6 +40,5 @@ const styles = StyleSheet.create({
     maxWidth: BASE_MAX_WIDTH,
     width: "100%",
     alignSelf: "center",
-    paddingHorizontal: spacing.md,
   },
 });
