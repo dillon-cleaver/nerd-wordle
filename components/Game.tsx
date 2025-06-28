@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: "center",
-    gap: spacing.xl,
+    gap: spacing.lg,
   },
   keyboard: {
     alignItems: "center",

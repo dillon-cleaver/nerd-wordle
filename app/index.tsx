@@ -16,7 +16,8 @@ export default function Index() {
   }
 
   return (
-    <BaseSafeAreaView addStyles={styles.container}>
+    // TODO: Look into how edges is actually supposed to work. I think my implementation could be improved.
+    <BaseSafeAreaView addStyles={styles.container} edges={[]}>
       <Game />
     </BaseSafeAreaView>
   );
