@@ -33,8 +33,10 @@ export const Game = ({}: GameProps) => {
             />
           )}
           <GuessGrid />
+          <View style={styles.keyboard}>
+            <Keyboard />
+          </View>
         </View>
-        <Keyboard />
       </View>
     </BaseSafeAreaView>
   );
@@ -42,10 +44,14 @@ export const Game = ({}: GameProps) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    gap: spacing.xl,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.sm,
   },
   container: {
     alignItems: "center",
     gap: spacing.xl,
+  },
+  keyboard: {
+    alignItems: "center",
   },
 });
