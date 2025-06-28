@@ -3,7 +3,6 @@ import { View, StyleSheet } from "react-native";
 import { GameBanner } from "./GameBanner";
 import { GuessGrid } from "./GuessGrid";
 import { Keyboard } from "./Keyboard";
-import { BaseSafeAreaView } from "./base/BaseSafeAreaView";
 import { GameContext } from "@/context/GameContext";
 import { WordCard } from "./WordCard";
 import { spacing } from "@/constants/styles";
@@ -18,27 +17,25 @@ export const Game = ({}: GameProps) => {
   }, []);
 
   return (
-    <BaseSafeAreaView>
-      <View style={styles.wrapper}>
-        <View style={styles.container}>
-          {gameStatus === "running" ? (
-            <>
-              <WordCard />
-            </>
-          ) : (
-            <GameBanner
-              gameStatus={gameStatus}
-              numGuesses={guesses.length}
-              answer={answer}
-            />
-          )}
-          <GuessGrid />
-          <View style={styles.keyboard}>
-            <Keyboard />
-          </View>
+    <View style={styles.wrapper}>
+      <View style={styles.container}>
+        {gameStatus === "running" ? (
+          <>
+            <WordCard />
+          </>
+        ) : (
+          <GameBanner
+            gameStatus={gameStatus}
+            numGuesses={guesses.length}
+            answer={answer}
+          />
+        )}
+        <GuessGrid />
+        <View style={styles.keyboard}>
+          <Keyboard />
         </View>
       </View>
-    </BaseSafeAreaView>
+    </View>
   );
 };
 
@@ -53,5 +50,6 @@ const styles = StyleSheet.create({
   },
   keyboard: {
     alignItems: "center",
+    width: "100%",
   },
 });
