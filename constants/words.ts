@@ -105,6 +105,7 @@ const WORDS = {
     "PLAIN",
     "HOIST",
     "PLATE",
+    "NOISE",
   ],
 
   fantasyAndSciFi: [
