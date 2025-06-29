@@ -6,49 +6,29 @@ import { Keyboard } from "./Keyboard";
 import { GameContext } from "@/context/GameContext";
 import { WordCard } from "./WordCard";
 import { spacing } from "@/constants/styles";
+import { BannerCard } from "./BannerCard";
 
-type GameProps = {};
-
-export const Game = ({}: GameProps) => {
-  const { gameStatus, guesses, category, answer } = useContext(GameContext);
+export const Game = () => {
+  const { category, answer } = useContext(GameContext);
 
   useEffect(() => {
     console.info({ answer, category });
   }, []);
 
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.container}>
-        {gameStatus === "running" ? (
-          <>
-            <WordCard />
-          </>
-        ) : (
-          <GameBanner
-            gameStatus={gameStatus}
-            numGuesses={guesses.length}
-            answer={answer}
-          />
-        )}
-        <GuessGrid />
-        <View style={styles.keyboard}>
-          <Keyboard />
-        </View>
-      </View>
+    <View style={styles.container}>
+      <BannerCard />
+      <GuessGrid />
+      <Keyboard />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  wrapper: {
+  container: {
     paddingVertical: spacing.md,
     paddingHorizontal: spacing.sm,
-  },
-  container: {
-    alignItems: "center",
-    gap: spacing.lg,
-  },
-  keyboard: {
+    gap: spacing.xl,
     alignItems: "center",
     width: "100%",
   },
