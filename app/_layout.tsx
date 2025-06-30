@@ -125,6 +125,22 @@ export default function RootLayout() {
               }}
             />
             <Drawer.Screen
+              name="words"
+              options={{
+                title: "Word Collection",
+                drawerLabel: "Word Collection",
+                drawerLabelStyle: {
+                  fontFamily: fontFamily.bitter.bold,
+                  fontSize: fontSize.title.large,
+                  lineHeight: lineHeight.title.large,
+                },
+                drawerItemStyle: { borderRadius: borderRadius.md },
+                drawerIcon: ({ color }: { color: string }) => (
+                  <FontAwesome name="lightbulb-o" size={24} color={color} />
+                ),
+              }}
+            />
+            {/* <Drawer.Screen
               name="friends"
               options={{
                 title: "Friends",
@@ -139,7 +155,7 @@ export default function RootLayout() {
                   <FontAwesome name="users" size={24} color={color} />
                 ),
               }}
-            />
+            /> */}
           </Drawer>
           <StatusBar networkActivityIndicatorVisible={true} style="light" />
         </GestureHandlerRootView>
