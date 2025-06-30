@@ -72,7 +72,7 @@ export default function RootLayout() {
                   justifyContent: "space-between",
                 }}
               >
-                <View>
+                <View style={{ gap: spacing.sm }}>
                   <DrawerItemList {...props} />
                 </View>
                 <View style={{ paddingVertical: spacing.sm }}>
