@@ -14,9 +14,7 @@ import {
   WORD_CARD_GUESS_GRID_MIN_WIDTH,
 } from "@/constants/dimensions";
 
-type WordCardProps = {};
-
-export const WordCard = ({ ...rest }: WordCardProps) => {
+export const WordCard = () => {
   const { category } = useContext(GameContext);
 
   return (

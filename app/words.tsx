@@ -1,17 +1,23 @@
-import { View, StyleSheet, Text } from "react-native";
+import { BaseSafeAreaView } from "@/components/base/BaseSafeAreaView";
+import { WordCard } from "@/components/WordCard";
+import { colors } from "@/constants/styles";
+import { StyleSheet, View } from "react-native";
 
 export default function Words() {
   return (
-    <View style={styles.container}>
-      <Text>Word Cards Go Here</Text>
-    </View>
+    <BaseSafeAreaView addStyles={styles.container} edges={[]}>
+      <View style={styles.content}>
+        <WordCard />
+      </View>
+    </BaseSafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
+    backgroundColor: colors.neutral.background,
+  },
+  content: {
     alignItems: "center",
   },
 });
