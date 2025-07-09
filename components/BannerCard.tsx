@@ -1,13 +1,26 @@
 import { useContext } from "react";
 import { GameContext } from "@/context/GameContext";
-import { WordCard } from "./WordCard";
 import { GameBanner } from "./GameBanner";
+import { View, Text, StyleSheet } from "react-native";
+import {
+  colors,
+  fontFamily,
+  fontSize,
+  lineHeight,
+  spacing,
+} from "@/constants/styles";
 
 export const BannerCard = () => {
-  const { gameStatus, guesses, answer } = useContext(GameContext);
+  const { gameStatus, guesses, answer, category } = useContext(GameContext);
 
+  // TODO: Make the hints dynamic
   return gameStatus === "running" ? (
-    <WordCard />
+    <View style={styles.content}>
+      <Text style={styles.category}>{category}</Text>
+      <Text style={styles.hint}>
+        Even Heisenberg couldn’t pin this one down exactly.
+      </Text>
+    </View>
   ) : (
     <GameBanner
       gameStatus={gameStatus}
@@ -16,3 +29,22 @@ export const BannerCard = () => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  content: {
+    paddingHorizontal: spacing.md,
+    gap: spacing.xs,
+  },
+  category: {
+    fontFamily: fontFamily.bitter.bold,
+    fontSize: fontSize.title.large,
+    lineHeight: lineHeight.title.large,
+    color: colors.neutral.white,
+  },
+  hint: {
+    fontFamily: fontFamily.bitter.regular,
+    fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
+    color: colors.neutral.white,
+  },
+});

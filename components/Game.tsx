@@ -1,10 +1,8 @@
 import { useContext, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
-import { GameBanner } from "./GameBanner";
 import { GuessGrid } from "./GuessGrid";
 import { Keyboard } from "./Keyboard";
 import { GameContext } from "@/context/GameContext";
-import { WordCard } from "./WordCard";
 import { spacing } from "@/constants/styles";
 import { BannerCard } from "./BannerCard";
 
@@ -17,8 +15,10 @@ export const Game = () => {
 
   return (
     <View style={styles.container}>
-      <BannerCard />
-      <GuessGrid />
+      <View style={styles.content}>
+        <BannerCard />
+        <GuessGrid />
+      </View>
       <Keyboard />
     </View>
   );
@@ -31,5 +31,9 @@ const styles = StyleSheet.create({
     gap: spacing.xl,
     alignItems: "center",
     width: "100%",
+  },
+  content: {
+    gap: spacing.xl,
+    alignItems: "center",
   },
 });
