@@ -1,4 +1,4 @@
-import { WordCategory, WORDS } from "@/constants/words";
+import { WordCategory, WORDS, HINTS } from "@/constants/words";
 import { sample } from "./sample";
 import { colors } from "@/constants/styles";
 
@@ -28,6 +28,46 @@ const convertCategory = (word: WordCategory): string => {
       return "Fantasy and Sci-Fi";
   }
   return "Fantasy and Sci-Fi";
+};
+
+const getDefaultHint = (category: WordCategory): string => {
+  switch (category) {
+    case "animeAndManga":
+      return "Kawaii! This one's straight from Japan.";
+    case "fantasyAndSciFi":
+      return "A word from the realms of imagination and future.";
+    case "science":
+      return "A scientific term that's fundamental to understanding.";
+    case "tabletopAndBoardGames":
+      return "Roll the dice and hope for the best!";
+    case "techAndInternetCulture":
+      return "Tech-savvy and internet-culture approved.";
+    case "videoGames":
+      return "Press start and begin your quest!";
+    case "superheroes":
+      return "With great power comes great responsibility.";
+    case "movies":
+      return "Lights, camera, action!";
+    case "literature":
+      return "A word that tells a story.";
+    case "common":
+    default:
+      return "A common word that's anything but ordinary.";
+  }
+};
+
+export const getHintForWord = (
+  word: string,
+  category: WordCategory
+): string => {
+  // Check if there's a specific hint for this word
+  const specificHint = HINTS[word];
+  if (specificHint) {
+    return specificHint;
+  }
+
+  // Fall back to a default hint based on category
+  return getDefaultHint(category);
 };
 
 export const getCategoryColor = (category: string): string => {

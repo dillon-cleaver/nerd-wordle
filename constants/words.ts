@@ -89,7 +89,6 @@ const WORDS = {
     "CREST",
     "TROPE",
     "NACRE",
-    "LASER",
     "CLINT",
     "TILES",
     "SATIN",
@@ -117,7 +116,6 @@ const WORDS = {
     "GENRE",
     "MOVIE",
     "CAMEO",
-    "STARS",
     "SHORT",
   ],
 
@@ -137,7 +135,6 @@ const WORDS = {
     "QUEST",
     "ELVES",
     "SPOCK",
-    "LASER",
     "CYBER",
     "DWARF",
     "FORCE",
@@ -205,7 +202,6 @@ const WORDS = {
     "BYTES",
     "CODER",
     "CLOUD",
-    "GLOWS",
     "TESLA",
     "CACHE",
     "PINGS",
@@ -229,7 +225,118 @@ const WORDS = {
   ],
 } as const;
 
+// Hints for specific words
+const HINTS: Record<string, string> = {
+  // Science
+  ATOMS: "Even Heisenberg couldn't pin this one down exactly.",
+  QUARK: "A fundamental particle that's always strange.",
+  CELLS: "The building blocks of life, not your phone.",
+  GENES: "What makes you, you - it's in your DNA.",
+  ORBIT: "Going in circles around something bigger.",
+  GAMMA: "The most energetic form of electromagnetic radiation.",
+  HYDRO: "The H in H2O - hydrogen's time to shine.",
+  OXIDE: "When oxygen bonds with another element.",
+  FLORA: "All the plants in a particular area.",
+  ASTRO: "Relating to stars and space exploration.",
+  MICRO: "Tiny, microscopic, or very small scale.",
+  STARS: "Twinkle, twinkle, little... wait, that's not right.",
+  POLAR: "Opposite ends, like North and South poles.",
+  DATUM: "A single piece of information or data point.",
+
+  // Movies
+  PIXAR: "Animation magic that brings toys to life.",
+  ACTOR: "Someone who pretends to be someone else for a living.",
+  SCENE: "A part of a movie or play with its own setting.",
+  SCORE: "The background music that sets the mood.",
+  THEME: "The main idea or message of a story.",
+  GENRE: "A category of artistic composition.",
+  MOVIE: "Motion pictures that tell stories on screen.",
+  CAMEO: "A brief appearance by a famous person.",
+  SHORT: "A film that's not quite feature length.",
+
+  // Literature
+  NOVEL: "A long fictional story in book form.",
+  POETS: "Writers who craft verses and rhymes.",
+  STORY: "A narrative that entertains or teaches.",
+  PROSE: "Written language in its ordinary form.",
+  FABLE: "A short story with a moral lesson.",
+  VERSE: "Poetry or metrical writing.",
+  EDGAR: "Allan Poe, master of mystery and horror.",
+  HOMER: "Ancient Greek poet of the Odyssey.",
+
+  // Fantasy and Sci-Fi
+  MAGIC: "Abracadabra! The art of the impossible.",
+  QUEST: "A journey to find something important.",
+  ELVES: "Pointy-eared magical beings from folklore.",
+  SPOCK: "Live long and prosper with this logical choice.",
+  CYBER: "Relating to computers and digital technology.",
+  DWARF: "Short, stout beings who love mining and crafting.",
+  FORCE: "May this be with you, young padawan.",
+
+  // Video Games
+  MARIO: "It's-a me! This plumber's always jumping.",
+  SONIC: "Gotta go fast! The blue hedgehog's speed.",
+  RUPEE: "The currency of Hyrule's green gems.",
+  BOSSY: "Like a difficult boss fight in a game.",
+  LEVEL: "A stage or area in a video game.",
+  PIXEL: "The tiny squares that make up digital images.",
+  ZELDA: "The princess, not the hero - though both are legendary.",
+  COMBO: "A sequence of moves that work together.",
+
+  // Anime and Manga
+  MANGA: "Japanese comic books and graphic novels.",
+  OTAKU: "A person with obsessive interests, especially anime.",
+  SENPU: "A whirlwind or tornado in Japanese.",
+  MECHA: "Giant robots piloted by humans.",
+  HELLS: "Multiple underworlds or demonic realms.",
+  JUTSU: "Ninja techniques and special abilities.",
+  KAWAI: "Cute and adorable in Japanese culture.",
+  CHIBI: "Small, cute versions of characters.",
+  GENKI: "Energetic and full of life in Japanese.",
+  SAKUR: "Cherry blossoms, a symbol of spring.",
+  NINJA: "Stealthy warriors with special skills.",
+  SAMUR: "Honorable Japanese warriors with swords.",
+  SHONN: "A genre of anime aimed at young boys.",
+  YOKAI: "Supernatural creatures from Japanese folklore.",
+
+  // Tabletop and Board Games
+  DICEY: "Risky or uncertain, like rolling dice.",
+  CHESS: "The game of kings, queens, and strategic thinking.",
+  TOKEN: "A small piece representing something in a game.",
+  HEXES: "Six-sided spaces on a game board.",
+  DECKS: "Collections of cards for playing games.",
+  CHECK: "A threat to capture the king in chess.",
+  SPELL: "Magical words that create effects.",
+  CARDS: "Rectangular pieces used in many games.",
+  BOARD: "The surface where games are played.",
+
+  // Tech and Internet Culture
+  LINUX: "Free as in freedom, not as in beer.",
+  BYTES: "Units of digital information storage.",
+  CODER: "Someone who writes computer programs.",
+  CLOUD: "Remote servers accessed over the internet.",
+  TESLA: "Electric cars and innovative technology.",
+  CACHE: "Temporary storage for faster access.",
+  PINGS: "Network messages to check connectivity.",
+  DEBUG: "The art of removing bugs, not adding features.",
+  STACK: "A data structure that works like a pile.",
+  CODES: "Instructions that tell computers what to do.",
+  FILES: "Collections of data stored on computers.",
+  VIRUS: "Malicious software that spreads like disease.",
+  EMAIL: "Electronic mail - faster than snail mail!",
+
+  // Superheroes
+  JOKER: "Why so serious? This clown prince of crime.",
+  ROBIN: "Batman's young sidekick and partner.",
+  BLADE: "A vampire hunter with a sharp edge.",
+  FLASH: "The fastest man alive, or so he claims.",
+  BEAST: "A mutant with blue fur and super strength.",
+  SPAWN: "A hellspawn with supernatural powers.",
+  VENOM: "A symbiote that bonds with its host.",
+  LOGAN: "Wolverine's real name, the best there is at what he does.",
+} as const;
+
 type Word = (typeof WORDS)[keyof typeof WORDS][number];
 type WordCategory = keyof typeof WORDS;
 
-export { WORDS, Word, WordCategory };
+export { WORDS, HINTS, Word, WordCategory };

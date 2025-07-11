@@ -9,17 +9,18 @@ import {
   lineHeight,
   spacing,
 } from "@/constants/styles";
+import { getHintForWord } from "@/utils/game";
 
 export const BannerCard = () => {
-  const { gameStatus, guesses, answer, category } = useContext(GameContext);
+  const { gameStatus, guesses, answer, category, originalCategory } =
+    useContext(GameContext);
 
-  // TODO: Make the hints dynamic
+  const hint = getHintForWord(answer, originalCategory);
+
   return gameStatus === "running" ? (
     <View style={styles.content}>
       <Text style={styles.category}>{category}</Text>
-      <Text style={styles.hint}>
-        Even Heisenberg couldn’t pin this one down exactly.
-      </Text>
+      <Text style={styles.hint}>{hint}</Text>
     </View>
   ) : (
     <GameBanner
@@ -32,8 +33,8 @@ export const BannerCard = () => {
 
 const styles = StyleSheet.create({
   content: {
-    paddingHorizontal: spacing.md,
     gap: spacing.xs,
+    marginLeft: -spacing.md,
   },
   category: {
     fontFamily: fontFamily.bitter.bold,
