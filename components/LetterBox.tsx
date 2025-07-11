@@ -1,6 +1,7 @@
 import { View, StyleSheet, Text, StyleProp, ViewStyle } from "react-native";
 import { borderRadius, colors, fontSize } from "@/constants/styles";
 import { HintOutline } from "./HintOutline";
+import { getCategoryColor } from "@/utils/game";
 
 export type LetterBoxProps = {
   letter: string;
@@ -25,18 +26,7 @@ const LetterBox = ({
 }: LetterBoxProps) => {
   const cellStyles: StyleProp<ViewStyle> = [styles.container];
 
-  const tileBackgroundColor =
-    category === "videoGames"
-      ? colors.categories.videoGames
-      : category === "science"
-      ? colors.categories.science
-      : category === "fantasyAndSciFi"
-      ? colors.categories.fantasyAndSciFi
-      : category === "animeAndManga"
-      ? colors.categories.animeAndManga
-      : category === "tabletopAndBoardGames"
-      ? colors.categories.tabletopAndBoardGames
-      : colors.categories.techAndInternetCulture;
+  const tileBackgroundColor = getCategoryColor(category);
 
   if (!isCurrentGuess && letter) {
     if (isCorrect) {

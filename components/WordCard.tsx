@@ -13,13 +13,18 @@ import {
   WORD_CARD_GUESS_GRID_MAX_WIDTH,
   WORD_CARD_GUESS_GRID_MIN_WIDTH,
 } from "@/constants/dimensions";
+import { getCategoryColor } from "@/utils/game";
 
 export const WordCard = () => {
-  const { category, answer } = useContext(GameContext);
+  const { category, answer, originalCategory } = useContext(GameContext);
+
+  const tileBackgroundColor = getCategoryColor(originalCategory);
 
   return (
     <Card addStyles={styles.container}>
-      <Card addStyles={styles.content}>
+      <Card
+        addStyles={[styles.content, { backgroundColor: tileBackgroundColor }]}
+      >
         <Text style={styles.categoryText}>{answer}</Text>
         <Text style={styles.categoryText}>{category}</Text>
       </Card>
@@ -38,7 +43,6 @@ const styles = StyleSheet.create({
   content: {
     borderRadius: borderRadius.sm,
     flex: 1,
-    backgroundColor: colors.categories.science,
   },
   categoryText: {
     color: colors.neutral.white,

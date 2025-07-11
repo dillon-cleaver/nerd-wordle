@@ -8,6 +8,7 @@ import {
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { useContext } from "react";
 import { GameContext } from "@/context/GameContext";
+import { getCategoryColor } from "@/utils/game";
 
 // TODO: Clean up this code: make it more modular, etc.
 
@@ -27,18 +28,7 @@ export const Keyboard = () => {
   const { guesses, answer, handleKeyPress, originalCategory } =
     useContext(GameContext);
 
-  const tileBackgroundColor =
-    originalCategory === "videoGames"
-      ? colors.categories.videoGames
-      : originalCategory === "science"
-      ? colors.categories.science
-      : originalCategory === "fantasyAndSciFi"
-      ? colors.categories.fantasyAndSciFi
-      : originalCategory === "animeAndManga"
-      ? colors.categories.animeAndManga
-      : originalCategory === "tabletopAndBoardGames"
-      ? colors.categories.tabletopAndBoardGames
-      : colors.categories.techAndInternetCulture;
+  const tileBackgroundColor = getCategoryColor(originalCategory);
 
   const getKeyStatus = (key: string) => {
     const hasBeenUsed = guesses.some((guess) => guess.includes(key));

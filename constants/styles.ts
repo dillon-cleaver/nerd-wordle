@@ -1,11 +1,14 @@
 const colors = {
   categories: {
-    science: "#3aacd8",
-    fantasyAndSciFi: "#228b22",
-    videoGames: "#e60012",
-    animeAndManga: "#ff69b4",
-    tabletopAndBoardGames: "#d2691e",
-    techAndInternetCulture: "#708090",
+    science: "#CD66FF",
+    videoGames: "#FF659A",
+    movies: "#FF0200",
+    animeAndManga: "#FF9901",
+    tabletopAndBoardGames: "#FFFF00",
+    fantasyAndSciFi: "#059901",
+    techAndInternetCulture: "#0199CC",
+    superheroes: "#35009A",
+    literature: "#99019A",
   },
   tiles: {
     // TODO: Revisit this default color
