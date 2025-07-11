@@ -127,8 +127,8 @@ export default function RootLayout() {
             <Drawer.Screen
               name="words"
               options={{
-                title: "Word Collection",
-                drawerLabel: "Word Collection",
+                title: "Words",
+                drawerLabel: "Words",
                 drawerLabelStyle: {
                   fontFamily: fontFamily.bitter.bold,
                   fontSize: fontSize.title.large,
@@ -136,7 +136,7 @@ export default function RootLayout() {
                 },
                 drawerItemStyle: { borderRadius: borderRadius.md },
                 drawerIcon: ({ color }: { color: string }) => (
-                  <FontAwesome name="lightbulb-o" size={24} color={color} />
+                  <FontAwesome name="trophy" size={24} color={color} />
                 ),
               }}
             />
