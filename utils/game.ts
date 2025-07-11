@@ -1,4 +1,4 @@
-import { WordCategory, WORDS, HINTS } from "@/constants/words";
+import { WordCategory, WORDS, HINTS, SUMMARIES, Word } from "@/constants/words";
 import { sample } from "./sample";
 import { colors } from "@/constants/styles";
 
@@ -56,6 +56,32 @@ const getDefaultHint = (category: WordCategory): string => {
   }
 };
 
+const getDefaultSummary = (category: WordCategory): string => {
+  switch (category) {
+    case "animeAndManga":
+      return "A summary of a word from Japanese anime and manga culture.";
+    case "fantasyAndSciFi":
+      return "A summary of a word from the realms of fantasy and science fiction.";
+    case "science":
+      return "A summary of a fundamental scientific term.";
+    case "tabletopAndBoardGames":
+      return "A summary of a word from tabletop and board games.";
+    case "techAndInternetCulture":
+      return "A summary of a word from technology and internet culture.";
+    case "videoGames":
+      return "A summary of a word from the world of video games.";
+    case "superheroes":
+      return "A summary of a word from superhero lore.";
+    case "movies":
+      return "A summary of a word from the world of movies.";
+    case "literature":
+      return "A summary of a word from literature.";
+    case "common":
+    default:
+      return "A summary of a common word.";
+  }
+};
+
 export const getHintForWord = (
   word: string,
   category: WordCategory
@@ -68,6 +94,20 @@ export const getHintForWord = (
 
   // Fall back to a default hint based on category
   return getDefaultHint(category);
+};
+
+export const getSummaryForWord = (
+  word: string,
+  category: WordCategory
+): string => {
+  // Check if there's a specific summary for this word
+  const specificSummary = SUMMARIES[word];
+  if (specificSummary) {
+    return specificSummary;
+  }
+
+  // Fall back to a default summary based on category
+  return getDefaultSummary(category);
 };
 
 export const getCategoryColor = (category: string): string => {
@@ -90,6 +130,31 @@ export const getCategoryColor = (category: string): string => {
       return colors.categories.movies;
     case "literature":
       return colors.categories.literature;
+    default:
+      return colors.categories.techAndInternetCulture;
+  }
+};
+
+export const getCategoryTextColor = (category: string) => {
+  switch (category) {
+    case "videoGames":
+      return colors.neutral.black;
+    case "science":
+      return colors.neutral.black;
+    case "fantasyAndSciFi":
+      return colors.neutral.black;
+    case "animeAndManga":
+      return colors.neutral.black;
+    case "tabletopAndBoardGames":
+      return colors.neutral.black;
+    case "techAndInternetCulture":
+      return colors.neutral.black;
+    case "superheroes":
+      return colors.neutral.white;
+    case "movies":
+      return colors.neutral.black;
+    case "literature":
+      return colors.neutral.white;
     default:
       return colors.categories.techAndInternetCulture;
   }
