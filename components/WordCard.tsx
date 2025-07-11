@@ -15,11 +15,12 @@ import {
 } from "@/constants/dimensions";
 
 export const WordCard = () => {
-  const { category } = useContext(GameContext);
+  const { category, answer } = useContext(GameContext);
 
   return (
     <Card addStyles={styles.container}>
       <Card addStyles={styles.content}>
+        <Text style={styles.categoryText}>{answer}</Text>
         <Text style={styles.categoryText}>{category}</Text>
       </Card>
     </Card>

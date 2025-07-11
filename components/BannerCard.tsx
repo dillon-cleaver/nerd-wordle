@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     color: colors.neutral.white,
   },
   hint: {
-    fontFamily: fontFamily.bitter.regular,
+    fontFamily: fontFamily.bitter.italic,
     fontSize: fontSize.body.base,
     lineHeight: lineHeight.body.base,
     color: colors.neutral.white,
