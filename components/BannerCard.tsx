@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     width: "100%",
     minHeight: MIN_BANNER_HEIGHT,
     maxWidth: WORD_CARD_GUESS_GRID_MAX_WIDTH,
-    marginLeft: -spacing.md,
   },
   gameBannerContainer: {
     minHeight: MIN_BANNER_HEIGHT,
