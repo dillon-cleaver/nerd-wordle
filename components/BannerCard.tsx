@@ -2,11 +2,11 @@ import { useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import { GameContext } from "@/context/GameContext";
 import { GameBanner } from "./GameBanner";
-import { spacing } from "@/constants/styles";
 import { CategoryBanner } from "./CategoryBanner";
-import { WORD_CARD_GUESS_GRID_MAX_WIDTH } from "@/constants/dimensions";
-
-const MIN_BANNER_HEIGHT = 64;
+import {
+  BANNER_GUESS_GRID_MAX_WIDTH,
+  MIN_BANNER_HEIGHT,
+} from "@/constants/dimensions";
 
 export const BannerCard = () => {
   const { gameStatus, guesses, answer } = useContext(GameContext);
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   categoryBannerContainer: {
     width: "100%",
     minHeight: MIN_BANNER_HEIGHT,
-    maxWidth: WORD_CARD_GUESS_GRID_MAX_WIDTH,
+    maxWidth: BANNER_GUESS_GRID_MAX_WIDTH,
   },
   gameBannerContainer: {
     minHeight: MIN_BANNER_HEIGHT,

@@ -1,4 +1,4 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Card } from "./base/Card";
 import {
   borderRadius,
@@ -11,8 +11,8 @@ import {
 import { useContext } from "react";
 import { GameContext } from "@/context/GameContext";
 import {
-  WORD_CARD_GUESS_GRID_MAX_WIDTH,
-  WORD_CARD_GUESS_GRID_MIN_WIDTH,
+  WORD_CARD_MAX_WIDTH,
+  WORD_CARD_MIN_WIDTH,
 } from "@/constants/dimensions";
 import {
   getCategoryColor,
@@ -29,12 +29,34 @@ export const WordCard = () => {
   const tileBackgroundColor = getCategoryColor(originalCategory);
   const textColor = getCategoryTextColor(originalCategory);
 
+  // TODO: Make edition number dynamic
+  // TODO: Make date dynamic and store on the card
+
+  // Format date as MM/DD/YY
+  const today = new Date();
+  const formattedDate = `${String(today.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}/${String(today.getDate()).padStart(2, "0")}/${String(
+    today.getFullYear()
+  ).slice(-2)}`;
+
   return (
     <Card addStyles={styles.container}>
       <Card
         addStyles={[styles.content, { backgroundColor: tileBackgroundColor }]}
       >
-        <Text style={[styles.answerText, { color: textColor }]}>{answer}</Text>
+        <View style={styles.answerEditionRow}>
+          <Text style={[styles.answerText, { color: textColor }]}>
+            {answer}
+          </Text>
+          <View>
+            <Text style={[styles.editionText, { color: textColor }]}>#123</Text>
+            <Text style={[styles.dateText, { color: textColor }]}>
+              {formattedDate}
+            </Text>
+          </View>
+        </View>
         <Text style={[styles.hintText, { color: textColor }]}>{hint}</Text>
         <Text style={[styles.summaryText, { color: textColor }]}>
           {summary}
@@ -49,8 +71,8 @@ export const WordCard = () => {
 
 const styles = StyleSheet.create({
   container: {
-    minWidth: WORD_CARD_GUESS_GRID_MIN_WIDTH,
-    maxWidth: WORD_CARD_GUESS_GRID_MAX_WIDTH,
+    minWidth: WORD_CARD_MIN_WIDTH,
+    maxWidth: WORD_CARD_MAX_WIDTH,
     width: "100%",
     borderWidth: 2,
     borderColor: colors.neutral.white,
@@ -59,11 +81,26 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: spacing.md,
     borderRadius: borderRadius.sm,
+    padding: spacing.sm,
+  },
+  answerEditionRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   answerText: {
     fontSize: fontSize.title.xLarge,
     lineHeight: lineHeight.title.xLarge,
     fontFamily: fontFamily.bitter.bold,
+  },
+  editionText: {
+    fontSize: fontSize.title.xLarge,
+    lineHeight: lineHeight.title.xLarge,
+    fontFamily: fontFamily.bitter.bold,
+  },
+  dateText: {
+    fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
+    fontFamily: fontFamily.bitter.regular,
   },
   hintText: {
     fontSize: fontSize.title.medium,
