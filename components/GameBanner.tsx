@@ -6,6 +6,7 @@ import {
   fontSize,
   spacing,
 } from "@/constants/styles";
+import { WORD_CARD_GUESS_GRID_MIN_WIDTH } from "@/constants/dimensions";
 
 type GameBannerProps = {
   gameStatus: "won" | "running" | "lost";
@@ -24,7 +25,9 @@ export const GameBanner = ({
     <View style={styles.container}>
       <Text style={styles.bannerText}>
         {gameStatus === "won"
-          ? `Congratulations! You won in ${numGuesses} guesses!`
+          ? `Congratulations! You won in ${numGuesses} ${
+              numGuesses === 1 ? "guess" : "guesses"
+            }!`
           : `Sorry, you lost! The answer was ${answer}`}
       </Text>
     </View>
@@ -34,6 +37,7 @@ export const GameBanner = ({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.semantic.success,
+    minWidth: WORD_CARD_GUESS_GRID_MIN_WIDTH,
     padding: spacing.md,
     borderRadius: borderRadius.md,
   },
