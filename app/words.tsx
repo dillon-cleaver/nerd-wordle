@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   content: {
     alignItems: "center",
     paddingTop: spacing.md,
-    gap: spacing.xl,
+    gap: spacing.md,
   },
   titleTextContainer: {
     width: "100%",

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Pressable, Linking } from "react-native";
 import { Card } from "./base/Card";
 import {
   borderRadius,
@@ -19,6 +19,7 @@ import {
   getCategoryTextColor,
   getHintForWord,
   getSummaryForWord,
+  getWikipediaLinkForWord,
 } from "@/utils/game";
 
 export const WordCard = () => {
@@ -28,6 +29,12 @@ export const WordCard = () => {
   const summary = getSummaryForWord(answer, originalCategory);
   const tileBackgroundColor = getCategoryColor(originalCategory);
   const textColor = getCategoryTextColor(originalCategory);
+  const wikipediaLink = getWikipediaLinkForWord(answer);
+
+  // TODO: Covert to a Link component for better accessibility?
+  const handleWikipediaPress = () => {
+    Linking.openURL(wikipediaLink);
+  };
 
   // TODO: Make edition number dynamic
   // TODO: Make date dynamic and store on the card
@@ -61,6 +68,11 @@ export const WordCard = () => {
         <Text style={[styles.summaryText, { color: textColor }]}>
           {summary}
         </Text>
+        <Pressable onPress={handleWikipediaPress}>
+          <Text style={[styles.linkText, { color: textColor }]}>
+            Learn more on Wikipedia
+          </Text>
+        </Pressable>
         <Text style={[styles.categoryText, { color: textColor }]}>
           {category}
         </Text>
@@ -111,6 +123,12 @@ const styles = StyleSheet.create({
     fontSize: fontSize.body.base,
     lineHeight: lineHeight.body.base,
     fontFamily: fontFamily.bitter.regular,
+  },
+  linkText: {
+    fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
+    fontFamily: fontFamily.bitter.regular,
+    textDecorationLine: "underline",
   },
   categoryText: {
     fontSize: fontSize.title.base,
