@@ -5,6 +5,7 @@ import { GameBanner } from "./GameBanner";
 import { CategoryBanner } from "./CategoryBanner";
 import {
   BANNER_GUESS_GRID_MAX_WIDTH,
+  BANNER_GUESS_GRID_MIN_WIDTH,
   MIN_BANNER_HEIGHT,
 } from "@/constants/dimensions";
 
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
   categoryBannerContainer: {
     width: "100%",
     minHeight: MIN_BANNER_HEIGHT,
+    minWidth: BANNER_GUESS_GRID_MIN_WIDTH,
     maxWidth: BANNER_GUESS_GRID_MAX_WIDTH,
   },
   gameBannerContainer: {

@@ -19,7 +19,9 @@ export const Game = () => {
         <BannerCard />
         <GuessGrid />
       </View>
-      <Keyboard />
+      <View style={styles.keyboardContainer}>
+        <Keyboard />
+      </View>
     </View>
   );
 };
@@ -27,12 +29,15 @@ export const Game = () => {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: spacing.md,
-    paddingHorizontal: spacing.sm,
     gap: spacing.xl,
     width: "100%",
   },
   content: {
     gap: spacing.xl,
     alignItems: "center",
+    paddingHorizontal: spacing.md,
+  },
+  keyboardContainer: {
+    paddingHorizontal: spacing.sm,
   },
 });

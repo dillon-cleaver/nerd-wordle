@@ -3,10 +3,10 @@ import { Dimensions } from "react-native";
 const DEVICE_WIDTH = Dimensions.get("window").width;
 
 const BANNER_GUESS_GRID_MIN_WIDTH = 280;
-const BANNER_GUESS_GRID_MAX_WIDTH = 324;
+const BANNER_GUESS_GRID_MAX_WIDTH = 368;
 
 const WORD_CARD_MIN_WIDTH = 280;
-const WORD_CARD_MAX_WIDTH = 400;
+const WORD_CARD_MAX_WIDTH = 368;
 
 const MIN_BANNER_HEIGHT = 64;
 

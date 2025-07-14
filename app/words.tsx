@@ -1,6 +1,9 @@
 import { BaseSafeAreaView } from "@/components/base/BaseSafeAreaView";
 import { WordCard } from "@/components/WordCard";
-import { WORD_CARD_MAX_WIDTH } from "@/constants/dimensions";
+import {
+  WORD_CARD_MAX_WIDTH,
+  WORD_CARD_MIN_WIDTH,
+} from "@/constants/dimensions";
 import {
   colors,
   fontFamily,
@@ -35,12 +38,13 @@ const styles = StyleSheet.create({
   },
   titleTextContainer: {
     width: "100%",
+    minWidth: WORD_CARD_MIN_WIDTH,
     maxWidth: WORD_CARD_MAX_WIDTH,
   },
   titleText: {
-    fontSize: fontSize.title.xLarge,
+    fontSize: fontSize.title.large,
     fontFamily: fontFamily.bitter.bold,
-    lineHeight: lineHeight.title.xLarge,
+    lineHeight: lineHeight.title.large,
     color: colors.neutral.white,
   },
 });
