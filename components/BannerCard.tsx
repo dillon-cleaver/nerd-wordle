@@ -1,26 +1,17 @@
 import { useContext } from "react";
+import { StyleSheet, View } from "react-native";
 import { GameContext } from "@/context/GameContext";
 import { GameBanner } from "./GameBanner";
-import { View, Text, StyleSheet } from "react-native";
-import {
-  colors,
-  fontFamily,
-  fontSize,
-  lineHeight,
-  spacing,
-} from "@/constants/styles";
-import { getHintForWord } from "@/utils/game";
+import { spacing } from "@/constants/styles";
+import { CategoryBanner } from "./CategoryBanner";
+import { WORD_CARD_GUESS_GRID_MAX_WIDTH } from "@/constants/dimensions";
 
 export const BannerCard = () => {
-  const { gameStatus, guesses, answer, category, originalCategory } =
-    useContext(GameContext);
-
-  const hint = getHintForWord(answer, originalCategory);
+  const { gameStatus, guesses, answer } = useContext(GameContext);
 
   return gameStatus === "running" ? (
-    <View style={styles.content}>
-      <Text style={styles.category}>{category}</Text>
-      <Text style={styles.hint}>{hint}</Text>
+    <View style={styles.container}>
+      <CategoryBanner />
     </View>
   ) : (
     <GameBanner
@@ -32,20 +23,9 @@ export const BannerCard = () => {
 };
 
 const styles = StyleSheet.create({
-  content: {
-    gap: spacing.xs,
+  container: {
+    width: "100%",
+    maxWidth: WORD_CARD_GUESS_GRID_MAX_WIDTH,
     marginLeft: -spacing.md,
-  },
-  category: {
-    fontFamily: fontFamily.bitter.bold,
-    fontSize: fontSize.title.large,
-    lineHeight: lineHeight.title.large,
-    color: colors.neutral.white,
-  },
-  hint: {
-    fontFamily: fontFamily.bitter.italic,
-    fontSize: fontSize.body.base,
-    lineHeight: lineHeight.body.base,
-    color: colors.neutral.white,
   },
 });

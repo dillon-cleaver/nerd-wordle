@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
     paddingHorizontal: spacing.sm,
     gap: spacing.xl,
-    alignItems: "center",
     width: "100%",
   },
   content: {
