@@ -6,7 +6,7 @@ import {
   fontSize,
   spacing,
 } from "@/constants/styles";
-import { WORD_CARD_GUESS_GRID_MIN_WIDTH } from "@/constants/dimensions";
+import { WORD_CARD_MIN_WIDTH } from "@/constants/dimensions";
 
 type GameBannerProps = {
   gameStatus: "won" | "running" | "lost";
@@ -37,7 +37,7 @@ export const GameBanner = ({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.semantic.success,
-    minWidth: WORD_CARD_GUESS_GRID_MIN_WIDTH,
+    minWidth: WORD_CARD_MIN_WIDTH,
     padding: spacing.md,
     borderRadius: borderRadius.md,
   },

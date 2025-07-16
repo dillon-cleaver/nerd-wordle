@@ -1,6 +1,9 @@
 import { Word, WORDS } from "@/constants/words";
 import { NUMBER_OF_GUESSES } from "@/constants/numbers";
 import { GameStatus, Hint, GameStateUpdaters } from "@/types/game";
+import { PuzzleResult } from "@/types/backend";
+import { savePuzzleResultsLocally } from "./puzzle-result-storage";
+// import { syncPuzzleResultToBackend } from "./puzzle-result-sync";
 
 export const handleSubmitGuess = (
   tentativeGuess: string,
@@ -60,9 +63,30 @@ export const handleSubmitGuess = (
   if (tentativeGuess === answer) {
     updaters.setGameStatus("won");
     updaters.setHint(undefined);
+
+    const result: PuzzleResult = {
+      // id: new Date().toISOString().split("T")[0],
+      id: new Date().toISOString(),
+      word: answer,
+      date: new Date().toISOString(),
+      status: "win",
+    };
+    savePuzzleResultsLocally(result);
+    // syncPuzzleResultToBackend(result).catch(console.error);
   } else if (nextGuesses.length >= NUMBER_OF_GUESSES) {
     updaters.setGameStatus("lost");
     updaters.setHint(undefined);
+
+    // TODO: Re-do typing – attempts is incorrect here
+    const result: PuzzleResult = {
+      // id: new Date().toISOString().split("T")[0],
+      id: new Date().toISOString(),
+      word: answer,
+      date: new Date().toISOString(),
+      status: "fail",
+    };
+    savePuzzleResultsLocally(result);
+    // syncPuzzleResultToBackend(result).catch(console.error);
   }
 };
 

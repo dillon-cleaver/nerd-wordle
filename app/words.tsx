@@ -11,9 +11,17 @@ import {
   lineHeight,
   spacing,
 } from "@/constants/styles";
+import { getPuzzleResults } from "@/utils/puzzle-result-storage";
+import { useEffect } from "react";
 import { StyleSheet, View, Text } from "react-native";
 
 export default function Words() {
+  // TODO: This is here temporarily --->
+  useEffect(() => {
+    const results = getPuzzleResults();
+    console.log("Puzzle history:", results);
+  }, []);
+
   return (
     <BaseSafeAreaView addStyles={styles.container} edges={[]}>
       <View style={styles.content}>
