@@ -2,6 +2,7 @@ import { Word, WordCategory } from "@/constants/words";
 
 type GameStatus = "won" | "running" | "lost";
 
+// TODO: Fix this type – remove undefined from type definition
 type Hint =
   | {
       row: number;
