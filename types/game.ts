@@ -1,4 +1,4 @@
-import { Word, WordCategory } from "@/constants/words";
+import { Word, WordCategory } from "./word";
 
 type GameStatus = "won" | "running" | "lost";
 

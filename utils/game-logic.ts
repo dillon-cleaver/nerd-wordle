@@ -1,8 +1,9 @@
-import { Word, WORDS } from "@/constants/words";
 import { NUMBER_OF_GUESSES } from "@/constants/numbers";
 import { GameStatus, Hint, GameStateUpdaters } from "@/types/game";
 import { PuzzleResult } from "@/types/backend";
 import { savePuzzleResultsLocally } from "./puzzle-result-storage";
+import { Word } from "@/types/word";
+import { WORD_DATA } from "@/constants/words";
 // import { syncPuzzleResultToBackend } from "./puzzle-result-sync";
 
 export const handleSubmitGuess = (
@@ -13,9 +14,7 @@ export const handleSubmitGuess = (
 ) => {
   if (tentativeGuess.length !== 5) return;
 
-  const isValidWord = Object.values(WORDS)
-    .flat()
-    .includes(tentativeGuess as Word);
+  const isValidWord = tentativeGuess.toUpperCase() in WORD_DATA;
 
   if (!isValidWord) {
     updaters.setInvalidWord(true);

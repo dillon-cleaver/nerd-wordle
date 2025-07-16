@@ -1,8 +1,8 @@
 import { createContext, ReactNode, useState, useCallback } from "react";
-import { WordCategory, Word } from "@/constants/words";
 import { initializeGame } from "@/utils/game";
 import { handleSubmitGuess, handleKeyPress } from "../utils/game-logic";
 import { GameStatus, Hint, GameState } from "@/types/game";
+import { Word, WordCategory } from "@/types/word";
 
 type GameContextType = {
   gameStatus: GameStatus;

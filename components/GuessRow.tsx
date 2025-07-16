@@ -1,8 +1,8 @@
 import { View, StyleSheet } from "react-native";
 import { range } from "../utils/range";
 import LetterBox from "./LetterBox";
-import { Word } from "@/constants/words";
 import { spacing } from "@/constants/styles";
+import { Word } from "@/types/word";
 
 export type GuessRowProps = {
   currentGuess: string;

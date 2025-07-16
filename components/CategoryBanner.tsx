@@ -1,4 +1,4 @@
-import { WORD_CARD_GUESS_GRID_MIN_WIDTH } from "@/constants/dimensions";
+import { BANNER_GUESS_GRID_MIN_WIDTH } from "@/constants/dimensions";
 import {
   colors,
   fontFamily,
@@ -26,7 +26,7 @@ export const CategoryBanner = () => {
 
 const styles = StyleSheet.create({
   content: {
-    minWidth: WORD_CARD_GUESS_GRID_MIN_WIDTH,
+    minWidth: BANNER_GUESS_GRID_MIN_WIDTH,
     gap: spacing.xs,
   },
   category: {

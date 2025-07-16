@@ -1,6 +1,7 @@
-import { WordCategory, WORDS, HINTS, SUMMARIES, Word } from "@/constants/words";
+import { WORD_DATA } from "@/constants/words";
 import { sample } from "./sample";
 import { colors } from "@/constants/styles";
+import { WordCategory } from "@/types/word";
 
 const convertCategory = (word: WordCategory): string => {
   switch (word) {
@@ -86,10 +87,10 @@ export const getHintForWord = (
   word: string,
   category: WordCategory
 ): string => {
-  // Check if there's a specific hint for this word
-  const specificHint = HINTS[word];
-  if (specificHint) {
-    return specificHint;
+  // Try the specific hint stored in WORD_DATA
+  const entry = WORD_DATA[word as keyof typeof WORD_DATA];
+  if (entry?.hints && entry.hints.length > 0) {
+    return entry.hints[0];
   }
 
   // Fall back to a default hint based on category
@@ -100,13 +101,11 @@ export const getSummaryForWord = (
   word: string,
   category: WordCategory
 ): string => {
-  // Check if there's a specific summary for this word
-  const specificSummary = SUMMARIES[word];
-  if (specificSummary) {
-    return specificSummary;
+  const entry = WORD_DATA[word as keyof typeof WORD_DATA];
+  if (entry?.summary) {
+    return entry.summary;
   }
 
-  // Fall back to a default summary based on category
   return getDefaultSummary(category);
 };
 
@@ -280,16 +279,22 @@ export const getCategoryTextColor = (category: string) => {
 };
 
 export function initializeGame() {
-  const categoriesExcludingCommon = Object.keys(WORDS).filter(
-    (category) => category !== "common"
-  ) as WordCategory[];
+  // Build a unique list of categories, excluding "common"
+  const categoriesExcludingCommon = Array.from(
+    new Set(Object.values(WORD_DATA).map((w) => w.category))
+  ).filter((c): c is WordCategory => c !== "common");
 
   const selectedCategory = sample(categoriesExcludingCommon);
   const convertedCategory = convertCategory(selectedCategory);
 
+  // Collect all words (record keys) that belong to the chosen category
+  const wordsInCategory = Object.entries(WORD_DATA)
+    .filter(([, v]) => v.category === selectedCategory)
+    .map(([k]) => k);
+
   return {
     category: convertedCategory,
     originalCategory: selectedCategory,
-    answer: sample([...WORDS[selectedCategory]]),
+    answer: sample(wordsInCategory),
   };
 }
