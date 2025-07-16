@@ -16,7 +16,12 @@ export function savePuzzleResultsLocally(result: PuzzleResult) {
   }
 }
 
-// export function getPuzzleResults(): PuzzleResult[] {
-//   //...
-//   return;
-// }
+export function getPuzzleResults(): PuzzleResult[] {
+  try {
+    const stored = localStorage.getItem(PUZZLE_RESULTS_KEY) || "[]";
+    return JSON.parse(stored) as PuzzleResult[];
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+}
