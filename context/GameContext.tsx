@@ -3,6 +3,7 @@ import { initializeGame } from "@/utils/game";
 import { handleSubmitGuess, handleKeyPress } from "../utils/game-logic";
 import { GameStatus, Hint, GameState } from "@/types/game";
 import { Word, WordCategory } from "@/types/word";
+import { TODAY_PUZZLE } from "@/utils/daily-puzzle";
 
 type GameContextType = {
   gameStatus: GameStatus;
@@ -27,7 +28,7 @@ export const GameContext = createContext<GameContextType>({
   hint: undefined,
   category: "",
   originalCategory: "fantasyAndSciFi",
-  answer: "SLATE" as Word,
+  answer: TODAY_PUZZLE.word as Word,
   handleKeyPress: () => {},
   handleSubmitGuess: () => {},
   // TODO: Remove before production - development only
@@ -35,14 +36,10 @@ export const GameContext = createContext<GameContextType>({
 });
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
-  const [{ category, answer, originalCategory }, setGameState] =
-    useState<GameState>(() => {
-      const game = initializeGame();
-      return {
-        ...game,
-        category: game.category || "Fantasy and Sci-Fi",
-      };
-    });
+  const { hintIndex } = TODAY_PUZZLE; // we'll still use its hint rotation
+  const [{ category, originalCategory, answer }, setGameState] =
+    useState<GameState>(() => initializeGame());
+
   const [gameStatus, setGameStatus] = useState<GameStatus>("running");
   const [guesses, setGuesses] = useState<Word[]>([]);
   const [tentativeGuess, setTentativeGuess] = useState("");
@@ -50,14 +47,20 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [hint, setHint] = useState<Hint>(undefined);
 
   const handleSubmitGuessCallback = useCallback(() => {
-    handleSubmitGuess(tentativeGuess, guesses, answer, {
-      setGuesses,
-      setTentativeGuess,
-      setInvalidWord,
-      setHint,
-      setGameStatus,
-    });
-  }, [tentativeGuess, guesses, answer]);
+    handleSubmitGuess(
+      tentativeGuess,
+      guesses,
+      answer,
+      {
+        setGuesses,
+        setTentativeGuess,
+        setInvalidWord,
+        setHint,
+        setGameStatus,
+      },
+      hintIndex
+    );
+  }, [tentativeGuess, guesses, answer, hintIndex]);
 
   const handleKeyPressCallback = useCallback(
     (key: string) => {

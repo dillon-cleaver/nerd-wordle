@@ -2,7 +2,8 @@ type PuzzleResult = {
   id: string;
   word: string;
   date: string;
-  attempts: number;
+  guesses: number;
+  hintIndex: number;
   status: "win" | "fail";
 };
 

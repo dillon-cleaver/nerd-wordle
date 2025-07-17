@@ -1,16 +1,21 @@
 import { NUMBER_OF_GUESSES } from "@/constants/numbers";
 import { GameStatus, Hint, GameStateUpdaters } from "@/types/game";
-import { PuzzleResult } from "@/types/backend";
-import { savePuzzleResultsLocally } from "./puzzle-result-storage";
+import { PuzzleResult } from "@/types/puzzle-result";
+import { savePuzzleResult } from "@/storage/puzzle-results";
 import { Word } from "@/types/word";
 import { WORD_DATA } from "@/constants/words";
+// import { getAuth } from "firebase/auth";
 // import { syncPuzzleResultToBackend } from "./puzzle-result-sync";
+
+const ISO = new Date().toISOString();
+// const UID = getAuth().currentUser?.uid ?? null;
 
 export const handleSubmitGuess = (
   tentativeGuess: string,
   guesses: Word[],
   answer: Word,
-  updaters: GameStateUpdaters
+  updaters: GameStateUpdaters,
+  hintIndex: number
 ) => {
   if (tentativeGuess.length !== 5) return;
 
@@ -65,13 +70,15 @@ export const handleSubmitGuess = (
 
     const result: PuzzleResult = {
       // id: new Date().toISOString().split("T")[0],
-      id: new Date().toISOString(),
+      id: ISO,
       word: answer,
-      date: new Date().toISOString(),
-      attempts: guesses.length,
+      date: ISO,
+      guesses: nextGuesses.length,
+      hintIndex,
       status: "win",
     };
-    savePuzzleResultsLocally(result);
+    // savePuzzleResult(UID, result);
+    savePuzzleResult(null, result);
     // syncPuzzleResultToBackend(result).catch(console.error);
   } else if (nextGuesses.length >= NUMBER_OF_GUESSES) {
     updaters.setGameStatus("lost");
@@ -79,13 +86,15 @@ export const handleSubmitGuess = (
 
     const result: PuzzleResult = {
       // id: new Date().toISOString().split("T")[0],
-      id: new Date().toISOString(),
+      id: ISO,
       word: answer,
-      date: new Date().toISOString(),
-      attempts: guesses.length,
+      date: ISO,
+      guesses: nextGuesses.length,
+      hintIndex,
       status: "fail",
     };
-    savePuzzleResultsLocally(result);
+    // savePuzzleResult(UID, result);
+    savePuzzleResult(null, result);
     // syncPuzzleResultToBackend(result).catch(console.error);
   }
 };

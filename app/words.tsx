@@ -11,7 +11,7 @@ import {
   lineHeight,
   spacing,
 } from "@/constants/styles";
-import { getPuzzleResults } from "@/utils/puzzle-result-storage";
+import { getPuzzleResults } from "@/storage/puzzle-results.local";
 import { useEffect } from "react";
 import { StyleSheet, View, Text } from "react-native";
 
