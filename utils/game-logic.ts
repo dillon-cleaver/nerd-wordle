@@ -68,6 +68,7 @@ export const handleSubmitGuess = (
       id: new Date().toISOString(),
       word: answer,
       date: new Date().toISOString(),
+      attempts: guesses.length,
       status: "win",
     };
     savePuzzleResultsLocally(result);
@@ -76,12 +77,12 @@ export const handleSubmitGuess = (
     updaters.setGameStatus("lost");
     updaters.setHint(undefined);
 
-    // TODO: Re-do typing – attempts is incorrect here
     const result: PuzzleResult = {
       // id: new Date().toISOString().split("T")[0],
       id: new Date().toISOString(),
       word: answer,
       date: new Date().toISOString(),
+      attempts: guesses.length,
       status: "fail",
     };
     savePuzzleResultsLocally(result);
