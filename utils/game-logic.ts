@@ -2,13 +2,13 @@ import { NUMBER_OF_GUESSES } from "@/constants/numbers";
 import { GameStatus, Hint, GameStateUpdaters } from "@/types/game";
 import { PuzzleResult } from "@/types/puzzle-result";
 import { savePuzzleResult } from "@/storage/puzzle-results";
-import { addWordCollectionEventLocal } from "@/storage/word-collections.local";
+import { addToCollection } from "./collection-helpers";
 import { WordEntry, WordId, NerdWordEntry } from "@/types/word";
 import { WORD_DATA, getWordEntry } from "@/constants/words";
 // import { getAuth } from "firebase/auth";
 // import { syncPuzzleResultToBackend } from "./puzzle-result-sync";
 
-const getISODate = () => new Date().toISOString();
+const generatePuzzleId = () => crypto.randomUUID();
 // const UID = getAuth().currentUser?.uid ?? null;
 
 export const handleSubmitGuess = (
@@ -79,10 +79,16 @@ export const handleSubmitGuess = (
     updaters.setGameStatus("won");
     updaters.setHint(undefined);
 
-    const puzzleId = getISODate();
+    const puzzleId = generatePuzzleId();
+    const edition =
+      answerEntry.category === "common"
+        ? 0
+        : (answerEntry as NerdWordEntry).edition;
+
     const result: PuzzleResult = {
       id: puzzleId,
       word: answerId,
+      edition,
       date: new Date(),
       guesses: nextGuesses.length,
       hintIndex,
@@ -90,19 +96,11 @@ export const handleSubmitGuess = (
     };
     savePuzzleResult(null, result);
 
-    // Save word collection for nerd words
+    // Add to collection for nerd words
     if (answerEntry.category !== "common") {
-      const nerdWord = answerEntry as NerdWordEntry;
-
-      addWordCollectionEventLocal(answerId, nerdWord.edition, {
-        date: new Date(),
-        hintIndex,
-        guesses: nextGuesses.length,
-        puzzleResultId: puzzleId,
-      });
-
+      addToCollection(answerId, edition, new Date());
       console.log(
-        `Word collected! ${answerId} (Edition ${nerdWord.edition}) - ${nextGuesses.length} guesses, hint index ${hintIndex}`
+        `Word collected! ${answerId} (Edition ${edition}) - ${nextGuesses.length} guesses, hint index ${hintIndex}`
       );
     }
 
@@ -111,9 +109,14 @@ export const handleSubmitGuess = (
     updaters.setGameStatus("lost");
     updaters.setHint(undefined);
 
+    const edition =
+      answerEntry.category === "common"
+        ? 0
+        : (answerEntry as NerdWordEntry).edition;
     const result: PuzzleResult = {
-      id: getISODate(),
+      id: generatePuzzleId(),
       word: answerId,
+      edition,
       date: new Date(),
       guesses: nextGuesses.length,
       hintIndex,

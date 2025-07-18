@@ -2,8 +2,7 @@ import { WordEntry } from "@/types/word";
 
 type DailyPuzzleSeed = {
   date: string; // ISO (YYYY-MM-DD)
-  word: WordEntry;
-  hintIndex: number;
+  word: WordEntry; // The word includes its own appearance data
 };
 
 /**
@@ -14,13 +13,12 @@ type DailyPuzzleSeed = {
  * (or another backend endpoint) so that **every player sees the
  * same puzzle on the same calendar date**.
  *
- * • `date`      →  ISO string that identifies the puzzle day.
- * • `word`      →  The correct answer for that day.
- * • `hintIndex` →  Which hint to display from WORD_DATA[word].hints[].
+ * • `date` → ISO string that identifies the puzzle day.
+ * • `word` → The correct answer for that day, including its appearance data.
  *
+ * The word's `appearance.currentHintIndex` tells us which hint to show.
  * During local‑only development the game still picks the word at
- * random inside `initializeGame()`, so for now we only *use*
- * `hintIndex` (defaults to 0) and ignore the other fields.
+ * random inside `initializeGame()`, so this is just a stub.
  *
  * When the backend is ready, simply replace this static constant with
  * a fetch/helper that returns the real daily seed—and delete these
@@ -31,11 +29,16 @@ const TODAY_PUZZLE: DailyPuzzleSeed = {
   word: {
     id: "ZELDA",
     category: "videoGames",
-    edition: 1,
+    edition: 5,
     summary: "",
     hints: [],
+    appearance: {
+      timesShown: 1,
+      firstShownDate: new Date("2025-07-17"),
+      currentHintIndex: 0,
+      lastHintRotation: new Date("2025-07-17"),
+    },
   },
-  hintIndex: 0,
 };
 
 export { DailyPuzzleSeed, TODAY_PUZZLE };

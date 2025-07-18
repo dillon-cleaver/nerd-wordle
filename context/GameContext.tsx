@@ -13,6 +13,7 @@ type GameContextType = {
   invalidWord: boolean;
   hint: Hint | undefined;
   category: string; // human‑readable name
+  // TODO: Update this to use newer typing
   originalCategory: WordCategory;
   answer: WordId;
   handleKeyPress: (key: string) => void;
@@ -37,7 +38,10 @@ export const GameContext = createContext<GameContextType>({
 });
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
-  const { hintIndex } = TODAY_PUZZLE; // we'll still use its hint rotation
+  const hintIndex =
+    TODAY_PUZZLE.word.category !== "common" && TODAY_PUZZLE.word.appearance
+      ? TODAY_PUZZLE.word.appearance.currentHintIndex
+      : 0;
   const [{ category, originalCategory, answer }, setGameState] = useState(() =>
     initializeGame()
   );
