@@ -112,55 +112,46 @@ const WORD_DATA: Record<string, WordMeta> = {
   PIXAR: {
     category: "movies",
     edition: 1,
-    hints: [],
     summary: "",
   },
   NOVEL: {
     category: "literature",
     edition: 2,
-    hints: [],
     summary: "",
   },
   EMAIL: {
     category: "techAndInternetCulture",
     edition: 3,
-    hints: [],
     summary: "",
   },
   ATOMS: {
     category: "science",
     edition: 4,
-    hints: [],
     summary: "",
   },
   ZELDA: {
     category: "videoGames",
     edition: 5,
-    hints: [],
     summary: "",
   },
   MAGIC: {
     category: "fantasyAndSciFi",
     edition: 6,
-    hints: [],
     summary: "",
   },
   JOKER: {
     category: "superheroes",
     edition: 7,
-    hints: [],
     summary: "",
   },
   CHESS: {
     category: "tabletopAndBoardGames",
     edition: 8,
-    hints: [],
     summary: "",
   },
   MANGA: {
     category: "animeAndManga",
     edition: 9,
-    hints: [],
     summary: "",
   },
 };

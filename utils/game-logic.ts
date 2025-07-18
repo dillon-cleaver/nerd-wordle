@@ -7,7 +7,7 @@ import { WORD_DATA } from "@/constants/words";
 // import { getAuth } from "firebase/auth";
 // import { syncPuzzleResultToBackend } from "./puzzle-result-sync";
 
-const ISO = new Date().toISOString();
+const getISODate = () => new Date().toISOString();
 // const UID = getAuth().currentUser?.uid ?? null;
 
 export const handleSubmitGuess = (
@@ -80,9 +80,9 @@ export const handleSubmitGuess = (
 
     const result: PuzzleResult = {
       // id: new Date().toISOString().split("T")[0],
-      id: ISO,
+      id: getISODate(),
       word: answerId,
-      date: ISO,
+      date: getISODate(),
       guesses: nextGuesses.length,
       hintIndex,
       status: "win",
@@ -96,9 +96,9 @@ export const handleSubmitGuess = (
 
     const result: PuzzleResult = {
       // id: new Date().toISOString().split("T")[0],
-      id: ISO,
+      id: getISODate(),
       word: answerId,
-      date: ISO,
+      date: getISODate(),
       guesses: nextGuesses.length,
       hintIndex,
       status: "fail",

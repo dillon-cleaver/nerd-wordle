@@ -9,8 +9,7 @@ export async function createUserIfNotExists(user: User) {
 
   if (!userDoc.exists()) {
     const userProfile: UserProfile = {
-      // TODO: Change from hardcoded uid
-      uid: "123",
+      uid: user.uid,
       displayName: user.displayName || "Anonymous",
       email: user.email || "",
       photoURL: user.photoURL || "",
