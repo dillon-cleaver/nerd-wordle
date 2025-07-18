@@ -24,8 +24,10 @@ type DailyPuzzleSeed = {
  * a fetch/helper that returns the real daily seed—and delete these
  * “ignored” comments.
  */
+const today = new Date().toISOString().split("T")[0]; // Gets "YYYY-MM-DD"
+
 const TODAY_PUZZLE: DailyPuzzleSeed = {
-  date: "2025-07-17",
+  date: today,
   word: {
     id: "ZELDA",
     category: "videoGames",
@@ -34,9 +36,9 @@ const TODAY_PUZZLE: DailyPuzzleSeed = {
     hints: [],
     appearance: {
       timesShown: 1,
-      firstShownDate: new Date("2025-07-17"),
+      firstShownDate: new Date(),
       currentHintIndex: 0,
-      lastHintRotation: new Date("2025-07-17"),
+      lastHintRotation: new Date(),
     },
   },
 };

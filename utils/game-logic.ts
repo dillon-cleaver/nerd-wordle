@@ -8,6 +8,8 @@ import { WORD_DATA, getWordEntry } from "@/constants/words";
 // import { getAuth } from "firebase/auth";
 // import { syncPuzzleResultToBackend } from "./puzzle-result-sync";
 
+// TODO: Replace with React Native-compatible UUID generation when building for native
+// Consider: react-native-get-random-values + uuid, or expo-crypto
 const generatePuzzleId = () => crypto.randomUUID();
 // const UID = getAuth().currentUser?.uid ?? null;
 

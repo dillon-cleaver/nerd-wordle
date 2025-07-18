@@ -13,16 +13,26 @@ export const loadWordCollectionsLocal = (): UserWordCollections => {
     };
   }
 
-  const parsed = JSON.parse(stored);
-  // Convert date strings back to Date objects
-  return {
-    ...parsed,
-    lastUpdated: new Date(parsed.lastUpdated),
-    collections: parsed.collections.map((collection: any) => ({
-      ...collection,
-      firstCollectedDate: new Date(collection.firstCollectedDate),
-    })),
-  };
+  try {
+    const parsed = JSON.parse(stored) as UserWordCollections;
+    // Convert date strings back to Date objects
+    return {
+      ...parsed,
+      lastUpdated: new Date(parsed.lastUpdated),
+      collections: parsed.collections.map((collection: WordCollection) => ({
+        ...collection,
+        firstCollectedDate: new Date(collection.firstCollectedDate),
+      })),
+    };
+  } catch (error) {
+    console.error("Failed to parse word collections from localStorage:", error);
+    // Return default structure on error
+    return {
+      collections: [],
+      totalWordsCollected: 0,
+      lastUpdated: new Date(),
+    };
+  }
 };
 
 export const saveWordCollectionsLocal = (
