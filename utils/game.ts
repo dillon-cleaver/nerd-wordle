@@ -2,6 +2,7 @@ import { WORD_DATA } from "@/constants/words";
 import { sample } from "./sample";
 import { colors } from "@/constants/styles";
 import { WordCategory } from "@/types/word";
+import { CATEGORY_WORDS } from "@/utils/word-index";
 
 const convertCategory = (word: WordCategory): string => {
   switch (word) {
@@ -287,14 +288,12 @@ export function initializeGame() {
   const selectedCategory = sample(categoriesExcludingCommon);
   const convertedCategory = convertCategory(selectedCategory);
 
-  // Collect all words (record keys) that belong to the chosen category
-  const wordsInCategory = Object.entries(WORD_DATA)
-    .filter(([, v]) => v.category === selectedCategory)
-    .map(([k]) => k);
+  const wordsInCategory = CATEGORY_WORDS[selectedCategory];
+  const answer = sample(wordsInCategory);
 
   return {
     category: convertedCategory,
     originalCategory: selectedCategory,
-    answer: sample(wordsInCategory),
+    answer: answer,
   };
 }

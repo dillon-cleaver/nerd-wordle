@@ -2,7 +2,7 @@ import { NUMBER_OF_GUESSES } from "@/constants/numbers";
 import { GameStatus, Hint, GameStateUpdaters } from "@/types/game";
 import { PuzzleResult } from "@/types/puzzle-result";
 import { savePuzzleResult } from "@/storage/puzzle-results";
-import { Word } from "@/types/word";
+import { WordEntry, WordId } from "@/types/word";
 import { WORD_DATA } from "@/constants/words";
 // import { getAuth } from "firebase/auth";
 // import { syncPuzzleResultToBackend } from "./puzzle-result-sync";
@@ -12,12 +12,13 @@ const ISO = new Date().toISOString();
 
 export const handleSubmitGuess = (
   tentativeGuess: string,
-  guesses: Word[],
-  answer: Word,
+  guesses: WordId[],
+  answerEntry: WordEntry,
   updaters: GameStateUpdaters,
   hintIndex: number
 ) => {
   if (tentativeGuess.length !== 5) return;
+  const answerId = answerEntry.id as WordId; // 5‑letter string, e.g. "PIXAR"
 
   const isValidWord = tentativeGuess.toUpperCase() in WORD_DATA;
 
@@ -30,29 +31,32 @@ export const handleSubmitGuess = (
     return;
   }
 
-  const nextGuesses = [...guesses, tentativeGuess as Word];
+  const nextGuesses: WordId[] = [
+    ...guesses,
+    tentativeGuess.toUpperCase() as WordId,
+  ];
 
   const correctLettersInPlace = guesses
     .flatMap((guess) =>
-      guess.split("").map((char, i) => (char === answer[i] ? char : null))
+      guess.split("").map((char, i) => (char === answerId[i] ? char : null))
     )
     .filter(Boolean);
 
   let nextHint: Hint = undefined;
-  if (tentativeGuess !== answer && guesses.length >= 3) {
+  if (tentativeGuess !== answerId && guesses.length >= 3) {
     for (let i = 0; i < 5; i++) {
       const letter = tentativeGuess[i];
       const isMisplaced =
         letter &&
-        letter !== answer[i] &&
-        answer.includes(letter) &&
-        tentativeGuess.indexOf(letter) !== answer.indexOf(letter) &&
+        letter !== answerId[i] &&
+        answerId.includes(letter) &&
+        tentativeGuess.indexOf(letter) !== answerId.indexOf(letter) &&
         !correctLettersInPlace.includes(letter);
 
       if (isMisplaced) {
         nextHint = {
           row: guesses.length + 1,
-          col: answer.indexOf(letter),
+          col: answerId.indexOf(letter),
           letter,
         };
         break;
@@ -60,18 +64,24 @@ export const handleSubmitGuess = (
     }
   }
 
-  updaters.setGuesses(nextGuesses);
+  const nextGuessesEntries: WordEntry[] = nextGuesses.map((id) => ({
+    id,
+    ...WORD_DATA[id],
+    edition: WORD_DATA[id].edition ?? 1,
+  }));
+
+  updaters.setGuesses(nextGuessesEntries);
   updaters.setHint(nextHint);
   updaters.setTentativeGuess("");
 
-  if (tentativeGuess === answer) {
+  if (tentativeGuess === answerId) {
     updaters.setGameStatus("won");
     updaters.setHint(undefined);
 
     const result: PuzzleResult = {
       // id: new Date().toISOString().split("T")[0],
       id: ISO,
-      word: answer,
+      word: answerId,
       date: ISO,
       guesses: nextGuesses.length,
       hintIndex,
@@ -87,7 +97,7 @@ export const handleSubmitGuess = (
     const result: PuzzleResult = {
       // id: new Date().toISOString().split("T")[0],
       id: ISO,
-      word: answer,
+      word: answerId,
       date: ISO,
       guesses: nextGuesses.length,
       hintIndex,

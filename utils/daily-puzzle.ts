@@ -1,9 +1,8 @@
-import { Word } from "@/types/word";
+import { WordEntry } from "@/types/word";
 
 type DailyPuzzleSeed = {
   date: string; // ISO (YYYY-MM-DD)
-  word: Word;
-  edition: number;
+  word: WordEntry;
   hintIndex: number;
 };
 
@@ -17,7 +16,6 @@ type DailyPuzzleSeed = {
  *
  * • `date`      →  ISO string that identifies the puzzle day.
  * • `word`      →  The correct answer for that day.
- * • `edition`   →  The “print run” number that belongs to the *word itself* (think collector‑card edition).
  * • `hintIndex` →  Which hint to display from WORD_DATA[word].hints[].
  *
  * During local‑only development the game still picks the word at
@@ -30,8 +28,7 @@ type DailyPuzzleSeed = {
  */
 const TODAY_PUZZLE: DailyPuzzleSeed = {
   date: "2025-07-17",
-  word: "ZELDA",
-  edition: 1,
+  word: { id: "ZELDA", category: "videoGames", edition: 1 },
   hintIndex: 0,
 };
 

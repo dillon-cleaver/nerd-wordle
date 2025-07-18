@@ -25,7 +25,9 @@ export const GuessGrid = () => {
         const currentGuess =
           rowIndex === guesses.length
             ? tentativeGuess
-            : guesses[rowIndex] || "";
+            : guesses[rowIndex]
+            ? guesses[rowIndex].id
+            : "";
         const isCurrentGuess = rowIndex === guesses.length;
 
         const hintForThisRow =

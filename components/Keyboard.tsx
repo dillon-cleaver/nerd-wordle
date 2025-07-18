@@ -31,11 +31,11 @@ export const Keyboard = () => {
   const tileBackgroundColor = getCategoryColor(originalCategory);
 
   const getKeyStatus = (key: string) => {
-    const hasBeenUsed = guesses.some((guess) => guess.includes(key));
+    const hasBeenUsed = guesses.some((guess) => guess.id.includes(key));
     if (!hasBeenUsed) return null;
 
     const isCorrect = guesses.some((guess) =>
-      guess
+      guess.id
         .split("")
         .some((letter, index) => letter === key && key === answer[index])
     );

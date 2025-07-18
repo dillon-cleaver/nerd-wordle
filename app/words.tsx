@@ -11,14 +11,14 @@ import {
   lineHeight,
   spacing,
 } from "@/constants/styles";
-import { getPuzzleResults } from "@/storage/puzzle-results.local";
+import { loadPuzzleResultsLocal } from "@/storage/puzzle-results.local";
 import { useEffect } from "react";
 import { StyleSheet, View, Text } from "react-native";
 
 export default function Words() {
   // TODO: This is here temporarily --->
   useEffect(() => {
-    const results = getPuzzleResults();
+    const results = loadPuzzleResultsLocal();
     console.log("Puzzle history:", results);
   }, []);
 

@@ -1,19 +1,20 @@
 import { createContext, ReactNode, useState, useCallback } from "react";
 import { initializeGame } from "@/utils/game";
 import { handleSubmitGuess, handleKeyPress } from "../utils/game-logic";
-import { GameStatus, Hint, GameState } from "@/types/game";
-import { Word, WordCategory } from "@/types/word";
+import { GameStatus, Hint } from "@/types/game";
 import { TODAY_PUZZLE } from "@/utils/daily-puzzle";
+import { WordEntry, WordId, WordCategory } from "@/types/word";
+import { WORD_DATA } from "@/constants/words";
 
 type GameContextType = {
   gameStatus: GameStatus;
-  guesses: Word[];
+  guesses: WordEntry[];
   tentativeGuess: string;
   invalidWord: boolean;
   hint: Hint;
-  category: string;
+  category: string; // human‑readable name
   originalCategory: WordCategory;
-  answer: Word;
+  answer: WordId;
   handleKeyPress: (key: string) => void;
   handleSubmitGuess: () => void;
   // TODO: Remove before production - development only
@@ -22,13 +23,13 @@ type GameContextType = {
 
 export const GameContext = createContext<GameContextType>({
   gameStatus: "running",
-  guesses: [],
+  guesses: [] as WordEntry[],
   tentativeGuess: "",
   invalidWord: false,
   hint: undefined,
-  category: "",
+  category: "Fantasy and Sci‑Fi",
   originalCategory: "fantasyAndSciFi",
-  answer: TODAY_PUZZLE.word as Word,
+  answer: TODAY_PUZZLE.word.id,
   handleKeyPress: () => {},
   handleSubmitGuess: () => {},
   // TODO: Remove before production - development only
@@ -38,19 +39,25 @@ export const GameContext = createContext<GameContextType>({
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const { hintIndex } = TODAY_PUZZLE; // we'll still use its hint rotation
   const [{ category, originalCategory, answer }, setGameState] =
-    useState<GameState>(() => initializeGame());
+    useState(() => initializeGame());
 
   const [gameStatus, setGameStatus] = useState<GameStatus>("running");
-  const [guesses, setGuesses] = useState<Word[]>([]);
+  const [guesses, setGuesses] = useState<WordEntry[]>([]);
   const [tentativeGuess, setTentativeGuess] = useState("");
   const [invalidWord, setInvalidWord] = useState(false);
   const [hint, setHint] = useState<Hint>(undefined);
 
   const handleSubmitGuessCallback = useCallback(() => {
+    const answerEntry: WordEntry = {
+      id: answer,
+      ...WORD_DATA[answer],
+      edition: WORD_DATA[answer].edition ?? 1, // ensure non‑optional
+    };
+
     handleSubmitGuess(
       tentativeGuess,
-      guesses,
-      answer,
+      guesses.map((g) => g.id),
+      answerEntry,
       {
         setGuesses,
         setTentativeGuess,
