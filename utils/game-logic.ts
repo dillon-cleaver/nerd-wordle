@@ -42,7 +42,7 @@ export const handleSubmitGuess = (
     )
     .filter(Boolean);
 
-  let nextHint: Hint = undefined;
+  let nextHint: Hint | undefined = undefined;
   if (tentativeGuess !== answerId && guesses.length >= 3) {
     for (let i = 0; i < 5; i++) {
       const letter = tentativeGuess[i];

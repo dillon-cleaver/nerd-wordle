@@ -11,7 +11,7 @@ export const Game = () => {
 
   useEffect(() => {
     console.info({ answer, category });
-  }, []);
+  }, [answer, category]);
 
   return (
     <View style={styles.container}>

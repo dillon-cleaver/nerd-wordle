@@ -11,7 +11,7 @@ type GameContextType = {
   guesses: WordEntry[];
   tentativeGuess: string;
   invalidWord: boolean;
-  hint: Hint;
+  hint: Hint | undefined;
   category: string; // human‑readable name
   originalCategory: WordCategory;
   answer: WordId;
@@ -38,14 +38,15 @@ export const GameContext = createContext<GameContextType>({
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const { hintIndex } = TODAY_PUZZLE; // we'll still use its hint rotation
-  const [{ category, originalCategory, answer }, setGameState] =
-    useState(() => initializeGame());
+  const [{ category, originalCategory, answer }, setGameState] = useState(() =>
+    initializeGame()
+  );
 
   const [gameStatus, setGameStatus] = useState<GameStatus>("running");
   const [guesses, setGuesses] = useState<WordEntry[]>([]);
   const [tentativeGuess, setTentativeGuess] = useState("");
   const [invalidWord, setInvalidWord] = useState(false);
-  const [hint, setHint] = useState<Hint>(undefined);
+  const [hint, setHint] = useState<Hint>();
 
   const handleSubmitGuessCallback = useCallback(() => {
     const answerEntry: WordEntry = {
