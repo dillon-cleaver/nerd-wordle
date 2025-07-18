@@ -36,6 +36,7 @@ export const WordCard = () => {
     Linking.openURL(wikipediaLink);
   };
 
+  // TODO: Show guesses/attempts number somewhere
   // TODO: Make edition number dynamic
   // TODO: Make date dynamic and store on the card
 

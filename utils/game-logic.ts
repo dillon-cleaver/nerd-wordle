@@ -1,21 +1,31 @@
-import { Word, WORDS } from "@/constants/words";
 import { NUMBER_OF_GUESSES } from "@/constants/numbers";
 import { GameStatus, Hint, GameStateUpdaters } from "@/types/game";
-import { PuzzleResult } from "@/types/backend";
-import { savePuzzleResultsLocally } from "./puzzle-result-storage";
+import { PuzzleResult } from "@/types/puzzle-result";
+import { savePuzzleResult } from "@/storage/puzzle-results";
+import { addToCollection } from "./collection-helpers";
+import { WordEntry, WordId, NerdWordEntry } from "@/types/word";
+import { WORD_DATA, getWordEntry } from "@/constants/words";
+// import { getAuth } from "firebase/auth";
 // import { syncPuzzleResultToBackend } from "./puzzle-result-sync";
+
+// TODO: Replace with React Native-compatible UUID generation when building for native
+// Consider: react-native-get-random-values + uuid, or expo-crypto
+const generatePuzzleId = () => crypto.randomUUID();
+// const UID = getAuth().currentUser?.uid ?? null;
 
 export const handleSubmitGuess = (
   tentativeGuess: string,
-  guesses: Word[],
-  answer: Word,
-  updaters: GameStateUpdaters
+  guesses: WordId[],
+  answerEntry: WordEntry,
+  updaters: GameStateUpdaters,
+  hintIndex: number
 ) => {
   if (tentativeGuess.length !== 5) return;
+  const answerId = answerEntry.id as WordId;
 
-  const isValidWord = Object.values(WORDS)
-    .flat()
-    .includes(tentativeGuess as Word);
+  const isValidWord = WORD_DATA.some(
+    (word) => word.id === tentativeGuess.toUpperCase()
+  );
 
   if (!isValidWord) {
     updaters.setInvalidWord(true);
@@ -26,29 +36,32 @@ export const handleSubmitGuess = (
     return;
   }
 
-  const nextGuesses = [...guesses, tentativeGuess as Word];
+  const nextGuesses: WordId[] = [
+    ...guesses,
+    tentativeGuess.toUpperCase() as WordId,
+  ];
 
   const correctLettersInPlace = guesses
     .flatMap((guess) =>
-      guess.split("").map((char, i) => (char === answer[i] ? char : null))
+      guess.split("").map((char, i) => (char === answerId[i] ? char : null))
     )
     .filter(Boolean);
 
-  let nextHint: Hint = undefined;
-  if (tentativeGuess !== answer && guesses.length >= 3) {
+  let nextHint: Hint | undefined = undefined;
+  if (tentativeGuess !== answerId && guesses.length >= 3) {
     for (let i = 0; i < 5; i++) {
       const letter = tentativeGuess[i];
       const isMisplaced =
         letter &&
-        letter !== answer[i] &&
-        answer.includes(letter) &&
-        tentativeGuess.indexOf(letter) !== answer.indexOf(letter) &&
+        letter !== answerId[i] &&
+        answerId.includes(letter) &&
+        tentativeGuess.indexOf(letter) !== answerId.indexOf(letter) &&
         !correctLettersInPlace.includes(letter);
 
       if (isMisplaced) {
         nextHint = {
           row: guesses.length + 1,
-          col: answer.indexOf(letter),
+          col: answerId.indexOf(letter),
           letter,
         };
         break;
@@ -56,36 +69,62 @@ export const handleSubmitGuess = (
     }
   }
 
-  updaters.setGuesses(nextGuesses);
+  const nextGuessesEntries: WordEntry[] = nextGuesses.map((id) =>
+    getWordEntry(id)
+  );
+
+  updaters.setGuesses(nextGuessesEntries);
   updaters.setHint(nextHint);
   updaters.setTentativeGuess("");
 
-  if (tentativeGuess === answer) {
+  if (tentativeGuess === answerId) {
     updaters.setGameStatus("won");
     updaters.setHint(undefined);
 
+    const puzzleId = generatePuzzleId();
+    const edition =
+      answerEntry.category === "common"
+        ? 0
+        : (answerEntry as NerdWordEntry).edition;
+
     const result: PuzzleResult = {
-      // id: new Date().toISOString().split("T")[0],
-      id: new Date().toISOString(),
-      word: answer,
-      date: new Date().toISOString(),
+      id: puzzleId,
+      word: answerId,
+      edition,
+      date: new Date(),
+      guesses: nextGuesses.length,
+      hintIndex,
       status: "win",
     };
-    savePuzzleResultsLocally(result);
+    savePuzzleResult(null, result);
+
+    // Add to collection for nerd words
+    if (answerEntry.category !== "common") {
+      addToCollection(answerId, edition, new Date());
+      console.log(
+        `Word collected! ${answerId} (Edition ${edition}) - ${nextGuesses.length} guesses, hint index ${hintIndex}`
+      );
+    }
+
     // syncPuzzleResultToBackend(result).catch(console.error);
   } else if (nextGuesses.length >= NUMBER_OF_GUESSES) {
     updaters.setGameStatus("lost");
     updaters.setHint(undefined);
 
-    // TODO: Re-do typing – attempts is incorrect here
+    const edition =
+      answerEntry.category === "common"
+        ? 0
+        : (answerEntry as NerdWordEntry).edition;
     const result: PuzzleResult = {
-      // id: new Date().toISOString().split("T")[0],
-      id: new Date().toISOString(),
-      word: answer,
-      date: new Date().toISOString(),
+      id: generatePuzzleId(),
+      word: answerId,
+      edition,
+      date: new Date(),
+      guesses: nextGuesses.length,
+      hintIndex,
       status: "fail",
     };
-    savePuzzleResultsLocally(result);
+    savePuzzleResult(null, result);
     // syncPuzzleResultToBackend(result).catch(console.error);
   }
 };

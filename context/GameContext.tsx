@@ -1,18 +1,21 @@
 import { createContext, ReactNode, useState, useCallback } from "react";
-import { WordCategory, Word } from "@/constants/words";
 import { initializeGame } from "@/utils/game";
 import { handleSubmitGuess, handleKeyPress } from "../utils/game-logic";
-import { GameStatus, Hint, GameState } from "@/types/game";
+import { GameStatus, Hint } from "@/types/game";
+import { TODAY_PUZZLE } from "@/utils/daily-puzzle";
+import { WordEntry, WordId, WordCategory } from "@/types/word";
+import { getWordEntry } from "@/constants/words";
 
 type GameContextType = {
   gameStatus: GameStatus;
-  guesses: Word[];
+  guesses: WordEntry[];
   tentativeGuess: string;
   invalidWord: boolean;
-  hint: Hint;
-  category: string;
+  hint: Hint | undefined;
+  category: string; // human‑readable name
+  // TODO: Update this to use newer typing
   originalCategory: WordCategory;
-  answer: Word;
+  answer: WordId;
   handleKeyPress: (key: string) => void;
   handleSubmitGuess: () => void;
   // TODO: Remove before production - development only
@@ -21,13 +24,13 @@ type GameContextType = {
 
 export const GameContext = createContext<GameContextType>({
   gameStatus: "running",
-  guesses: [],
+  guesses: [] as WordEntry[],
   tentativeGuess: "",
   invalidWord: false,
   hint: undefined,
-  category: "",
+  category: "Fantasy and Sci‑Fi",
   originalCategory: "fantasyAndSciFi",
-  answer: "SLATE" as Word,
+  answer: TODAY_PUZZLE.word.id,
   handleKeyPress: () => {},
   handleSubmitGuess: () => {},
   // TODO: Remove before production - development only
@@ -35,29 +38,37 @@ export const GameContext = createContext<GameContextType>({
 });
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
-  const [{ category, answer, originalCategory }, setGameState] =
-    useState<GameState>(() => {
-      const game = initializeGame();
-      return {
-        ...game,
-        category: game.category || "Fantasy and Sci-Fi",
-      };
-    });
+  const hintIndex =
+    TODAY_PUZZLE.word.category !== "common" && TODAY_PUZZLE.word.appearance
+      ? TODAY_PUZZLE.word.appearance.currentHintIndex
+      : 0;
+  const [{ category, originalCategory, answer }, setGameState] = useState(() =>
+    initializeGame()
+  );
+
   const [gameStatus, setGameStatus] = useState<GameStatus>("running");
-  const [guesses, setGuesses] = useState<Word[]>([]);
+  const [guesses, setGuesses] = useState<WordEntry[]>([]);
   const [tentativeGuess, setTentativeGuess] = useState("");
   const [invalidWord, setInvalidWord] = useState(false);
-  const [hint, setHint] = useState<Hint>(undefined);
+  const [hint, setHint] = useState<Hint>();
 
   const handleSubmitGuessCallback = useCallback(() => {
-    handleSubmitGuess(tentativeGuess, guesses, answer, {
-      setGuesses,
-      setTentativeGuess,
-      setInvalidWord,
-      setHint,
-      setGameStatus,
-    });
-  }, [tentativeGuess, guesses, answer]);
+    const answerEntry = getWordEntry(answer);
+
+    handleSubmitGuess(
+      tentativeGuess,
+      guesses.map((g) => g.id),
+      answerEntry,
+      {
+        setGuesses,
+        setTentativeGuess,
+        setInvalidWord,
+        setHint,
+        setGameStatus,
+      },
+      hintIndex
+    );
+  }, [tentativeGuess, guesses, answer, hintIndex]);
 
   const handleKeyPressCallback = useCallback(
     (key: string) => {

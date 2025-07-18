@@ -1,27 +1,23 @@
-import { Word, WordCategory } from "@/constants/words";
+import { WordEntry } from "./word";
 
 type GameStatus = "won" | "running" | "lost";
 
 // TODO: Fix this type – remove undefined from type definition
-type Hint =
-  | {
-      row: number;
-      col: number;
-      letter: string;
-    }
-  | undefined;
+type Hint = {
+  row: number;
+  col: number;
+  letter: string;
+};
 
 type GameState = {
-  category: string;
-  originalCategory: WordCategory;
-  answer: Word;
+  answer: WordEntry;
 };
 
 type GameStateUpdaters = {
-  setGuesses: (guesses: Word[]) => void;
+  setGuesses: (guesses: WordEntry[]) => void;
   setTentativeGuess: (guess: string) => void;
   setInvalidWord: (invalid: boolean) => void;
-  setHint: (hint: Hint) => void;
+  setHint: (hint: Hint | undefined) => void;
   setGameStatus: (status: GameStatus) => void;
 };
 

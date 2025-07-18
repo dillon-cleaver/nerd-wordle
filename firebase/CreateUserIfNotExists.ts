@@ -9,10 +9,11 @@ export async function createUserIfNotExists(user: User) {
 
   if (!userDoc.exists()) {
     const userProfile: UserProfile = {
+      id: user.uid,
       displayName: user.displayName || "Anonymous",
       email: user.email || "",
       photoURL: user.photoURL || "",
-      joinedAt: Date.now(),
+      joinedAt: new Date(),
       friends: [],
     };
 
