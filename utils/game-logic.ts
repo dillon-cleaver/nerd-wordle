@@ -2,7 +2,8 @@ import { NUMBER_OF_GUESSES } from "@/constants/numbers";
 import { GameStatus, Hint, GameStateUpdaters } from "@/types/game";
 import { PuzzleResult } from "@/types/puzzle-result";
 import { savePuzzleResult } from "@/storage/puzzle-results";
-import { WordEntry, WordId } from "@/types/word";
+import { addWordCollectionEventLocal } from "@/storage/word-collections.local";
+import { WordEntry, WordId, NerdWordEntry } from "@/types/word";
 import { WORD_DATA, getWordEntry } from "@/constants/words";
 // import { getAuth } from "firebase/auth";
 // import { syncPuzzleResultToBackend } from "./puzzle-result-sync";
@@ -78,8 +79,9 @@ export const handleSubmitGuess = (
     updaters.setGameStatus("won");
     updaters.setHint(undefined);
 
+    const puzzleId = getISODate();
     const result: PuzzleResult = {
-      id: getISODate(),
+      id: puzzleId,
       word: answerId,
       date: new Date(),
       guesses: nextGuesses.length,
@@ -87,6 +89,23 @@ export const handleSubmitGuess = (
       status: "win",
     };
     savePuzzleResult(null, result);
+
+    // Save word collection for nerd words
+    if (answerEntry.category !== "common") {
+      const nerdWord = answerEntry as NerdWordEntry;
+
+      addWordCollectionEventLocal(answerId, nerdWord.edition, {
+        date: new Date(),
+        hintIndex,
+        guesses: nextGuesses.length,
+        puzzleResultId: puzzleId,
+      });
+
+      console.log(
+        `Word collected! ${answerId} (Edition ${nerdWord.edition}) - ${nextGuesses.length} guesses, hint index ${hintIndex}`
+      );
+    }
+
     // syncPuzzleResultToBackend(result).catch(console.error);
   } else if (nextGuesses.length >= NUMBER_OF_GUESSES) {
     updaters.setGameStatus("lost");

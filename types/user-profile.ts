@@ -1,4 +1,5 @@
 import { PuzzleResult } from "./puzzle-result";
+import { UserWordCollections } from "./word-collection";
 
 type UserProfile = {
   readonly id: string;
@@ -7,7 +8,8 @@ type UserProfile = {
   photoURL: string;
   joinedAt: Date;
   friends: readonly string[];
-  puzzleHistory?: readonly PuzzleResult[];
+  puzzleHistory?: readonly PuzzleResult[]; // All puzzle attempts (wins/losses)
+  wordCollections?: UserWordCollections; // Achievement/collection data
 };
 
 export { UserProfile };
