@@ -1,10 +1,10 @@
-import { WordData } from "@/types/word";
+import { WordMeta } from "@/types/word";
 
 /**
  * Central source of truth for all playable words.
  * TODO: migrate the remaining entries from the old WORDS/HINTS/SUMMARIES constants.
  */
-const WORD_DATA: Record<string, WordData> = {
+const WORD_DATA: Record<string, WordMeta> = {
   SLATE: { category: "common" },
   TRACE: { category: "common" },
   ROAST: { category: "common" },

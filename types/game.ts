@@ -11,15 +11,6 @@ type Hint =
     }
   | undefined;
 
-/**
- * The runtime snapshot of the current puzzle.
- *
- * • `answer` is now a full WordEntry so callers have
- *   both the id ("PIXAR") and its metadata (`category`, `edition`, …).
- *
- *   Any component that needs the category can read
- *   `gameState.answer.category` instead of storing a duplicate string.
- */
 type GameState = {
   answer: WordEntry;
 };
