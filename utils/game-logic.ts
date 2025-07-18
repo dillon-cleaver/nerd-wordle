@@ -3,7 +3,7 @@ import { GameStatus, Hint, GameStateUpdaters } from "@/types/game";
 import { PuzzleResult } from "@/types/puzzle-result";
 import { savePuzzleResult } from "@/storage/puzzle-results";
 import { WordEntry, WordId } from "@/types/word";
-import { WORD_DATA } from "@/constants/words";
+import { WORD_DATA, getWordEntry } from "@/constants/words";
 // import { getAuth } from "firebase/auth";
 // import { syncPuzzleResultToBackend } from "./puzzle-result-sync";
 
@@ -18,9 +18,11 @@ export const handleSubmitGuess = (
   hintIndex: number
 ) => {
   if (tentativeGuess.length !== 5) return;
-  const answerId = answerEntry.id as WordId; // 5‑letter string, e.g. "PIXAR"
+  const answerId = answerEntry.id as WordId;
 
-  const isValidWord = tentativeGuess.toUpperCase() in WORD_DATA;
+  const isValidWord = WORD_DATA.some(
+    (word) => word.id === tentativeGuess.toUpperCase()
+  );
 
   if (!isValidWord) {
     updaters.setInvalidWord(true);
@@ -64,11 +66,9 @@ export const handleSubmitGuess = (
     }
   }
 
-  const nextGuessesEntries: WordEntry[] = nextGuesses.map((id) => ({
-    id,
-    ...WORD_DATA[id],
-    edition: WORD_DATA[id].edition ?? 1,
-  }));
+  const nextGuessesEntries: WordEntry[] = nextGuesses.map((id) =>
+    getWordEntry(id)
+  );
 
   updaters.setGuesses(nextGuessesEntries);
   updaters.setHint(nextHint);
@@ -79,15 +79,13 @@ export const handleSubmitGuess = (
     updaters.setHint(undefined);
 
     const result: PuzzleResult = {
-      // id: new Date().toISOString().split("T")[0],
       id: getISODate(),
       word: answerId,
-      date: getISODate(),
+      date: new Date(),
       guesses: nextGuesses.length,
       hintIndex,
       status: "win",
     };
-    // savePuzzleResult(UID, result);
     savePuzzleResult(null, result);
     // syncPuzzleResultToBackend(result).catch(console.error);
   } else if (nextGuesses.length >= NUMBER_OF_GUESSES) {
@@ -95,15 +93,13 @@ export const handleSubmitGuess = (
     updaters.setHint(undefined);
 
     const result: PuzzleResult = {
-      // id: new Date().toISOString().split("T")[0],
       id: getISODate(),
       word: answerId,
-      date: getISODate(),
+      date: new Date(),
       guesses: nextGuesses.length,
       hintIndex,
       status: "fail",
     };
-    // savePuzzleResult(UID, result);
     savePuzzleResult(null, result);
     // syncPuzzleResultToBackend(result).catch(console.error);
   }

@@ -1,10 +1,13 @@
+import { WordId } from "./word";
+type PuzzleStatus = "win" | "fail";
+
 type PuzzleResult = {
-  id: string;
-  word: string;
-  date: string;
+  readonly id: string;
+  word: WordId;
+  date: Date;
   guesses: number;
   hintIndex: number;
-  status: "win" | "fail";
+  status: PuzzleStatus;
 };
 
-export { PuzzleResult };
+export { PuzzleResult, PuzzleStatus };

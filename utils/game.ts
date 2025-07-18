@@ -1,8 +1,7 @@
 import { WORD_DATA } from "@/constants/words";
-import { sample } from "./sample";
 import { colors } from "@/constants/styles";
 import { WordCategory } from "@/types/word";
-import { CATEGORY_WORDS } from "@/utils/word-index";
+import { sample } from "./sample";
 
 const convertCategory = (word: WordCategory): string => {
   switch (word) {
@@ -88,13 +87,12 @@ export const getHintForWord = (
   word: string,
   category: WordCategory
 ): string => {
-  // Try the specific hint stored in WORD_DATA
-  const entry = WORD_DATA[word as keyof typeof WORD_DATA];
-  if (entry?.hints && entry.hints.length > 0) {
+  const entry = WORD_DATA.find((w) => w.id === word);
+
+  if (entry && entry.category !== "common" && entry.hints.length > 0) {
     return entry.hints[0];
   }
 
-  // Fall back to a default hint based on category
   return getDefaultHint(category);
 };
 
@@ -102,8 +100,9 @@ export const getSummaryForWord = (
   word: string,
   category: WordCategory
 ): string => {
-  const entry = WORD_DATA[word as keyof typeof WORD_DATA];
-  if (entry?.summary) {
+  const entry = WORD_DATA.find((w) => w.id === word);
+
+  if (entry && entry.category !== "common" && entry.summary) {
     return entry.summary;
   }
 
@@ -280,15 +279,21 @@ export const getCategoryTextColor = (category: string) => {
 };
 
 export function initializeGame() {
-  // Build a unique list of categories, excluding "common"
   const categoriesExcludingCommon = Array.from(
-    new Set(Object.values(WORD_DATA).map((w) => w.category))
-  ).filter((c): c is WordCategory => c !== "common");
+    new Set(
+      WORD_DATA.filter((word) => word.category !== "common").map(
+        (word) => word.category
+      )
+    )
+  ) as WordCategory[];
 
   const selectedCategory = sample(categoriesExcludingCommon);
   const convertedCategory = convertCategory(selectedCategory);
 
-  const wordsInCategory = CATEGORY_WORDS[selectedCategory];
+  const wordsInCategory = WORD_DATA.filter(
+    (word) => word.category === selectedCategory
+  ).map((word) => word.id);
+
   const answer = sample(wordsInCategory);
 
   return {

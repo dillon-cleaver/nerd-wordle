@@ -1,6 +1,4 @@
-import { WORD_DATA } from "@/constants/words";
-
-type WordId = keyof typeof WORD_DATA;
+type WordId = string;
 
 type WordCategory =
   | "common"
@@ -14,13 +12,19 @@ type WordCategory =
   | "techAndInternetCulture"
   | "superheroes";
 
-type WordMeta = {
-  category: WordCategory;
-  edition?: number;
-  hints?: string[];
-  summary?: string;
+type CommonWordEntry = {
+  id: WordId;
+  category: "common";
 };
 
-type WordEntry = { id: WordId } & WordMeta;
+type NerdWordEntry = {
+  id: WordId;
+  category: Exclude<WordCategory, "common">;
+  edition: number;
+  hints: string[];
+  summary: string;
+};
 
-export { WordId, WordMeta, WordCategory, WordEntry };
+type WordEntry = CommonWordEntry | NerdWordEntry;
+
+export { WordId, WordCategory, WordEntry, CommonWordEntry, NerdWordEntry };

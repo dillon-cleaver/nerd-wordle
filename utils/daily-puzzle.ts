@@ -7,7 +7,7 @@ type DailyPuzzleSeed = {
 };
 
 /**
- * ------------------------------------------------------------
+ * ---------------------------------------------------------------------------
  * DAILY PUZZLE SEED (TEMP STUB)
  * ------------------------------------------------------------
  * In the finished app this object will be hydrated from Firestore
@@ -28,7 +28,13 @@ type DailyPuzzleSeed = {
  */
 const TODAY_PUZZLE: DailyPuzzleSeed = {
   date: "2025-07-17",
-  word: { id: "ZELDA", category: "videoGames", edition: 1 },
+  word: {
+    id: "ZELDA",
+    category: "videoGames",
+    edition: 1,
+    summary: "",
+    hints: [],
+  },
   hintIndex: 0,
 };
 

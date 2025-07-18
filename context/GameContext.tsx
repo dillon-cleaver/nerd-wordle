@@ -4,7 +4,7 @@ import { handleSubmitGuess, handleKeyPress } from "../utils/game-logic";
 import { GameStatus, Hint } from "@/types/game";
 import { TODAY_PUZZLE } from "@/utils/daily-puzzle";
 import { WordEntry, WordId, WordCategory } from "@/types/word";
-import { WORD_DATA } from "@/constants/words";
+import { getWordEntry } from "@/constants/words";
 
 type GameContextType = {
   gameStatus: GameStatus;
@@ -49,11 +49,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [hint, setHint] = useState<Hint>();
 
   const handleSubmitGuessCallback = useCallback(() => {
-    const answerEntry: WordEntry = {
-      id: answer,
-      ...WORD_DATA[answer],
-      edition: WORD_DATA[answer].edition ?? 1, // ensure non‑optional
-    };
+    const answerEntry = getWordEntry(answer);
 
     handleSubmitGuess(
       tentativeGuess,
