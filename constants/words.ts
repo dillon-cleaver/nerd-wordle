@@ -112,24 +112,57 @@ const WORD_DATA: Record<string, WordData> = {
   PIXAR: {
     category: "movies",
     edition: 1,
-    hints: [
-      "Animation magic that brings toys to life.",
-      "The studio behind classics like Toy Story and Finding Nemo.",
-    ],
-    summary:
-      "Pixar is a pioneering animation studio renowned for its computer‑animated films, beginning with Toy Story in 1995.",
+    hints: [],
+    summary: "",
   },
   NOVEL: {
     category: "literature",
     edition: 2,
-    hints: [
-      "A long fictional story in book form.",
-      "Not to be confused with something merely new or unusual.",
-    ],
-    summary:
-      "A novel is an extended work of fiction that explores characters and plot in depth, typically published as a standalone book.",
+    hints: [],
+    summary: "",
   },
-  // 🚧  REMAINING WORDS NEED TO BE MIGRATED INTO THIS STRUCTURE  🚧
+  EMAIL: {
+    category: "techAndInternetCulture",
+    edition: 3,
+    hints: [],
+    summary: "",
+  },
+  ATOMS: {
+    category: "science",
+    edition: 4,
+    hints: [],
+    summary: "",
+  },
+  ZELDA: {
+    category: "videoGames",
+    edition: 5,
+    hints: [],
+    summary: "",
+  },
+  MAGIC: {
+    category: "fantasyAndSciFi",
+    edition: 6,
+    hints: [],
+    summary: "",
+  },
+  JOKER: {
+    category: "superheroes",
+    edition: 7,
+    hints: [],
+    summary: "",
+  },
+  CHESS: {
+    category: "tabletopAndBoardGames",
+    edition: 8,
+    hints: [],
+    summary: "",
+  },
+  MANGA: {
+    category: "animeAndManga",
+    edition: 9,
+    hints: [],
+    summary: "",
+  },
 };
 
 export { WORD_DATA };
