@@ -10,6 +10,7 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
+    "typecheck": "tsc --noEmit",
     "build": "expo export:web",
     "prepare": "husky"
   },
