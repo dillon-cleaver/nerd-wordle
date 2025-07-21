@@ -120,6 +120,9 @@ importers:
       eslint-config-expo:
         specifier: ~9.2.0
         version: 9.2.0(eslint@9.31.0)(typescript@5.8.3)
+      husky:
+        specifier: ^9.1.7
+        version: 9.1.7
       jest:
         specifier: ^29.2.1
         version: 29.7.0(@types/node@22.15.24)
@@ -2963,6 +2966,11 @@ packages:
   human-signals@2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
+
+  husky@9.1.7:
+    resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   hyphenate-style-name@1.1.0:
     resolution: {integrity: sha512-WDC/ui2VVRrz3jOVi+XtjqkDjiVjTtFaAGiW37k6b+ohyQ5wYDOGkvCZa8+H0nx3gyvv0+BST9xuOgIyGQ00gw==}
@@ -8749,6 +8757,8 @@ snapshots:
 
   human-signals@2.1.0: {}
 
+  husky@9.1.7: {}
+
   hyphenate-style-name@1.1.0: {}
 
   iconv-lite@0.6.3:
@@ -11070,7 +11080,7 @@ snapshots:
       '@webassemblyjs/ast': 1.14.1
       '@webassemblyjs/wasm-edit': 1.14.1
       '@webassemblyjs/wasm-parser': 1.14.1
-      acorn: 8.14.1
+      acorn: 8.15.0
       browserslist: 4.24.5
       chrome-trace-event: 1.0.4
       enhanced-resolve: 5.18.1
