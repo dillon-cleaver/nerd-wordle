@@ -10,21 +10,17 @@ import {
  * keep the function names & signatures the same.
  */
 export const savePuzzleResult = async (
-  uid: string | null,
+  _uid: string | null,
   result: PuzzleResult
 ) => {
-  // TODO: Implement Firestore saving logic here
-  // Add this log to suppress unused parameter warnings
-  console.log(uid);
+  // TODO: Implement Firestore loading logic here
   // today ignore uid and just go local
   savePuzzleResultLocal(result);
 };
 
 export const loadPuzzleResults = async (
-  uid: string | null
+  _uid: string | null
 ): Promise<PuzzleResult[]> => {
-  // TODO: Implement Firestore saving logic here
-  // Add this log to suppress unused parameter warnings
-  console.log(uid);
+  // TODO: Implement Firestore loading logic here
   return loadPuzzleResultsLocal();
 };
