@@ -2,7 +2,12 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import express from "express";
 import cors from "cors";
-import { ApiError, WinRecordRequest, WinRecordResponse } from "../../types/api";
+import {
+  ApiError,
+  WinHistoryResponse,
+  WinRecordRequest,
+  WinRecordResponse,
+} from "./types";
 
 // Initialize Firebase Admin SDK
 admin.initializeApp();
@@ -85,7 +90,7 @@ app.post(
         } as ApiError);
       }
 
-      // Store the win data (covert date string to Firestore timestamp)
+      // Store the win data (convert date string to Firestore timestamp)
       const winData = {
         id,
         word,
@@ -112,13 +117,46 @@ app.post(
         data: responseData,
       } as WinRecordResponse);
     } catch (err) {
-      console.error(err);
-      return res.status(500).json({ error: "Internal server error" });
+      console.error("Error recording win:", err);
+      return res
+        .status(500)
+        .json({ error: "Internal server error" } as ApiError);
     }
   }
 );
 
-// GET / win route
-// HERE --->
+// GET /win route
+app.get("/win", verifyToken, async (req, res) => {
+  try {
+    const { uid } = req.user!;
+
+    const winsSnapshot = await db
+      .collection("users")
+      .doc(uid)
+      .collection("winHistory")
+      .orderBy("date", "desc")
+      .get();
+
+    const wins: WinRecordRequest[] = winsSnapshot.docs.map((doc) => {
+      const data = doc.data();
+
+      return {
+        id: doc.id,
+        word: data.word,
+        attempts: data.attempts,
+        date: data.date.toDate().toISOString(),
+        edition: data.edition,
+        hintIndex: data.hintIndex,
+      };
+    });
+
+    return res
+      .status(200)
+      .json({ wins, count: wins.length } as WinHistoryResponse);
+  } catch (err) {
+    console.error("Error fetching wins:", err);
+    return res.status(500).json({ error: "Internal server error" } as ApiError);
+  }
+});
 
 export const api = functions.https.onRequest(app);

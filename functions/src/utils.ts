@@ -1,5 +1,5 @@
 // Utility functions to convert between domain and API types
-import { WinRecordRequest } from "../../types/api";
+import { WinRecordRequest } from "./types";
 import { PuzzleResult } from "../../types/puzzle-result";
 
 export const puzzleResultToWinRecord = (
