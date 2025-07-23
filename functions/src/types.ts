@@ -1,19 +1,20 @@
-export type WinRecordRequest = {
+export type PuzzleResultRequest = {
   id: string;
   word: string;
   attempts: number;
   date: string;
+  status: "win" | "loss";
   edition?: number;
   hintIndex?: number;
 };
 
-export type WinRecordResponse = {
+export type PuzzleResultResponse = {
   message: string;
-  data: WinRecordRequest;
+  data: PuzzleResultRequest;
 };
 
-export type WinHistoryResponse = {
-  wins: WinRecordRequest[];
+export type PuzzleHistoryResponse = {
+  results: PuzzleResultRequest[];
   count: number;
 };
 

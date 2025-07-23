@@ -2,7 +2,7 @@ import { NUMBER_OF_GUESSES } from "@/constants/numbers";
 import { GameStatus, Hint, GameStateUpdaters } from "@/types/game";
 import { PuzzleResult } from "@/types/puzzle-result";
 import { savePuzzleResult } from "@/storage/puzzle-results";
-import { addToCollection } from "./collection-helpers";
+import { addToCollection } from "@/storage/word-collections";
 import { WordEntry, WordId, NerdWordEntry } from "@/types/word";
 import { WORD_DATA, getWordEntry } from "@/constants/words";
 // import { getAuth } from "firebase/auth";

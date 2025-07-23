@@ -4,9 +4,9 @@ import express from "express";
 import cors from "cors";
 import {
   ApiError,
-  WinHistoryResponse,
-  WinRecordRequest,
-  WinRecordResponse,
+  PuzzleHistoryResponse,
+  PuzzleResultRequest,
+  PuzzleResultResponse,
 } from "./types";
 
 // Initialize Firebase Admin SDK
@@ -58,66 +58,82 @@ const verifyToken = async (
   }
 };
 
-// POST /win route
+// POST /puzzle-result route
 app.post(
-  "/win",
+  "/puzzle-result",
   verifyToken,
   async (req: express.Request, res: express.Response) => {
     try {
       const { uid } = req.user!;
-      const { id, word, attempts, date, edition, hintIndex }: WinRecordRequest =
-        req.body;
-
-      // Validate required fields
-      if (!id || !word || attempts === undefined || !date) {
-        return res.status(400).json({
-          error: "Missing required fields: id, word, attempts, or date",
-        } as ApiError);
-      }
-
-      // Check if win with this id already exists
-      const winRef = db
-        .collection("users")
-        .doc(uid)
-        .collection("winHistory")
-        .doc(id);
-
-      const existingWin = await winRef.get();
-
-      if (existingWin.exists) {
-        return res.status(409).json({
-          error: "A win with this id already exists",
-        } as ApiError);
-      }
-
-      // Store the win data (convert date string to Firestore timestamp)
-      const winData = {
-        id,
-        word,
-        attempts,
-        date: new Date(date),
-        edition: edition || 1,
-        hintIndex: hintIndex || 0,
-      };
-
-      await winRef.set(winData);
-
-      // Return the original request format
-      const responseData: WinRecordRequest = {
+      const {
         id,
         word,
         attempts,
         date,
+        status,
+        edition,
+        hintIndex,
+      }: PuzzleResultRequest = req.body;
+
+      // Validate required fields
+      if (!id || !word || attempts === undefined || !date || !status) {
+        return res.status(400).json({
+          error: "Missing required fields: id, word, attempts, date, or status",
+        } as ApiError);
+      }
+
+      // Validate status
+      if (status !== "win" && status !== "loss") {
+        return res.status(400).json({
+          error: "Status must be either 'win' or 'loss'",
+        } as ApiError);
+      }
+
+      // Check if result with this id already exists
+      const resultRef = db
+        .collection("users")
+        .doc(uid)
+        .collection("puzzleHistory")
+        .doc(id);
+
+      const existingResult = await resultRef.get();
+
+      if (existingResult.exists) {
+        return res.status(409).json({
+          error: "A puzzle result with this id already exists",
+        } as ApiError);
+      }
+
+      // Store the puzzle result data (convert date string to Firestore timestamp)
+      const resultData = {
+        id,
+        word,
+        attempts,
+        date: new Date(date),
+        status,
+        edition: edition || 1,
+        hintIndex: hintIndex || 0,
+      };
+
+      await resultRef.set(resultData);
+
+      // Return the original request format
+      const responseData: PuzzleResultRequest = {
+        id,
+        word,
+        attempts,
+        date,
+        status,
         edition,
         hintIndex,
       };
 
       return res.status(200).json({
-        message: "Win recorded successfully",
+        message: "Puzzle result recorded successfully",
         data: responseData,
-      } as WinRecordResponse);
+      } as PuzzleResultResponse);
     } catch (err) {
-      console.error("Error recording win:", err);
+      console.error("Error recording puzzle result:", err);
       return res
         .status(500)
         .json({ error: "Internal server error" } as ApiError);
@@ -125,19 +141,19 @@ app.post(
   }
 );
 
-// GET /win route
-app.get("/win", verifyToken, async (req, res) => {
+// GET /puzzle-history route
+app.get("/puzzle-history", verifyToken, async (req, res) => {
   try {
     const { uid } = req.user!;
 
-    const winsSnapshot = await db
+    const resultsSnapshot = await db
       .collection("users")
       .doc(uid)
-      .collection("winHistory")
+      .collection("puzzleHistory")
       .orderBy("date", "desc")
       .get();
 
-    const wins: WinRecordRequest[] = winsSnapshot.docs.map((doc) => {
+    const results: PuzzleResultRequest[] = resultsSnapshot.docs.map((doc) => {
       const data = doc.data();
 
       return {
@@ -145,6 +161,7 @@ app.get("/win", verifyToken, async (req, res) => {
         word: data.word,
         attempts: data.attempts,
         date: data.date.toDate().toISOString(),
+        status: data.status,
         edition: data.edition,
         hintIndex: data.hintIndex,
       };
@@ -152,9 +169,9 @@ app.get("/win", verifyToken, async (req, res) => {
 
     return res
       .status(200)
-      .json({ wins, count: wins.length } as WinHistoryResponse);
+      .json({ results, count: results.length } as PuzzleHistoryResponse);
   } catch (err) {
-    console.error("Error fetching wins:", err);
+    console.error("Error fetching puzzle history:", err);
     return res.status(500).json({ error: "Internal server error" } as ApiError);
   }
 });

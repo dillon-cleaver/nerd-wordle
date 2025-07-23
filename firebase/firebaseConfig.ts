@@ -6,7 +6,11 @@ import { getFirestore } from "firebase/firestore";
 // import {...} from 'firebase/functions';
 // import {...} from 'firebase/storage';
 
-// Initialize Firebase
+// Initialize Firebase - PRODUCTION CONFIG
+// Firestore behavior:
+// - When FIRESTORE_EMULATOR_HOST is set (emulator running): Uses local emulator
+// - When FIRESTORE_EMULATOR_HOST is not set: Uses production Firestore
+// - Firebase SDK automatically detects the environment variable
 export const firebaseConfig = {
   apiKey: "AIzaSyCFKMe4vTWkUKr83E-T_i7wmrhG7cx29zY",
   authDomain: "nerd-word-cfda3.firebaseapp.com",
