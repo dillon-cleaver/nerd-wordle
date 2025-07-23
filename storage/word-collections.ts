@@ -5,6 +5,9 @@ import {
   saveWordCollectionsLocal,
   getWordCollectionLocal,
 } from "@/storage/word-collections.local";
+// import { getAuth } from "firebase/auth";
+// TODO: Create API functions for word collections (similar to puzzleHistoryApi)
+// import { wordCollectionsApi } from "@/utils/api";
 
 export const addToCollection = (
   wordId: WordId,
@@ -34,8 +37,20 @@ export const addToCollection = (
     lastUpdated: new Date(), // Update this timestamp
   };
 
-  // Save to localStorage
+  // Save to localStorage for offline support
   saveWordCollectionsLocal(updatedCollections);
+
+  // TODO: Save to backend if user is authenticated
+  // const user = getAuth().currentUser;
+  // if (user) {
+  //   try {
+  //     await wordCollectionsApi.addToCollection(user, { wordId, edition, collectedDate });
+  //     console.log('✅ Word collection saved to backend');
+  //   } catch (error) {
+  //     console.error('❌ Failed to save word collection to backend:', error);
+  //     // Don't throw - we want the local save to succeed even if backend fails
+  //   }
+  // }
 };
 
 export const hasCollected = (wordId: WordId, edition: number): boolean => {
