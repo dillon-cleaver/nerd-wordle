@@ -3,27 +3,9 @@ import { colors } from "../constants/styles";
 import { Game } from "@/components/Game";
 import { BaseSafeAreaView } from "@/components/base/BaseSafeAreaView";
 import { useUser } from "@/hooks/useUser";
-import { useEffect } from "react";
 
 export default function Index() {
-  const { loading, authUser } = useUser();
-
-  // TODO: TEMPORARY: Log fresh Firebase token for API testing
-  useEffect(() => {
-    const logToken = async () => {
-      if (authUser) {
-        try {
-          const token = await authUser.getIdToken(true); // Force refresh
-          console.log("🔑 Fresh Firebase Token for API testing:");
-          console.log(token);
-          console.log("Copy this token and use it in Yaak!");
-        } catch (error) {
-          console.error("Error getting token:", error);
-        }
-      }
-    };
-    logToken();
-  }, [authUser]);
+  const { loading } = useUser();
 
   if (loading) {
     return (

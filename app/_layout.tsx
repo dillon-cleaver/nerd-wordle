@@ -25,6 +25,7 @@ import { UserProvider } from "@/context/UserContext";
 import { View } from "react-native";
 import { DrawerSignOutButton } from "@/components/DrawerSignOutButton";
 import { GameProvider } from "@/context/GameContext";
+import { PuzzleHistoryProvider } from "@/context/PuzzleHistoryContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -61,8 +62,9 @@ export default function RootLayout() {
 
   return (
     <UserProvider>
-      <GameProvider>
-        <GestureHandlerRootView style={{ flex: 1 }}>
+      <PuzzleHistoryProvider>
+        <GameProvider>
+          <GestureHandlerRootView style={{ flex: 1 }}>
           <Drawer
             drawerContent={(props) => (
               <DrawerContentScrollView
@@ -160,6 +162,7 @@ export default function RootLayout() {
           <StatusBar networkActivityIndicatorVisible={true} style="light" />
         </GestureHandlerRootView>
       </GameProvider>
+      </PuzzleHistoryProvider>
     </UserProvider>
   );
 }
