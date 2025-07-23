@@ -34,6 +34,7 @@ const TODAY_PUZZLE: DailyPuzzleSeed = {
     edition: 5,
     summary: "",
     hints: [],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/The_Legend_of_Zelda",
     appearance: {
       timesShown: 1,
       firstShownDate: new Date(),

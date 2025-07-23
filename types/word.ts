@@ -23,6 +23,7 @@ type NerdWordEntry = {
   edition: number;
   hints: string[];
   summary: string;
+  wikipediaUrl: string; // Wikipedia link for additional context
   appearance?: {
     timesShown: number; // How many times this word has appeared globally
     firstShownDate: Date; // When first shown
