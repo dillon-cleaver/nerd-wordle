@@ -54,11 +54,13 @@ export function PuzzleHistoryProvider({
         };
         setPuzzleResults((prev) => [newResult, ...prev]);
 
+        // TODO: Replace console.log with proper logging service (e.g., Firebase Analytics, Sentry)
         console.log("✅ Puzzle result saved successfully:", newResult);
       } catch (err) {
         const errorMessage =
           err instanceof Error ? err.message : "Failed to save puzzle result";
         setError(errorMessage);
+        // TODO: Replace console.error with proper error tracking service (e.g., Sentry, Crashlytics)
         console.error("❌ Failed to save puzzle result:", err);
         throw err; // Re-throw so caller can handle if needed
       } finally {

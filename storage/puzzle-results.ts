@@ -29,6 +29,7 @@ export const savePuzzleResult = async (
   _uid: string | null,
   result: PuzzleResult
 ) => {
+  // TODO: Replace console.log with proper logging service (e.g., Firebase Analytics, Sentry)
   console.log("🔄 Starting to save puzzle result:", result);
 
   // Save locally for offline support
@@ -50,6 +51,7 @@ export const savePuzzleResult = async (
       await puzzleHistoryApi.savePuzzleResult(user, apiResult);
       console.log("✅ Puzzle result saved to backend:", apiResult);
     } catch (error) {
+      // TODO: Replace console.error with proper error tracking service (e.g., Sentry, Crashlytics)
       console.error("❌ Failed to save puzzle result to backend:", error);
       console.error(
         "Error details:",
