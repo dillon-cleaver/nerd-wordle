@@ -16,6 +16,8 @@ import { useEffect, useCallback } from "react";
 import { StyleSheet, View, Text, FlatList, ViewToken } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 
+const TEMPORARY_ITEM_COUNT = 25;
+
 export default function Words() {
   // TODO: This is here temporarily --->
   useEffect(() => {
@@ -24,7 +26,9 @@ export default function Words() {
   }, []);
 
   // TODO: Replace this with real data
-  const data = new Array(TEMPORARY_ITEM_COUNT).fill(0).map((_, index) => ({ id: index }));
+  const data = new Array(TEMPORARY_ITEM_COUNT)
+    .fill(0)
+    .map((_, index) => ({ id: index }));
 
   const viewableItems = useSharedValue<ViewToken[]>([]);
 
