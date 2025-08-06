@@ -1,4 +1,4 @@
-import { BaseSafeAreaView } from "@/components/base/BaseSafeAreaView";
+import { ListItem } from "@/components/ListItem";
 import { WordCard } from "@/components/WordCard";
 import {
   WORD_CARD_MAX_WIDTH,
@@ -12,8 +12,11 @@ import {
   spacing,
 } from "@/constants/styles";
 import { loadPuzzleResultsLocal } from "@/storage/puzzle-results.local";
-import { useEffect } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { useEffect, useCallback } from "react";
+import { StyleSheet, View, Text, FlatList, ViewToken } from "react-native";
+import { useSharedValue } from "react-native-reanimated";
+
+const TEMPORARY_ITEM_COUNT = 25;
 
 export default function Words() {
   // TODO: This is here temporarily --->
@@ -22,26 +25,47 @@ export default function Words() {
     console.log("Puzzle history:", results);
   }, []);
 
+  // TODO: Replace this with real data
+  const data = new Array(TEMPORARY_ITEM_COUNT)
+    .fill(0)
+    .map((_, index) => ({ id: index }));
+
+  const viewableItems = useSharedValue<ViewToken[]>([]);
+
+  const onViewableItemsChanged = useCallback(
+    ({ viewableItems: vItems }: { viewableItems: ViewToken[] }) => {
+      viewableItems.value = vItems;
+    },
+    [viewableItems]
+  );
+
   return (
-    <BaseSafeAreaView addStyles={styles.container} edges={[]}>
-      <View style={styles.content}>
-        <View style={styles.titleTextContainer}>
-          <Text style={styles.titleText}>Words</Text>
-        </View>
-        <WordCard />
+    <View style={styles.container}>
+      <View style={styles.titleTextContainer}>
+        <Text style={styles.titleText}>Words</Text>
       </View>
-    </BaseSafeAreaView>
+      <FlatList
+        data={data}
+        showsVerticalScrollIndicator={false}
+        onViewableItemsChanged={onViewableItemsChanged}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <ListItem item={item} viewableItems={viewableItems}>
+            <WordCard />
+          </ListItem>
+        )}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: spacing.md,
-    backgroundColor: colors.neutral.background,
-  },
-  content: {
+    flex: 1,
     alignItems: "center",
+    paddingHorizontal: spacing.md,
     paddingTop: spacing.md,
+    backgroundColor: colors.neutral.background,
     gap: spacing.md,
   },
   titleTextContainer: {
