@@ -26,7 +26,7 @@ export const ListItem = ({ children, item, viewableItems }: ListItemProps) => {
       opacity: withTiming(isVisible ? 1 : 0),
       transform: [{ scale: withTiming(isVisible ? 1 : 0.9) }],
     };
-  }, []);
+  }, [item.id, viewableItems]);
 
   return (
     <Animated.View style={[rStyle, { paddingVertical: 8 }]}>

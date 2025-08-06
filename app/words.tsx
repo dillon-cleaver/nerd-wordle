@@ -23,6 +23,7 @@ export default function Words() {
     console.log("Puzzle history:", results);
   }, []);
 
+  // TODO: Replace this with real data
   const data = new Array(25).fill(0).map((_, index) => ({ id: index }));
 
   const viewableItems = useSharedValue<ViewToken[]>([]);
@@ -43,6 +44,7 @@ export default function Words() {
         data={data}
         showsVerticalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <ListItem item={item} viewableItems={viewableItems}>
             <WordCard />
