@@ -24,7 +24,7 @@ export default function Words() {
   }, []);
 
   // TODO: Replace this with real data
-  const data = new Array(25).fill(0).map((_, index) => ({ id: index }));
+  const data = new Array(TEMPORARY_ITEM_COUNT).fill(0).map((_, index) => ({ id: index }));
 
   const viewableItems = useSharedValue<ViewToken[]>([]);
 
