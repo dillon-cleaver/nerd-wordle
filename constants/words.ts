@@ -904,12 +904,172 @@ const WORD_DATA: WordEntry[] = [
   },
   // tabletopAndBoardGames -------------------------------------------------------->
   {
-    id: "CHESS",
+    id: "ROGUE",
     category: "tabletopAndBoardGames",
     edition: 8,
-    summary: "",
-    hints: [],
+    summary:
+      "A stealth‑focused D&D class known for Sneak Attack, skills, and subterfuge.",
+    hints: [
+      "Skilled with Thieves’ Cant and expertise rather than heavy armor",
+      "Its signature damage feature triggers when an ally is adjacent",
+    ],
+    wikipediaUrl:
+      "https://en.wikipedia.org/wiki/Character_classes_in_Dungeons_%26_Dragons#Rogue",
+  },
+  {
+    id: "PSION",
+    category: "tabletopAndBoardGames",
+    edition: 17,
+    summary:
+      "A psionic character class in some D&D editions, wielding mental disciplines and power points.",
+    hints: [
+      "Manifests abilities via disciplines instead of spell schools",
+      "Often associated with crystal foci and the Far Realm",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Psion_(Dungeons_%26_Dragons)",
+  },
+  {
+    id: "DRUID",
+    category: "tabletopAndBoardGames",
+    edition: 26,
+    summary:
+      "A D&D spellcaster tied to nature, known for Wild Shape and circle traditions.",
+    hints: [
+      "Can prepare spells from the entire list after each long rest",
+      "Transforms into beasts while retaining class features",
+    ],
+    wikipediaUrl:
+      "https://en.wikipedia.org/wiki/Character_classes_in_Dungeons_%26_Dragons#Druid",
+  },
+  {
+    id: "CATAN",
+    category: "tabletopAndBoardGames",
+    edition: 35,
+    summary:
+      "A seminal Eurogame about trading and building on a modular hex map.",
+    hints: [
+      "Wool, ore, brick — trade ratios shape your tempo",
+      "The robber freezes production on a tile until displaced",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Catan",
+  },
+  {
+    id: "CHESS",
+    category: "tabletopAndBoardGames",
+    edition: 44,
+    summary:
+      "A classic two‑player strategy game on an 8×8 board with asymmetric piece movement.",
+    hints: [
+      "One special king move requires untouched pieces and a clear path",
+      "A pawn may capture en passant under precise timing",
+    ],
     wikipediaUrl: "https://en.wikipedia.org/wiki/Chess",
+  },
+  {
+    id: "CHECK",
+    category: "tabletopAndBoardGames",
+    edition: 53,
+    summary:
+      "In chess, a direct attack on the king that must be addressed immediately.",
+    hints: [
+      "Avoidable by capture, interposition, or king movement only",
+      "Declare this before mate ends the game",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Check_(chess)",
+  },
+  {
+    id: "MAGIC",
+    category: "tabletopAndBoardGames",
+    edition: 62,
+    summary:
+      "Magic: The Gathering — a trading card game built on a five‑color resource system.",
+    hints: [
+      "Lands enter tapped or untapped to fuel spells",
+      "The color pie divides philosophies like blue control and red burn",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Magic:_The_Gathering",
+  },
+  {
+    id: "QUEST",
+    category: "tabletopAndBoardGames",
+    edition: 71,
+    summary:
+      "A core RPG objective structure — narrative goals that drive adventures.",
+    hints: [
+      "Often formalized in modules with hooks, milestones, and rewards",
+      "May be tracked alongside side objectives and downtime tasks",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Role-playing_game",
+  },
+  {
+    id: "BLUFF",
+    category: "tabletopAndBoardGames",
+    edition: 80,
+    summary:
+      "A hidden‑information/deduction tactic central to games like poker and Liar’s Dice.",
+    hints: [
+      "Success hinges on probabilistic claims and table image",
+      "Often countered by forced reveals or challenge mechanics",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Bluffing",
+  },
+  {
+    id: "PIECE",
+    category: "tabletopAndBoardGames",
+    edition: 89,
+    summary: "A movable unit used to represent players or powers on a board.",
+    hints: [
+      "Its shape may encode movement or ownership",
+      "In abstracts, material advantage is measured in these units",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Game_piece",
+  },
+  {
+    id: "SPACE",
+    category: "tabletopAndBoardGames",
+    edition: 98,
+    summary:
+      "A discrete position on a board that constrains movement and placement.",
+    hints: [
+      "Landing here can trigger card draws, penalties, or bonuses",
+      "Grids and hexes partition these locations",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Board_game",
+  },
+  {
+    id: "BOARD",
+    category: "tabletopAndBoardGames",
+    edition: 107,
+    summary: "The surface or layout on which a tabletop game is played.",
+    hints: [
+      "May be modular, folding, or tile‑based for replayability",
+      "Its topology defines adjacency and movement costs",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Board_game",
+  },
+  {
+    id: "ROUTE",
+    category: "tabletopAndBoardGames",
+    edition: 116,
+    summary:
+      "Ticket to Ride’s central mechanic — claiming connections between cities to score.",
+    hints: [
+      "Set collection enables longer claims for higher points",
+      "Hidden objectives reward completing specific paths",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Ticket_to_Ride_(board_game)",
+  },
+  {
+    id: "MIMIC",
+    category: "tabletopAndBoardGames",
+    edition: 125,
+    summary:
+      "A classic D&D monster that disguises itself as a chest or door to ambush adventurers.",
+    hints: [
+      "Often adhesive — making escape checks necessary",
+      "Perception tests fail when you treat treasure like a trap",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Mimic_(Dungeons_%26_Dragons)",
   },
   // animeAndManga -------------------------------------------------------->
   {
