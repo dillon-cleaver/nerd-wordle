@@ -7,111 +7,2342 @@ import { WordEntry, WordId } from "@/types/word";
 
 // TODO: Add 150 more common words --->
 const WORD_DATA: WordEntry[] = [
-  { id: "SLATE", category: "common" },
-  { id: "TRACE", category: "common" },
-  { id: "ROAST", category: "common" },
-  { id: "STARE", category: "common" },
-  { id: "CARET", category: "common" },
-  { id: "CRANE", category: "common" },
-  { id: "SLANT", category: "common" },
-  { id: "STALE", category: "common" },
-  { id: "STOLE", category: "common" },
-  { id: "SNARE", category: "common" },
-  { id: "IRATE", category: "common" },
-  { id: "AROSE", category: "common" },
-  { id: "TRAIN", category: "common" },
-  { id: "TASER", category: "common" },
-  { id: "RAISE", category: "common" },
-  { id: "TRADE", category: "common" },
-  { id: "ORATE", category: "common" },
-  { id: "SLICE", category: "common" },
-  { id: "LANCE", category: "common" },
-  { id: "STORE", category: "common" },
-  { id: "TARES", category: "common" },
-  { id: "LEANT", category: "common" },
-  { id: "ALTER", category: "common" },
-  { id: "CRONE", category: "common" },
-  { id: "CLOSE", category: "common" },
-  { id: "ARIEL", category: "common" },
-  { id: "ARISE", category: "common" },
-  { id: "AISLE", category: "common" },
-  { id: "SCALE", category: "common" },
-  { id: "ALONE", category: "common" },
-  { id: "TEARS", category: "common" },
-  { id: "SITAR", category: "common" },
-  { id: "SNORE", category: "common" },
-  { id: "CANST", category: "common" },
-  { id: "TAILS", category: "common" },
-  { id: "TRIAL", category: "common" },
-  { id: "CASTE", category: "common" },
-  { id: "PLANE", category: "common" },
-  { id: "RESAT", category: "common" },
-  { id: "TONER", category: "common" },
-  { id: "TRANS", category: "common" },
-  { id: "TALES", category: "common" },
-  { id: "SCARE", category: "common" },
-  { id: "ALERT", category: "common" },
-  { id: "CATER", category: "common" },
-  { id: "DEALT", category: "common" },
-  { id: "EARNT", category: "common" },
-  { id: "RINSE", category: "common" },
-  { id: "RATES", category: "common" },
-  { id: "LEARN", category: "common" },
-  { id: "SIREN", category: "common" },
-  { id: "TRIES", category: "common" },
-  { id: "REALS", category: "common" },
-  { id: "STAIR", category: "common" },
-  { id: "SALON", category: "common" },
-  { id: "CLONE", category: "common" },
-  { id: "NITRE", category: "common" },
-  { id: "LATER", category: "common" },
-  { id: "COAST", category: "common" },
-  { id: "CANOE", category: "common" },
-  { id: "CAIRN", category: "common" },
-  { id: "SNORT", category: "common" },
-  { id: "TENOR", category: "common" },
-  { id: "CAROL", category: "common" },
-  { id: "LITRE", category: "common" },
-  { id: "SONAR", category: "common" },
-  { id: "PARSE", category: "common" },
-  { id: "GRATE", category: "common" },
-  { id: "TRODE", category: "common" },
-  { id: "CARES", category: "common" },
-  { id: "ATONE", category: "common" },
-  { id: "TRIPE", category: "common" },
-  { id: "SAUTE", category: "common" },
-  { id: "CLADE", category: "common" },
-  { id: "SCANT", category: "common" },
-  { id: "DRONE", category: "common" },
-  { id: "TALON", category: "common" },
-  { id: "TRUCE", category: "common" },
-  { id: "SORTA", category: "common" },
-  { id: "SLOAN", category: "common" },
-  { id: "CRUET", category: "common" },
-  { id: "TRIED", category: "common" },
-  { id: "STONE", category: "common" },
-  { id: "SPARE", category: "common" },
-  { id: "TIRES", category: "common" },
-  { id: "CREST", category: "common" },
-  { id: "TROPE", category: "common" },
-  { id: "NACRE", category: "common" },
-  { id: "CLINT", category: "common" },
-  { id: "TILES", category: "common" },
-  { id: "SATIN", category: "common" },
-  { id: "SINCE", category: "common" },
-  { id: "LEANS", category: "common" },
-  { id: "PEARL", category: "common" },
-  { id: "SOLAR", category: "common" },
-  { id: "SHARE", category: "common" },
-  { id: "SHALE", category: "common" },
-  { id: "TROIS", category: "common" },
-  { id: "REACT", category: "common" },
-  { id: "MISTY", category: "common" },
-  { id: "PLAIN", category: "common" },
-  { id: "HOIST", category: "common" },
-  { id: "PLATE", category: "common" },
-  { id: "NOISE", category: "common" },
-  // movies -------------------------------------------------------->
+  {
+    id: "ABOUT",
+    category: "common",
+  },
+  {
+    id: "ABOVE",
+    category: "common",
+  },
+  {
+    id: "ACTOR",
+    category: "common",
+  },
+  {
+    id: "ADMIT",
+    category: "common",
+  },
+  {
+    id: "ADOPT",
+    category: "common",
+  },
+  {
+    id: "AFTER",
+    category: "common",
+  },
+  {
+    id: "AGENT",
+    category: "common",
+  },
+  {
+    id: "AGREE",
+    category: "common",
+  },
+  {
+    id: "AHEAD",
+    category: "common",
+  },
+  {
+    id: "AISLE",
+    category: "common",
+  },
+  {
+    id: "ALARM",
+    category: "common",
+  },
+  {
+    id: "ALERT",
+    category: "common",
+  },
+  {
+    id: "ALIEN",
+    category: "common",
+  },
+  {
+    id: "ALIVE",
+    category: "common",
+  },
+  {
+    id: "ALLOW",
+    category: "common",
+  },
+  {
+    id: "ALONE",
+    category: "common",
+  },
+  {
+    id: "ALTER",
+    category: "common",
+  },
+  {
+    id: "AMONG",
+    category: "common",
+  },
+  {
+    id: "ANGER",
+    category: "common",
+  },
+  {
+    id: "ANGRY",
+    category: "common",
+  },
+  {
+    id: "ANKLE",
+    category: "common",
+  },
+  {
+    id: "APPLY",
+    category: "common",
+  },
+  {
+    id: "ARGUE",
+    category: "common",
+  },
+  {
+    id: "ARIEL",
+    category: "common",
+  },
+  {
+    id: "ARISE",
+    category: "common",
+  },
+  {
+    id: "AROSE",
+    category: "common",
+  },
+  {
+    id: "ARRAY",
+    category: "common",
+  },
+  {
+    id: "ARROW",
+    category: "common",
+  },
+  {
+    id: "ASIDE",
+    category: "common",
+  },
+  {
+    id: "ATONE",
+    category: "common",
+  },
+  {
+    id: "AUDIO",
+    category: "common",
+  },
+  {
+    id: "AVOID",
+    category: "common",
+  },
+  {
+    id: "AWAKE",
+    category: "common",
+  },
+  {
+    id: "BADGE",
+    category: "common",
+  },
+  {
+    id: "BEACH",
+    category: "common",
+  },
+  {
+    id: "BEARD",
+    category: "common",
+  },
+  {
+    id: "BEGIN",
+    category: "common",
+  },
+  {
+    id: "BEING",
+    category: "common",
+  },
+  {
+    id: "BELLY",
+    category: "common",
+  },
+  {
+    id: "BELOW",
+    category: "common",
+  },
+  {
+    id: "BENCH",
+    category: "common",
+  },
+  {
+    id: "BIRTH",
+    category: "common",
+  },
+  {
+    id: "BLACK",
+    category: "common",
+  },
+  {
+    id: "BLAME",
+    category: "common",
+  },
+  {
+    id: "BLANK",
+    category: "common",
+  },
+  {
+    id: "BLAST",
+    category: "common",
+  },
+  {
+    id: "BLAZE",
+    category: "common",
+  },
+  {
+    id: "BLEED",
+    category: "common",
+  },
+  {
+    id: "BLESS",
+    category: "common",
+  },
+  {
+    id: "BLIND",
+    category: "common",
+  },
+  {
+    id: "BLOCK",
+    category: "common",
+  },
+  {
+    id: "BLOOD",
+    category: "common",
+  },
+  {
+    id: "BLOOM",
+    category: "common",
+  },
+  {
+    id: "BOAST",
+    category: "common",
+  },
+  {
+    id: "BOUND",
+    category: "common",
+  },
+  {
+    id: "BRAVE",
+    category: "common",
+  },
+  {
+    id: "BREAD",
+    category: "common",
+  },
+  {
+    id: "BREAK",
+    category: "common",
+  },
+  {
+    id: "BREED",
+    category: "common",
+  },
+  {
+    id: "BRICK",
+    category: "common",
+  },
+  {
+    id: "BRIEF",
+    category: "common",
+  },
+  {
+    id: "BRING",
+    category: "common",
+  },
+  {
+    id: "BROAD",
+    category: "common",
+  },
+  {
+    id: "BROKE",
+    category: "common",
+  },
+  {
+    id: "BROWN",
+    category: "common",
+  },
+  {
+    id: "BUILD",
+    category: "common",
+  },
+  {
+    id: "BUILT",
+    category: "common",
+  },
+  {
+    id: "BURST",
+    category: "common",
+  },
+  {
+    id: "BUYER",
+    category: "common",
+  },
+  {
+    id: "CABIN",
+    category: "common",
+  },
+  {
+    id: "CABLE",
+    category: "common",
+  },
+  {
+    id: "CAIRN",
+    category: "common",
+  },
+  {
+    id: "CANOE",
+    category: "common",
+  },
+  {
+    id: "CANST",
+    category: "common",
+  },
+  {
+    id: "CARES",
+    category: "common",
+  },
+  {
+    id: "CARET",
+    category: "common",
+  },
+  {
+    id: "CARRY",
+    category: "common",
+  },
+  {
+    id: "CARVE",
+    category: "common",
+  },
+  {
+    id: "CASTE",
+    category: "common",
+  },
+  {
+    id: "CATCH",
+    category: "common",
+  },
+  {
+    id: "CATER",
+    category: "common",
+  },
+  {
+    id: "CAUSE",
+    category: "common",
+  },
+  {
+    id: "CHAIN",
+    category: "common",
+  },
+  {
+    id: "CHAIR",
+    category: "common",
+  },
+  {
+    id: "CHAOS",
+    category: "common",
+  },
+  {
+    id: "CHARM",
+    category: "common",
+  },
+  {
+    id: "CHART",
+    category: "common",
+  },
+  {
+    id: "CHASE",
+    category: "common",
+  },
+  {
+    id: "CHEAP",
+    category: "common",
+  },
+  {
+    id: "CHEEK",
+    category: "common",
+  },
+  {
+    id: "CHEST",
+    category: "common",
+  },
+  {
+    id: "CHILD",
+    category: "common",
+  },
+  {
+    id: "CHINA",
+    category: "common",
+  },
+  {
+    id: "CHOSE",
+    category: "common",
+  },
+  {
+    id: "CLADE",
+    category: "common",
+  },
+  {
+    id: "CLAIM",
+    category: "common",
+  },
+  {
+    id: "CLASS",
+    category: "common",
+  },
+  {
+    id: "CLEAN",
+    category: "common",
+  },
+  {
+    id: "CLEAR",
+    category: "common",
+  },
+  {
+    id: "CLIMB",
+    category: "common",
+  },
+  {
+    id: "CLINT",
+    category: "common",
+  },
+  {
+    id: "CLOCK",
+    category: "common",
+  },
+  {
+    id: "CLOSE",
+    category: "common",
+  },
+  {
+    id: "CLOUD",
+    category: "common",
+  },
+  {
+    id: "COACH",
+    category: "common",
+  },
+  {
+    id: "COAST",
+    category: "common",
+  },
+  {
+    id: "COULD",
+    category: "common",
+  },
+  {
+    id: "COUNT",
+    category: "common",
+  },
+  {
+    id: "COURT",
+    category: "common",
+  },
+  {
+    id: "COVER",
+    category: "common",
+  },
+  {
+    id: "CRACK",
+    category: "common",
+  },
+  {
+    id: "CRAFT",
+    category: "common",
+  },
+  {
+    id: "CRANE",
+    category: "common",
+  },
+  {
+    id: "CRATE",
+    category: "common",
+  },
+  {
+    id: "CRAZY",
+    category: "common",
+  },
+  {
+    id: "CREAM",
+    category: "common",
+  },
+  {
+    id: "CREST",
+    category: "common",
+  },
+  {
+    id: "CRIME",
+    category: "common",
+  },
+  {
+    id: "CRONE",
+    category: "common",
+  },
+  {
+    id: "CROSS",
+    category: "common",
+  },
+  {
+    id: "CROWD",
+    category: "common",
+  },
+  {
+    id: "CROWN",
+    category: "common",
+  },
+  {
+    id: "CRUET",
+    category: "common",
+  },
+  {
+    id: "CRUSH",
+    category: "common",
+  },
+  {
+    id: "CURSE",
+    category: "common",
+  },
+  {
+    id: "CURVE",
+    category: "common",
+  },
+  {
+    id: "DAILY",
+    category: "common",
+  },
+  {
+    id: "DANCE",
+    category: "common",
+  },
+  {
+    id: "DEALT",
+    category: "common",
+  },
+  {
+    id: "DEATH",
+    category: "common",
+  },
+  {
+    id: "DELAY",
+    category: "common",
+  },
+  {
+    id: "DEPTH",
+    category: "common",
+  },
+  {
+    id: "DEVIL",
+    category: "common",
+  },
+  {
+    id: "DIRTY",
+    category: "common",
+  },
+  {
+    id: "DIZZY",
+    category: "common",
+  },
+  {
+    id: "DOUBT",
+    category: "common",
+  },
+  {
+    id: "DOUGH",
+    category: "common",
+  },
+  {
+    id: "DRAFT",
+    category: "common",
+  },
+  {
+    id: "DRAMA",
+    category: "common",
+  },
+  {
+    id: "DREAM",
+    category: "common",
+  },
+  {
+    id: "DRESS",
+    category: "common",
+  },
+  {
+    id: "DRIED",
+    category: "common",
+  },
+  {
+    id: "DRILL",
+    category: "common",
+  },
+  {
+    id: "DRINK",
+    category: "common",
+  },
+  {
+    id: "DRIVE",
+    category: "common",
+  },
+  {
+    id: "DRONE",
+    category: "common",
+  },
+  {
+    id: "DROVE",
+    category: "common",
+  },
+  {
+    id: "DRUNK",
+    category: "common",
+  },
+  {
+    id: "DUSTY",
+    category: "common",
+  },
+  {
+    id: "EAGER",
+    category: "common",
+  },
+  {
+    id: "EARLY",
+    category: "common",
+  },
+  {
+    id: "EARNT",
+    category: "common",
+  },
+  {
+    id: "EARTH",
+    category: "common",
+  },
+  {
+    id: "EIGHT",
+    category: "common",
+  },
+  {
+    id: "ELECT",
+    category: "common",
+  },
+  {
+    id: "EMPTY",
+    category: "common",
+  },
+  {
+    id: "ENEMY",
+    category: "common",
+  },
+  {
+    id: "ENJOY",
+    category: "common",
+  },
+  {
+    id: "ENTER",
+    category: "common",
+  },
+  {
+    id: "ENTRY",
+    category: "common",
+  },
+  {
+    id: "EQUAL",
+    category: "common",
+  },
+  {
+    id: "ERROR",
+    category: "common",
+  },
+  {
+    id: "EVENT",
+    category: "common",
+  },
+  {
+    id: "EVERY",
+    category: "common",
+  },
+  {
+    id: "EXACT",
+    category: "common",
+  },
+  {
+    id: "EXIST",
+    category: "common",
+  },
+  {
+    id: "FAITH",
+    category: "common",
+  },
+  {
+    id: "FALSE",
+    category: "common",
+  },
+  {
+    id: "FAULT",
+    category: "common",
+  },
+  {
+    id: "FENCE",
+    category: "common",
+  },
+  {
+    id: "FEVER",
+    category: "common",
+  },
+  {
+    id: "FIELD",
+    category: "common",
+  },
+  {
+    id: "FIFTY",
+    category: "common",
+  },
+  {
+    id: "FIGHT",
+    category: "common",
+  },
+  {
+    id: "FINAL",
+    category: "common",
+  },
+  {
+    id: "FIRST",
+    category: "common",
+  },
+  {
+    id: "FIXED",
+    category: "common",
+  },
+  {
+    id: "FLAME",
+    category: "common",
+  },
+  {
+    id: "FLESH",
+    category: "common",
+  },
+  {
+    id: "FLOOR",
+    category: "common",
+  },
+  {
+    id: "FLOUR",
+    category: "common",
+  },
+  {
+    id: "FLUID",
+    category: "common",
+  },
+  {
+    id: "FOCUS",
+    category: "common",
+  },
+  {
+    id: "FORTH",
+    category: "common",
+  },
+  {
+    id: "FORTY",
+    category: "common",
+  },
+  {
+    id: "FOUND",
+    category: "common",
+  },
+  {
+    id: "FRAME",
+    category: "common",
+  },
+  {
+    id: "FRANK",
+    category: "common",
+  },
+  {
+    id: "FRESH",
+    category: "common",
+  },
+  {
+    id: "FRONT",
+    category: "common",
+  },
+  {
+    id: "FRUIT",
+    category: "common",
+  },
+  {
+    id: "FULLY",
+    category: "common",
+  },
+  {
+    id: "FUNNY",
+    category: "common",
+  },
+  {
+    id: "GIANT",
+    category: "common",
+  },
+  {
+    id: "GIVEN",
+    category: "common",
+  },
+  {
+    id: "GLASS",
+    category: "common",
+  },
+  {
+    id: "GLOBE",
+    category: "common",
+  },
+  {
+    id: "GLORY",
+    category: "common",
+  },
+  {
+    id: "GRACE",
+    category: "common",
+  },
+  {
+    id: "GRADE",
+    category: "common",
+  },
+  {
+    id: "GRAND",
+    category: "common",
+  },
+  {
+    id: "GRAPE",
+    category: "common",
+  },
+  {
+    id: "GRASS",
+    category: "common",
+  },
+  {
+    id: "GRATE",
+    category: "common",
+  },
+  {
+    id: "GRAVE",
+    category: "common",
+  },
+  {
+    id: "GREAT",
+    category: "common",
+  },
+  {
+    id: "GREED",
+    category: "common",
+  },
+  {
+    id: "GREEN",
+    category: "common",
+  },
+  {
+    id: "GREET",
+    category: "common",
+  },
+  {
+    id: "GRIEF",
+    category: "common",
+  },
+  {
+    id: "GROSS",
+    category: "common",
+  },
+  {
+    id: "GROUP",
+    category: "common",
+  },
+  {
+    id: "GROWN",
+    category: "common",
+  },
+  {
+    id: "GUARD",
+    category: "common",
+  },
+  {
+    id: "GUESS",
+    category: "common",
+  },
+  {
+    id: "GUEST",
+    category: "common",
+  },
+  {
+    id: "GUIDE",
+    category: "common",
+  },
+  {
+    id: "GUILD",
+    category: "common",
+  },
+  {
+    id: "HABIT",
+    category: "common",
+  },
+  {
+    id: "HAPPY",
+    category: "common",
+  },
+  {
+    id: "HARSH",
+    category: "common",
+  },
+  {
+    id: "HASTE",
+    category: "common",
+  },
+  {
+    id: "HEAVY",
+    category: "common",
+  },
+  {
+    id: "HOIST",
+    category: "common",
+  },
+  {
+    id: "HORSE",
+    category: "common",
+  },
+  {
+    id: "HOTEL",
+    category: "common",
+  },
+  {
+    id: "HOUSE",
+    category: "common",
+  },
+  {
+    id: "HUMAN",
+    category: "common",
+  },
+  {
+    id: "HURRY",
+    category: "common",
+  },
+  {
+    id: "IDEAL",
+    category: "common",
+  },
+  {
+    id: "IMAGE",
+    category: "common",
+  },
+  {
+    id: "INDEX",
+    category: "common",
+  },
+  {
+    id: "INNER",
+    category: "common",
+  },
+  {
+    id: "INPUT",
+    category: "common",
+  },
+  {
+    id: "IRATE",
+    category: "common",
+  },
+  {
+    id: "ISSUE",
+    category: "common",
+  },
+  {
+    id: "JEWEL",
+    category: "common",
+  },
+  {
+    id: "JOINT",
+    category: "common",
+  },
+  {
+    id: "JUDGE",
+    category: "common",
+  },
+  {
+    id: "JUICE",
+    category: "common",
+  },
+  {
+    id: "KNIFE",
+    category: "common",
+  },
+  {
+    id: "KNOWN",
+    category: "common",
+  },
+  {
+    id: "LABEL",
+    category: "common",
+  },
+  {
+    id: "LANCE",
+    category: "common",
+  },
+  {
+    id: "LARGE",
+    category: "common",
+  },
+  {
+    id: "LATER",
+    category: "common",
+  },
+  {
+    id: "LAUGH",
+    category: "common",
+  },
+  {
+    id: "LAYER",
+    category: "common",
+  },
+  {
+    id: "LEANS",
+    category: "common",
+  },
+  {
+    id: "LEANT",
+    category: "common",
+  },
+  {
+    id: "LEARN",
+    category: "common",
+  },
+  {
+    id: "LEASE",
+    category: "common",
+  },
+  {
+    id: "LEAST",
+    category: "common",
+  },
+  {
+    id: "LEAVE",
+    category: "common",
+  },
+  {
+    id: "LEGAL",
+    category: "common",
+  },
+  {
+    id: "LIMIT",
+    category: "common",
+  },
+  {
+    id: "LITRE",
+    category: "common",
+  },
+  {
+    id: "LIVER",
+    category: "common",
+  },
+  {
+    id: "LOCAL",
+    category: "common",
+  },
+  {
+    id: "LOOSE",
+    category: "common",
+  },
+  {
+    id: "LOWER",
+    category: "common",
+  },
+  {
+    id: "LUCKY",
+    category: "common",
+  },
+  {
+    id: "LUNCH",
+    category: "common",
+  },
+  {
+    id: "MAJOR",
+    category: "common",
+  },
+  {
+    id: "MARRY",
+    category: "common",
+  },
+  {
+    id: "MATCH",
+    category: "common",
+  },
+  {
+    id: "MAYBE",
+    category: "common",
+  },
+  {
+    id: "MAYOR",
+    category: "common",
+  },
+  {
+    id: "MEDAL",
+    category: "common",
+  },
+  {
+    id: "MEDIA",
+    category: "common",
+  },
+  {
+    id: "MERCY",
+    category: "common",
+  },
+  {
+    id: "METAL",
+    category: "common",
+  },
+  {
+    id: "METER",
+    category: "common",
+  },
+  {
+    id: "MIGHT",
+    category: "common",
+  },
+  {
+    id: "MINOR",
+    category: "common",
+  },
+  {
+    id: "MINUS",
+    category: "common",
+  },
+  {
+    id: "MISTY",
+    category: "common",
+  },
+  {
+    id: "MODEL",
+    category: "common",
+  },
+  {
+    id: "MONEY",
+    category: "common",
+  },
+  {
+    id: "MONTH",
+    category: "common",
+  },
+  {
+    id: "MORAL",
+    category: "common",
+  },
+  {
+    id: "MOTOR",
+    category: "common",
+  },
+  {
+    id: "MOUNT",
+    category: "common",
+  },
+  {
+    id: "MOUSE",
+    category: "common",
+  },
+  {
+    id: "MOUTH",
+    category: "common",
+  },
+  {
+    id: "MOVED",
+    category: "common",
+  },
+  {
+    id: "MOVIE",
+    category: "common",
+  },
+  {
+    id: "MUSIC",
+    category: "common",
+  },
+  {
+    id: "NACRE",
+    category: "common",
+  },
+  {
+    id: "NAKED",
+    category: "common",
+  },
+  {
+    id: "NAMED",
+    category: "common",
+  },
+  {
+    id: "NEEDS",
+    category: "common",
+  },
+  {
+    id: "NEVER",
+    category: "common",
+  },
+  {
+    id: "NEWLY",
+    category: "common",
+  },
+  {
+    id: "NIGHT",
+    category: "common",
+  },
+  {
+    id: "NINTH",
+    category: "common",
+  },
+  {
+    id: "NITRE",
+    category: "common",
+  },
+  {
+    id: "NOBLE",
+    category: "common",
+  },
+  {
+    id: "NOISE",
+    category: "common",
+  },
+  {
+    id: "NORTH",
+    category: "common",
+  },
+  {
+    id: "NURSE",
+    category: "common",
+  },
+  {
+    id: "OCEAN",
+    category: "common",
+  },
+  {
+    id: "OFFER",
+    category: "common",
+  },
+  {
+    id: "OFTEN",
+    category: "common",
+  },
+  {
+    id: "OLDER",
+    category: "common",
+  },
+  {
+    id: "OLIVE",
+    category: "common",
+  },
+  {
+    id: "ONION",
+    category: "common",
+  },
+  {
+    id: "OPERA",
+    category: "common",
+  },
+  {
+    id: "ORATE",
+    category: "common",
+  },
+  {
+    id: "ORDER",
+    category: "common",
+  },
+  {
+    id: "ORGAN",
+    category: "common",
+  },
+  {
+    id: "OTHER",
+    category: "common",
+  },
+  {
+    id: "OUGHT",
+    category: "common",
+  },
+  {
+    id: "OUNCE",
+    category: "common",
+  },
+  {
+    id: "OUTER",
+    category: "common",
+  },
+  {
+    id: "OWNER",
+    category: "common",
+  },
+  {
+    id: "PAINT",
+    category: "common",
+  },
+  {
+    id: "PANEL",
+    category: "common",
+  },
+  {
+    id: "PAPER",
+    category: "common",
+  },
+  {
+    id: "PARSE",
+    category: "common",
+  },
+  {
+    id: "PARTY",
+    category: "common",
+  },
+  {
+    id: "PASTA",
+    category: "common",
+  },
+  {
+    id: "PATCH",
+    category: "common",
+  },
+  {
+    id: "PEACE",
+    category: "common",
+  },
+  {
+    id: "PEARL",
+    category: "common",
+  },
+  {
+    id: "PHASE",
+    category: "common",
+  },
+  {
+    id: "PHONE",
+    category: "common",
+  },
+  {
+    id: "PHOTO",
+    category: "common",
+  },
+  {
+    id: "PIANO",
+    category: "common",
+  },
+  {
+    id: "PILOT",
+    category: "common",
+  },
+  {
+    id: "PITCH",
+    category: "common",
+  },
+  {
+    id: "PLACE",
+    category: "common",
+  },
+  {
+    id: "PLAIN",
+    category: "common",
+  },
+  {
+    id: "PLANE",
+    category: "common",
+  },
+  {
+    id: "PLANT",
+    category: "common",
+  },
+  {
+    id: "PLATE",
+    category: "common",
+  },
+  {
+    id: "PLAZA",
+    category: "common",
+  },
+  {
+    id: "POINT",
+    category: "common",
+  },
+  {
+    id: "POLAR",
+    category: "common",
+  },
+  {
+    id: "POUND",
+    category: "common",
+  },
+  {
+    id: "POWER",
+    category: "common",
+  },
+  {
+    id: "PRESS",
+    category: "common",
+  },
+  {
+    id: "PRICE",
+    category: "common",
+  },
+  {
+    id: "PRIDE",
+    category: "common",
+  },
+  {
+    id: "PRIME",
+    category: "common",
+  },
+  {
+    id: "PRINT",
+    category: "common",
+  },
+  {
+    id: "PRIOR",
+    category: "common",
+  },
+  {
+    id: "PROOF",
+    category: "common",
+  },
+  {
+    id: "PROUD",
+    category: "common",
+  },
+  {
+    id: "PROVE",
+    category: "common",
+  },
+  {
+    id: "PURSE",
+    category: "common",
+  },
+  {
+    id: "QUEEN",
+    category: "common",
+  },
+  {
+    id: "QUICK",
+    category: "common",
+  },
+  {
+    id: "QUIET",
+    category: "common",
+  },
+  {
+    id: "QUITE",
+    category: "common",
+  },
+  {
+    id: "QUOTA",
+    category: "common",
+  },
+  {
+    id: "QUOTE",
+    category: "common",
+  },
+  {
+    id: "RADIO",
+    category: "common",
+  },
+  {
+    id: "RAISE",
+    category: "common",
+  },
+  {
+    id: "RAPID",
+    category: "common",
+  },
+  {
+    id: "RATES",
+    category: "common",
+  },
+  {
+    id: "REACH",
+    category: "common",
+  },
+  {
+    id: "REACT",
+    category: "common",
+  },
+  {
+    id: "READY",
+    category: "common",
+  },
+  {
+    id: "REALS",
+    category: "common",
+  },
+  {
+    id: "REBEL",
+    category: "common",
+  },
+  {
+    id: "REFER",
+    category: "common",
+  },
+  {
+    id: "RELAX",
+    category: "common",
+  },
+  {
+    id: "REPLY",
+    category: "common",
+  },
+  {
+    id: "RESAT",
+    category: "common",
+  },
+  {
+    id: "RIGHT",
+    category: "common",
+  },
+  {
+    id: "RINSE",
+    category: "common",
+  },
+  {
+    id: "RIVER",
+    category: "common",
+  },
+  {
+    id: "ROAST",
+    category: "common",
+  },
+  {
+    id: "ROGER",
+    category: "common",
+  },
+  {
+    id: "ROUGH",
+    category: "common",
+  },
+  {
+    id: "ROUND",
+    category: "common",
+  },
+  {
+    id: "ROYAL",
+    category: "common",
+  },
+  {
+    id: "RUGBY",
+    category: "common",
+  },
+  {
+    id: "RULER",
+    category: "common",
+  },
+  {
+    id: "RURAL",
+    category: "common",
+  },
+  {
+    id: "SADLY",
+    category: "common",
+  },
+  {
+    id: "SAINT",
+    category: "common",
+  },
+  {
+    id: "SALAD",
+    category: "common",
+  },
+  {
+    id: "SALON",
+    category: "common",
+  },
+  {
+    id: "SANDY",
+    category: "common",
+  },
+  {
+    id: "SARIN",
+    category: "common",
+  },
+  {
+    id: "SATIN",
+    category: "common",
+  },
+  {
+    id: "SAUCE",
+    category: "common",
+  },
+  {
+    id: "SAUTE",
+    category: "common",
+  },
+  {
+    id: "SCALE",
+    category: "common",
+  },
+  {
+    id: "SCANT",
+    category: "common",
+  },
+  {
+    id: "SCARE",
+    category: "common",
+  },
+  {
+    id: "SCOPE",
+    category: "common",
+  },
+  {
+    id: "SENSE",
+    category: "common",
+  },
+  {
+    id: "SERVE",
+    category: "common",
+  },
+  {
+    id: "SEVEN",
+    category: "common",
+  },
+  {
+    id: "SHADE",
+    category: "common",
+  },
+  {
+    id: "SHAKE",
+    category: "common",
+  },
+  {
+    id: "SHALE",
+    category: "common",
+  },
+  {
+    id: "SHALL",
+    category: "common",
+  },
+  {
+    id: "SHAME",
+    category: "common",
+  },
+  {
+    id: "SHAPE",
+    category: "common",
+  },
+  {
+    id: "SHARE",
+    category: "common",
+  },
+  {
+    id: "SHARP",
+    category: "common",
+  },
+  {
+    id: "SHEET",
+    category: "common",
+  },
+  {
+    id: "SHELL",
+    category: "common",
+  },
+  {
+    id: "SHINE",
+    category: "common",
+  },
+  {
+    id: "SHIRT",
+    category: "common",
+  },
+  {
+    id: "SHOCK",
+    category: "common",
+  },
+  {
+    id: "SHOOT",
+    category: "common",
+  },
+  {
+    id: "SHOUT",
+    category: "common",
+  },
+  {
+    id: "SHOWN",
+    category: "common",
+  },
+  {
+    id: "SIGHT",
+    category: "common",
+  },
+  {
+    id: "SILLY",
+    category: "common",
+  },
+  {
+    id: "SINCE",
+    category: "common",
+  },
+  {
+    id: "SIREN",
+    category: "common",
+  },
+  {
+    id: "SITAR",
+    category: "common",
+  },
+  {
+    id: "SIXTH",
+    category: "common",
+  },
+  {
+    id: "SIXTY",
+    category: "common",
+  },
+  {
+    id: "SKILL",
+    category: "common",
+  },
+  {
+    id: "SLANT",
+    category: "common",
+  },
+  {
+    id: "SLATE",
+    category: "common",
+  },
+  {
+    id: "SLAVE",
+    category: "common",
+  },
+  {
+    id: "SLEEP",
+    category: "common",
+  },
+  {
+    id: "SLICE",
+    category: "common",
+  },
+  {
+    id: "SLIDE",
+    category: "common",
+  },
+  {
+    id: "SLOAN",
+    category: "common",
+  },
+  {
+    id: "SMALL",
+    category: "common",
+  },
+  {
+    id: "SMART",
+    category: "common",
+  },
+  {
+    id: "SMILE",
+    category: "common",
+  },
+  {
+    id: "SMOKE",
+    category: "common",
+  },
+  {
+    id: "SNAKE",
+    category: "common",
+  },
+  {
+    id: "SNARE",
+    category: "common",
+  },
+  {
+    id: "SNORE",
+    category: "common",
+  },
+  {
+    id: "SNORT",
+    category: "common",
+  },
+  {
+    id: "SOLAR",
+    category: "common",
+  },
+  {
+    id: "SOLID",
+    category: "common",
+  },
+  {
+    id: "SOLVE",
+    category: "common",
+  },
+  {
+    id: "SONAR",
+    category: "common",
+  },
+  {
+    id: "SORRY",
+    category: "common",
+  },
+  {
+    id: "SORTA",
+    category: "common",
+  },
+  {
+    id: "SOUND",
+    category: "common",
+  },
+  {
+    id: "SOUTH",
+    category: "common",
+  },
+  {
+    id: "SPARE",
+    category: "common",
+  },
+  {
+    id: "SPEAK",
+    category: "common",
+  },
+  {
+    id: "SPEED",
+    category: "common",
+  },
+  {
+    id: "SPEND",
+    category: "common",
+  },
+  {
+    id: "SPLIT",
+    category: "common",
+  },
+  {
+    id: "SPOKE",
+    category: "common",
+  },
+  {
+    id: "SPORT",
+    category: "common",
+  },
+  {
+    id: "SQUAD",
+    category: "common",
+  },
+  {
+    id: "STAFF",
+    category: "common",
+  },
+  {
+    id: "STAGE",
+    category: "common",
+  },
+  {
+    id: "STAIN",
+    category: "common",
+  },
+  {
+    id: "STAIR",
+    category: "common",
+  },
+  {
+    id: "STAKE",
+    category: "common",
+  },
+  {
+    id: "STALE",
+    category: "common",
+  },
+  {
+    id: "STAND",
+    category: "common",
+  },
+  {
+    id: "STARE",
+    category: "common",
+  },
+  {
+    id: "START",
+    category: "common",
+  },
+  {
+    id: "STATE",
+    category: "common",
+  },
+  {
+    id: "STEAL",
+    category: "common",
+  },
+  {
+    id: "STEEL",
+    category: "common",
+  },
+  {
+    id: "STICK",
+    category: "common",
+  },
+  {
+    id: "STILL",
+    category: "common",
+  },
+  {
+    id: "STOCK",
+    category: "common",
+  },
+  {
+    id: "STOLE",
+    category: "common",
+  },
+  {
+    id: "STONE",
+    category: "common",
+  },
+  {
+    id: "STOOD",
+    category: "common",
+  },
+  {
+    id: "STORE",
+    category: "common",
+  },
+  {
+    id: "STORM",
+    category: "common",
+  },
+  {
+    id: "STORY",
+    category: "common",
+  },
+  {
+    id: "STRIP",
+    category: "common",
+  },
+  {
+    id: "STUCK",
+    category: "common",
+  },
+  {
+    id: "STUDY",
+    category: "common",
+  },
+  {
+    id: "STUFF",
+    category: "common",
+  },
+  {
+    id: "STYLE",
+    category: "common",
+  },
+  {
+    id: "SUGAR",
+    category: "common",
+  },
+  {
+    id: "SUITE",
+    category: "common",
+  },
+  {
+    id: "SUNNY",
+    category: "common",
+  },
+  {
+    id: "SUPER",
+    category: "common",
+  },
+  {
+    id: "SWEET",
+    category: "common",
+  },
+  {
+    id: "SWIFT",
+    category: "common",
+  },
+  {
+    id: "TABLE",
+    category: "common",
+  },
+  {
+    id: "TAILS",
+    category: "common",
+  },
+  {
+    id: "TAKEN",
+    category: "common",
+  },
+  {
+    id: "TALES",
+    category: "common",
+  },
+  {
+    id: "TALON",
+    category: "common",
+  },
+  {
+    id: "TARES",
+    category: "common",
+  },
+  {
+    id: "TASER",
+    category: "common",
+  },
+  {
+    id: "TASTE",
+    category: "common",
+  },
+  {
+    id: "TEACH",
+    category: "common",
+  },
+  {
+    id: "TEARS",
+    category: "common",
+  },
+  {
+    id: "TEETH",
+    category: "common",
+  },
+  {
+    id: "TEMPO",
+    category: "common",
+  },
+  {
+    id: "TENOR",
+    category: "common",
+  },
+  {
+    id: "TERMS",
+    category: "common",
+  },
+  {
+    id: "THANK",
+    category: "common",
+  },
+  {
+    id: "THEIR",
+    category: "common",
+  },
+  {
+    id: "THERE",
+    category: "common",
+  },
+  {
+    id: "THESE",
+    category: "common",
+  },
+  {
+    id: "THICK",
+    category: "common",
+  },
+  {
+    id: "THINK",
+    category: "common",
+  },
+  {
+    id: "THIRD",
+    category: "common",
+  },
+  {
+    id: "THOSE",
+    category: "common",
+  },
+  {
+    id: "THREE",
+    category: "common",
+  },
+  {
+    id: "THREW",
+    category: "common",
+  },
+  {
+    id: "THROW",
+    category: "common",
+  },
+  {
+    id: "THUMB",
+    category: "common",
+  },
+  {
+    id: "TIGER",
+    category: "common",
+  },
+  {
+    id: "TIGHT",
+    category: "common",
+  },
+  {
+    id: "TILES",
+    category: "common",
+  },
+  {
+    id: "TIMER",
+    category: "common",
+  },
+  {
+    id: "TIRES",
+    category: "common",
+  },
+  {
+    id: "TITLE",
+    category: "common",
+  },
+  {
+    id: "TODAY",
+    category: "common",
+  },
+  {
+    id: "TONER",
+    category: "common",
+  },
+  {
+    id: "TOTAL",
+    category: "common",
+  },
+  {
+    id: "TOUCH",
+    category: "common",
+  },
+  {
+    id: "TOUGH",
+    category: "common",
+  },
+  {
+    id: "TOWER",
+    category: "common",
+  },
+  {
+    id: "TRACE",
+    category: "common",
+  },
+  {
+    id: "TRACK",
+    category: "common",
+  },
+  {
+    id: "TRADE",
+    category: "common",
+  },
+  {
+    id: "TRAIL",
+    category: "common",
+  },
+  {
+    id: "TRAIN",
+    category: "common",
+  },
+  {
+    id: "TRANS",
+    category: "common",
+  },
+  {
+    id: "TRASH",
+    category: "common",
+  },
+  {
+    id: "TREAT",
+    category: "common",
+  },
+  {
+    id: "TREND",
+    category: "common",
+  },
+  {
+    id: "TRIAL",
+    category: "common",
+  },
+  {
+    id: "TRICK",
+    category: "common",
+  },
+  {
+    id: "TRIED",
+    category: "common",
+  },
+  {
+    id: "TRIES",
+    category: "common",
+  },
+  {
+    id: "TRIPE",
+    category: "common",
+  },
+  {
+    id: "TRODE",
+    category: "common",
+  },
+  {
+    id: "TROIS",
+    category: "common",
+  },
+  {
+    id: "TROPE",
+    category: "common",
+  },
+  {
+    id: "TRUCE",
+    category: "common",
+  },
+  {
+    id: "TRUCK",
+    category: "common",
+  },
+  {
+    id: "TRULY",
+    category: "common",
+  },
+  {
+    id: "TRUST",
+    category: "common",
+  },
+  {
+    id: "TRUTH",
+    category: "common",
+  },
+  {
+    id: "UNCLE",
+    category: "common",
+  },
+  {
+    id: "UNDER",
+    category: "common",
+  },
+  {
+    id: "UNION",
+    category: "common",
+  },
+  {
+    id: "UNITE",
+    category: "common",
+  },
+  {
+    id: "UNITY",
+    category: "common",
+  },
+  {
+    id: "UNTIL",
+    category: "common",
+  },
+  {
+    id: "UPPER",
+    category: "common",
+  },
+  {
+    id: "URBAN",
+    category: "common",
+  },
+  {
+    id: "USAGE",
+    category: "common",
+  },
+  {
+    id: "USUAL",
+    category: "common",
+  },
+  {
+    id: "VALUE",
+    category: "common",
+  },
+  {
+    id: "VIDEO",
+    category: "common",
+  },
+  {
+    id: "VISIT",
+    category: "common",
+  },
+  {
+    id: "VITAL",
+    category: "common",
+  },
+  {
+    id: "VOICE",
+    category: "common",
+  },
+  {
+    id: "WASTE",
+    category: "common",
+  },
+  {
+    id: "WATCH",
+    category: "common",
+  },
+  {
+    id: "WATER",
+    category: "common",
+  },
+  {
+    id: "WHEEL",
+    category: "common",
+  },
+  {
+    id: "WHERE",
+    category: "common",
+  },
+  {
+    id: "WHICH",
+    category: "common",
+  },
+  {
+    id: "WHILE",
+    category: "common",
+  },
+  {
+    id: "WHITE",
+    category: "common",
+  },
+  {
+    id: "WHOLE",
+    category: "common",
+  },
+  {
+    id: "WHOSE",
+    category: "common",
+  },
+  {
+    id: "WIDTH",
+    category: "common",
+  },
+  {
+    id: "WOMAN",
+    category: "common",
+  },
+  {
+    id: "WOMEN",
+    category: "common",
+  },
+  {
+    id: "WORLD",
+    category: "common",
+  },
+  {
+    id: "WORRY",
+    category: "common",
+  },
+  {
+    id: "WORSE",
+    category: "common",
+  },
+  {
+    id: "WORST",
+    category: "common",
+  },
+  {
+    id: "WORTH",
+    category: "common",
+  },
+  {
+    id: "WOULD",
+    category: "common",
+  },
+  {
+    id: "WRITE",
+    category: "common",
+  },
+  {
+    id: "WRONG",
+    category: "common",
+  },
+  {
+    id: "WROTE",
+    category: "common",
+  },
+  {
+    id: "YIELD",
+    category: "common",
+  },
+  {
+    id: "YOUNG",
+    category: "common",
+  },
+  {
+    id: "YOUTH",
+    category: "common",
+  },
   {
     id: "PIXAR",
     category: "movies",
@@ -224,7 +2455,6 @@ const WORD_DATA: WordEntry[] = [
     hints: [],
     wikipediaUrl: "https://en.wikipedia.org/wiki/Fargo_(film)",
   },
-  // literature -------------------------------------------------------->
   {
     id: "KAFKA",
     category: "literature",
@@ -337,7 +2567,6 @@ const WORD_DATA: WordEntry[] = [
     hints: [],
     wikipediaUrl: "https://en.wikipedia.org/wiki/Albert_Camus",
   },
-  // techAndInternetCulture -------------------------------------------------------->
   {
     id: "BASIC",
     category: "techAndInternetCulture",
@@ -450,7 +2679,6 @@ const WORD_DATA: WordEntry[] = [
     hints: [],
     wikipediaUrl: "https://en.wikipedia.org/wiki/Email",
   },
-  // science -------------------------------------------------------->
   {
     id: "QUARK",
     category: "science",
@@ -563,7 +2791,6 @@ const WORD_DATA: WordEntry[] = [
     hints: [],
     wikipediaUrl: "https://en.wikipedia.org/wiki/Cloning",
   },
-  // videoGames -------------------------------------------------------->
   {
     id: "ZELDA",
     category: "videoGames",
@@ -676,7 +2903,6 @@ const WORD_DATA: WordEntry[] = [
     hints: [],
     wikipediaUrl: "https://en.wikipedia.org/wiki/Sid_Meier",
   },
-  // fantasyAndSciFi -------------------------------------------------------->
   {
     id: "ARWEN",
     category: "fantasyAndSciFi",
@@ -789,7 +3015,6 @@ const WORD_DATA: WordEntry[] = [
     hints: [],
     wikipediaUrl: "https://en.wikipedia.org/wiki/Magic_(supernatural)",
   },
-  // superheroes -------------------------------------------------------->
   {
     id: "JOKER",
     category: "superheroes",
@@ -902,7 +3127,6 @@ const WORD_DATA: WordEntry[] = [
     hints: [],
     wikipediaUrl: "https://en.wikipedia.org/wiki/Beast_(character)",
   },
-  // tabletopAndBoardGames -------------------------------------------------------->
   {
     id: "ROGUE",
     category: "tabletopAndBoardGames",
@@ -1071,7 +3295,6 @@ const WORD_DATA: WordEntry[] = [
     ],
     wikipediaUrl: "https://en.wikipedia.org/wiki/Mimic_(Dungeons_%26_Dragons)",
   },
-  // animeAndManga -------------------------------------------------------->
   {
     id: "MANGA",
     category: "animeAndManga",
@@ -1235,7 +3458,8 @@ const WORD_DATA: WordEntry[] = [
       "Transformations often change hair color to gold",
     ],
     wikipediaUrl: "https://en.wikipedia.org/wiki/Saiyan",
-  },
+  }
+
 ];
 
 export const getWordEntry = (id: WordId): WordEntry => {
