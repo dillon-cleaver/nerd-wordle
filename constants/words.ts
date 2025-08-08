@@ -1076,9 +1076,165 @@ const WORD_DATA: WordEntry[] = [
     id: "MANGA",
     category: "animeAndManga",
     edition: 9,
-    summary: "",
-    hints: [],
+    summary:
+      "Japanese comics and graphic novels, often adapted into anime and read right to left.",
+    hints: [
+      "Printed format often adapted into animated series",
+      "Typically read from right to left in its country of origin",
+    ],
     wikipediaUrl: "https://en.wikipedia.org/wiki/Manga",
+  },
+  {
+    id: "ANIME",
+    category: "animeAndManga",
+    edition: 18,
+    summary: "Japanese animated works, covering diverse genres and art styles.",
+    hints: [
+      "May adapt manga, light novels, or be entirely original",
+      "Character designs often feature exaggerated expressions and large eyes",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Anime",
+  },
+  {
+    id: "LIGHT",
+    category: "animeAndManga",
+    edition: 27,
+    summary:
+      "Light Yagami, protagonist of Death Note, who gains a supernatural notebook of deadly power.",
+    hints: [
+      "Thinks of himself as a god of a new world",
+      "Outwitted in a high-stakes cat-and-mouse game with a detective known only as L",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Light_Yagami",
+  },
+  {
+    id: "RYUKO",
+    category: "animeAndManga",
+    edition: 36,
+    summary: "Ryuko Matoi, scissor blade-wielding heroine of Kill la Kill.",
+    hints: [
+      "Seeks the truth behind her father's murder",
+      "Wears a sentient sailor uniform named Senketsu",
+    ],
+    wikipediaUrl:
+      "https://en.wikipedia.org/wiki/List_of_Kill_la_Kill_characters#Ry%C5%ABko_Matoi",
+  },
+  {
+    id: "SPIKE",
+    category: "animeAndManga",
+    edition: 45,
+    summary:
+      "Spike Spiegel, the laid-back bounty hunter protagonist of Cowboy Bebop.",
+    hints: [
+      "Former member of the Red Dragon Crime Syndicate",
+      "Haunted by a past love and a deadly rival",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Spike_Spiegel",
+  },
+  {
+    id: "ASTRO",
+    category: "animeAndManga",
+    edition: 54,
+    summary: "Astro Boy, a classic robot hero created by Osamu Tezuka.",
+    hints: [
+      "A robot with emotions who fights for justice",
+      "Known as Tetsuwan Atom in Japan",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Astro_Boy",
+  },
+  {
+    id: "ALITA",
+    category: "animeAndManga",
+    edition: 63,
+    summary:
+      "Cyborg heroine of Battle Angel Alita, set in a post-apocalyptic world.",
+    hints: [
+      "Discovered in a scrapyard by cybernetics doctor Ido",
+      "Excels in the martial art Panzer Kunst",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Battle_Angel_Alita",
+  },
+  {
+    id: "LUPIN",
+    category: "animeAndManga",
+    edition: 72,
+    summary:
+      "Lupin III, gentleman thief from the long-running manga and anime series.",
+    hints: [
+      "Grandson of a famous fictional French burglar",
+      "Often pursued by Inspector Zenigata",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Lupin_III",
+  },
+  {
+    id: "USAGI",
+    category: "animeAndManga",
+    edition: 81,
+    summary: "Usagi Tsukino, magical girl heroine of Sailor Moon.",
+    hints: [
+      "Transforms into a guardian of love and justice",
+      "Carries a brooch and wields a Moon Tiara",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Sailor_Moon_(character)",
+  },
+  {
+    id: "RENJI",
+    category: "animeAndManga",
+    edition: 90,
+    summary: "Renji Abarai, lieutenant in Bleach’s Soul Society.",
+    hints: [
+      "Wields a zanpakuto named Zabimaru",
+      "Known for his striking red hair and tattoos",
+    ],
+    wikipediaUrl:
+      "https://en.wikipedia.org/wiki/List_of_Bleach_characters#Renji_Abarai",
+  },
+  {
+    id: "SANJI",
+    category: "animeAndManga",
+    edition: 99,
+    summary: "Sanji, cook of the Straw Hat Pirates in One Piece.",
+    hints: [
+      "Fights primarily using powerful kicks",
+      "Dreams of finding the All Blue",
+    ],
+    wikipediaUrl:
+      "https://en.wikipedia.org/wiki/List_of_One_Piece_characters#Sanji",
+  },
+  {
+    id: "CELTY",
+    category: "animeAndManga",
+    edition: 108,
+    summary: "Celty Sturluson, headless dullahan from Durarara!!.",
+    hints: [
+      "Rides a black motorcycle in Ikebukuro",
+      "Searching for her missing head",
+    ],
+    wikipediaUrl:
+      "https://en.wikipedia.org/wiki/List_of_Durarara!!_characters#Celty_Sturluson",
+  },
+  {
+    id: "HIKAR",
+    category: "animeAndManga",
+    edition: 117,
+    summary: "Hikaru Shindo, protagonist of Hikaru no Go.",
+    hints: [
+      "Haunted by the spirit of an ancient Go master",
+      "Learns strategy through the board game Go",
+    ],
+    wikipediaUrl:
+      "https://en.wikipedia.org/wiki/List_of_Hikaru_no_Go_characters#Hikaru_Shindo",
+  },
+  {
+    id: "SAIYA",
+    category: "animeAndManga",
+    edition: 126,
+    summary: "Saiyan, warrior race from the Dragon Ball series.",
+    hints: [
+      "Known for spiky hair and incredible power boosts",
+      "Transformations often change hair color to gold",
+    ],
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Saiyan",
   },
 ];
 
