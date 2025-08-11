@@ -2744,12 +2744,12 @@ const WORD_DATA: WordEntry[] = [
     wikipediaUrl: "https://en.wikipedia.org/wiki/Laser",
   },
   {
-    id: "NADIR",
+    id: "VENUS",
     category: "science",
     edition: 76,
     summary: "",
     hints: [],
-    wikipediaUrl: "https://en.wikipedia.org/wiki/Nadir",
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Venus",
   },
   {
     id: "RADAR",
@@ -2848,12 +2848,12 @@ const WORD_DATA: WordEntry[] = [
     wikipediaUrl: "https://en.wikipedia.org/wiki/Crash_Bandicoot",
   },
   {
-    id: "SCORE",
+    id: "CLOUD",
     category: "videoGames",
     edition: 68,
     summary: "",
     hints: [],
-    wikipediaUrl: "https://en.wikipedia.org/wiki/Score_(video_game)",
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Cloud_Strife",
   },
   {
     id: "HADES",
@@ -2936,12 +2936,12 @@ const WORD_DATA: WordEntry[] = [
     wikipediaUrl: "https://en.wikipedia.org/wiki/Frodo_Baggins",
   },
   {
-    id: "HADES",
+    id: "LEELA",
     category: "fantasyAndSciFi",
     edition: 42,
     summary: "",
     hints: [],
-    wikipediaUrl: "https://en.wikipedia.org/wiki/Hades",
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Leela_(Futurama)",
   },
   {
     id: "CHANI",
@@ -2960,12 +2960,12 @@ const WORD_DATA: WordEntry[] = [
     wikipediaUrl: "https://en.wikipedia.org/wiki/Gimli_(Middle-earth)",
   },
   {
-    id: "TITAN",
+    id: "SMAUG",
     category: "fantasyAndSciFi",
     edition: 69,
     summary: "",
     hints: [],
-    wikipediaUrl: "https://en.wikipedia.org/wiki/Titan_(mythology)",
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Smaug",
   },
   {
     id: "FORCE",
@@ -3008,12 +3008,12 @@ const WORD_DATA: WordEntry[] = [
     wikipediaUrl: "https://en.wikipedia.org/wiki/Sigil_(magic)",
   },
   {
-    id: "MAGIC",
+    id: "MORIA",
     category: "fantasyAndSciFi",
     edition: 123,
     summary: "",
     hints: [],
-    wikipediaUrl: "https://en.wikipedia.org/wiki/Magic_(supernatural)",
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Moria,_Middle-earth",
   },
   {
     id: "JOKER",
@@ -3458,8 +3458,7 @@ const WORD_DATA: WordEntry[] = [
       "Transformations often change hair color to gold",
     ],
     wikipediaUrl: "https://en.wikipedia.org/wiki/Saiyan",
-  }
-
+  },
 ];
 
 export const getWordEntry = (id: WordId): WordEntry => {
