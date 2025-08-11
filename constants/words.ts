@@ -420,10 +420,6 @@ const WORD_DATA: WordEntry[] = [
     category: "common",
   },
   {
-    id: "CLOUD",
-    category: "common",
-  },
-  {
     id: "COACH",
     category: "common",
   },
