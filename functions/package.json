@@ -1,7 +1,7 @@
 {
   "name": "functions",
   "scripts": {
-    "lint": "eslint --ext .js,.ts .",
+    "lint": "eslint . --ext .js,.ts",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "serve": "pnpm run build && firebase emulators:start --only functions,firestore",
@@ -11,13 +11,17 @@
     "logs": "firebase functions:log",
     "migrate:words": "pnpm run build && FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node lib/functions/src/migrations/seed-words.js",
     "migrate:puzzles": "pnpm run build && FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node lib/functions/src/migrations/seed-daily-puzzles.js",
-    "migrate:all": "pnpm run migrate:words && pnpm run migrate:puzzles"
+    "migrate:all": "pnpm run migrate:words && pnpm run migrate:puzzles",
+    "migrate:words:prod": "pnpm run build && node lib/functions/src/migrations/seed-words.js",
+    "migrate:puzzles:prod": "pnpm run build && node lib/functions/src/migrations/seed-daily-puzzles.js",
+    "migrate:all:prod": "pnpm run migrate:words:prod && pnpm run migrate:puzzles:prod"
   },
   "engines": {
     "node": "20"
   },
   "main": "lib/functions/src/index.js",
   "dependencies": {
+    "@google-cloud/functions-framework": "^4.0.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "firebase-admin": "^12.6.0",
