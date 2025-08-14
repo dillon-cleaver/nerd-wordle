@@ -2,6 +2,10 @@
 
 A Wordle-style word guessing game focused on nerdy topics including movies, science, video games, anime, literature, and more! Built with React Native and Expo.
 
+[![Web App](https://img.shields.io/badge/Play%20Online-nerd--wordle.expo.app-blue)](https://nerd-wordle.expo.app)
+[![Firebase](https://img.shields.io/badge/Backend-Firebase-orange)](https://firebase.google.com/)
+[![Expo](https://img.shields.io/badge/Built%20with-Expo-000020.svg?style=flat&logo=expo)](https://expo.dev/)
+
 ## 🎮 What is NerdWord?
 
 NerdWord puts a geeky twist on the classic word-guessing game. Instead of just common words, you'll be guessing terms from:
@@ -18,137 +22,100 @@ NerdWord puts a geeky twist on the classic word-guessing game. Instead of just c
 
 Each puzzle includes hints and Wikipedia links to help you learn more about the topics!
 
-## 🚀 Getting Started
+## 🚀 Quick Start
 
-### Prerequisites
+### Play Online
 
-- Node.js (v20 or higher)
-- pnpm (recommended) or npm
-- Expo CLI (`npm install -g @expo/cli`)
-- For development: Expo Go app on your mobile device
+Visit [nerd-wordle.expo.app](https://nerd-wordle.expo.app) to play in your browser!
 
-### Installation
+### Mobile Development
 
-1. **Clone the repository**
+```bash
+# Clone and install
+git clone https://github.com/dillon-cleaver/nerd-wordle.git
+cd nerd-wordle
+pnpm install
 
-   ```bash
-   git clone https://github.com/dillon-cleaver/nerd-wordle.git
-   cd nerd-wordle
-   ```
+# Start development server
+pnpm start
 
-2. **Install dependencies**
-
-   ```bash
-   pnpm install
-   ```
-
-3. **Start the development server**
-
-   ```bash
-   pnpm start
-   # or
-   npx expo start
-   ```
-
-4. **Run on your device**
-   - Scan the QR code with Expo Go (Android) or Camera app (iOS)
-   - Or press `i` for iOS simulator, `a` for Android emulator
-
-### Available Scripts
-
-- `pnpm start` - Start the Expo development server
-- `pnpm android` - Run on Android device/emulator
-- `pnpm ios` - Run on iOS device/simulator
-- `pnpm web` - Run in web browser
-- `pnpm test` - Run tests with Jest
-- `pnpm lint` - Run ESLint
-- `pnpm typecheck` - Run TypeScript type checking
-- `pnpm build` - Build for production
-
-## 🔧 Development Setup
-
-### Firebase Functions (Optional)
-
-The app includes Firebase Functions for puzzle history and user data. To run the backend locally:
-
-1. **Install Firebase CLI**
-
-   ```bash
-   npm install -g firebase-tools
-   ```
-
-2. **Start Firebase emulators**
-
-   ```bash
-   cd functions
-   pnpm install
-   pnpm serve
-   ```
-
-   This starts the Functions and Firestore emulators at `http://127.0.0.1:5001`
-
-3. **Configure emulator connection**
-   - The app automatically detects when running against local emulators
-   - Production builds connect to deployed Firebase services
-
-### Project Structure
-
+# Run on device
+# - Scan QR code with Expo Go app
+# - Or press 'i' for iOS, 'a' for Android
 ```
-├── app/                    # Expo Router pages
-├── components/            # Reusable UI components
-├── constants/             # Game data and styling constants
-├── context/              # React Context providers
-├── firebase/             # Firebase configuration
-├── functions/            # Firebase Cloud Functions
-├── hooks/                # Custom React hooks
-├── storage/              # Local storage utilities
-├── types/                # TypeScript type definitions
-└── utils/                # Helper functions and game logic
+
+### Full Development Setup
+
+For backend development and testing:
+
+```bash
+# Install dependencies
+pnpm install
+cd functions && pnpm install && cd ..
+
+# Start Firebase emulators + Expo
+pnpm run dev:full
 ```
+
+**📖 For detailed setup instructions, see [docs/development-guide.md](docs/development-guide.md)**
+
+### Quick Commands
+
+| Command               | Description                     |
+| --------------------- | ------------------------------- |
+| `pnpm start`          | Start Expo dev server           |
+| `pnpm run dev:full`   | Start Expo + Firebase emulators |
+| `pnpm run web:deploy` | Deploy web app                  |
+| `pnpm run eas:update` | Update mobile apps              |
+| `pnpm run deploy:all` | Deploy everything               |
 
 ## 🎯 Features
 
-- **Daily Puzzles**: New themed word puzzles each day
-- **Multiple Categories**: Diverse nerdy topics to challenge different interests
-- **Hint System**: Progressive hints to help when you're stuck
-- **User Authentication**: Sign in with Google to save progress
-- **Puzzle History**: Track your wins, attempts, and statistics
-- **Word Collection**: Collect and learn about words you've solved
-- **Cross-Platform**: Works on iOS, Android, and web
-- **Offline Support**: Play even without internet connection
+- **Daily Puzzles** 📅 - New themed word puzzles each day
+- **Multiple Categories** 🎲 - Diverse nerdy topics
+- **Hint System** 💡 - Progressive hints when you're stuck
+- **Cross-Platform** 📱 - iOS, Android, and web
+- **3,800+ Words** 📚 - Curated nerdy vocabulary
+- **User Progress** 📊 - Track stats and puzzle history
+- **Offline Support** ⚡ - Play without internet
 
-## 🛠 Tech Stack
+## 🏗️ Tech Stack
 
 - **Frontend**: React Native, Expo, TypeScript
-- **Backend**: Firebase (Auth, Firestore, Functions), Express.js
-- **Styling**: React Native StyleSheet
-- **Navigation**: Expo Router with Drawer navigation
-- **State Management**: React Context
-- **Testing**: Jest
-- **Linting**: ESLint with Expo config
+- **Backend**: Firebase (Functions, Firestore, Auth)
+- **Deployment**: EAS Build/Update, Firebase Hosting
+- **Development**: Expo Router, React Context, Jest
 
-## 📱 Deployment
+## � Project Structure
 
-### Building for Production
-
-```bash
-# For web
-pnpm build
-
-# For mobile (requires EAS Build)
-npx eas build --platform all
+```
+nerd-wordle/
+├── app/                    # Expo Router pages
+├── components/             # Reusable UI components
+├── functions/              # Firebase Cloud Functions
+├── constants/              # Game data and styling
+├── utils/                  # Helper functions
+├── docs/                   # Documentation
+└── package.json            # Dependencies & scripts
 ```
 
-### Firebase Deployment
+## 🚀 Deployment
 
-```bash
-# Deploy functions
-cd functions
-pnpm deploy
+The app is deployed to multiple platforms:
 
-# Deploy hosting (if configured)
-firebase deploy --only hosting
-```
+- **Web**: [nerd-wordle.expo.app](https://nerd-wordle.expo.app) (EAS Hosting)
+- **Mobile**: EAS Update for over-the-air updates
+- **Backend**: Firebase Functions on Google Cloud
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Test with `pnpm run dev:full`
+5. Submit a pull request
+
+See [docs/development-guide.md](docs/development-guide.md) for detailed development instructions.
 
 ## 📄 License
 
@@ -158,4 +125,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Inspired by the original Wordle by Josh Wardle
 - Built with the amazing Expo and React Native ecosystem
-- Word data and categories curated for maximum nerdiness!
+- Word data curated for maximum nerdiness! 🤓
