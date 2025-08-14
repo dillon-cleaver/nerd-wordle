@@ -4,11 +4,14 @@
     "lint": "eslint --ext .js,.ts .",
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "serve": "npm run build && firebase emulators:start --only functions,firestore",
-    "shell": "npm run build && firebase functions:shell",
-    "start": "npm run shell",
+    "serve": "pnpm run build && firebase emulators:start --only functions,firestore",
+    "shell": "pnpm run build && firebase functions:shell",
+    "start": "pnpm run shell",
     "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "logs": "firebase functions:log",
+    "migrate:words": "pnpm run build && FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node lib/functions/src/migrations/seed-words.js",
+    "migrate:puzzles": "pnpm run build && FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node lib/functions/src/migrations/seed-daily-puzzles.js",
+    "migrate:all": "pnpm run migrate:words && pnpm run migrate:puzzles"
   },
   "engines": {
     "node": "20"
