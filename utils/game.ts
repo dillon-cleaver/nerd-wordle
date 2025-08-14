@@ -159,6 +159,7 @@ export const getCategoryTextColor = (category: string) => {
   }
 };
 
+// TODO: Fix this function signature
 export function initializeGame(dailyWord?: import("@/types/word").WordEntry) {
   // If a daily word is provided, use it instead of random selection
   if (dailyWord) {
