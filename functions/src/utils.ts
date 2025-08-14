@@ -75,7 +75,7 @@ export const firestoreToWordEntry = (
  */
 export const wordEntryToFirestore = (word: WordEntry): any => {
   const baseData = {
-    id: word.id, // Include the word ID!
+    id: word.id, // The word ID is included to ensure that when reconstructing WordEntry objects from Firestore data, the ID is available even if the document ID is not directly accessible. This prevents bugs where the ID would be missing from the reconstructed object.
     category: word.category,
   };
 
