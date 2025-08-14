@@ -24,15 +24,20 @@ const GuessRow = ({
   hint,
   category,
 }: GuessRowProps) => {
+  // Defensive coding: ensure currentGuess is always a string
+  const safeCurrentGuess = currentGuess || "";
+  // Defensive coding: ensure answer is valid during loading state
+  const safeAnswer = answer && answer !== "LOADING" ? answer : "     "; // 5 spaces as fallback
+
   return (
     <View style={styles.guessRow}>
       {range(0, 5).map((letterIndex) => {
-        const letter = currentGuess[letterIndex] || "";
+        const letter = safeCurrentGuess[letterIndex] || "";
 
-        const isCorrect = letter === answer[letterIndex];
+        const isCorrect = letter === safeAnswer[letterIndex];
 
         const isPresent =
-          !isCorrect && letter !== "" && answer.includes(letter);
+          !isCorrect && letter !== "" && safeAnswer.includes(letter);
 
         const shouldShowHint = !!hint && hint.col === letterIndex;
 
