@@ -2,12 +2,8 @@ import { User } from "firebase/auth";
 import { WordEntry } from "@/types/word";
 import { DailyPuzzleSeed } from "@/utils/daily-puzzle";
 
-// TODO: ALPHA ONLY - Hardcoded localhost URL for emulator testing
-// For production deployment, replace with:
-// - Firebase Functions URL: https://us-central1-nerd-word-cfda3.cloudfunctions.net/api
-// - Or custom domain: https://api.your-domain.com
-// Consider using environment variables for different deployment environments
-const API_BASE_URL = "http://127.0.0.1:5001/nerd-word-cfda3/us-central1/api";
+// Production API URL - Cloud Functions v2 (Cloud Run)
+const API_BASE_URL = "https://api-2no66svcwq-uc.a.run.app";
 
 export type PuzzleResult = {
   id: string;
