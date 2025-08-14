@@ -20,22 +20,24 @@ import {
   getHintForWord,
   getSummaryForWord,
 } from "@/utils/game";
-import { getWordEntry } from "@/constants/words";
-import { WordId, NerdWordEntry } from "@/types/word";
+import { NerdWordEntry } from "@/types/word";
 
 export const WordCard = () => {
-  const { category, answer, originalCategory } = useContext(GameContext);
+  const { category, answer, answerEntry, originalCategory } =
+    useContext(GameContext);
 
   // WordCard is only used for nerd words, so we can safely cast
-  const wordEntry = getWordEntry(answer as WordId) as NerdWordEntry;
-  const hint = getHintForWord(answer, originalCategory);
-  const summary = getSummaryForWord(answer, originalCategory);
+  const wordEntry = answerEntry as NerdWordEntry;
+  const hint = getHintForWord(answerEntry, originalCategory);
+  const summary = getSummaryForWord(answerEntry, originalCategory);
   const tileBackgroundColor = getCategoryColor(originalCategory);
   const textColor = getCategoryTextColor(originalCategory);
 
   // TODO: Convert to a Link component for better accessibility?
   const handleWikipediaPress = () => {
-    Linking.openURL(wordEntry.wikipediaUrl);
+    if (wordEntry?.wikipediaUrl) {
+      Linking.openURL(wordEntry.wikipediaUrl);
+    }
   };
 
   // TODO: Show guesses/attempts number somewhere

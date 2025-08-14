@@ -25,6 +25,15 @@ export function UserProvider({ children }: { children: ReactNode }) {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setAuthUser(user);
       if (user) {
+        // TODO: Remove before beta testing
+        // 🧪 Console log user information for debugging
+        console.log("=== User Authentication Info ===");
+        console.log("Email:", user.email);
+        console.log("UID:", user.uid);
+        console.log("Display Name:", user.displayName);
+        console.log("Provider:", user.providerData[0]?.providerId);
+        console.log("=====================================");
+
         const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {

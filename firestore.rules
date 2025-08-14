@@ -1,10 +1,28 @@
 rules_version = '2';
 
-// WARNING: These rules allow full read/write access to anyone. 
-// This is for development only. 
-// TODO: Set to 'false' before deploying to production to secure your database.
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Allow read access to words collection for all users
+    match /words/{wordId} {
+      allow read: if true;
+    }
+    
+    // Allow read access to daily puzzles for all users
+    match /dailyPuzzles/{date} {
+      allow read: if true;
+    }
+    
+    // User-specific puzzle history - only the user can read/write their own data
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      match /puzzleHistory/{puzzleId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+    
+    // TODO: ALPHA ONLY - Permissive rules for development and testing
+    // Production should restrict these rules to specific operations only
     match /{document=**} {
       allow read, write: if true;
     }

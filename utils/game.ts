@@ -1,6 +1,6 @@
 import { WORD_DATA } from "@/constants/words";
 import { colors } from "@/constants/styles";
-import { WordCategory } from "@/types/word";
+import { WordCategory, WordEntry } from "@/types/word";
 import { sample } from "./sample";
 
 const convertCategory = (word: WordCategory): string => {
@@ -84,26 +84,32 @@ const getDefaultSummary = (category: WordCategory): string => {
 };
 
 export const getHintForWord = (
-  word: string,
+  wordEntry: WordEntry | null,
   category: WordCategory
 ): string => {
-  const entry = WORD_DATA.find((w) => w.id === word);
-
-  if (entry && entry.category !== "common" && entry.hints.length > 0) {
-    return entry.hints[0];
+  if (
+    wordEntry &&
+    wordEntry.category !== "common" &&
+    "hints" in wordEntry &&
+    wordEntry.hints.length > 0
+  ) {
+    return wordEntry.hints[0];
   }
 
   return getDefaultHint(category);
 };
 
 export const getSummaryForWord = (
-  word: string,
+  wordEntry: WordEntry | null,
   category: WordCategory
 ): string => {
-  const entry = WORD_DATA.find((w) => w.id === word);
-
-  if (entry && entry.category !== "common" && entry.summary) {
-    return entry.summary;
+  if (
+    wordEntry &&
+    wordEntry.category !== "common" &&
+    "summary" in wordEntry &&
+    wordEntry.summary
+  ) {
+    return wordEntry.summary;
   }
 
   return getDefaultSummary(category);
@@ -159,7 +165,18 @@ export const getCategoryTextColor = (category: string) => {
   }
 };
 
-export function initializeGame() {
+export function initializeGame(dailyWord?: WordEntry) {
+  // If a daily word is provided, use it instead of random selection
+  if (dailyWord) {
+    const convertedCategory = convertCategory(dailyWord.category);
+    return {
+      category: convertedCategory,
+      originalCategory: dailyWord.category,
+      answer: dailyWord.id,
+    };
+  }
+
+  // Fallback to random word selection (for development/testing)
   const categoriesExcludingCommon = Array.from(
     new Set(
       WORD_DATA.filter((word) => word.category !== "common").map(

@@ -7,7 +7,18 @@ import {
   PuzzleHistoryResponse,
   PuzzleResultRequest,
   PuzzleResultResponse,
+  WordsResponse,
+  WordResponse,
+  DailyPuzzleResponse,
 } from "./types";
+import {
+  wordsCollection,
+  dailyPuzzlesCollection,
+  firestoreToWordEntry,
+  firestoreToDailyPuzzle,
+  getTodayDateString,
+  isValidDateFormat,
+} from "./utils";
 
 // Initialize Firebase Admin SDK
 admin.initializeApp();
@@ -175,5 +186,161 @@ app.get("/puzzle-history", verifyToken, async (req, res) => {
     return res.status(500).json({ error: "Internal server error" } as ApiError);
   }
 });
+
+// GET /words route - fetch all words
+app.get("/words", async (_req: express.Request, res: express.Response) => {
+  try {
+    const wordsSnapshot = await wordsCollection().get();
+    const words = wordsSnapshot.docs
+      .map((doc) => firestoreToWordEntry(doc))
+      .filter((word) => word !== null);
+
+    return res.status(200).json({
+      words,
+      count: words.length,
+    } as WordsResponse);
+  } catch (err) {
+    console.error("Error fetching words:", err);
+    return res.status(500).json({ error: "Internal server error" } as ApiError);
+  }
+});
+
+// GET /words/:id route - fetch specific word
+app.get("/words/:id", async (req: express.Request, res: express.Response) => {
+  try {
+    const { id } = req.params;
+    const wordDoc = await wordsCollection().doc(id.toUpperCase()).get();
+    const word = firestoreToWordEntry(wordDoc);
+
+    if (!word) {
+      return res.status(404).json({
+        error: `Word with id "${id}" not found`,
+      } as ApiError);
+    }
+
+    return res.status(200).json({ word } as WordResponse);
+  } catch (err) {
+    console.error(`Error fetching word ${req.params.id}:`, err);
+    return res.status(500).json({ error: "Internal server error" } as ApiError);
+  }
+});
+
+// GET /daily-puzzle/today route - fetch current puzzle
+// NOTE: This route must come BEFORE the generic /:date route to match correctly
+app.get(
+  "/daily-puzzle/today",
+  async (_req: express.Request, res: express.Response) => {
+    try {
+      const today = getTodayDateString();
+      const puzzleDoc = await dailyPuzzlesCollection().doc(today).get();
+      const puzzle = firestoreToDailyPuzzle(puzzleDoc);
+
+      if (!puzzle) {
+        return res.status(404).json({
+          error: `No puzzle found for today (${today})`,
+        } as ApiError);
+      }
+
+      return res.status(200).json({ puzzle } as DailyPuzzleResponse);
+    } catch (err) {
+      console.error("Error fetching today's puzzle:", err);
+      return res
+        .status(500)
+        .json({ error: "Internal server error" } as ApiError);
+    }
+  }
+);
+
+// GET /daily-puzzle/:date route - fetch puzzle for specific date
+app.get(
+  "/daily-puzzle/:date",
+  async (req: express.Request, res: express.Response) => {
+    try {
+      const { date } = req.params;
+
+      if (!isValidDateFormat(date)) {
+        return res.status(400).json({
+          error: "Invalid date format. Use YYYY-MM-DD",
+        } as ApiError);
+      }
+
+      const puzzleDoc = await dailyPuzzlesCollection().doc(date).get();
+      const puzzle = firestoreToDailyPuzzle(puzzleDoc);
+
+      if (!puzzle) {
+        return res.status(404).json({
+          error: `No puzzle found for date ${date}`,
+        } as ApiError);
+      }
+
+      return res.status(200).json({ puzzle } as DailyPuzzleResponse);
+    } catch (err) {
+      console.error(`Error fetching puzzle for date ${req.params.date}:`, err);
+      return res
+        .status(500)
+        .json({ error: "Internal server error" } as ApiError);
+    }
+  }
+);
+
+// POST /daily-puzzle route - manually schedule daily puzzles (for testing/initial seeding)
+// TODO: ALPHA ONLY - Manual puzzle scheduling for testing
+// Production should use automated puzzle generation algorithm
+app.post(
+  "/daily-puzzle",
+  verifyToken,
+  async (req: express.Request, res: express.Response) => {
+    try {
+      const { date, wordId } = req.body;
+
+      // Validate required fields
+      if (!date || !wordId) {
+        return res.status(400).json({
+          error: "Missing required fields: date and wordId",
+        } as ApiError);
+      }
+
+      if (!isValidDateFormat(date)) {
+        return res.status(400).json({
+          error: "Invalid date format. Use YYYY-MM-DD",
+        } as ApiError);
+      }
+
+      // Check if word exists
+      const wordDoc = await wordsCollection().doc(wordId.toUpperCase()).get();
+      const word = firestoreToWordEntry(wordDoc);
+
+      if (!word) {
+        return res.status(404).json({
+          error: `Word with id "${wordId}" not found`,
+        } as ApiError);
+      }
+
+      // Check if puzzle for this date already exists
+      const existingPuzzleDoc = await dailyPuzzlesCollection().doc(date).get();
+      if (existingPuzzleDoc.exists) {
+        return res.status(409).json({
+          error: `A puzzle for date ${date} already exists`,
+        } as ApiError);
+      }
+
+      // Create the daily puzzle
+      const puzzle = { date, word };
+      await dailyPuzzlesCollection().doc(date).set({
+        word: word,
+      });
+
+      return res.status(201).json({
+        message: "Daily puzzle created successfully",
+        puzzle,
+      });
+    } catch (err) {
+      console.error("Error creating daily puzzle:", err);
+      return res
+        .status(500)
+        .json({ error: "Internal server error" } as ApiError);
+    }
+  }
+);
 
 export const api = functions.https.onRequest(app);

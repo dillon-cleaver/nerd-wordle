@@ -17,17 +17,22 @@ export const GuessGrid = () => {
     invalidWord,
     hint,
     originalCategory,
+    isLoading,
   } = useContext(GameContext);
+
+  // Prevent rendering during initial load to avoid crashes with undefined answer
+  // Only block if actively loading AND no valid answer yet
+  if (isLoading && (!answer || answer === "LOADING")) {
+    return <View style={styles.container} />;
+  }
 
   return (
     <View style={styles.container}>
       {range(0, NUMBER_OF_GUESSES).map((rowIndex) => {
         const currentGuess =
           rowIndex === guesses.length
-            ? tentativeGuess
-            : guesses[rowIndex]
-            ? guesses[rowIndex].id
-            : "";
+            ? tentativeGuess || ""
+            : guesses[rowIndex]?.id || "";
         const isCurrentGuess = rowIndex === guesses.length;
 
         const hintForThisRow =

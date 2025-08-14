@@ -4,7 +4,6 @@ import { PuzzleResult } from "@/types/puzzle-result";
 import { savePuzzleResult } from "@/storage/puzzle-results";
 import { addToCollection } from "@/storage/word-collections";
 import { WordEntry, WordId, NerdWordEntry } from "@/types/word";
-import { WORD_DATA, getWordEntry } from "@/constants/words";
 // import { getAuth } from "firebase/auth";
 // import { syncPuzzleResultToBackend } from "./puzzle-result-sync";
 
@@ -18,16 +17,14 @@ export const handleSubmitGuess = (
   guesses: WordId[],
   answerEntry: WordEntry,
   updaters: GameStateUpdaters,
-  hintIndex: number
+  hintIndex: number,
+  getWordEntry: (id: WordId) => WordEntry | undefined,
+  isValidWord: (word: string) => boolean
 ) => {
   if (tentativeGuess.length !== 5) return;
   const answerId = answerEntry.id as WordId;
 
-  const isValidWord = WORD_DATA.some(
-    (word) => word.id === tentativeGuess.toUpperCase()
-  );
-
-  if (!isValidWord) {
+  if (!isValidWord(tentativeGuess)) {
     updaters.setInvalidWord(true);
     setTimeout(() => {
       updaters.setInvalidWord(false);
@@ -69,9 +66,9 @@ export const handleSubmitGuess = (
     }
   }
 
-  const nextGuessesEntries: WordEntry[] = nextGuesses.map((id) =>
-    getWordEntry(id)
-  );
+  const nextGuessesEntries: WordEntry[] = nextGuesses
+    .map((id) => getWordEntry(id))
+    .filter((entry): entry is WordEntry => entry !== undefined);
 
   updaters.setGuesses(nextGuessesEntries);
   updaters.setHint(nextHint);
