@@ -84,26 +84,32 @@ const getDefaultSummary = (category: WordCategory): string => {
 };
 
 export const getHintForWord = (
-  word: string,
+  wordEntry: WordEntry | null,
   category: WordCategory
 ): string => {
-  const entry = WORD_DATA.find((w) => w.id === word);
-
-  if (entry && entry.category !== "common" && entry.hints.length > 0) {
-    return entry.hints[0];
+  if (
+    wordEntry &&
+    wordEntry.category !== "common" &&
+    "hints" in wordEntry &&
+    wordEntry.hints.length > 0
+  ) {
+    return wordEntry.hints[0];
   }
 
   return getDefaultHint(category);
 };
 
 export const getSummaryForWord = (
-  word: string,
+  wordEntry: WordEntry | null,
   category: WordCategory
 ): string => {
-  const entry = WORD_DATA.find((w) => w.id === word);
-
-  if (entry && entry.category !== "common" && entry.summary) {
-    return entry.summary;
+  if (
+    wordEntry &&
+    wordEntry.category !== "common" &&
+    "summary" in wordEntry &&
+    wordEntry.summary
+  ) {
+    return wordEntry.summary;
   }
 
   return getDefaultSummary(category);

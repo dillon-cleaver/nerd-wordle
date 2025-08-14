@@ -12,9 +12,9 @@ import { useContext } from "react";
 import { Text, View, StyleSheet } from "react-native";
 
 export const CategoryBanner = () => {
-  const { answer, originalCategory, category } = useContext(GameContext);
+  const { answerEntry, originalCategory, category } = useContext(GameContext);
 
-  const hint = getHintForWord(answer, originalCategory);
+  const hint = getHintForWord(answerEntry, originalCategory);
 
   return (
     <View style={styles.content}>

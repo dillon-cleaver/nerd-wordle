@@ -26,6 +26,7 @@ import { View } from "react-native";
 import { DrawerSignOutButton } from "@/components/DrawerSignOutButton";
 import { GameProvider } from "@/context/GameContext";
 import { PuzzleHistoryProvider } from "@/context/PuzzleHistoryContext";
+import { WordDataProvider } from "@/context/WordDataContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -63,86 +64,87 @@ export default function RootLayout() {
   return (
     <UserProvider>
       <PuzzleHistoryProvider>
-        <GameProvider>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <Drawer
-              drawerContent={(props) => (
-                <DrawerContentScrollView
-                  {...props}
-                  contentContainerStyle={{
-                    flex: 1,
-                    justifyContent: "space-between",
+        <WordDataProvider>
+          <GameProvider>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <Drawer
+                drawerContent={(props) => (
+                  <DrawerContentScrollView
+                    {...props}
+                    contentContainerStyle={{
+                      flex: 1,
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <View style={{ gap: spacing.sm }}>
+                      <DrawerItemList {...props} />
+                    </View>
+                    <View style={{ paddingVertical: spacing.sm }}>
+                      <DrawerSignOutButton />
+                    </View>
+                  </DrawerContentScrollView>
+                )}
+                screenOptions={{
+                  headerStyle: {
+                    backgroundColor: colors.neutral.background,
+                    // TODO: Border still shows on desktop web
+                    borderBottomWidth: 0,
+                    elevation: 0,
+                    shadowOpacity: 0,
+                  },
+                  headerTitleAlign: "center",
+                  headerTintColor: colors.neutral.white,
+                  headerTitle: "NerdWord",
+                  headerTitleStyle: {
+                    fontFamily: fontFamily.bitter.bold,
+                    fontSize: fontSize.title.large,
+                    alignItems: "center",
+                    lineHeight: lineHeight.title.large,
+                  },
+                  drawerStyle: {
+                    backgroundColor: colors.neutral.background,
+                    width: isDesktop ? 600 : DRAWER_WIDTH,
+                  },
+                  drawerActiveTintColor: colors.neutral.white,
+                  drawerInactiveTintColor: colors.neutral.white,
+                  drawerItemStyle: {
+                    marginVertical: spacing.xs,
+                  },
+                }}
+              >
+                <Drawer.Screen
+                  name="index"
+                  options={{
+                    title: "Home",
+                    drawerLabel: "Home",
+                    drawerLabelStyle: {
+                      fontFamily: fontFamily.bitter.bold,
+                      fontSize: fontSize.title.large,
+                      lineHeight: lineHeight.title.large,
+                    },
+                    drawerItemStyle: { borderRadius: borderRadius.md },
+                    drawerIcon: ({ color }: { color: string }) => (
+                      <FontAwesome name="home" size={24} color={color} />
+                    ),
                   }}
-                >
-                  <View style={{ gap: spacing.sm }}>
-                    <DrawerItemList {...props} />
-                  </View>
-                  <View style={{ paddingVertical: spacing.sm }}>
-                    <DrawerSignOutButton />
-                  </View>
-                </DrawerContentScrollView>
-              )}
-              screenOptions={{
-                headerStyle: {
-                  backgroundColor: colors.neutral.background,
-                  // TODO: Border still shows on desktop web
-                  borderBottomWidth: 0,
-                  elevation: 0,
-                  shadowOpacity: 0,
-                },
-                headerTitleAlign: "center",
-                headerTintColor: colors.neutral.white,
-                headerTitle: "NerdWord",
-                headerTitleStyle: {
-                  fontFamily: fontFamily.bitter.bold,
-                  fontSize: fontSize.title.large,
-                  alignItems: "center",
-                  lineHeight: lineHeight.title.large,
-                },
-                drawerStyle: {
-                  backgroundColor: colors.neutral.background,
-                  width: isDesktop ? 600 : DRAWER_WIDTH,
-                },
-                drawerActiveTintColor: colors.neutral.white,
-                drawerInactiveTintColor: colors.neutral.white,
-                drawerItemStyle: {
-                  marginVertical: spacing.xs,
-                },
-              }}
-            >
-              <Drawer.Screen
-                name="index"
-                options={{
-                  title: "Home",
-                  drawerLabel: "Home",
-                  drawerLabelStyle: {
-                    fontFamily: fontFamily.bitter.bold,
-                    fontSize: fontSize.title.large,
-                    lineHeight: lineHeight.title.large,
-                  },
-                  drawerItemStyle: { borderRadius: borderRadius.md },
-                  drawerIcon: ({ color }: { color: string }) => (
-                    <FontAwesome name="home" size={24} color={color} />
-                  ),
-                }}
-              />
-              <Drawer.Screen
-                name="words"
-                options={{
-                  title: "Words",
-                  drawerLabel: "Words",
-                  drawerLabelStyle: {
-                    fontFamily: fontFamily.bitter.bold,
-                    fontSize: fontSize.title.large,
-                    lineHeight: lineHeight.title.large,
-                  },
-                  drawerItemStyle: { borderRadius: borderRadius.md },
-                  drawerIcon: ({ color }: { color: string }) => (
-                    <FontAwesome name="trophy" size={24} color={color} />
-                  ),
-                }}
-              />
-              {/* <Drawer.Screen
+                />
+                <Drawer.Screen
+                  name="words"
+                  options={{
+                    title: "Words",
+                    drawerLabel: "Words",
+                    drawerLabelStyle: {
+                      fontFamily: fontFamily.bitter.bold,
+                      fontSize: fontSize.title.large,
+                      lineHeight: lineHeight.title.large,
+                    },
+                    drawerItemStyle: { borderRadius: borderRadius.md },
+                    drawerIcon: ({ color }: { color: string }) => (
+                      <FontAwesome name="trophy" size={24} color={color} />
+                    ),
+                  }}
+                />
+                {/* <Drawer.Screen
               name="friends"
               options={{
                 title: "Friends",
@@ -158,10 +160,11 @@ export default function RootLayout() {
                 ),
               }}
             /> */}
-            </Drawer>
-            <StatusBar networkActivityIndicatorVisible={true} style="light" />
-          </GestureHandlerRootView>
-        </GameProvider>
+              </Drawer>
+              <StatusBar networkActivityIndicatorVisible={true} style="light" />
+            </GestureHandlerRootView>
+          </GameProvider>
+        </WordDataProvider>
       </PuzzleHistoryProvider>
     </UserProvider>
   );

@@ -2,8 +2,8 @@ import { createContext, ReactNode, useState, useCallback } from "react";
 import { handleSubmitGuess, handleKeyPress } from "../utils/game-logic";
 import { GameStatus, Hint } from "@/types/game";
 import { WordEntry, WordId, WordCategory } from "@/types/word";
-import { getWordEntry } from "@/constants/words";
 import { useDailyPuzzle } from "@/hooks/useDailyPuzzle";
+import { useWordData } from "@/context/WordDataContext";
 
 type GameContextType = {
   gameStatus: GameStatus;
@@ -15,6 +15,7 @@ type GameContextType = {
   // TODO: Update this to use newer typing
   originalCategory: WordCategory;
   answer: WordId;
+  answerEntry: WordEntry | null; // The full word entry from Firebase
   handleKeyPress: (key: string) => void;
   handleSubmitGuess: () => void;
   // TODO: Remove before production - development only
@@ -32,6 +33,7 @@ export const GameContext = createContext<GameContextType>({
   category: "Fantasy and Sci‑Fi",
   originalCategory: "fantasyAndSciFi",
   answer: "LOADING", // Placeholder while puzzle loads
+  answerEntry: null, // Placeholder while puzzle loads
   handleKeyPress: () => {},
   handleSubmitGuess: () => {},
   resetGame: () => {},
@@ -40,7 +42,8 @@ export const GameContext = createContext<GameContextType>({
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   // Use the enhanced hook for clean puzzle loading and game state
-  const { gameState, hintIndex, isLoading } = useDailyPuzzle();
+  const { dailyPuzzle, gameState, hintIndex, isLoading } = useDailyPuzzle();
+  const { getWordEntry, isValidWord } = useWordData();
   const { category, originalCategory, answer } = gameState;
 
   const [gameStatus, setGameStatus] = useState<GameStatus>("running");
@@ -50,7 +53,13 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [hint, setHint] = useState<Hint>();
 
   const handleSubmitGuessCallback = useCallback(() => {
-    const answerEntry = getWordEntry(answer);
+    // Use the word entry from the daily puzzle instead of looking it up locally
+    if (!dailyPuzzle?.word) {
+      console.error("No daily puzzle word available");
+      return;
+    }
+
+    const answerEntry = dailyPuzzle.word;
 
     handleSubmitGuess(
       tentativeGuess,
@@ -63,9 +72,18 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         setHint,
         setGameStatus,
       },
-      hintIndex
+      hintIndex,
+      getWordEntry, // Pass the Firebase-aware word lookup function
+      isValidWord // Pass the Firebase-aware word validation function
     );
-  }, [tentativeGuess, guesses, answer, hintIndex]);
+  }, [
+    tentativeGuess,
+    guesses,
+    dailyPuzzle?.word,
+    hintIndex,
+    getWordEntry,
+    isValidWord,
+  ]);
 
   const handleKeyPressCallback = useCallback(
     (key: string) => {
@@ -99,6 +117,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         category,
         originalCategory,
         answer,
+        answerEntry: dailyPuzzle?.word || null,
         handleKeyPress: handleKeyPressCallback,
         handleSubmitGuess: handleSubmitGuessCallback,
         resetGame,
