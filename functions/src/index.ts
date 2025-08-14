@@ -35,6 +35,8 @@ const corsOptions = {
     "exp://localhost:19000", // Expo mobile
     "https://nerd-word-cfda3.web.app", // Your Firebase hosting domain
     "https://nerd-word-cfda3.firebaseapp.com",
+    "https://nerd-wordle.expo.app", // Expo hosting domain
+    /^https:\/\/nerd-wordle--[a-z0-9]+\.expo\.app$/, // Expo hosting preview domains
   ],
   credentials: true,
   optionsSuccessStatus: 200,

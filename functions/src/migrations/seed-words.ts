@@ -9,7 +9,7 @@ if (!admin.apps.length) {
   });
 }
 
-// Configure Firestore to use the emulator
+// Configure Firestore to use the emulator if specified
 const db = admin.firestore();
 if (process.env.FIRESTORE_EMULATOR_HOST) {
   // Already configured via environment variable
@@ -17,9 +17,7 @@ if (process.env.FIRESTORE_EMULATOR_HOST) {
     `🔧 Using Firestore emulator at ${process.env.FIRESTORE_EMULATOR_HOST}`
   );
 } else {
-  // Set emulator host manually
-  process.env.FIRESTORE_EMULATOR_HOST = "127.0.0.1:8080";
-  console.log("🔧 Setting Firestore emulator host to 127.0.0.1:8080");
+  console.log("� Using production Firestore");
 }
 
 /**
