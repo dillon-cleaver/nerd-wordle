@@ -1,5 +1,5 @@
 // Simple test to check if daily puzzle is fetching from Firebase
-const fetch = require('node-fetch');
+// Using global fetch (Node.js v18+)
 
 async function testDailyPuzzle() {
   console.log('🧪 Testing Daily Puzzle API...');
