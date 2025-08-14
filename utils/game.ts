@@ -159,7 +159,18 @@ export const getCategoryTextColor = (category: string) => {
   }
 };
 
-export function initializeGame() {
+export function initializeGame(dailyWord?: import("@/types/word").WordEntry) {
+  // If a daily word is provided, use it instead of random selection
+  if (dailyWord) {
+    const convertedCategory = convertCategory(dailyWord.category);
+    return {
+      category: convertedCategory,
+      originalCategory: dailyWord.category,
+      answer: dailyWord.id,
+    };
+  }
+
+  // Fallback to random word selection (for development/testing)
   const categoriesExcludingCommon = Array.from(
     new Set(
       WORD_DATA.filter((word) => word.category !== "common").map(
