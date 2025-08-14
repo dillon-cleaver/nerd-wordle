@@ -41,7 +41,8 @@ async function seedWordsCollection() {
 
   try {
     // Process words in batches of 500 (Firestore limit)
-    const BATCH_SIZE = 500;
+    // Process words in batches of 450 (slightly below Firestore limit for safety)
+    const BATCH_SIZE = 450;
 
     for (let i = 0; i < WORD_DATA.length; i += BATCH_SIZE) {
       const batch = db.batch();
