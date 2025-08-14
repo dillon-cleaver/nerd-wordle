@@ -1,3 +1,6 @@
+// TODO: PRODUCTION - Migrate to tRPC for end-to-end type safety
+// Current types are duplicated between frontend (/types/*) and backend
+// tRPC would eliminate duplication and provide automatic type inference
 export type PuzzleResultRequest = {
   id: string;
   word: string;
@@ -20,6 +23,62 @@ export type PuzzleHistoryResponse = {
 
 export type ApiError = {
   error: string;
+};
+
+// Word and Daily Puzzle types for API
+export type WordCategory =
+  | "common"
+  | "movies"
+  | "literature"
+  | "fantasyAndSciFi"
+  | "science"
+  | "videoGames"
+  | "animeAndManga"
+  | "tabletopAndBoardGames"
+  | "techAndInternetCulture"
+  | "superheroes";
+
+export type WordAppearance = {
+  timesShown: number;
+  firstShownDate: Date;
+  currentHintIndex: number;
+  lastHintRotation?: Date;
+};
+
+export type CommonWordEntry = {
+  id: string;
+  category: "common";
+};
+
+export type NerdWordEntry = {
+  id: string;
+  category: Exclude<WordCategory, "common">;
+  edition: number;
+  hints: string[];
+  summary: string;
+  wikipediaUrl: string;
+  appearance?: WordAppearance;
+};
+
+export type WordEntry = CommonWordEntry | NerdWordEntry;
+
+export type DailyPuzzleSeed = {
+  date: string; // ISO (YYYY-MM-DD)
+  word: WordEntry;
+};
+
+// API Response types
+export type WordsResponse = {
+  words: WordEntry[];
+  count: number;
+};
+
+export type WordResponse = {
+  word: WordEntry;
+};
+
+export type DailyPuzzleResponse = {
+  puzzle: DailyPuzzleSeed;
 };
 
 // Express middleware types for functions
