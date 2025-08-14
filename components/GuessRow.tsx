@@ -24,14 +24,13 @@ const GuessRow = ({
   hint,
   category,
 }: GuessRowProps) => {
+  const WORD_LENGTH = 5;
+
   // Defensive coding: ensure currentGuess is always a string
   const safeCurrentGuess = currentGuess || "";
   // Defensive coding: ensure answer is valid during loading state
-  const safeAnswer = answer && answer !== "LOADING" ? answer : "     "; // 5 spaces as fallback
-
-  return (
-    <View style={styles.guessRow}>
-  const safeAnswer = answer && answer !== "LOADING" ? answer : ' '.repeat(WORD_LENGTH); // WORD_LENGTH spaces as fallback
+  const safeAnswer =
+    answer && answer !== "LOADING" ? answer : " ".repeat(WORD_LENGTH);
 
   return (
     <View style={styles.guessRow}>

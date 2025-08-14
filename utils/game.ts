@@ -1,6 +1,6 @@
 import { WORD_DATA } from "@/constants/words";
 import { colors } from "@/constants/styles";
-import { WordCategory } from "@/types/word";
+import { WordCategory, WordEntry } from "@/types/word";
 import { sample } from "./sample";
 
 const convertCategory = (word: WordCategory): string => {
@@ -159,8 +159,7 @@ export const getCategoryTextColor = (category: string) => {
   }
 };
 
-// TODO: Fix this function signature
-export function initializeGame(dailyWord?: import("@/types/word").WordEntry) {
+export function initializeGame(dailyWord?: WordEntry) {
   // If a daily word is provided, use it instead of random selection
   if (dailyWord) {
     const convertedCategory = convertCategory(dailyWord.category);
