@@ -31,7 +31,11 @@ const GuessRow = ({
 
   return (
     <View style={styles.guessRow}>
-      {range(0, 5).map((letterIndex) => {
+  const safeAnswer = answer && answer !== "LOADING" ? answer : ' '.repeat(WORD_LENGTH); // WORD_LENGTH spaces as fallback
+
+  return (
+    <View style={styles.guessRow}>
+      {range(0, WORD_LENGTH).map((letterIndex) => {
         const letter = safeCurrentGuess[letterIndex] || "";
 
         const isCorrect = letter === safeAnswer[letterIndex];
