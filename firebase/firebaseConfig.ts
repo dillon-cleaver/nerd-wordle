@@ -1,10 +1,11 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getAuth, connectAuthEmulator } from "firebase/auth";
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 
-// Optionally import the services that you want to use
-// import {...} from 'firebase/functions';
-// import {...} from 'firebase/storage';
+// Environment detection
+const isDevelopment =
+  process.env.NODE_ENV === "development" ||
+  process.env.EXPO_PUBLIC_DEV_MODE === "true";
 
 // Initialize Firebase - PRODUCTION CONFIG
 // Firestore behavior:
@@ -22,7 +23,21 @@ export const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-// For more information on how to access Firebase in your project,
-// see the Firebase documentation: https://firebase.google.com/docs/web/setup#access-firebase
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+// Connect to emulators in development
+if (isDevelopment) {
+  // Only connect if not already connected
+  try {
+    connectFirestoreEmulator(db, "localhost", 8080);
+    connectAuthEmulator(auth, "http://localhost:9099");
+    console.log("🔧 Connected to Firebase emulators");
+  } catch (error) {
+    // Emulators might already be connected
+    console.log(
+      "🔧 Firebase emulators connection (may already be connected):",
+      error
+    );
+  }
+}
