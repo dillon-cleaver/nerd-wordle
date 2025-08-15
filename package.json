@@ -11,15 +11,12 @@
     "test": "jest --watchAll",
     "lint": "expo lint --max-warnings 0",
     "typecheck": "tsc --noEmit",
+    "prepare": "husky",
+    "dev": "cd functions && pnpm run emulator:start & pnpm start",
+    "dev:prod-data": "cd functions && pnpm run dev:prod-data & pnpm start",
     "deploy": "pnpm run deploy:web",
     "deploy:web": "expo export --platform web && eas deploy",
-    "deploy:backend": "cd functions && pnpm run deploy",
-    "deploy:all": "pnpm run deploy:backend && pnpm run deploy:web",
-    "prepare": "husky",
-    "dev": "cd functions && pnpm run serve & pnpm start",
-    "dev:full": "cd functions && pnpm run serve && sleep 3 && cd functions && pnpm run migrate:all && cd .. && pnpm start",
-    "dev:seed": "cd functions && pnpm run migrate:all",
-    "migrate": "cd functions && pnpm run migrate:all:prod"
+    "deploy:all": "cd functions && pnpm run deploy && cd .. && pnpm run deploy:web"
   },
   "jest": {
     "preset": "jest-expo"
