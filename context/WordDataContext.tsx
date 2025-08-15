@@ -7,6 +7,11 @@ import {
 } from "react";
 import { WordEntry, WordId } from "@/types/word";
 import { wordsApi } from "@/utils/api";
+import {
+  saveWordsLocal,
+  loadWordsLocal,
+  isWordsCacheValid,
+} from "@/storage/words.local";
 
 type WordDataContextType = {
   words: WordEntry[];
@@ -35,9 +40,23 @@ export const WordDataProvider = ({ children }: { children: ReactNode }) => {
         setIsLoading(true);
         setError(null);
 
-        // Try to load from Firebase first
+        // Check if we have cached words
+        const cachedData = loadWordsLocal();
+        if (cachedData && isWordsCacheValid(cachedData)) {
+          console.log("Loading words from localStorage cache");
+          setWords(cachedData.words);
+          setIsLoading(false);
+          return;
+        }
+
+        // Cache miss or expired, fetch from API
+        console.log("Cache miss, fetching from API");
         const firebaseWords = await wordsApi.getAllWords();
         setWords(firebaseWords);
+
+        // Cache the words using utility function
+        saveWordsLocal(firebaseWords);
+
         console.log(`Loaded ${firebaseWords.length} words from Firebase`);
       } catch (err) {
         console.error("Failed to load words from Firebase:", err);

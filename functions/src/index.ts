@@ -27,6 +27,11 @@ const db = admin.firestore();
 // Create Express app
 const app = express();
 
+// Cache for words to reduce Firestore reads
+let wordsCache: any[] | null = null;
+let wordsCacheTimestamp = 0;
+const WORDS_CACHE_TTL = 60 * 60 * 1000; // 1 hour in milliseconds
+
 // Configure CORS for local development and Expo requests
 const corsOptions = {
   origin: [
@@ -192,10 +197,27 @@ app.get("/puzzle-history", verifyToken, async (req, res) => {
 // GET /words route - fetch all words
 app.get("/words", async (_req: express.Request, res: express.Response) => {
   try {
+    const now = Date.now();
+
+    // Check if cache is valid
+    if (wordsCache && now - wordsCacheTimestamp < WORDS_CACHE_TTL) {
+      console.log("Serving words from cache");
+      return res.status(200).json({
+        words: wordsCache,
+        count: wordsCache.length,
+      } as WordsResponse);
+    }
+
+    // Cache miss or expired, fetch from Firestore
+    console.log("Cache miss, fetching words from Firestore");
     const wordsSnapshot = await wordsCollection().get();
     const words = wordsSnapshot.docs
       .map((doc) => firestoreToWordEntry(doc))
       .filter((word) => word !== null);
+
+    // Update cache
+    wordsCache = words;
+    wordsCacheTimestamp = now;
 
     return res.status(200).json({
       words,
