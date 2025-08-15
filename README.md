@@ -61,13 +61,14 @@ pnpm run dev:full
 
 ### Quick Commands
 
-| Command               | Description                     |
-| --------------------- | ------------------------------- |
-| `pnpm start`          | Start Expo dev server           |
-| `pnpm run dev:full`   | Start Expo + Firebase emulators |
-| `pnpm run web:deploy` | Deploy web app                  |
-| `pnpm run eas:update` | Update mobile apps              |
-| `pnpm run deploy:all` | Deploy everything               |
+| Command                   | Description                     |
+| ------------------------- | ------------------------------- |
+| `pnpm start`              | Start Expo dev server           |
+| `pnpm run dev`            | Start Expo + Firebase emulators |
+| `pnpm run dev:full`       | Start Expo + emulators + seed data |
+| `pnpm run deploy:web`     | Deploy web app                  |
+| `pnpm run deploy:backend` | Deploy backend functions        |
+| `pnpm run deploy:all`     | Deploy everything               |
 
 ## 🎯 Features
 

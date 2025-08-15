@@ -13,7 +13,7 @@ cd nerd-wordle
 pnpm install
 cd functions && pnpm install && cd ..
 
-# Start development server with Firebase emulators
+# Start development server with Firebase emulators and seeded data
 pnpm run dev:full
 ```
 
@@ -64,12 +64,20 @@ pnpm run env:check
 
 ### Starting Development
 
+| Command                   | Description                                           |
+| ------------------------- | ----------------------------------------------------- |
+| `pnpm start`              | Start Expo dev server only                           |
+| `pnpm run dev`            | Start Expo + Firebase emulators (no seeding)         |
+| `pnpm run dev:full`       | Start Expo + Firebase emulators + seed data (recommended) |
+| `pnpm run dev:seed`       | Seed local database with words and puzzles           |
+| `pnpm run clean`          | Start Expo with cleared cache                        |
+
+### Backend Development
+
 | Command                   | Description                     |
 | ------------------------- | ------------------------------- |
-| `pnpm start`              | Start Expo dev server only      |
-| `pnpm run dev:full`       | Start Expo + Firebase emulators |
-| `pnpm run dev:clean`      | Start with cleared cache        |
-| `pnpm run firebase:serve` | Start Firebase emulators only   |
+| `pnpm run dev:seed`       | Seed local Firestore with test data |
+| `pnpm run migrate`        | Run production migrations       |
 
 ### Platform-Specific Development
 
@@ -89,56 +97,49 @@ pnpm run env:check
 
 ## 🏗️ Building & Deployment
 
-### Web Deployment (EAS Hosting)
+### Web Deployment
 
 ```bash
-# Export web build and deploy to production
-pnpm run web:deploy:prod
+# Deploy web app to production
+pnpm run deploy:web
 
-# Or step by step:
-pnpm run expo:export    # Export static files
-pnpm run eas:deploy     # Deploy to EAS Hosting
+# Deploy backend functions
+pnpm run deploy:backend
+
+# Deploy everything (backend + web)
+pnpm run deploy:all
 ```
 
 ### Mobile App Updates (EAS Update)
 
 ```bash
-# Deploy to production channel
-pnpm run eas:update
-
-# Deploy to preview channel for testing
-pnpm run eas:update:preview
+# Deploy mobile app update
+pnpm run deploy:mobile
 
 # Check deployment status
-pnpm run eas:status
+eas update:list
 ```
 
 ### App Store Builds (EAS Build)
 
 ```bash
 # Build for app stores
-pnpm run eas:build:all      # Both platforms
-pnpm run eas:build:android  # Android only
-pnpm run eas:build:ios      # iOS only
-
-# Preview builds for testing
-pnpm run eas:build:preview
+eas build --platform all      # Both platforms
+eas build --platform android  # Android only
+eas build --platform ios      # iOS only
 
 # Submit to app stores
-pnpm run eas:submit:all
+eas submit --platform all
 ```
 
 ### Backend Deployment (Firebase)
 
 ```bash
-# Deploy API functions only
-pnpm run firebase:deploy
-
-# Deploy everything (functions, hosting, etc.)
-pnpm run firebase:deploy:all
+# Deploy backend functions (from functions/ directory)
+pnpm run deploy:backend
 
 # View function logs
-pnpm run firebase:logs
+firebase functions:log
 ```
 
 ## 🗄️ Database Management & Setup
@@ -160,26 +161,30 @@ pnpm run build
 firebase deploy --only functions
 ```
 
-### Local Development
+### Local Development Database
 
 ```bash
-# Seed local Firestore with words and puzzles
-pnpm run migrate:all
+# Seed local Firestore with words and puzzles (recommended workflow)
+pnpm run dev:seed
 
-# Seed individual collections
+# For individual seeding (from functions/ directory):
+cd functions
 pnpm run migrate:words    # Word dictionary (3,800+ words)
 pnpm run migrate:puzzles  # Daily puzzles
+pnpm run migrate:all      # Both words and puzzles
 ```
 
 ### Production Database Setup
 
 ```bash
 # Seed production Firestore (USE WITH CAUTION)
-pnpm run migrate:all:prod
+pnpm run migrate
 
-# Seed individual collections in production
+# For individual production seeding (from functions/ directory):
+cd functions
 pnpm run migrate:words:prod
 pnpm run migrate:puzzles:prod
+pnpm run migrate:all:prod
 ```
 
 ## 📊 API Endpoints
@@ -277,12 +282,12 @@ const words = await wordsApi.getAllWords();
 }
 ```
 
-## 🔧 Common Workflows
+## 🔧 Development Workflow
 
-### Daily Development
+### Recommended Daily Development
 
 ```bash
-# 1. Start development environment
+# 1. Start full development environment (emulators + seeded data)
 pnpm run dev:full
 
 # 2. Make your changes...
@@ -290,6 +295,16 @@ pnpm run dev:full
 # 3. Test locally
 pnpm run lint
 pnpm run typecheck
+```
+
+### Quick Development (No Seeding)
+
+```bash
+# For quick testing without database setup
+pnpm run dev
+
+# To seed data later if needed
+pnpm run dev:seed
 ```
 
 ### Deploying Updates
@@ -301,30 +316,29 @@ pnpm run deploy:all
 # Or deploy individually:
 pnpm run deploy:backend  # Firebase Functions
 pnpm run deploy:web      # Web app
-pnpm run deploy:mobile   # Mobile app update
 ```
 
 ### Adding New Words/Puzzles
 
 1. Update data in `constants/words.json` or equivalent
-2. Run migrations: `pnpm run migrate:all:prod`
-3. Deploy backend: `pnpm run firebase:deploy`
+2. Run migrations: `pnpm run migrate` (production)
+3. Deploy backend: `pnpm run deploy:backend`
 4. Test the changes
 
-### Troubleshooting
+### Troubleshooting Development
 
 ```bash
 # Clear all caches and reset
 pnpm run clean
 
-# Check for dependency issues
-pnpm run deps:check
+# Re-seed local database
+pnpm run dev:seed
 
-# Upgrade Expo SDK
-pnpm run deps:upgrade
+# Check if emulators are running
+firebase emulators:list
 
-# Reset project to template state
-pnpm run dev:reset
+# Restart development environment
+pnpm run dev:full
 ```
 
 ## 🎯 Key Features
@@ -370,15 +384,16 @@ pnpm run dev:reset
 2. Make your changes
 3. Test locally with `pnpm run dev:full`
 4. Run quality checks: `pnpm run lint && pnpm run typecheck`
-5. Deploy to preview: `pnpm run eas:update:preview`
+5. Deploy for testing: `pnpm run deploy:web`
 6. Create pull request
 
 ## 🆘 Need Help?
 
-- Check `pnpm run env:check` for authentication issues
-- Use `pnpm run firebase:logs` for backend debugging
-- Run `pnpm run deps:check` for dependency conflicts
+- Check authentication status and verify environment setup
+- Use `firebase functions:log` for backend debugging
+- Run `pnpm run dev:seed` to refresh local database
 - See Firebase console for production monitoring
+- For emulator issues, restart with `pnpm run dev:full`
 
 ---
 
