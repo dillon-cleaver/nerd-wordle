@@ -35,4 +35,10 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+# Firebase Emulator Data
+functions/emulator-data/
+functions/firebase-debug.log
+functions/firestore-debug.log
+firestore-debug.log
+
 app-example
