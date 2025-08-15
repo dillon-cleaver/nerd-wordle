@@ -64,20 +64,20 @@ pnpm run env:check
 
 ### Starting Development
 
-| Command                   | Description                                           |
-| ------------------------- | ----------------------------------------------------- |
-| `pnpm start`              | Start Expo dev server only                           |
-| `pnpm run dev`            | Start Expo + Firebase emulators (no seeding)         |
-| `pnpm run dev:full`       | Start Expo + Firebase emulators + seed data (recommended) |
-| `pnpm run dev:seed`       | Seed local database with words and puzzles           |
-| `pnpm run clean`          | Start Expo with cleared cache                        |
+| Command             | Description                                               |
+| ------------------- | --------------------------------------------------------- |
+| `pnpm start`        | Start Expo dev server only                                |
+| `pnpm run dev`      | Start Expo + Firebase emulators (no seeding)              |
+| `pnpm run dev:full` | Start Expo + Firebase emulators + seed data (recommended) |
+| `pnpm run dev:seed` | Seed local database with words and puzzles                |
+| `pnpm run clean`    | Start Expo with cleared cache                             |
 
 ### Backend Development
 
-| Command                   | Description                     |
-| ------------------------- | ------------------------------- |
-| `pnpm run dev:seed`       | Seed local Firestore with test data |
-| `pnpm run migrate`        | Run production migrations       |
+| Command             | Description                         |
+| ------------------- | ----------------------------------- |
+| `pnpm run dev:seed` | Seed local Firestore with test data |
+| `pnpm run migrate`  | Run production migrations           |
 
 ### Platform-Specific Development
 

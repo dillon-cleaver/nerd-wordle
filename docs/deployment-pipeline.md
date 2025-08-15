@@ -149,7 +149,7 @@ Or deploy individually:
 # Deploy just the backend
 pnpm run deploy:backend
 
-# Deploy just the web app  
+# Deploy just the web app
 pnpm run deploy:web
 ```
 
