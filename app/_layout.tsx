@@ -18,8 +18,6 @@ import {
 } from "@react-navigation/drawer";
 import { FontAwesome } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
-import { DEVICE_WIDTH } from "@/constants/dimensions";
-import { useDevice } from "@/hooks/useDevice";
 import { useAuthListener } from "@/hooks/useAuthListener";
 import { UserProvider } from "@/context/UserContext";
 import { View } from "react-native";
@@ -29,8 +27,6 @@ import { PuzzleHistoryProvider } from "@/context/PuzzleHistoryContext";
 import { WordDataProvider } from "@/context/WordDataContext";
 
 SplashScreen.preventAutoHideAsync();
-
-const DRAWER_WIDTH = DEVICE_WIDTH * (2 / 3);
 
 export default function RootLayout() {
   useAuthListener();
@@ -47,7 +43,6 @@ export default function RootLayout() {
     "OpenSans-Medium": require("../assets/fonts/OpenSans-Medium.ttf"),
     "OpenSans-Regular": require("../assets/fonts/OpenSans-Regular.ttf"),
   });
-  const { isDesktop } = useDevice();
 
   useEffect(() => {
     if (loaded || error) {
@@ -103,7 +98,6 @@ export default function RootLayout() {
                   },
                   drawerStyle: {
                     backgroundColor: colors.neutral.background,
-                    width: isDesktop ? 600 : DRAWER_WIDTH,
                   },
                   drawerActiveTintColor: colors.neutral.white,
                   drawerInactiveTintColor: colors.neutral.white,
