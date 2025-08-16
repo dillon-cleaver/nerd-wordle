@@ -1,23 +1,29 @@
 {
   "name": "functions",
   "scripts": {
-    "lint": "eslint --ext .js,.ts .",
+    "lint": "eslint . --ext .js,.ts",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "serve": "pnpm run build && firebase emulators:start --only functions,firestore",
     "shell": "pnpm run build && firebase functions:shell",
     "start": "pnpm run shell",
+    "emulator:start": "pnpm run build && firebase emulators:start --only functions,firestore --import=./emulator-data --export-on-exit=./emulator-data",
+    "emulator:reset": "rm -rf ./emulator-data && firebase emulators:exec --only firestore 'firebase firestore:delete --all-collections -f'",
     "deploy": "firebase deploy --only functions",
+    "deploy:all": "firebase deploy",
     "logs": "firebase functions:log",
-    "migrate:words": "pnpm run build && FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node lib/functions/src/migrations/seed-words.js",
-    "migrate:puzzles": "pnpm run build && FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node lib/functions/src/migrations/seed-daily-puzzles.js",
-    "migrate:all": "pnpm run migrate:words && pnpm run migrate:puzzles"
+    "migrate:from-prod": "pnpm run build && FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node lib/functions/src/migrations/import-from-production.js",
+    "db:export": "gcloud firestore export gs://nerd-word-cfda3.firebasestorage.app/firestore-exports/$(date +%Y%m%d-%H%M%S) --project=nerd-word-cfda3",
+    "db:import:latest": "gcloud firestore import gs://nerd-word-cfda3.firebasestorage.app/firestore-exports/$(gsutil ls gs://nerd-word-cfda3.firebasestorage.app/firestore-exports/ | sort | tail -n 1 | sed 's|gs://nerd-word-cfda3.firebasestorage.app/firestore-exports/||') --project=nerd-word-cfda3",
+    "db:list-exports": "gsutil ls gs://nerd-word-cfda3.firebasestorage.app/firestore-exports/",
+    "dev:prod-data": "firebase emulators:exec --only functions,firestore 'pnpm run migrate:from-prod' --export-on-exit=./emulator-data"
   },
   "engines": {
     "node": "20"
   },
   "main": "lib/functions/src/index.js",
   "dependencies": {
+    "@google-cloud/functions-framework": "^4.0.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "firebase-admin": "^12.6.0",
