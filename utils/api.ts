@@ -2,8 +2,8 @@ import { User } from "firebase/auth";
 import { WordEntry } from "@/types/word";
 import { DailyPuzzleSeed } from "@/utils/daily-puzzle";
 
-// Environment detection
-const isDevelopment = process.env.NODE_ENV === 'development' || process.env.EXPO_PUBLIC_DEV_MODE === 'true';
+// Environment detection - only use development API in actual development
+const isDevelopment = process.env.NODE_ENV === 'development' && (process.env.EXPO_PUBLIC_DEV_MODE === 'true' || (typeof __DEV__ !== "undefined" && __DEV__));
 
 // API URLs
 const PRODUCTION_API_URL = "https://api-2no66svcwq-uc.a.run.app";

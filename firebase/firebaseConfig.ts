@@ -2,11 +2,11 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 
-// Environment detection
+// Environment detection - only use emulator in actual development
 const isDevelopment =
-  process.env.NODE_ENV === "development" ||
-  process.env.EXPO_PUBLIC_DEV_MODE === "true" ||
-  (typeof __DEV__ !== "undefined" && __DEV__);
+  process.env.NODE_ENV === "development" &&
+  (process.env.EXPO_PUBLIC_DEV_MODE === "true" ||
+  (typeof __DEV__ !== "undefined" && __DEV__));
 
 // Debug logging
 console.log(`🔧 Firebase Configuration:`, {
