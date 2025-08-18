@@ -10,7 +10,7 @@
     "emulator:start": "pnpm run build && firebase emulators:start --only functions,firestore --import=./emulator-data --export-on-exit=./emulator-data",
     "emulator:reset": "rm -rf ./emulator-data && firebase emulators:exec --only firestore 'firebase firestore:delete --all-collections -f'",
     "deploy": "firebase deploy --only functions",
-    "deploy:all": "firebase deploy",
+    "deploy:firebase": "firebase deploy",
     "logs": "firebase functions:log",
     "migrate:from-prod": "pnpm run build && FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node lib/functions/src/migrations/import-from-production.js",
     "db:export": "gcloud firestore export gs://nerd-word-cfda3.firebasestorage.app/firestore-exports/$(date +%Y%m%d-%H%M%S) --project=nerd-word-cfda3",

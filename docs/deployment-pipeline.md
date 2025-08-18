@@ -54,7 +54,8 @@ graph TD
 pnpm expo start --web
 
 # Local Firebase Functions
-pnpm firebase:serve
+cd functions
+pnpm run emulator:start
 ```
 
 ### Staging/Preview Environment
@@ -174,7 +175,8 @@ pnpm build
 
 ```bash
 # Start local Firebase emulator with seeded data
-pnpm run dev:full
+cd functions
+pnpm run emulator:start
 
 # Test endpoints
 curl http://localhost:5001/nerd-word-cfda3/us-central1/api/words
@@ -210,6 +212,10 @@ cd functions
 firebase deploy --only functions
 firebase deploy --only functions:api
 
+# Deploy all Firebase services (functions + rules + indexes)
+cd functions  
+pnpm run deploy:firebase
+
 # With specific project
 firebase deploy --project nerd-word-cfda3 --only functions
 ```
@@ -229,14 +235,13 @@ firebase deploy --only firestore:indexes
 #### Data Migrations
 
 ```bash
-# Run production migrations from root
-pnpm run migrate
-
-# Or run individual migrations from functions directory
+# Import production data to emulator (from functions/ directory)
 cd functions
-pnpm run migrate:words:prod
-pnpm run migrate:puzzles:prod
-pnpm run migrate:all:prod
+pnpm run migrate:from-prod
+
+# Or start emulator with production data seeded
+cd functions
+pnpm run dev:prod-data
 ```
 
 ## 🔄 Complete Deployment Checklist

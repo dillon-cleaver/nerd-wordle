@@ -12,9 +12,9 @@
     "lint": "expo lint --max-warnings 0",
     "typecheck": "tsc --noEmit",
     "prepare": "husky",
-    "deploy": "pnpm run deploy:web",
     "deploy:web": "expo export --platform web && eas deploy",
-    "deploy:all": "cd functions && pnpm run deploy && cd .. && pnpm run deploy:web"
+    "deploy:backend": "cd functions && pnpm run deploy",
+    "deploy:all": "pnpm run deploy:backend && pnpm run deploy:web"
   },
   "jest": {
     "preset": "jest-expo"
