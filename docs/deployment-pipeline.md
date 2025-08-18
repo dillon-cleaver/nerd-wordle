@@ -147,11 +147,14 @@ echo "🔗 https://console.firebase.google.com/project/nerd-word-cfda3/authentic
 Or deploy individually:
 
 ```bash
-# Deploy just the backend
-pnpm run deploy:backend
+# Deploy just the backend (from functions/ directory)
+cd functions && pnpm run deploy
 
-# Deploy just the web app
+# Deploy just the web app (from root)
 pnpm run deploy:web
+
+# Deploy everything (from root)
+pnpm run deploy:all
 ```
 
 ### 2. Backend Deployment (Firebase Functions)
@@ -201,20 +204,25 @@ pnpm run deploy:all
 #### Function Deployment Commands
 
 ```bash
-# Deploy backend functions from root
-pnpm run deploy:backend
+# Deploy backend functions from root directory
+pnpm run deploy:all
 
-# Deploy everything (backend + web)
+# Or deploy all (backend + web)
 pnpm run deploy:all
 
 # Direct Firebase commands (from functions/ directory)
 cd functions
-firebase deploy --only functions
-firebase deploy --only functions:api
+pnpm run deploy
+pnpm run deploy:functions
 
 # Deploy all Firebase services (functions + rules + indexes)
-cd functions  
+cd functions
 pnpm run deploy:firebase
+
+# Deploy specific Firebase services
+cd functions
+pnpm run deploy:rules
+pnpm run deploy:indexes
 
 # With specific project
 firebase deploy --project nerd-word-cfda3 --only functions
@@ -264,7 +272,7 @@ pnpm run dev:prod-data
 ### Backend Deployment
 
 - [ ] Build functions (`cd functions && pnpm build`)
-- [ ] Deploy functions (`pnpm run deploy:backend`)
+- [ ] Deploy functions (`cd functions && pnpm run deploy`)
 - [ ] Check Firebase Console for success
 - [ ] Test API endpoints
 - [ ] Monitor function logs

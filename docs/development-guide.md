@@ -105,11 +105,25 @@ pnpm run env:check
 # Deploy web app to production
 pnpm run deploy:web
 
-# Deploy backend functions
-pnpm run deploy:backend
-
 # Deploy everything (backend + web)
 pnpm run deploy:all
+```
+
+### Backend Deployment (from functions/ directory)
+
+```bash
+cd functions
+
+# Deploy functions only
+pnpm run deploy
+
+# Deploy all Firebase services (functions + rules + indexes)
+pnpm run deploy:firebase
+
+# Deploy specific services
+pnpm run deploy:functions
+pnpm run deploy:rules
+pnpm run deploy:indexes
 ```
 
 ### Mobile App Updates (EAS Update)
@@ -336,15 +350,18 @@ pnpm start
 pnpm run deploy:all
 
 # Or deploy individually:
-pnpm run deploy:backend  # Firebase Functions
-pnpm run deploy:web      # Web app
+# Frontend only (from root)
+pnpm run deploy:web
+
+# Backend only (from functions/)
+cd functions && pnpm run deploy
 ```
 
 ### Adding New Words/Puzzles
 
 1. Update data in `constants/words.json` or equivalent
 2. Run migrations: `pnpm run migrate` (production)
-3. Deploy backend: `pnpm run deploy:backend`
+3. Deploy backend: `cd functions && pnpm run deploy`
 4. Test the changes
 
 ### Troubleshooting Development
