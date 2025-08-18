@@ -13,8 +13,14 @@ cd nerd-wordle
 pnpm install
 cd functions && pnpm install && cd ..
 
-# Start development server with Firebase emulators and seeded data
-pnpm run dev:full
+# Start development: Backend first, then frontend
+# Terminal 1: Start Firebase emulators
+cd functions
+pnpm run emulator:start
+
+# Terminal 2: Start frontend dev server
+cd ..  # back to root
+pnpm start
 ```
 
 ## 📁 Project Structure
@@ -64,28 +70,24 @@ pnpm run env:check
 
 ### Starting Development
 
-| Command             | Description                                               |
-| ------------------- | --------------------------------------------------------- |
-| `pnpm start`        | Start Expo dev server only                                |
-| `pnpm run dev`      | Start Expo + Firebase emulators (no seeding)              |
-| `pnpm run dev:full` | Start Expo + Firebase emulators + seed data (recommended) |
-| `pnpm run dev:seed` | Seed local database with words and puzzles                |
-| `pnpm run clean`    | Start Expo with cleared cache                             |
-
-### Backend Development
-
-| Command             | Description                         |
-| ------------------- | ----------------------------------- |
-| `pnpm run dev:seed` | Seed local Firestore with test data |
-| `pnpm run migrate`  | Run production migrations           |
-
-### Platform-Specific Development
+#### Frontend (from root directory)
 
 | Command            | Description                     |
 | ------------------ | ------------------------------- |
+| `pnpm start`       | Start Expo dev server           |
+| `pnpm run clean`   | Start Expo with cleared cache   |
 | `pnpm run android` | Open on Android device/emulator |
 | `pnpm run ios`     | Open on iOS device/simulator    |
 | `pnpm run web`     | Open in web browser             |
+
+#### Backend (from functions/ directory)
+
+| Command                      | Description                                      |
+| ---------------------------- | ------------------------------------------------ |
+| `pnpm run emulator:start`    | Start Firebase emulators (Firestore + Functions) |
+| `pnpm run dev:prod-data`     | Start emulators with production data seeded      |
+| `pnpm run emulator:reset`    | Reset emulator data and start fresh              |
+| `pnpm run migrate:from-prod` | Import production data to local emulator         |
 
 ### Code Quality
 
@@ -284,27 +286,47 @@ const words = await wordsApi.getAllWords();
 
 ## 🔧 Development Workflow
 
-### Recommended Daily Development
+### Recommended Daily Development Workflow
 
 ```bash
-# 1. Start full development environment (emulators + seeded data)
-pnpm run dev:full
+# 1. Start backend emulators first (Terminal 1)
+cd functions
+pnpm run emulator:start
 
-# 2. Make your changes...
+# 2. Start frontend dev server (Terminal 2)
+cd ..  # back to root directory
+pnpm start
 
-# 3. Test locally
+# 3. Make your changes...
+
+# 4. Test locally
 pnpm run lint
 pnpm run typecheck
 ```
 
-### Quick Development (No Seeding)
+### Alternative: Development with Production Data
 
 ```bash
-# For quick testing without database setup
-pnpm run dev
+# 1. Start backend with production data seeded (Terminal 1)
+cd functions
+pnpm run dev:prod-data
 
-# To seed data later if needed
-pnpm run dev:seed
+# 2. Start frontend dev server (Terminal 2)
+cd ..  # back to root directory
+pnpm start
+```
+
+### Quick Development (Fresh Start)
+
+```bash
+# 1. Reset and start emulators (Terminal 1)
+cd functions
+pnpm run emulator:reset
+pnpm run emulator:start
+
+# 2. Start frontend (Terminal 2)
+cd ..
+pnpm start
 ```
 
 ### Deploying Updates
@@ -328,17 +350,20 @@ pnpm run deploy:web      # Web app
 ### Troubleshooting Development
 
 ```bash
-# Clear all caches and reset
+# Clear frontend cache and restart
 pnpm run clean
 
-# Re-seed local database
-pnpm run dev:seed
+# Reset backend emulators and start fresh (from functions/)
+cd functions
+pnpm run emulator:reset
+pnpm run emulator:start
 
 # Check if emulators are running
 firebase emulators:list
 
-# Restart development environment
-pnpm run dev:full
+# Import fresh production data to emulator (from functions/)
+cd functions
+pnpm run migrate:from-prod
 ```
 
 ## 🎯 Key Features
@@ -389,11 +414,17 @@ pnpm run dev:full
 
 ## 🆘 Need Help?
 
-- Check authentication status and verify environment setup
-- Use `firebase functions:log` for backend debugging
-- Run `pnpm run dev:seed` to refresh local database
-- See Firebase console for production monitoring
-- For emulator issues, restart with `pnpm run dev:full`
+- **Backend Issues**: Use `firebase functions:log` for backend debugging
+- **Database Issues**: Reset emulators with `cd functions && pnpm run emulator:reset`
+- **Frontend Issues**: Clear cache with `pnpm run clean`
+- **Environment Setup**: Check authentication status and verify Firebase CLI setup
+- **Production Monitoring**: See Firebase console for production issues
+
+### Development Workflow Reminder
+
+1. **Start backend first**: `cd functions && pnpm run emulator:start`
+2. **Start frontend second**: `cd .. && pnpm start`
+3. **Both running?** Check that emulators are on localhost:8080 (Firestore) and localhost:5001 (Functions)
 
 ---
 
