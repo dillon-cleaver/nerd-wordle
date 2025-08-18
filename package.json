@@ -13,7 +13,7 @@
     "typecheck": "tsc --noEmit",
     "prepare": "husky",
     "deploy:web": "expo export --platform web && eas deploy",
-    "deploy:all": "cd functions && pnpm run deploy && cd .. && pnpm run deploy:web"
+    "deploy:all": "cd functions && pnpm run deploy:functions && cd .. && pnpm run deploy:web"
   },
   "jest": {
     "preset": "jest-expo"

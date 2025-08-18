@@ -98,7 +98,7 @@ This document outlines how to test and verify that our two-layer caching system 
    ```bash
    # In terminal
    cd /Users/dilloncleaver/src/nerd-wordle
-   pnpm firebase:deploy
+   cd functions && pnpm run deploy:functions
    ```
 
 2. **First user request**:

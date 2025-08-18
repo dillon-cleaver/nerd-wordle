@@ -115,7 +115,7 @@ pnpm run deploy:all
 cd functions
 
 # Deploy functions only
-pnpm run deploy
+pnpm run deploy:functions
 
 # Deploy all Firebase services (functions + rules + indexes)
 pnpm run deploy:firebase
@@ -152,7 +152,8 @@ eas submit --platform all
 
 ```bash
 # Deploy backend functions (from functions/ directory)
-pnpm run deploy:backend
+cd functions
+pnpm run deploy:functions
 
 # View function logs
 firebase functions:log
@@ -180,27 +181,21 @@ firebase deploy --only functions
 ### Local Development Database
 
 ```bash
-# Seed local Firestore with words and puzzles (recommended workflow)
-pnpm run dev:seed
-
-# For individual seeding (from functions/ directory):
+# Import production data to local emulator (from functions/ directory)
 cd functions
-pnpm run migrate:words    # Word dictionary (3,800+ words)
-pnpm run migrate:puzzles  # Daily puzzles
-pnpm run migrate:all      # Both words and puzzles
+pnpm run migrate:from-prod
+
+# Or start emulator with production data seeded
+cd functions
+pnpm run dev:prod-data
 ```
 
 ### Production Database Setup
 
 ```bash
-# Seed production Firestore (USE WITH CAUTION)
-pnpm run migrate
-
-# For individual production seeding (from functions/ directory):
+# Import production data to emulator for development
 cd functions
-pnpm run migrate:words:prod
-pnpm run migrate:puzzles:prod
-pnpm run migrate:all:prod
+pnpm run dev:prod-data
 ```
 
 ## 📊 API Endpoints
@@ -354,14 +349,14 @@ pnpm run deploy:all
 pnpm run deploy:web
 
 # Backend only (from functions/)
-cd functions && pnpm run deploy
+cd functions && pnpm run deploy:functions
 ```
 
 ### Adding New Words/Puzzles
 
 1. Update data in `constants/words.json` or equivalent
 2. Run migrations: `pnpm run migrate` (production)
-3. Deploy backend: `cd functions && pnpm run deploy`
+3. Deploy backend: `cd functions && pnpm run deploy:functions`
 4. Test the changes
 
 ### Troubleshooting Development

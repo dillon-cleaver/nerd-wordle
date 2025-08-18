@@ -148,7 +148,7 @@ Or deploy individually:
 
 ```bash
 # Deploy just the backend (from functions/ directory)
-cd functions && pnpm run deploy
+cd functions && pnpm run deploy:functions
 
 # Deploy just the web app (from root)
 pnpm run deploy:web
@@ -212,7 +212,7 @@ pnpm run deploy:all
 
 # Direct Firebase commands (from functions/ directory)
 cd functions
-pnpm run deploy
+pnpm run deploy:functions
 pnpm run deploy:functions
 
 # Deploy all Firebase services (functions + rules + indexes)
@@ -272,7 +272,7 @@ pnpm run dev:prod-data
 ### Backend Deployment
 
 - [ ] Build functions (`cd functions && pnpm build`)
-- [ ] Deploy functions (`cd functions && pnpm run deploy`)
+- [ ] Deploy functions (`cd functions && pnpm run deploy:functions`)
 - [ ] Check Firebase Console for success
 - [ ] Test API endpoints
 - [ ] Monitor function logs
