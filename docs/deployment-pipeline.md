@@ -54,7 +54,8 @@ graph TD
 pnpm expo start --web
 
 # Local Firebase Functions
-pnpm firebase:serve
+cd functions
+pnpm run emulator:start
 ```
 
 ### Staging/Preview Environment
@@ -146,11 +147,14 @@ echo "🔗 https://console.firebase.google.com/project/nerd-word-cfda3/authentic
 Or deploy individually:
 
 ```bash
-# Deploy just the backend
-pnpm run deploy:backend
+# Deploy just the functions (from functions/ directory)
+cd functions && pnpm run deploy:functions
 
-# Deploy just the web app
+# Deploy just the web app (from root)
 pnpm run deploy:web
+
+# Deploy everything (from root)
+pnpm run deploy:all
 ```
 
 ### 2. Backend Deployment (Firebase Functions)
@@ -174,7 +178,8 @@ pnpm build
 
 ```bash
 # Start local Firebase emulator with seeded data
-pnpm run dev:full
+cd functions
+pnpm run emulator:start
 
 # Test endpoints
 curl http://localhost:5001/nerd-word-cfda3/us-central1/api/words
@@ -184,10 +189,10 @@ curl http://localhost:5001/nerd-word-cfda3/us-central1/api/words
 
 ```bash
 # Deploy backend functions from root directory
-pnpm run deploy:backend
-
-# Or deploy all (backend + web)
 pnpm run deploy:all
+
+# Or deploy functions only (from functions/ directory)
+cd functions && pnpm run deploy:functions
 ```
 
 **4. Verify Deployment:**
@@ -199,16 +204,21 @@ pnpm run deploy:all
 #### Function Deployment Commands
 
 ```bash
-# Deploy backend functions from root
-pnpm run deploy:backend
-
-# Deploy everything (backend + web)
+# Deploy everything (backend + web) from root directory
 pnpm run deploy:all
 
-# Direct Firebase commands (from functions/ directory)
+# Deploy functions only (from functions/ directory)
 cd functions
-firebase deploy --only functions
-firebase deploy --only functions:api
+pnpm run deploy:functions
+
+# Deploy all Firebase services (functions + rules + indexes)
+cd functions
+pnpm run deploy:all
+
+# Deploy specific Firebase services
+cd functions
+pnpm run deploy:rules
+pnpm run deploy:indexes
 
 # With specific project
 firebase deploy --project nerd-word-cfda3 --only functions
@@ -229,14 +239,13 @@ firebase deploy --only firestore:indexes
 #### Data Migrations
 
 ```bash
-# Run production migrations from root
-pnpm run migrate
-
-# Or run individual migrations from functions directory
+# Import production data to emulator (from functions/ directory)
 cd functions
-pnpm run migrate:words:prod
-pnpm run migrate:puzzles:prod
-pnpm run migrate:all:prod
+pnpm run migrate:from-prod
+
+# Or start emulator with production data seeded
+cd functions
+pnpm run dev:prod-data
 ```
 
 ## 🔄 Complete Deployment Checklist
@@ -259,7 +268,7 @@ pnpm run migrate:all:prod
 ### Backend Deployment
 
 - [ ] Build functions (`cd functions && pnpm build`)
-- [ ] Deploy functions (`pnpm run deploy:backend`)
+- [ ] Deploy functions (`cd functions && pnpm run deploy:functions`)
 - [ ] Check Firebase Console for success
 - [ ] Test API endpoints
 - [ ] Monitor function logs

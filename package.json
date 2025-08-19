@@ -12,11 +12,8 @@
     "lint": "expo lint --max-warnings 0",
     "typecheck": "tsc --noEmit",
     "prepare": "husky",
-    "dev": "cd functions && pnpm run emulator:start & pnpm start",
-    "dev:prod-data": "cd functions && pnpm run dev:prod-data",
-    "deploy": "pnpm run deploy:web",
     "deploy:web": "expo export --platform web && eas deploy",
-    "deploy:all": "cd functions && pnpm run deploy && cd .. && pnpm run deploy:web"
+    "deploy:all": "cd functions && pnpm run deploy:functions && cd .. && pnpm run deploy:web"
   },
   "jest": {
     "preset": "jest-expo"
