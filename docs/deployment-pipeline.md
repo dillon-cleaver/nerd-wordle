@@ -147,7 +147,7 @@ echo "🔗 https://console.firebase.google.com/project/nerd-word-cfda3/authentic
 Or deploy individually:
 
 ```bash
-# Deploy just the backend (from functions/ directory)
+# Deploy just the functions (from functions/ directory)
 cd functions && pnpm run deploy:functions
 
 # Deploy just the web app (from root)
@@ -189,10 +189,10 @@ curl http://localhost:5001/nerd-word-cfda3/us-central1/api/words
 
 ```bash
 # Deploy backend functions from root directory
-pnpm run deploy:backend
-
-# Or deploy all (backend + web)
 pnpm run deploy:all
+
+# Or deploy functions only (from functions/ directory)
+cd functions && pnpm run deploy:functions
 ```
 
 **4. Verify Deployment:**
@@ -204,20 +204,16 @@ pnpm run deploy:all
 #### Function Deployment Commands
 
 ```bash
-# Deploy backend functions from root directory
+# Deploy everything (backend + web) from root directory
 pnpm run deploy:all
 
-# Or deploy all (backend + web)
-pnpm run deploy:all
-
-# Direct Firebase commands (from functions/ directory)
+# Deploy functions only (from functions/ directory)
 cd functions
-pnpm run deploy:functions
 pnpm run deploy:functions
 
 # Deploy all Firebase services (functions + rules + indexes)
 cd functions
-pnpm run deploy:firebase
+pnpm run deploy:all
 
 # Deploy specific Firebase services
 cd functions

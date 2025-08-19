@@ -16,191 +16,7 @@ cd functions && pnpm install && cd ..
 # Start development: Backend first, then frontend
 # Terminal 1: Start Firebase emulators
 cd functions
-pnpm run e1. **Don't commit sensitive data**: Review `emulator-data/` contents before committing
-2. **Use descriptive snapshots**: Consider renaming emulator-data for different test scenarios
-3. **Regular cleanup**: Periodically run `emulator:reset` to prevent stale data issues
-4. **Production parity**: Use `dev:prod-data` regularly to keep test data realistic
-5. **Backup important test states**: Copy `emulator-data/` to save specific test scenarios
-
-## 🔧 Backend Function Development
-
-### TypeScript Compilation Commands
-
-Firebase Functions are written in TypeScript and must be compiled to JavaScript before deployment or testing.
-
-#### `build` - One-Time Compilation
-```bash
-cd functions
-pnpm run build
-```
-- **What it does**: `tsc` - Compiles all TypeScript files from `src/` to JavaScript in `lib/`
-- **When to use**:
-  - Before deployment to production
-  - After making changes to verify compilation
-  - Checking for TypeScript errors
-  - Manual builds for testing
-- **Output**: Creates/updates `lib/` directory with compiled JavaScript
-- **Required for**: Deployment, shell testing, migration scripts
-
-#### `build:watch` - Continuous Compilation
-```bash
-cd functions
-pnpm run build:watch
-```
-- **What it does**: `tsc --watch` - Automatically recompiles when TypeScript files change
-- **When to use**:
-  - During active development
-  - Keep running in background while coding
-  - Ensures functions are always up-to-date for emulator
-- **Best practice**: Start this in a dedicated terminal at beginning of development session
-- **Stops automatically**: When you exit the terminal or stop the process
-
-### Interactive Function Testing
-
-#### `shell` - Firebase Functions Shell
-```bash
-cd functions
-pnpm run shell
-```
-- **What it does**: `pnpm run build && firebase functions:shell` - Opens Node.js REPL with your functions loaded
-- **When to use**:
-  - Test individual functions without full emulator
-  - Debug function logic interactively  
-  - Query Firestore directly from functions context
-  - Test functions with custom parameters
-  - Rapid prototyping of function changes
-
-**Example shell usage:**
-```javascript
-// Test the main API function
-api({method: 'GET', url: '/words'})
-
-// Test with custom request data
-api({
-  method: 'POST', 
-  url: '/puzzle-result',
-  body: {id: 'test', word: 'ZELDA', attempts: 3, date: '2024-08-19', status: 'win'}
-})
-
-// Access Firebase Admin directly
-admin.firestore().collection('words').get()
-
-// Test utility functions
-wordsCollection().doc('ZELDA').get()
-firestoreToWordEntry(doc)
-
-// Access environment and admin instances
-process.env.NODE_ENV
-admin.app()
-```
-
-**Available in shell:**
-- All exported functions from `index.ts` (`api`)
-- All utility functions from `utils.ts` 
-- Firebase Admin SDK (`admin`)
-- Environment variables
-- Node.js built-ins
-
-### Production Monitoring
-
-#### `logs` - Live Production Logs
-```bash
-cd functions
-pnpm run logs
-```
-- **What it does**: `firebase functions:log` - Streams real-time logs from production functions
-- **When to use**:
-  - Investigate production issues
-  - Monitor API usage patterns
-  - Debug authentication problems
-  - Performance analysis
-  - Post-deployment verification
-
-**What you'll see:**
-```
-2024-08-19T15:30:45.123Z I api: GET /words - 200ms
-2024-08-19T15:30:46.456Z E api: Error in /daily-puzzle: User not authenticated
-2024-08-19T15:30:47.789Z I api: POST /puzzle-result - User: abc123 - 150ms
-```
-
-**Log types:**
-- **I** (Info): Normal function execution, console.log statements
-- **E** (Error): Errors, exceptions, console.error statements  
-- **W** (Warning): console.warn statements
-- **D** (Debug): Detailed execution information
-
-### Recommended Backend Development Workflows
-
-#### Daily Development Setup
-```bash
-# Terminal 1: Continuous compilation
-cd functions
-pnpm run build:watch
-
-# Terminal 2: Emulator with persistent data
-cd functions  
 pnpm run emulator:start
-
-# Terminal 3: Frontend development
-cd ..
-pnpm start
-```
-
-#### Function Development & Testing
-```bash
-# 1. Make changes to TypeScript files
-# 2. build:watch automatically compiles
-# 3. Test in emulator by calling API endpoints
-# 4. For complex debugging:
-cd functions
-pnpm run shell
-# Test functions interactively
-```
-
-#### Pre-Deployment Verification
-```bash
-cd functions
-pnpm run build         # Ensure clean compilation
-pnpm run lint          # Check code quality  
-pnpm run shell         # Test key functions manually
-# Then deploy:
-pnpm run deploy:functions
-```
-
-#### Production Issue Investigation
-```bash
-# 1. Monitor production logs
-cd functions
-pnpm run logs
-
-# 2. Reproduce locally with production data
-pnpm run migrate:from-prod
-pnpm run shell
-# Test with real data
-
-# 3. Fix and redeploy
-pnpm run build
-pnpm run deploy:functions
-```
-
-#### Clean Development Reset
-```bash
-cd functions
-pnpm run emulator:reset    # Clear all data
-pnpm run build             # Fresh compilation
-pnpm run emulator:start    # Start clean
-```
-
-### Function Development Best Practices
-
-1. **Always run `build:watch`**: Keep TypeScript compilation active during development
-2. **Use `shell` for debugging**: Test functions interactively before full emulator testing  
-3. **Monitor production logs**: Use `logs` command to understand production behavior
-4. **Build before deployment**: Always run `build` manually before deploying to catch issues
-5. **Test with real data**: Use `migrate:from-prod` for realistic testing scenarios
-6. **Check compilation errors**: TypeScript errors in `build:watch` output indicate issues
-
-## 📊 API Endpoints:start
 
 # Terminal 2: Start frontend dev server
 cd ..  # back to root
@@ -268,10 +84,10 @@ pnpm run env:check
 
 | Command                      | Description                                      |
 | ---------------------------- | ------------------------------------------------ |
-| `pnpm run build`             | Compile TypeScript to JavaScript                |
-| `pnpm run build:watch`       | Continuous TypeScript compilation               |
-| `pnpm run shell`             | Interactive Firebase Functions debugging        |
-| `pnpm run logs`              | View production function logs                   |
+| `pnpm run build`             | Compile TypeScript to JavaScript                 |
+| `pnpm run build:watch`       | Continuous TypeScript compilation                |
+| `pnpm run shell`             | Interactive Firebase Functions debugging         |
+| `pnpm run logs`              | View production function logs                    |
 | `pnpm run emulator:start`    | Start Firebase emulators (Firestore + Functions) |
 | `pnpm run dev:prod-data`     | Start emulators with production data seeded      |
 | `pnpm run emulator:reset`    | Reset emulator data and start fresh              |
@@ -386,7 +202,7 @@ cd functions
 pnpm run dev:prod-data
 ```
 
-## �️ Firebase Emulator Data Management
+## 🗄️ Firebase Emulator Data Management
 
 ### Understanding Emulator Commands
 
@@ -603,7 +419,208 @@ pnpm run emulator:start         # Imports the shared data
 4. **Production parity**: Use `dev:prod-data` regularly to keep test data realistic
 5. **Backup important test states**: Copy `emulator-data/` to save specific test scenarios
 
-## �📊 API Endpoints
+## 🔧 Backend Function Development
+
+### TypeScript Compilation Commands
+
+Firebase Functions are written in TypeScript and must be compiled to JavaScript before deployment or testing.
+
+#### `build` - One-Time Compilation
+
+```bash
+cd functions
+pnpm run build
+```
+
+- **What it does**: `tsc` - Compiles all TypeScript files from `src/` to JavaScript in `lib/`
+- **When to use**:
+  - Before deployment to production
+  - After making changes to verify compilation
+  - Checking for TypeScript errors
+  - Manual builds for testing
+- **Output**: Creates/updates `lib/` directory with compiled JavaScript
+- **Required for**: Deployment, shell testing, migration scripts
+
+#### `build:watch` - Continuous Compilation
+
+```bash
+cd functions
+pnpm run build:watch
+```
+
+- **What it does**: `tsc --watch` - Automatically recompiles when TypeScript files change
+- **When to use**:
+  - During active development
+  - Keep running in background while coding
+  - Ensures functions are always up-to-date for emulator
+- **Best practice**: Start this in a dedicated terminal at beginning of development session
+- **Stops automatically**: When you exit the terminal or stop the process
+
+### Interactive Function Testing
+
+#### `shell` - Firebase Functions Shell
+
+```bash
+cd functions
+pnpm run shell
+```
+
+- **What it does**: `pnpm run build && firebase functions:shell` - Opens Node.js REPL with your functions loaded
+- **When to use**:
+  - Test individual functions without full emulator
+  - Debug function logic interactively
+  - Query Firestore directly from functions context
+  - Test functions with custom parameters
+  - Rapid prototyping of function changes
+
+**Example shell usage:**
+
+```javascript
+// Test the main API function
+api({ method: "GET", url: "/words" });
+
+// Test with custom request data
+api({
+  method: "POST",
+  url: "/puzzle-result",
+  body: {
+    id: "test",
+    word: "ZELDA",
+    attempts: 3,
+    date: "2024-08-19",
+    status: "win",
+  },
+});
+
+// Access Firebase Admin directly
+admin.firestore().collection("words").get();
+
+// Test utility functions
+wordsCollection().doc("ZELDA").get();
+firestoreToWordEntry(doc);
+
+// Access environment and admin instances
+process.env.NODE_ENV;
+admin.app();
+```
+
+**Available in shell:**
+
+- All exported functions from `index.ts` (`api`)
+- All utility functions from `utils.ts`
+- Firebase Admin SDK (`admin`)
+- Environment variables
+- Node.js built-ins
+
+### Production Monitoring
+
+#### `logs` - Live Production Logs
+
+```bash
+cd functions
+pnpm run logs
+```
+
+- **What it does**: `firebase functions:log` - Streams real-time logs from production functions
+- **When to use**:
+  - Investigate production issues
+  - Monitor API usage patterns
+  - Debug authentication problems
+  - Performance analysis
+  - Post-deployment verification
+
+**What you'll see:**
+
+```
+2024-08-19T15:30:45.123Z I api: GET /words - 200ms
+2024-08-19T15:30:46.456Z E api: Error in /daily-puzzle: User not authenticated
+2024-08-19T15:30:47.789Z I api: POST /puzzle-result - User: abc123 - 150ms
+```
+
+**Log types:**
+
+- **I** (Info): Normal function execution, console.log statements
+- **E** (Error): Errors, exceptions, console.error statements
+- **W** (Warning): console.warn statements
+- **D** (Debug): Detailed execution information
+
+### Recommended Backend Development Workflows
+
+#### Daily Development Setup
+
+```bash
+# Terminal 1: Continuous compilation
+cd functions
+pnpm run build:watch
+
+# Terminal 2: Emulator with persistent data
+cd functions
+pnpm run emulator:start
+
+# Terminal 3: Frontend development
+cd ..
+pnpm start
+```
+
+#### Function Development & Testing
+
+```bash
+# 1. Make changes to TypeScript files
+# 2. build:watch automatically compiles
+# 3. Test in emulator by calling API endpoints
+# 4. For complex debugging:
+cd functions
+pnpm run shell
+# Test functions interactively
+```
+
+#### Pre-Deployment Verification
+
+```bash
+cd functions
+pnpm run build         # Ensure clean compilation
+pnpm run lint          # Check code quality
+pnpm run shell         # Test key functions manually
+# Then deploy:
+pnpm run deploy:functions
+```
+
+#### Production Issue Investigation
+
+```bash
+# 1. Monitor production logs
+cd functions
+pnpm run logs
+
+# 2. Reproduce locally with production data
+pnpm run migrate:from-prod
+pnpm run shell
+# Test with real data
+
+# 3. Fix and redeploy
+pnpm run build
+pnpm run deploy:functions
+```
+
+#### Clean Development Reset
+
+```bash
+cd functions
+pnpm run emulator:reset    # Clear all data
+pnpm run build             # Fresh compilation
+pnpm run emulator:start    # Start clean
+```
+
+### Function Development Best Practices
+
+1. **Always run `build:watch`**: Keep TypeScript compilation active during development
+2. **Use `shell` for debugging**: Test functions interactively before full emulator testing
+3. **Monitor production logs**: Use `logs` command to understand production behavior
+4. **Build before deployment**: Always run `build` manually before deploying to catch issues
+5. **Test with real data**: Use `migrate:from-prod` for realistic testing scenarios
+6. **Check compilation errors**: TypeScript errors in `build:watch` output indicate issues
+
+## 📊 API Endpoints
 
 ### Production API
 
