@@ -1,13 +1,15 @@
 import { useContext, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { GuessGrid } from "./GuessGrid";
 import { Keyboard } from "./Keyboard";
 import { GameContext } from "@/context/GameContext";
-import { spacing } from "@/constants/styles";
+import { colors, spacing } from "@/constants/styles";
 import { BannerCard } from "./BannerCard";
+import { useCountdownToNewPuzzle } from "@/utils/countdown";
 
 export const Game = () => {
   const { category, answer } = useContext(GameContext);
+  const timeUntilNewPuzzle = useCountdownToNewPuzzle();
 
   useEffect(() => {
     console.info({ answer, category });
@@ -21,6 +23,9 @@ export const Game = () => {
       </View>
       <View style={styles.keyboardContainer}>
         <Keyboard />
+      </View>
+      <View style={styles.timerContainer}>
+        <Text style={styles.timerText}>{timeUntilNewPuzzle}</Text>
       </View>
     </View>
   );
@@ -39,5 +44,15 @@ const styles = StyleSheet.create({
   },
   keyboardContainer: {
     paddingHorizontal: spacing.sm,
+  },
+  timerContainer: {
+    paddingHorizontal: spacing.md,
+    alignItems: "center",
+  },
+  // TODO: Stylize this
+  timerText: {
+    fontSize: 14,
+    opacity: 0.7,
+    color: colors.neutral.white,
   },
 });
