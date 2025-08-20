@@ -1,5 +1,6 @@
 import { WordEntry } from "@/types/word";
 import { dailyPuzzleApi } from "@/utils/api";
+import { getTodayDateString } from "@/utils/time";
 
 type DailyPuzzleSeed = {
   date: string; // ISO (YYYY-MM-DD)
@@ -34,7 +35,7 @@ async function getTodaysPuzzle(): Promise<DailyPuzzleSeed> {
 
     // TODO: ALPHA ONLY - Hardcoded fallback for development
     // Production should have proper error handling and retry logic
-    const today = new Date().toISOString().split("T")[0]; // Gets "YYYY-MM-DD"
+    const today = getTodayDateString();
     return {
       date: today,
       word: {

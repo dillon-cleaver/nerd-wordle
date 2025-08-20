@@ -130,18 +130,3 @@ export const dailyPuzzleToFirestore = (puzzle: DailyPuzzleSeed): any => {
     word: wordEntryToFirestore(puzzle.word),
   };
 };
-
-/**
- * Get today's date in YYYY-MM-DD format
- */
-export const getTodayDateString = (): string => {
-  return new Date().toISOString().split("T")[0];
-};
-
-/**
- * Validate date format (YYYY-MM-DD)
- */
-export const isValidDateFormat = (date: string): boolean => {
-  const regex = /^\d{4}-\d{2}-\d{2}$/;
-  return regex.test(date) && !isNaN(Date.parse(date));
-};

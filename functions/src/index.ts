@@ -16,9 +16,8 @@ import {
   dailyPuzzlesCollection,
   firestoreToWordEntry,
   firestoreToDailyPuzzle,
-  getTodayDateString,
-  isValidDateFormat,
 } from "./utils";
+import { getTodayDateString, isValidDateFormat } from "./shared/time";
 
 // Initialize Firebase Admin SDK
 admin.initializeApp();
