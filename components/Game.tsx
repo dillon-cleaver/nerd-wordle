@@ -6,15 +6,29 @@ import { GameContext } from "@/context/GameContext";
 import { colors, spacing } from "@/constants/styles";
 import { BannerCard } from "./BannerCard";
 import { useCountdownToNewPuzzle } from "@/utils/countdown";
+import { useTodaysPuzzleResult } from "@/hooks/useTodaysPuzzleResult";
+import { CompletedGameView } from "./CompletedGameView";
 
 export const Game = () => {
   const { category, answer } = useContext(GameContext);
   const timeUntilNewPuzzle = useCountdownToNewPuzzle();
+  const { hasPlayedToday, todayResult, isLoading } = useTodaysPuzzleResult();
 
   useEffect(() => {
     console.info({ answer, category });
   }, [answer, category]);
 
+  // If loading, show empty container to prevent flashing
+  if (isLoading) {
+    return <View style={styles.container} />;
+  }
+
+  // If user has already played today, show completed view
+  if (hasPlayedToday && todayResult) {
+    return <CompletedGameView todayResult={todayResult} />;
+  }
+
+  // Otherwise, show the active game
   return (
     <View style={styles.container}>
       <View style={styles.content}>
