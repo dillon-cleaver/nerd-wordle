@@ -30,7 +30,11 @@ window.viewLocalPuzzleResults = () => {
 /**
  * Add a fake puzzle result for today (for testing)
  */
-window.addTodaysPuzzleResult = (word = "JOKER", status = "win", attempts = 1) => {
+window.addTodaysPuzzleResult = (
+  word = "JOKER",
+  status = "win",
+  attempts = 1
+) => {
   const results = JSON.parse(localStorage.getItem("puzzleResults_v1") || "[]");
   const today = new Date().toISOString();
   const fakeResult = {
@@ -42,12 +46,12 @@ window.addTodaysPuzzleResult = (word = "JOKER", status = "win", attempts = 1) =>
     hintIndex: 0,
     status: status,
   };
-  
+
   // Remove any existing result for today
-  const filtered = results.filter(r => 
-    new Date(r.date).toDateString() !== new Date().toDateString()
+  const filtered = results.filter(
+    (r) => new Date(r.date).toDateString() !== new Date().toDateString()
   );
-  
+
   filtered.push(fakeResult);
   localStorage.setItem("puzzleResults_v1", JSON.stringify(filtered));
   console.log("🎮 Added fake puzzle result for today:", fakeResult);
@@ -59,11 +63,19 @@ window.addTodaysPuzzleResult = (word = "JOKER", status = "win", attempts = 1) =>
  */
 window.simulateDifferentBrowser = () => {
   window.clearPuzzleResults();
-  console.log("🌐 Simulated different browser - localStorage cleared but user still authenticated");
+  console.log(
+    "🌐 Simulated different browser - localStorage cleared but user still authenticated"
+  );
 };
 
 console.log("🧪 Test utilities loaded! Available functions:");
 console.log("- clearPuzzleResults() - Clear localStorage puzzle results");
-console.log("- viewLocalPuzzleResults() - View current localStorage puzzle results");
-console.log("- addTodaysPuzzleResult(word, status, attempts) - Add fake result for today");
-console.log("- simulateDifferentBrowser() - Clear local data but keep user logged in");
+console.log(
+  "- viewLocalPuzzleResults() - View current localStorage puzzle results"
+);
+console.log(
+  "- addTodaysPuzzleResult(word, status, attempts) - Add fake result for today"
+);
+console.log(
+  "- simulateDifferentBrowser() - Clear local data but keep user logged in"
+);

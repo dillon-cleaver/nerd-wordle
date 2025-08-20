@@ -12,7 +12,11 @@ import { UserContext } from "@/context/UserContext";
  */
 export const useTodaysPuzzleResult = () => {
   const { authUser, loading: userLoading } = useContext(UserContext);
-  const { puzzleResults: backendResults, loadPuzzleResults, loading: historyLoading } = usePuzzleHistory();
+  const {
+    puzzleResults: backendResults,
+    loadPuzzleResults,
+    loading: historyLoading,
+  } = usePuzzleHistory();
   const { dailyPuzzle, isLoading: puzzleLoading } = useDailyPuzzle();
   const [localResults, setLocalResults] = useState<any[]>([]);
   const [hasTriedLoadingBackend, setHasTriedLoadingBackend] = useState(false);
@@ -25,8 +29,15 @@ export const useTodaysPuzzleResult = () => {
 
   // Load backend results when user is authenticated and we haven't tried yet
   useEffect(() => {
-    if (authUser && !userLoading && !historyLoading && !hasTriedLoadingBackend) {
-      console.log("🔄 Loading puzzle history from backend for authenticated user");
+    if (
+      authUser &&
+      !userLoading &&
+      !historyLoading &&
+      !hasTriedLoadingBackend
+    ) {
+      console.log(
+        "🔄 Loading puzzle history from backend for authenticated user"
+      );
       loadPuzzleResults(authUser)
         .then(() => {
           console.log("✅ Backend puzzle history loaded successfully");
@@ -37,7 +48,13 @@ export const useTodaysPuzzleResult = () => {
           setHasTriedLoadingBackend(true); // Still mark as tried to avoid infinite retries
         });
     }
-  }, [authUser, userLoading, historyLoading, hasTriedLoadingBackend, loadPuzzleResults]);
+  }, [
+    authUser,
+    userLoading,
+    historyLoading,
+    hasTriedLoadingBackend,
+    loadPuzzleResults,
+  ]);
 
   // Reset the loading flag when user changes (logout/login)
   useEffect(() => {
@@ -89,7 +106,8 @@ export const useTodaysPuzzleResult = () => {
     if (authUser && backendResults.length > 0) {
       const backendResult = backendResults.find((result) => {
         const resultDate = getDateString(new Date(result.date));
-        const matches = result.word === todaysPuzzleWord && resultDate === today;
+        const matches =
+          result.word === todaysPuzzleWord && resultDate === today;
         if (matches) {
           console.log("✅ Found backend result for today:", result);
         }
@@ -106,10 +124,20 @@ export const useTodaysPuzzleResult = () => {
 
     console.log("❌ No result found for today's puzzle");
     return null;
-  }, [dailyPuzzle, puzzleLoading, localResults, backendResults, authUser, hasTriedLoadingBackend]);
+  }, [
+    dailyPuzzle,
+    puzzleLoading,
+    localResults,
+    backendResults,
+    authUser,
+    hasTriedLoadingBackend,
+  ]);
 
   const hasPlayedToday = !!todayResult;
-  const isLoading = puzzleLoading || userLoading || (authUser && !hasTriedLoadingBackend && historyLoading);
+  const isLoading =
+    puzzleLoading ||
+    userLoading ||
+    (authUser && !hasTriedLoadingBackend && historyLoading);
 
   console.log("🎮 useTodaysPuzzleResult state:", {
     hasPlayedToday,

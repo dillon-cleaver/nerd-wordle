@@ -3,7 +3,7 @@ import { View, StyleSheet, Text } from "react-native";
 import { GuessGrid } from "./GuessGrid";
 import { Keyboard } from "./Keyboard";
 import { GameContext } from "@/context/GameContext";
-import { colors, spacing } from "@/constants/styles";
+import { borderRadius, colors, spacing } from "@/constants/styles";
 import { BannerCard } from "./BannerCard";
 import { useCountdownToNewPuzzle } from "@/utils/countdown";
 import { useTodaysPuzzleResult } from "@/hooks/useTodaysPuzzleResult";
@@ -25,7 +25,17 @@ export const Game = () => {
 
   // If user has already played today, show completed view
   if (hasPlayedToday && todayResult) {
-    return <CompletedGameView todayResult={todayResult} />;
+    return (
+      <View
+        style={{
+          backgroundColor: colors.neutral.black,
+          padding: spacing.sm,
+          borderRadius: borderRadius.md,
+        }}
+      >
+        <CompletedGameView todayResult={todayResult} />
+      </View>
+    );
   }
 
   // Otherwise, show the active game

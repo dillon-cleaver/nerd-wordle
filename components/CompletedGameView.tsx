@@ -22,9 +22,9 @@ export const CompletedGameView = ({ todayResult }: CompletedGameViewProps) => {
     if (todayResult.status === "win") {
       const attempts = todayResult.attempts;
       const attemptsText = attempts === 1 ? "guess" : "guesses";
-      return `🎉 You solved today&apos;s puzzle in ${attempts} ${attemptsText}!`;
+      return `🎉 You solved today's puzzle in ${attempts} ${attemptsText}!`;
     } else {
-      return `😔 You didn&apos;t solve today&apos;s puzzle. The word was ${todayResult.word}.`;
+      return `😔 You didn't solve today's puzzle. The word was ${todayResult.word}.`;
     }
   };
 
