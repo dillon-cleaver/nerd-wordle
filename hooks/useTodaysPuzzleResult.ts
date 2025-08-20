@@ -4,6 +4,7 @@ import { useDailyPuzzle } from "./useDailyPuzzle";
 import { getTodayDateString, getDateString } from "@/utils/time";
 import { loadPuzzleResultsLocal } from "@/storage/puzzle-results.local";
 import { UserContext } from "@/context/UserContext";
+import { PuzzleResult } from "@/types/puzzle-result";
 
 /**
  * Hook to check if the user has already completed today's puzzle
@@ -18,7 +19,7 @@ export const useTodaysPuzzleResult = () => {
     loading: historyLoading,
   } = usePuzzleHistory();
   const { dailyPuzzle, isLoading: puzzleLoading } = useDailyPuzzle();
-  const [localResults, setLocalResults] = useState<any[]>([]);
+  const [localResults, setLocalResults] = useState<PuzzleResult[]>([]);
   const [hasTriedLoadingBackend, setHasTriedLoadingBackend] = useState(false);
 
   // Load localStorage results immediately
@@ -35,16 +36,22 @@ export const useTodaysPuzzleResult = () => {
       !historyLoading &&
       !hasTriedLoadingBackend
     ) {
-      console.log(
-        "🔄 Loading puzzle history from backend for authenticated user"
-      );
+      if (__DEV__) {
+        console.log(
+          "🔄 Loading puzzle history from backend for authenticated user"
+        );
+      }
       loadPuzzleResults(authUser)
         .then(() => {
-          console.log("✅ Backend puzzle history loaded successfully");
+          if (__DEV__) {
+            console.log("✅ Backend puzzle history loaded successfully");
+          }
           setHasTriedLoadingBackend(true);
         })
         .catch((error) => {
-          console.error("❌ Failed to load backend puzzle history:", error);
+          if (__DEV__) {
+            console.error("❌ Failed to load backend puzzle history:", error);
+          }
           setHasTriedLoadingBackend(true); // Still mark as tried to avoid infinite retries
         });
     }
@@ -69,20 +76,22 @@ export const useTodaysPuzzleResult = () => {
     const today = getTodayDateString();
     const todaysPuzzleWord = dailyPuzzle.word.id;
 
-    console.log("🔍 Checking for today's puzzle result:", {
-      today,
-      puzzleWord: todaysPuzzleWord,
-      hasLocalResults: localResults.length > 0,
-      hasBackendResults: backendResults.length > 0,
-      isAuthenticated: !!authUser,
-      hasTriedLoadingBackend,
-    });
+    if (__DEV__) {
+      console.log("🔍 Checking for today's puzzle result:", {
+        today,
+        puzzleWord: todaysPuzzleWord,
+        hasLocalResults: localResults.length > 0,
+        hasBackendResults: backendResults.length > 0,
+        isAuthenticated: !!authUser,
+        hasTriedLoadingBackend,
+      });
+    }
 
     // Check localStorage results first (immediate access)
     const localResult = localResults.find((result) => {
       const resultDate = getDateString(new Date(result.date));
       const matches = result.word === todaysPuzzleWord && resultDate === today;
-      if (matches) {
+      if (matches && __DEV__) {
         console.log("✅ Found local result for today:", result);
       }
       return matches;
@@ -94,8 +103,8 @@ export const useTodaysPuzzleResult = () => {
         id: localResult.id,
         word: localResult.word,
         attempts: localResult.guesses, // localStorage uses 'guesses', API uses 'attempts'
-        date: localResult.date,
-        status: localResult.status === "fail" ? "loss" : localResult.status,
+        date: localResult.date instanceof Date ? localResult.date.toISOString() : localResult.date,
+        status: (localResult.status === "fail" ? "loss" : localResult.status) as "win" | "loss",
         edition: localResult.edition,
         hintIndex: localResult.hintIndex,
         source: "localStorage",
@@ -108,7 +117,7 @@ export const useTodaysPuzzleResult = () => {
         const resultDate = getDateString(new Date(result.date));
         const matches =
           result.word === todaysPuzzleWord && resultDate === today;
-        if (matches) {
+        if (matches && __DEV__) {
           console.log("✅ Found backend result for today:", result);
         }
         return matches;
@@ -117,12 +126,15 @@ export const useTodaysPuzzleResult = () => {
       if (backendResult) {
         return {
           ...backendResult,
+          date: backendResult.date,
           source: "backend",
         };
       }
     }
 
-    console.log("❌ No result found for today's puzzle");
+    if (__DEV__) {
+      console.log("❌ No result found for today's puzzle");
+    }
     return null;
   }, [
     dailyPuzzle,
@@ -139,12 +151,14 @@ export const useTodaysPuzzleResult = () => {
     userLoading ||
     (authUser && !hasTriedLoadingBackend && historyLoading);
 
-  console.log("🎮 useTodaysPuzzleResult state:", {
-    hasPlayedToday,
-    isLoading,
-    resultSource: todayResult?.source,
-    userAuthenticated: !!authUser,
-  });
+  if (__DEV__) {
+    console.log("🎮 useTodaysPuzzleResult state:", {
+      hasPlayedToday,
+      isLoading,
+      resultSource: todayResult?.source,
+      userAuthenticated: !!authUser,
+    });
+  }
 
   return {
     hasPlayedToday,

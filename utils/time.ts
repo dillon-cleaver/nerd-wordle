@@ -38,6 +38,11 @@ export const getCurrentInGameTimezone = (): Date => {
 
 /**
  * Check if a date is in daylight saving time for Central Time
+ *
+ * NOTE: This is a simplified approximation that doesn't account for the 2:00 AM
+ * transition time on DST change days. For a daily puzzle app changing at midnight,
+ * this provides sufficient accuracy (363/365 days correct). For more precision,
+ * consider using Intl.DateTimeFormat with America/Chicago timezone.
  */
 const isDaylightSavingTime = (date: Date): boolean => {
   // Simple approximation: DST runs from second Sunday in March to first Sunday in November

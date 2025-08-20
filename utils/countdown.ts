@@ -12,15 +12,17 @@ import {
 export const getTimeUntilNewPuzzle = () => {
   const { hours, minutes } = getTimeUntilNextGameTimezoneMidnight();
 
-  // Debug logging
-  console.log("Countdown Debug:", {
-    yourLocalTime: new Date().toLocaleString(),
-    currentCentralTime: getCurrentInGameTimezone().toISOString(),
-    nextMidnightCentral: getNextGameTimezoneMidnight().toISOString(),
-    hoursUntil: hours,
-    minutesUntil: minutes,
-    timezoneOffset: new Date().getTimezoneOffset(),
-  });
+  // Debug logging (only in development)
+  if (__DEV__) {
+    console.log("Countdown Debug:", {
+      yourLocalTime: new Date().toLocaleString(),
+      currentCentralTime: getCurrentInGameTimezone().toISOString(),
+      nextMidnightCentral: getNextGameTimezoneMidnight().toISOString(),
+      hoursUntil: hours,
+      minutesUntil: minutes,
+      timezoneOffset: new Date().getTimezoneOffset(),
+    });
+  }
 
   return {
     hours,
