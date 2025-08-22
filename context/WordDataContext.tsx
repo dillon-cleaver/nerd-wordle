@@ -43,21 +43,27 @@ export const WordDataProvider = ({ children }: { children: ReactNode }) => {
         // Check if we have cached words
         const cachedData = loadWordsLocal();
         if (cachedData && isWordsCacheValid(cachedData)) {
-          console.log("Loading words from localStorage cache");
+          if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+            console.log("Loading words from localStorage cache");
+          }
           setWords(cachedData.words);
           setIsLoading(false);
           return;
         }
 
         // Cache miss or expired, fetch from API
-        console.log("Cache miss, fetching from API");
+        if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+          console.log("Cache miss, fetching from API");
+        }
         const firebaseWords = await wordsApi.getAllWords();
         setWords(firebaseWords);
 
         // Cache the words using utility function
         saveWordsLocal(firebaseWords);
 
-        console.log(`Loaded ${firebaseWords.length} words from Firebase`);
+        if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+          console.log(`Loaded ${firebaseWords.length} words from Firebase`);
+        }
       } catch (err) {
         console.error("Failed to load words from Firebase:", err);
         setError(err as Error);

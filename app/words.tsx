@@ -11,20 +11,13 @@ import {
   lineHeight,
   spacing,
 } from "@/constants/styles";
-import { loadPuzzleResultsLocal } from "@/storage/puzzle-results.local";
-import { useEffect, useCallback } from "react";
+import { useCallback } from "react";
 import { StyleSheet, View, Text, FlatList, ViewToken } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 
 const TEMPORARY_ITEM_COUNT = 25;
 
 export default function Words() {
-  // TODO: This is here temporarily --->
-  useEffect(() => {
-    const results = loadPuzzleResultsLocal();
-    console.log("Puzzle history:", results);
-  }, []);
-
   // TODO: Replace this with real data
   const data = new Array(TEMPORARY_ITEM_COUNT)
     .fill(0)

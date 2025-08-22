@@ -1,4 +1,5 @@
 import { WordEntry } from "@/types/word";
+import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 
 const WORDS_KEY = "nerd-wordle-words_v1";
 
@@ -17,7 +18,9 @@ export const saveWordsLocal = (words: WordEntry[]): void => {
     };
 
     localStorage.setItem(WORDS_KEY, JSON.stringify(cachedData));
-    console.log(`✅ Cached ${words.length} words to localStorage`);
+    if (isDebugLoggingEnabled()) {
+      console.log(`✅ Cached ${words.length} words to localStorage`);
+    }
   } catch (error) {
     console.error("Failed to save words to localStorage:", error);
     // Optionally clear corrupted data and try again
@@ -73,7 +76,9 @@ export const isWordsCacheValid = (
 export const clearWordsCache = (): void => {
   try {
     localStorage.removeItem(WORDS_KEY);
-    console.log("✅ Words cache cleared");
+    if (isDebugLoggingEnabled()) {
+      console.log("✅ Words cache cleared");
+    }
   } catch (error) {
     console.error("Failed to clear words cache:", error);
   }

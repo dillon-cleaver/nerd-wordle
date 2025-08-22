@@ -2,6 +2,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 import type { User } from "firebase/auth";
 import type { UserProfile } from "@/types/user-profile";
+import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 
 export async function createUserIfNotExists(user: User) {
   const userRef = doc(db, "users", user.uid);
@@ -18,8 +19,12 @@ export async function createUserIfNotExists(user: User) {
     };
 
     await setDoc(userRef, userProfile);
-    console.log("User profile created");
+    if (isDebugLoggingEnabled()) {
+      console.log("User profile created");
+    }
   } else {
-    console.log("User already exists");
+    if (isDebugLoggingEnabled()) {
+      console.log("User already exists");
+    }
   }
 }

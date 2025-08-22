@@ -8,6 +8,7 @@ import { BannerCard } from "./BannerCard";
 import { useCountdownToNewPuzzle } from "@/utils/countdown";
 import { useTodaysPuzzleResult } from "@/hooks/useTodaysPuzzleResult";
 import { CompletedGameView } from "./CompletedGameView";
+import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 
 export const Game = () => {
   const { category, answer } = useContext(GameContext);
@@ -15,7 +16,9 @@ export const Game = () => {
   const { hasPlayedToday, todayResult, isLoading } = useTodaysPuzzleResult();
 
   useEffect(() => {
-    console.info({ answer, category });
+    if (isDebugLoggingEnabled()) {
+      console.info({ answer, category });
+    }
   }, [answer, category]);
 
   // If loading, show empty container to prevent flashing

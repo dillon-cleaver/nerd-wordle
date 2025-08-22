@@ -7,6 +7,7 @@ import {
 } from "react";
 import { User } from "firebase/auth";
 import { puzzleHistoryApi, PuzzleResult } from "../utils/api";
+import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 
 interface PuzzleHistoryContextType {
   puzzleResults: PuzzleResult[];
@@ -55,7 +56,9 @@ export function PuzzleHistoryProvider({
         setPuzzleResults((prev) => [newResult, ...prev]);
 
         // TODO: Replace console.log with proper logging service (e.g., Firebase Analytics, Sentry)
-        console.log("✅ Puzzle result saved successfully:", newResult);
+        if (isDebugLoggingEnabled()) {
+          console.log("✅ Puzzle result saved successfully:", newResult);
+        }
       } catch (err) {
         const errorMessage =
           err instanceof Error ? err.message : "Failed to save puzzle result";
@@ -78,7 +81,9 @@ export function PuzzleHistoryProvider({
       const resultsData = await puzzleHistoryApi.getPuzzleHistory(user);
       setPuzzleResults(resultsData);
 
-      console.log("✅ Loaded puzzle results:", resultsData.length, "records");
+      if (isDebugLoggingEnabled()) {
+        console.log("✅ Loaded puzzle results:", resultsData.length, "records");
+      }
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "Failed to load puzzle results";

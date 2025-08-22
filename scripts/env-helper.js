@@ -31,6 +31,14 @@ const presets = {
     EXPO_PUBLIC_API_URL:
       "http://127.0.0.1:5001/nerd-word-cfda3/us-central1/api",
   },
+
+  // Production settings (for local web exports)
+  production: {
+    EXPO_PUBLIC_DEV_MODE: "false",
+    EXPO_PUBLIC_ENABLE_DEBUG_LOGS: "false",
+    EXPO_PUBLIC_BYPASS_DAILY_LIMIT: "false",
+    EXPO_PUBLIC_SHOW_DEV_BADGE: "false",
+  },
 };
 
 function createEnvFile(preset) {
@@ -78,6 +86,7 @@ const command = process.argv[2];
 switch (command) {
   case "development":
   case "testing":
+  case "production":
     createEnvFile(command);
     break;
   case "show":
@@ -90,6 +99,7 @@ switch (command) {
     console.log(`Commands:`);
     console.log(`  development  - Standard dev mode`);
     console.log(`  testing      - Testing with bypass enabled`);
+    console.log(`  production   - Production settings (no dev features)`);
     console.log(`  show         - Show current configuration`);
     break;
 }

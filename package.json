@@ -8,7 +8,7 @@
     "lint": "expo lint --max-warnings 0",
     "typecheck": "tsc --noEmit",
     "prepare": "husky",
-    "deploy:web": "expo export --platform web && eas deploy",
+    "deploy:web": "pnpm run env:production && expo export --platform web && eas deploy",
     "deploy:all": "cd functions && pnpm run deploy:functions && cd .. && pnpm run deploy:web",
     "dev:web": "pnpm run env:development && expo start --web",
     "dev:web:bypass": "pnpm run env:testing && expo start --web",
@@ -17,7 +17,8 @@
     "dev:android": "pnpm run env:development && expo start --android",
     "dev:android:bypass": "pnpm run env:testing && expo start --android",
     "env:development": "node scripts/env-helper.js development",
-    "env:testing": "node scripts/env-helper.js testing"
+    "env:testing": "node scripts/env-helper.js testing",
+    "env:production": "node scripts/env-helper.js production"
   },
   "jest": {
     "preset": "jest-expo"
