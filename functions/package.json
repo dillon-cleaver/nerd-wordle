@@ -14,6 +14,10 @@
     "deploy:all": "firebase deploy",
     "logs": "firebase functions:log",
     "migrate:from-prod": "pnpm run build && FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node lib/functions/src/migrations/import-from-production.js",
+    "seed:words": "pnpm run build && node lib/functions/src/migrations/seed-words.js",
+    "seed:words:emulator": "pnpm run build && FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node lib/functions/src/migrations/seed-words.js",
+    "seed:alpha-beta": "pnpm run build && node lib/functions/src/migrations/seed-alpha-beta-puzzles.js",
+    "seed:production": "pnpm run build && node lib/functions/src/migrations/seed-production-puzzles.js",
     "dev:prod-data": "firebase emulators:exec --only functions,firestore 'pnpm run migrate:from-prod' --export-on-exit=./emulator-data"
   },
   "engines": {

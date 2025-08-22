@@ -58,6 +58,8 @@ export type NerdWordEntry = {
   summary: string;
   wikipediaUrl: string;
   appearance?: WordAppearance;
+  alpha?: boolean; // Mark word as available in alpha testing
+  beta?: boolean;  // Mark word as available in beta testing
 };
 
 export type WordEntry = CommonWordEntry | NerdWordEntry;

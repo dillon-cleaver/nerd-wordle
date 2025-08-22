@@ -21,52 +21,65 @@ if (process.env.FIRESTORE_EMULATOR_HOST) {
 }
 
 /**
- * Create daily puzzles for the next 11 days for Alpha testing
- * Uses the first 11 NerdWords by edition to test daily cycling and category diversity
- *
- * TODO: ALPHA ONLY - Replace with proper puzzle generation algorithm for production
- * Production should use intelligent word selection based on usage stats, difficulty,
- * category diversity, and time since last appearance.
+ * Create daily puzzles using words marked for testing
+ * Iterates through marked words by edition number (lowest first)
  */
 
 async function seedDailyPuzzles() {
-  console.log("🗓️  Starting daily puzzles seeding for Alpha (11 days)...");
+  if (process.env.FIRESTORE_EMULATOR_HOST) {
+    console.log("🗓️  Starting daily puzzles seeding...");
+  }
 
-  // TODO: ALPHA ONLY - Using fixed 11 words for testing
-  // Production should generate puzzles dynamically based on algorithm
-  const nerdWords = WORD_DATA.filter((word) => word.category !== "common");
+  // Get all nerd words and filter by test flags
+  const allNerdWords = WORD_DATA.filter((word) => word.category !== "common");
 
-  // Sort by edition to get the exact first 11 NerdWords in order
-  nerdWords.sort((a, b) => {
-    const aEdition = (a as any).edition || 0;
-    const bEdition = (b as any).edition || 0;
-    return aEdition - bEdition;
-  });
+  // Filter and sort words with alpha flag by edition (lowest first)
+  const firstPhaseWords = allNerdWords
+    .filter((word: any) => word.alpha === true)
+    .sort((a, b) => {
+      const aEdition = (a as any).edition || 0;
+      const bEdition = (b as any).edition || 0;
+      return aEdition - bEdition;
+    });
 
-  // TODO: ALPHA ONLY - Take first 11 for testing, production should use full algorithm
-  const testWords = nerdWords.slice(0, 11);
+  // Filter and sort words with beta flag by edition (lowest first)
+  const secondPhaseWords = allNerdWords
+    .filter((word: any) => word.beta === true)
+    .sort((a, b) => {
+      const aEdition = (a as any).edition || 0;
+      const bEdition = (b as any).edition || 0;
+      return aEdition - bEdition;
+    });
 
-  console.log(
-    `📝 Selected first ${testWords.length} NerdWords by edition for Alpha testing:`
-  );
-  testWords.forEach((word, index) => {
-    console.log(
-      `   ${index + 1}. ${word.id} (${word.category}, edition ${
-        (word as any).edition
-      })`
-    );
-  });
+  // Combine: first phase words first, then second phase words
+  const selectedWords = [...firstPhaseWords, ...secondPhaseWords];
+
+  if (process.env.FIRESTORE_EMULATOR_HOST) {
+    console.log(`📝 Selected ${selectedWords.length} words for testing:`);
+    console.log(`   First phase: ${firstPhaseWords.length} words`);
+    console.log(`   Second phase: ${secondPhaseWords.length} words`);
+
+    selectedWords.forEach((word, index) => {
+      const isFirstPhase = (word as any).alpha === true;
+      const phase = isFirstPhase ? "FIRST" : "SECOND";
+      console.log(
+        `   ${index + 1}. ${word.id} (${word.category}, edition ${
+          (word as any).edition
+        }) [${phase}]`
+      );
+    });
+  }
 
   const batch = db.batch();
   const startDate = new Date();
 
   try {
-    for (let i = 0; i < testWords.length; i++) {
+    for (let i = 0; i < selectedWords.length; i++) {
       const puzzleDate = new Date(startDate);
       puzzleDate.setDate(startDate.getDate() + i);
       const dateString = puzzleDate.toISOString().split("T")[0]; // YYYY-MM-DD
 
-      const word = testWords[i];
+      const word = selectedWords[i];
       const puzzleRef = db.collection("dailyPuzzles").doc(dateString);
 
       batch.set(puzzleRef, {
@@ -78,35 +91,41 @@ async function seedDailyPuzzles() {
         cycleLap: 1, // Track which cycle of the word list this is
       });
 
-      console.log(
-        `📅 ${dateString}: ${word.id} (${word.category}, edition ${
-          (word as any).edition || "N/A"
-        })`
-      );
+      if (process.env.FIRESTORE_EMULATOR_HOST) {
+        console.log(
+          `📅 ${dateString}: ${word.id} (${word.category}, edition ${
+            (word as any).edition || "N/A"
+          })`
+        );
+      }
     }
 
     await batch.commit();
-    console.log("🎉 Daily puzzles seeding completed successfully!");
-    console.log(
-      `📅 Alpha schedule: ${testWords.length} puzzles from ${
-        new Date(startDate).toISOString().split("T")[0]
-      } to ${
-        new Date(
-          startDate.getTime() + (testWords.length - 1) * 24 * 60 * 60 * 1000
-        )
-          .toISOString()
-          .split("T")[0]
-      }`
-    );
-    console.log(
-      "🔄 This will test daily cycling through different categories and editions"
-    );
 
-    // Verify the migration
-    const puzzlesSnapshot = await db.collection("dailyPuzzles").get();
-    console.log(
-      `📋 Verification: ${puzzlesSnapshot.size} daily puzzles now exist in Firestore`
-    );
+    if (process.env.FIRESTORE_EMULATOR_HOST) {
+      console.log("🎉 Daily puzzles seeding completed successfully!");
+      console.log(
+        `📅 Schedule: ${selectedWords.length} puzzles from ${
+          new Date(startDate).toISOString().split("T")[0]
+        } to ${
+          new Date(
+            startDate.getTime() +
+              (selectedWords.length - 1) * 24 * 60 * 60 * 1000
+          )
+            .toISOString()
+            .split("T")[0]
+        }`
+      );
+      console.log(
+        `🔄 Order: ${firstPhaseWords.length} first phase → ${secondPhaseWords.length} second phase (sorted by edition)`
+      );
+
+      // Verify the migration
+      const puzzlesSnapshot = await db.collection("dailyPuzzles").get();
+      console.log(
+        `📋 Verification: ${puzzlesSnapshot.size} daily puzzles now exist in Firestore`
+      );
+    }
   } catch (error) {
     console.error("❌ Error during daily puzzles seeding:", error);
     throw error;
@@ -126,20 +145,27 @@ async function main() {
     const existingCount = await checkExistingPuzzles();
 
     if (existingCount > 0) {
-      console.log(
-        `⚠️  Warning: Found ${existingCount} existing daily puzzles in Firestore`
-      );
-      console.log("This script will add new puzzles starting from today.");
-      console.log("Proceeding in 3 seconds... (Ctrl+C to cancel)");
+      if (process.env.FIRESTORE_EMULATOR_HOST) {
+        console.log(
+          `⚠️  Warning: Found ${existingCount} existing daily puzzles in Firestore`
+        );
+        console.log("This script will add new puzzles starting from today.");
+        console.log("Proceeding in 3 seconds... (Ctrl+C to cancel)");
+      }
 
       await new Promise((resolve) => setTimeout(resolve, 3000));
     }
 
     await seedDailyPuzzles();
-    console.log("🏁 Daily puzzles seeding completed successfully!");
+
+    if (process.env.FIRESTORE_EMULATOR_HOST) {
+      console.log("🏁 Daily puzzles seeding completed successfully!");
+    }
     process.exit(0);
   } catch (error) {
-    console.error("💥 Daily puzzles seeding failed:", error);
+    if (process.env.FIRESTORE_EMULATOR_HOST) {
+      console.error("💥 Daily puzzles seeding failed:", error);
+    }
     process.exit(1);
   }
 }
