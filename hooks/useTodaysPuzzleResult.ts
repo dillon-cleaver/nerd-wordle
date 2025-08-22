@@ -5,6 +5,7 @@ import { getTodayDateString, getDateString } from "@/utils/time";
 import { loadPuzzleResultsLocal } from "@/storage/puzzle-results.local";
 import { UserContext } from "@/context/UserContext";
 import { PuzzleResult } from "@/types/puzzle-result";
+import { canBypassDailyLock, isDebugLoggingEnabled } from "@/utils/dev-flags";
 
 /**
  * Hook to check if the user has already completed today's puzzle
@@ -36,20 +37,20 @@ export const useTodaysPuzzleResult = () => {
       !historyLoading &&
       !hasTriedLoadingBackend
     ) {
-      if (__DEV__) {
+      if (isDebugLoggingEnabled()) {
         console.log(
           "🔄 Loading puzzle history from backend for authenticated user"
         );
       }
       loadPuzzleResults(authUser)
         .then(() => {
-          if (__DEV__) {
+          if (isDebugLoggingEnabled()) {
             console.log("✅ Backend puzzle history loaded successfully");
           }
           setHasTriedLoadingBackend(true);
         })
         .catch((error) => {
-          if (__DEV__) {
+          if (isDebugLoggingEnabled()) {
             console.error("❌ Failed to load backend puzzle history:", error);
           }
           setHasTriedLoadingBackend(true); // Still mark as tried to avoid infinite retries
@@ -76,7 +77,7 @@ export const useTodaysPuzzleResult = () => {
     const today = getTodayDateString();
     const todaysPuzzleWord = dailyPuzzle.word.id;
 
-    if (__DEV__) {
+    if (isDebugLoggingEnabled()) {
       console.log("🔍 Checking for today's puzzle result:", {
         today,
         puzzleWord: todaysPuzzleWord,
@@ -84,6 +85,7 @@ export const useTodaysPuzzleResult = () => {
         hasBackendResults: backendResults.length > 0,
         isAuthenticated: !!authUser,
         hasTriedLoadingBackend,
+        canBypassDaily: canBypassDailyLock(),
       });
     }
 
@@ -91,7 +93,7 @@ export const useTodaysPuzzleResult = () => {
     const localResult = localResults.find((result) => {
       const resultDate = getDateString(new Date(result.date));
       const matches = result.word === todaysPuzzleWord && resultDate === today;
-      if (matches && __DEV__) {
+      if (matches && isDebugLoggingEnabled()) {
         console.log("✅ Found local result for today:", result);
       }
       return matches;
@@ -103,8 +105,13 @@ export const useTodaysPuzzleResult = () => {
         id: localResult.id,
         word: localResult.word,
         attempts: localResult.guesses, // localStorage uses 'guesses', API uses 'attempts'
-        date: localResult.date instanceof Date ? localResult.date.toISOString() : localResult.date,
-        status: (localResult.status === "fail" ? "loss" : localResult.status) as "win" | "loss",
+        date:
+          localResult.date instanceof Date
+            ? localResult.date.toISOString()
+            : localResult.date,
+        status: (localResult.status === "fail"
+          ? "loss"
+          : localResult.status) as "win" | "loss",
         edition: localResult.edition,
         hintIndex: localResult.hintIndex,
         source: "localStorage",
@@ -117,7 +124,7 @@ export const useTodaysPuzzleResult = () => {
         const resultDate = getDateString(new Date(result.date));
         const matches =
           result.word === todaysPuzzleWord && resultDate === today;
-        if (matches && __DEV__) {
+        if (matches && isDebugLoggingEnabled()) {
           console.log("✅ Found backend result for today:", result);
         }
         return matches;
@@ -132,7 +139,7 @@ export const useTodaysPuzzleResult = () => {
       }
     }
 
-    if (__DEV__) {
+    if (isDebugLoggingEnabled()) {
       console.log("❌ No result found for today's puzzle");
     }
     return null;
@@ -145,18 +152,20 @@ export const useTodaysPuzzleResult = () => {
     hasTriedLoadingBackend,
   ]);
 
-  const hasPlayedToday = !!todayResult;
+  // Apply dev bypass logic - if bypass is enabled, never report as having played today
+  const hasPlayedToday = canBypassDailyLock() ? false : !!todayResult;
   const isLoading =
     puzzleLoading ||
     userLoading ||
     (authUser && !hasTriedLoadingBackend && historyLoading);
 
-  if (__DEV__) {
+  if (isDebugLoggingEnabled()) {
     console.log("🎮 useTodaysPuzzleResult state:", {
       hasPlayedToday,
       isLoading,
       resultSource: todayResult?.source,
       userAuthenticated: !!authUser,
+      bypassEnabled: canBypassDailyLock(),
     });
   }
 

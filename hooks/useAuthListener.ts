@@ -7,10 +7,14 @@ export function useAuthListener() {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, async (user: User | null) => {
       if (user) {
-        console.log("Auth state changed: user signed in:", user.displayName);
+        if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+          console.log("Auth state changed: user signed in:", user.displayName);
+        }
         await createUserIfNotExists(user);
-      } else {
-        console.log("Auth state changed: user signed out");
+      } else {``
+        if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+          console.log("Auth state changed: user signed out");
+        }
       }
     });
 
