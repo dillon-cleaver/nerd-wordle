@@ -1,0 +1,61 @@
+{
+  "cli": {
+    "version": ">= 12.0.0"
+  },
+  "build": {
+    "base": {
+      "node": "20.18.0",
+      "yarn": "1.22.22",
+      "env": {
+        "EXPO_NO_CLIENT_ENV_VARS": "0"
+      }
+    },
+    "development": {
+      "extends": "base",
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_DEV_MODE": "true",
+        "EXPO_PUBLIC_ENABLE_DEBUG_LOGS": "true",
+        "EXPO_PUBLIC_BYPASS_DAILY_LIMIT": "false"
+      },
+      "android": {
+        "withoutCredentials": true,
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": true
+      }
+    },
+    "preview": {
+      "extends": "base",
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_DEV_MODE": "false",
+        "EXPO_PUBLIC_ENABLE_DEBUG_LOGS": "true",
+        "EXPO_PUBLIC_BYPASS_DAILY_LIMIT": "false"
+      },
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "testing": {
+      "extends": "preview",
+      "env": {
+        "EXPO_PUBLIC_DEV_MODE": "true",
+        "EXPO_PUBLIC_ENABLE_DEBUG_LOGS": "true",
+        "EXPO_PUBLIC_BYPASS_DAILY_LIMIT": "true",
+        "EXPO_PUBLIC_SHOW_DEV_BADGE": "true"
+      }
+    },
+    "production": {
+      "extends": "base",
+      "env": {
+        "EXPO_PUBLIC_DEV_MODE": "false",
+        "EXPO_PUBLIC_ENABLE_DEBUG_LOGS": "false",
+        "EXPO_PUBLIC_BYPASS_DAILY_LIMIT": "false",
+        "EXPO_PUBLIC_SHOW_DEV_BADGE": "false"
+      }
+    }
+  }
+}
