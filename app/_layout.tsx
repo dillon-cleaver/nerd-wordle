@@ -20,11 +20,13 @@ import { FontAwesome } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { useAuthListener } from "@/hooks/useAuthListener";
 import { UserProvider } from "@/context/UserContext";
-import { View } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { DrawerSignOutButton } from "@/components/DrawerSignOutButton";
 import { GameProvider } from "@/context/GameContext";
 import { PuzzleHistoryProvider } from "@/context/PuzzleHistoryContext";
 import { WordDataProvider } from "@/context/WordDataContext";
+import { DrawerDevInfo } from "@/components/DrawerDevInfo";
+import { DevModeBadge } from "@/components/DevModeBadge";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -75,6 +77,7 @@ export default function RootLayout() {
                       <DrawerItemList {...props} />
                     </View>
                     <View style={{ paddingVertical: spacing.sm }}>
+                      <DrawerDevInfo />
                       <DrawerSignOutButton />
                     </View>
                   </DrawerContentScrollView>
@@ -96,6 +99,30 @@ export default function RootLayout() {
                     alignItems: "center",
                     lineHeight: lineHeight.title.large,
                   },
+                  headerRight: () => (
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: spacing.sm,
+                        marginRight: spacing.md,
+                      }}
+                    >
+                      <DevModeBadge />
+                      <TouchableOpacity
+                        onPress={() => {
+                          // TODO: Add info functionality later
+                        }}
+                        style={{ padding: spacing.xs }}
+                      >
+                        <FontAwesome
+                          name="info-circle"
+                          size={24}
+                          color={colors.neutral.white}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  ),
                   drawerStyle: {
                     backgroundColor: colors.neutral.background,
                   },
@@ -138,22 +165,6 @@ export default function RootLayout() {
                     ),
                   }}
                 />
-                {/* <Drawer.Screen
-              name="friends"
-              options={{
-                title: "Friends",
-                drawerLabel: "Friends",
-                drawerLabelStyle: {
-                  fontFamily: fontFamily.bitter.bold,
-                  fontSize: fontSize.title.large,
-                  lineHeight: lineHeight.title.large,
-                },
-                drawerItemStyle: { borderRadius: borderRadius.md },
-                drawerIcon: ({ color }: { color: string }) => (
-                  <FontAwesome name="users" size={24} color={color} />
-                ),
-              }}
-            /> */}
               </Drawer>
               <StatusBar networkActivityIndicatorVisible={true} style="light" />
             </GestureHandlerRootView>
