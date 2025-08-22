@@ -3610,6 +3610,7 @@
   { "id": "VOUCH", "category": "common" },
   { "id": "VOWED", "category": "common" },
   { "id": "VOWER", "category": "common" },
+  { "id": "WAGER", "category": "common" },
   { "id": "WAIST", "category": "common" },
   { "id": "WAIVE", "category": "common" },
   { "id": "WAKEN", "category": "common" },
@@ -3739,7 +3740,8 @@
       "John Williams is famous for creating these for Star Wars and Jaws",
       "Can include leitmotifs that represent specific characters or themes"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Film_score"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Film_score",
+    "alpha": true
   },
   {
     "id": "CAMEO",
@@ -3893,7 +3895,8 @@
       "British author known for novels about multicultural London",
       "Wrote White Teeth and On Beauty"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Zadie_Smith"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Zadie_Smith",
+    "alpha": true
   },
   {
     "id": "RILKE",
@@ -4047,7 +4050,8 @@
       "Mathematical reasoning applied to programming and algorithms",
       "Helps computers make decisions and solve problems systematically"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Logic_in_computer_science"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Logic_in_computer_science",
+    "alpha": true
   },
   {
     "id": "TROLL",
@@ -4201,7 +4205,8 @@
       "Often paired with 'fauna' when describing ecosystems",
       "Can refer to both individual species and entire plant communities"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Flora"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Flora",
+    "alpha": true
   },
   {
     "id": "ORBIT",
@@ -4355,7 +4360,8 @@
       "Voiced by Nolan North in the popular action-adventure series",
       "Often compared to Indiana Jones for his archaeological adventures"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Nathan_Drake_(Uncharted)"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Nathan_Drake_(Uncharted)",
+    "alpha": true
   },
   {
     "id": "FORZA",
@@ -4509,7 +4515,8 @@
       "His name means 'dragon' in Latin",
       "Son of Lucius and Narcissa, marked as a Death Eater"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Draco_Malfoy"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Draco_Malfoy",
+    "alpha": true
   },
   {
     "id": "VADER",
@@ -4663,7 +4670,8 @@
       "Originally known as Ms. Marvel before taking the Captain Marvel title",
       "Gained her powers from Kree technology and Mar-Vell"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Carol_Danvers"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Carol_Danvers",
+    "alpha": true
   },
   {
     "id": "BLADE",
