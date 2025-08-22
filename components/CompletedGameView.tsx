@@ -1,5 +1,11 @@
 import { View, StyleSheet, Text } from "react-native";
-import { colors, spacing } from "@/constants/styles";
+import {
+  colors,
+  spacing,
+  fontSize,
+  fontFamily,
+  borderRadius,
+} from "@/constants/styles";
 import { BannerCard } from "./BannerCard";
 import { useCountdownToNewPuzzle } from "@/utils/countdown";
 
@@ -71,51 +77,54 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   completedText: {
-    fontSize: 16,
-    fontWeight: "600",
+    fontSize: fontSize.body.base,
     color: colors.neutral.white,
     opacity: 0.8,
+    fontFamily: fontFamily.openSans.medium,
   },
   statusText: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: fontSize.body.medium,
     color: colors.neutral.white,
     textAlign: "center",
+    fontFamily: fontFamily.bitter.bold,
   },
   instructionText: {
-    fontSize: 14,
+    fontSize: fontSize.title.base,
     color: colors.neutral.white,
     opacity: 0.7,
     textAlign: "center",
     marginTop: spacing.sm,
+    fontFamily: fontFamily.openSans.regular,
   },
   gridPlaceholder: {
     alignItems: "center",
     gap: spacing.sm,
     padding: spacing.lg,
     backgroundColor: colors.neutral.darkGray,
-    borderRadius: 8,
+    borderRadius: borderRadius.md,
     minHeight: 200,
     justifyContent: "center",
   },
   gridPlaceholderText: {
-    fontSize: 16,
-    fontWeight: "600",
+    fontSize: fontSize.body.base,
     color: colors.neutral.white,
     opacity: 0.6,
+    fontFamily: fontFamily.openSans.medium,
   },
   gridPlaceholderSubtext: {
-    fontSize: 14,
+    fontSize: fontSize.title.base,
     color: colors.neutral.white,
     opacity: 0.5,
+    fontFamily: fontFamily.openSans.regular,
   },
   timerContainer: {
     paddingHorizontal: spacing.md,
     alignItems: "center",
   },
   timerText: {
-    fontSize: 14,
+    fontSize: fontSize.title.base,
     opacity: 0.7,
     color: colors.neutral.white,
+    fontFamily: fontFamily.openSans.regular,
   },
 });
