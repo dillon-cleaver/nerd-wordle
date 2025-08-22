@@ -30,6 +30,8 @@ type NerdWordEntry = {
     currentHintIndex: number; // Which hint is currently being shown
     lastHintRotation?: Date; // When hint last changed
   };
+  alpha?: boolean; // Mark word as available in alpha testing
+  beta?: boolean;  // Mark word as available in beta testing
 };
 
 type WordEntry = CommonWordEntry | NerdWordEntry;
