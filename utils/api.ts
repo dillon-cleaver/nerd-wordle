@@ -2,22 +2,28 @@ import { User } from "firebase/auth";
 import { WordEntry } from "@/types/word";
 import { DailyPuzzleSeed } from "@/utils/daily-puzzle";
 
-// Environment detection - only use development API in actual development
-const isDevelopment = process.env.NODE_ENV === 'development' && (process.env.EXPO_PUBLIC_DEV_MODE === 'true' || (typeof __DEV__ !== "undefined" && __DEV__));
+// Environment detection - use explicit dev mode flag
+const isDevelopment = process.env.EXPO_PUBLIC_DEV_MODE === "true";
 
-// API URLs
+// API URLs - configurable via environment variables
 const PRODUCTION_API_URL = "https://api-2no66svcwq-uc.a.run.app";
-const DEVELOPMENT_API_URL = "http://127.0.0.1:5001/nerd-word-cfda3/us-central1/api";
+const DEVELOPMENT_API_URL =
+  "http://127.0.0.1:5001/nerd-word-cfda3/us-central1/api";
 
-const API_BASE_URL = isDevelopment ? DEVELOPMENT_API_URL : PRODUCTION_API_URL;
+const API_BASE_URL =
+  process.env.EXPO_PUBLIC_API_URL ||
+  (isDevelopment ? DEVELOPMENT_API_URL : PRODUCTION_API_URL);
 
-// Debug logging
-console.log(`🔧 API Configuration:`, {
-  isDevelopment,
-  NODE_ENV: process.env.NODE_ENV,
-  EXPO_PUBLIC_DEV_MODE: process.env.EXPO_PUBLIC_DEV_MODE,
-  API_BASE_URL
-});
+// Debug logging - only when debug logs are enabled
+if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+  console.log(`🔧 API Configuration:`, {
+    isDevelopment,
+    NODE_ENV: process.env.NODE_ENV,
+    EXPO_PUBLIC_DEV_MODE: process.env.EXPO_PUBLIC_DEV_MODE,
+    EXPO_PUBLIC_API_URL: process.env.EXPO_PUBLIC_API_URL,
+    API_BASE_URL,
+  });
+}
 
 export type PuzzleResult = {
   id: string;

@@ -12,8 +12,8 @@ import {
 export const getTimeUntilNewPuzzle = () => {
   const { hours, minutes } = getTimeUntilNextGameTimezoneMidnight();
 
-  // Debug logging (only in development)
-  if (__DEV__) {
+  // Debug logging (only when debug logs are enabled)
+  if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
     console.log("Countdown Debug:", {
       yourLocalTime: new Date().toLocaleString(),
       currentCentralTime: getCurrentInGameTimezone().toISOString(),

@@ -2,19 +2,17 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 
-// Environment detection - only use emulator in actual development
-const isDevelopment =
-  process.env.NODE_ENV === "development" &&
-  (process.env.EXPO_PUBLIC_DEV_MODE === "true" ||
-  (typeof __DEV__ !== "undefined" && __DEV__));
+// Environment detection - use explicit dev mode flag
+const isDevelopment = process.env.EXPO_PUBLIC_DEV_MODE === "true";
 
-// Debug logging
-console.log(`🔧 Firebase Configuration:`, {
-  isDevelopment,
-  NODE_ENV: process.env.NODE_ENV,
-  EXPO_PUBLIC_DEV_MODE: process.env.EXPO_PUBLIC_DEV_MODE,
-  __DEV__: typeof __DEV__ !== "undefined" ? __DEV__ : "undefined",
-});
+// Debug logging - only when debug logs are enabled
+if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+  console.log(`🔧 Firebase Configuration:`, {
+    isDevelopment,
+    NODE_ENV: process.env.NODE_ENV,
+    EXPO_PUBLIC_DEV_MODE: process.env.EXPO_PUBLIC_DEV_MODE,
+  });
+}
 
 // Initialize Firebase - PRODUCTION CONFIG
 // Firestore behavior:
@@ -40,21 +38,25 @@ if (isDevelopment) {
   // Only connect if not already connected
   try {
     connectFirestoreEmulator(db, "localhost", 8080);
-    console.log("🔧 Connected to Firestore emulator on localhost:8080");
-
-    // Test connection by attempting to access a document
-    console.log("🔧 Testing Firestore emulator connection...");
+    if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+      console.log("🔧 Connected to Firestore emulator on localhost:8080");
+      console.log("🔧 Testing Firestore emulator connection...");
+    }
   } catch (error) {
     // Emulator might already be connected
-    console.log(
-      "🔧 Firestore emulator connection (may already be connected):",
-      error
-    );
+    if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+      console.log(
+        "🔧 Firestore emulator connection (may already be connected):",
+        error
+      );
+    }
   }
 
   // Note: Auth emulator not configured - using production auth
-  console.log("🔧 Using production Firebase Auth (emulator not configured)");
-  console.log(
-    "🔧 Emulator setup complete - Firestore should use localhost:8080"
-  );
+  if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+    console.log("🔧 Using production Firebase Auth (emulator not configured)");
+    console.log(
+      "🔧 Emulator setup complete - Firestore should use localhost:8080"
+    );
+  }
 }
