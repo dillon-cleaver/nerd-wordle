@@ -11,7 +11,7 @@ export function useAuthListener() {
           console.log("Auth state changed: user signed in:", user.displayName);
         }
         await createUserIfNotExists(user);
-      } else {``
+      } else {
         if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
           console.log("Auth state changed: user signed out");
         }
