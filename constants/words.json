@@ -3785,7 +3785,8 @@
       "Known for non-linear storytelling and minimal use of CGI",
       "Directed the Dark Knight trilogy and Oppenheimer"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Christopher_Nolan"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Christopher_Nolan",
+    "beta": true
   },
   {
     "id": "SCENE",
@@ -3818,7 +3819,8 @@
       "Director of acclaimed films like 12 Angry Men and Network",
       "Directed over 50 films including Dog Day Afternoon"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sidney_Lumet"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sidney_Lumet",
+    "beta": true
   },
   {
     "id": "GRANT",
@@ -3907,7 +3909,8 @@
       "Austrian poet who wrote Letters to a Young Poet",
       "Famous for 'You must change your life' from a poem about Apollo"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Rainer_Maria_Rilke"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Rainer_Maria_Rilke",
+    "beta": true
   },
   {
     "id": "FABLE",
@@ -3951,7 +3954,8 @@
       "British author who wrote Mrs. Dalloway and To the Lighthouse",
       "Early 20th century feminist writer known for exploring women's inner lives"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Virginia_Woolf"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Virginia_Woolf",
+    "beta": true
   },
   {
     "id": "PROSE",
@@ -4084,7 +4088,8 @@
       "First created in Japan in the late 1990s",
       "Now standardized by the Unicode Consortium"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Emoji"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Emoji",
+    "beta": true
   },
   {
     "id": "VIRUS",
@@ -4161,7 +4166,8 @@
       "Digital images are made up of millions of these tiny squares",
       "Higher resolution means more of these per inch"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Pixel"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Pixel",
+    "beta": true
   },
   {
     "id": "TWEET",
@@ -4239,7 +4245,8 @@
       "Companion term to 'flora' in biological studies",
       "Includes everything from microscopic organisms to large mammals"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Fauna"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Fauna",
+    "beta": true
   },
   {
     "id": "OXIDE",
@@ -4261,7 +4268,8 @@
       "Used to measure brightness of light bulbs and projectors",
       "Different from watts, which measure electrical power consumption"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Lumen_(unit)"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Lumen_(unit)",
+    "beta": true
   },
   {
     "id": "LASER",
@@ -4405,7 +4413,8 @@
       "Originally called 'Jumpman' in Donkey Kong",
       "Named after Nintendo's landlord Mario Segale"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Mario"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Mario",
+    "beta": true
   },
   {
     "id": "CRASH",
@@ -4471,7 +4480,8 @@
       "Famous for breaking the fourth wall and meta-commentary",
       "Created Snake, Big Boss, and Death Stranding"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Hideo_Kojima"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Hideo_Kojima",
+    "beta": true
   },
   {
     "id": "UNITY",
@@ -4560,7 +4570,8 @@
       "Daughter of Liet-Kynes, skilled in desert survival",
       "Calls Paul 'Usul' and teaches him Fremen ways"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Chani"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Chani",
+    "beta": true
   },
   {
     "id": "GIMLI",
@@ -4593,7 +4604,8 @@
       "Has both Light and Dark sides representing good and evil",
       "Allows users to move objects, see the future, and influence minds"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/The_Force"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/The_Force",
+    "beta": true
   },
   {
     "id": "SPOCK",
@@ -4693,7 +4705,8 @@
       "CEO of Stark Industries and founding member of the Avengers",
       "His arc reactor keeps shrapnel from reaching his heart"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Tony_Stark"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Tony_Stark",
+    "beta": true
   },
   {
     "id": "VENOM",
@@ -4781,7 +4794,8 @@
       "Witnessed his parents' murder as a child in Crime Alley",
       "Uses the bat as his symbol to strike fear into criminals"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Bruce_Wayne"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Bruce_Wayne",
+    "beta": true
   },
   {
     "id": "DONNA",
@@ -4847,7 +4861,8 @@
       "Wool, ore, brick — trade ratios shape your tempo",
       "The robber freezes production on a tile until displaced"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Catan"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Catan",
+    "beta": true
   },
   {
     "id": "CHESS",
@@ -4946,7 +4961,8 @@
       "Set collection enables longer claims for higher points",
       "Hidden objectives reward completing specific paths"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Ticket_to_Ride_(board_game)"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Ticket_to_Ride_(board_game)",
+    "beta": true
   },
   {
     "id": "MIMIC",
@@ -5001,7 +5017,8 @@
       "Seeks the truth behind her father's murder",
       "Wears a sentient sailor uniform named Senketsu"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/List_of_Kill_la_Kill_characters#Ry%C5%ABko_Matoi"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/List_of_Kill_la_Kill_characters#Ry%C5%ABko_Matoi",
+    "beta": true
   },
   {
     "id": "SPIKE",
@@ -5056,7 +5073,8 @@
       "Transforms into a guardian of love and justice",
       "Carries a brooch and wields a Moon Tiara"
     ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sailor_Moon_(character)"
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sailor_Moon_(character)",
+    "beta": true
   },
   {
     "id": "RENJI",
