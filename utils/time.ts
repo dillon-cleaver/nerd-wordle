@@ -30,6 +30,19 @@ export const getDateString = (date: Date): string => {
 };
 
 /**
+ * Get date string for a specific Date object in MM/DD/YY format in game timezone
+ * Used for display purposes in WordCard
+ */
+export const getShortDateString = (date: Date): string => {
+  return date.toLocaleDateString("en-US", {
+    timeZone: GAME_TIMEZONE,
+    month: "2-digit",
+    day: "2-digit",
+    year: "2-digit",
+  });
+};
+
+/**
  * Get current time in the game timezone as a Date object
  */
 export const getCurrentInGameTimezone = (): Date => {

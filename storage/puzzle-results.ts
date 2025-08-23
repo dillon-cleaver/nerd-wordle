@@ -8,10 +8,11 @@ import { getAuth } from "firebase/auth";
 import { puzzleHistoryApi } from "@/utils/api";
 
 // Convert PuzzleResult to backend API format
+// TODO: Fix type inconsistency - Frontend uses 'guesses', API uses 'attempts' for same data
 const puzzleResultToApiFormat = (result: PuzzleResult) => ({
   id: result.id,
   word: result.word,
-  attempts: result.guesses,
+  attempts: result.guesses, // Converting frontend 'guesses' to API 'attempts'
   status: result.status === "fail" ? ("loss" as const) : result.status,
   edition: result.edition,
   hintIndex: result.hintIndex,

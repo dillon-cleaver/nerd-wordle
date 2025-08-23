@@ -3,18 +3,20 @@ import * as admin from "firebase-admin";
 import { PuzzleResultRequest, WordEntry, DailyPuzzleSeed } from "./types";
 import { PuzzleResult } from "../../types/puzzle-result";
 
+// TODO: Fix type inconsistency - Frontend uses 'guesses', API uses 'attempts' for same data
 export const puzzleResultToApiRequest = (
   result: PuzzleResult
 ): PuzzleResultRequest => ({
   id: result.id,
   word: result.word,
-  attempts: result.guesses,
+  attempts: result.guesses, // Converting frontend 'guesses' to API 'attempts'
   date: result.date.toISOString(),
   status: result.status === "fail" ? "loss" : result.status,
   edition: result.edition,
   hintIndex: result.hintIndex,
 });
 
+// TODO: Fix type inconsistency - API uses 'attempts', frontend uses 'guesses' for same data
 export const apiRequestToPuzzleResult = (
   record: PuzzleResultRequest
 ): Omit<PuzzleResult, "status"> => ({
@@ -22,7 +24,7 @@ export const apiRequestToPuzzleResult = (
   word: record.word,
   edition: record.edition || 1,
   date: new Date(record.date),
-  guesses: record.attempts,
+  guesses: record.attempts, // Converting API 'attempts' to frontend 'guesses'
   hintIndex: record.hintIndex || 0,
 });
 

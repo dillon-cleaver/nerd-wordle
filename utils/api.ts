@@ -25,10 +25,14 @@ if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
   });
 }
 
+// TODO: CRITICAL - Type inconsistency with frontend types
+// This API type uses 'attempts: number' while frontend type in types/puzzle-result.ts uses 'guesses: number'
+// Both represent the same concept (number of guesses to solve puzzle) but different property names
+// This causes 'as any' casts throughout codebase and conversion functions everywhere
 export type PuzzleResult = {
   id: string;
   word: string;
-  attempts: number;
+  attempts: number; // Number of guesses to solve (frontend uses 'guesses' for same data)
   date: string;
   status: "win" | "loss";
   edition?: number;

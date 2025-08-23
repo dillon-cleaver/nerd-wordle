@@ -1,3 +1,13 @@
+import { useCallback } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  ViewToken,
+  ActivityIndicator,
+} from "react-native";
+import { useSharedValue } from "react-native-reanimated";
 import { ListItem } from "@/components/ListItem";
 import { WordCard } from "@/components/WordCard";
 import {
@@ -11,18 +21,10 @@ import {
   lineHeight,
   spacing,
 } from "@/constants/styles";
-import { useCallback } from "react";
-import { StyleSheet, View, Text, FlatList, ViewToken } from "react-native";
-import { useSharedValue } from "react-native-reanimated";
-
-const TEMPORARY_ITEM_COUNT = 25;
+import { useCollectedWords } from "@/hooks/useCollectedWords";
 
 export default function Words() {
-  // TODO: Replace this with real data
-  const data = new Array(TEMPORARY_ITEM_COUNT)
-    .fill(0)
-    .map((_, index) => ({ id: index }));
-
+  const { collectedWords, loading, error } = useCollectedWords();
   const viewableItems = useSharedValue<ViewToken[]>([]);
 
   const onViewableItemsChanged = useCallback(
@@ -32,19 +34,52 @@ export default function Words() {
     [viewableItems]
   );
 
+  if (loading) {
+    return (
+      <View style={[styles.container, styles.centered]}>
+        <ActivityIndicator size="large" color={colors.neutral.white} />
+        <Text style={styles.loadingText}>Loading your words...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={[styles.container, styles.centered]}>
+        <Text style={styles.errorText}>Error loading your collected words</Text>
+      </View>
+    );
+  }
+
+  if (collectedWords.length === 0) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.titleTextContainer}>
+          <Text style={styles.titleText}>Words</Text>
+        </View>
+        <View style={styles.centered}>
+          <Text style={styles.emptyText}>
+            Complete puzzles to see your collected words here!
+          </Text>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.titleTextContainer}>
-        <Text style={styles.titleText}>Words</Text>
+        <Text style={styles.titleText}>Words ({collectedWords.length})</Text>
       </View>
       <FlatList
-        data={data}
+        data={collectedWords}
         showsVerticalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.listContainer}
         renderItem={({ item }) => (
           <ListItem item={item} viewableItems={viewableItems}>
-            <WordCard />
+            <WordCard collectedWordId={item.id} />
           </ListItem>
         )}
       />
@@ -71,5 +106,34 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.bitter.bold,
     lineHeight: lineHeight.title.large,
     color: colors.neutral.white,
+  },
+  listContainer: {
+    paddingBottom: spacing.lg,
+    width: "100%",
+    alignItems: "center",
+  },
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loadingText: {
+    fontSize: fontSize.body.base,
+    fontFamily: fontFamily.bitter.regular,
+    color: colors.neutral.white,
+    marginTop: spacing.sm,
+  },
+  errorText: {
+    fontSize: fontSize.body.base,
+    fontFamily: fontFamily.bitter.regular,
+    color: colors.neutral.white,
+    textAlign: "center",
+  },
+  emptyText: {
+    fontSize: fontSize.body.base,
+    fontFamily: fontFamily.bitter.regular,
+    color: colors.neutral.white,
+    textAlign: "center",
+    paddingHorizontal: spacing.lg,
   },
 });

@@ -8,8 +8,6 @@ import {
   lineHeight,
   spacing,
 } from "@/constants/styles";
-import { useContext } from "react";
-import { GameContext } from "@/context/GameContext";
 import {
   WORD_CARD_MAX_WIDTH,
   WORD_CARD_MIN_WIDTH,
@@ -20,38 +18,41 @@ import {
   getHintForWord,
   getSummaryForWord,
 } from "@/utils/game";
-import { NerdWordEntry } from "@/types/word";
+import { useCollectedWords } from "@/hooks/useCollectedWords";
+import { getShortDateString } from "@/utils/time";
 
-export const WordCard = () => {
-  const { category, answer, answerEntry, originalCategory } =
-    useContext(GameContext);
+type WordCardProps = {
+  collectedWordId: string;
+};
 
-  // WordCard is only used for nerd words, so we can safely cast
-  const wordEntry = answerEntry as NerdWordEntry;
-  const hint = getHintForWord(answerEntry, originalCategory);
-  const summary = getSummaryForWord(answerEntry, originalCategory);
-  const tileBackgroundColor = getCategoryColor(originalCategory);
-  const textColor = getCategoryTextColor(originalCategory);
+export const WordCard = ({ collectedWordId }: WordCardProps) => {
+  const { collectedWords } = useCollectedWords();
 
-  // TODO: Convert to a Link component for better accessibility?
+  // Find the specific collected word by ID
+  const collectedWord = collectedWords.find(
+    (word) => word.id === collectedWordId
+  );
+
+  if (!collectedWord) {
+    return null;
+  }
+
+  const { wordEntry, category, completedDate, editionNumber } = collectedWord;
+  const answer = wordEntry.id;
+
+  const hint = getHintForWord(wordEntry, category);
+  const summary = getSummaryForWord(wordEntry, category);
+  const tileBackgroundColor = getCategoryColor(category);
+  const textColor = getCategoryTextColor(category);
+
   const handleWikipediaPress = () => {
-    if (wordEntry?.wikipediaUrl) {
+    if (wordEntry.wikipediaUrl) {
       Linking.openURL(wordEntry.wikipediaUrl);
     }
   };
 
-  // TODO: Show guesses/attempts number somewhere
-  // TODO: Make edition number dynamic
-  // TODO: Make date dynamic and store on the card
-
-  // Format date as MM/DD/YY
-  const today = new Date();
-  const formattedDate = `${String(today.getMonth() + 1).padStart(
-    2,
-    "0"
-  )}/${String(today.getDate()).padStart(2, "0")}/${String(
-    today.getFullYear()
-  ).slice(-2)}`;
+  // Format date as MM/DD/YY using timezone-aware utility
+  const formattedDate = getShortDateString(completedDate);
 
   return (
     <Card addStyles={styles.container}>
@@ -63,7 +64,9 @@ export const WordCard = () => {
             {answer}
           </Text>
           <View>
-            <Text style={[styles.editionText, { color: textColor }]}>#123</Text>
+            <Text style={[styles.editionText, { color: textColor }]}>
+              #{editionNumber}
+            </Text>
             <Text style={[styles.dateText, { color: textColor }]}>
               {formattedDate}
             </Text>

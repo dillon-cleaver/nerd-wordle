@@ -10,16 +10,16 @@ type ListItemProps = {
   children: ReactNode;
   viewableItems: SharedValue<ViewToken[]>;
   item: {
-    id: number;
+    id: string | number;
   };
 };
 
 export const ListItem = ({ children, item, viewableItems }: ListItemProps) => {
   const rStyle = useAnimatedStyle(() => {
-    const isVisible = Boolean(
-      viewableItems.value
-        .filter((item) => item.isViewable)
-        .find((viewableItems) => viewableItems.item.id === item.id)
+    const isVisible = viewableItems.value.some(
+      (viewableItem) =>
+        viewableItem.isViewable &&
+        String(viewableItem.item?.id) === String(item.id)
     );
 
     return {
