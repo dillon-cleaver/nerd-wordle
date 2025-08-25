@@ -18,13 +18,14 @@ export const UserContext = createContext<UserContextType>({
 });
 
 export function UserProvider({ children }: { children: ReactNode }) {
-  const [authUser, setAuthUser] = useState<User | null>(null);
-  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [userState, setUserState] = useState<UserContextType>({
+    authUser: null,
+    userProfile: null,
+    loading: true,
+  });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setAuthUser(user);
       if (user) {
         // TODO: Remove before beta testing
         // 🧪 Console log user information for debugging
@@ -37,26 +38,47 @@ export function UserProvider({ children }: { children: ReactNode }) {
           console.log("=====================================");
         }
 
-        const docRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setUserProfile(docSnap.data() as UserProfile);
-        } else {
-          console.warn("No Firestore profile found for user:", user.uid);
-          setUserProfile(null);
+        try {
+          const docRef = doc(db, "users", user.uid);
+          const docSnap = await getDoc(docRef);
+          // Simple, safe type assertion with error handling
+          const profile = docSnap.exists() 
+            ? (docSnap.data() as UserProfile) 
+            : null;
+
+          if (!docSnap.exists()) {
+            console.warn("No Firestore profile found for user:", user.uid);
+          }
+
+          // Single atomic state update
+          setUserState({
+            authUser: user,
+            userProfile: profile,
+            loading: false,
+          });
+        } catch (error) {
+          console.error("Error fetching user profile:", error);
+          // Still set user as authenticated even if profile fetch fails
+          setUserState({
+            authUser: user,
+            userProfile: null,
+            loading: false,
+          });
         }
       } else {
-        setUserProfile(null);
+        // User is signed out - single atomic update
+        setUserState({
+          authUser: null,
+          userProfile: null,
+          loading: false,
+        });
       }
-      setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
   return (
-    <UserContext.Provider value={{ authUser, userProfile, loading }}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={userState}>{children}</UserContext.Provider>
   );
 }
