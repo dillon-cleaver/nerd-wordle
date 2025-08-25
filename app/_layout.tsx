@@ -2,6 +2,7 @@ import "@/firebase/firebaseConfig";
 import { useEffect } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import Head from "expo-router/head";
 import {
   borderRadius,
   colors,
@@ -59,118 +60,132 @@ export default function RootLayout() {
   // TODO: Make some components
 
   return (
-    <UserProvider>
-      <PuzzleHistoryProvider>
-        <WordDataProvider>
-          <GameProvider>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-              <Drawer
-                drawerContent={(props) => (
-                  <DrawerContentScrollView
-                    {...props}
-                    contentContainerStyle={{
-                      flex: 1,
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <View style={{ gap: spacing.sm }}>
-                      <DrawerItemList {...props} />
-                    </View>
-                    <View style={{ paddingVertical: spacing.sm }}>
-                      <DrawerDevInfo />
-                      <DrawerSignOutButton />
-                    </View>
-                  </DrawerContentScrollView>
-                )}
-                screenOptions={{
-                  headerStyle: {
-                    backgroundColor: colors.neutral.background,
-                    // TODO: Border still shows on desktop web
-                    borderBottomWidth: 0,
-                    elevation: 0,
-                    shadowOpacity: 0,
-                  },
-                  headerTitleAlign: "center",
-                  headerTintColor: colors.neutral.white,
-                  headerTitle: "NerdWord",
-                  headerTitleStyle: {
-                    fontFamily: fontFamily.bitter.bold,
-                    fontSize: fontSize.title.large,
-                    alignItems: "center",
-                    lineHeight: lineHeight.title.large,
-                  },
-                  headerRight: () => (
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: spacing.sm,
-                        marginRight: spacing.md,
+    <>
+      <Head>
+        <title>Nerd Wordle</title>
+        <meta
+          name="description"
+          content="A nerdy twist on the classic word game"
+        />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="theme-color" content="#1e212b" />
+      </Head>
+      <UserProvider>
+        <PuzzleHistoryProvider>
+          <WordDataProvider>
+            <GameProvider>
+              <GestureHandlerRootView style={{ flex: 1 }}>
+                <Drawer
+                  drawerContent={(props) => (
+                    <DrawerContentScrollView
+                      {...props}
+                      contentContainerStyle={{
+                        flex: 1,
+                        justifyContent: "space-between",
                       }}
                     >
-                      <DevModeBadge />
-                      <TouchableOpacity
-                        onPress={() => {
-                          // TODO: Add info functionality later
+                      <View style={{ gap: spacing.sm }}>
+                        <DrawerItemList {...props} />
+                      </View>
+                      <View style={{ paddingVertical: spacing.sm }}>
+                        <DrawerDevInfo />
+                        <DrawerSignOutButton />
+                      </View>
+                    </DrawerContentScrollView>
+                  )}
+                  screenOptions={{
+                    headerStyle: {
+                      backgroundColor: colors.neutral.background,
+                      // TODO: Border still shows on desktop web
+                      borderBottomWidth: 0,
+                      elevation: 0,
+                      shadowOpacity: 0,
+                    },
+                    headerTitleAlign: "center",
+                    headerTintColor: colors.neutral.white,
+                    headerTitle: "NerdWord",
+                    headerTitleStyle: {
+                      fontFamily: fontFamily.bitter.bold,
+                      fontSize: fontSize.title.large,
+                      alignItems: "center",
+                      lineHeight: lineHeight.title.large,
+                    },
+                    headerRight: () => (
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          gap: spacing.sm,
+                          marginRight: spacing.md,
                         }}
-                        style={{ padding: spacing.xs }}
                       >
-                        <FontAwesome
-                          name="info-circle"
-                          size={24}
-                          color={colors.neutral.white}
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  ),
-                  drawerStyle: {
-                    backgroundColor: colors.neutral.background,
-                  },
-                  drawerActiveTintColor: colors.neutral.white,
-                  drawerInactiveTintColor: colors.neutral.white,
-                  drawerItemStyle: {
-                    marginVertical: spacing.xs,
-                  },
-                }}
-              >
-                <Drawer.Screen
-                  name="index"
-                  options={{
-                    title: "Home",
-                    drawerLabel: "Home",
-                    drawerLabelStyle: {
-                      fontFamily: fontFamily.bitter.bold,
-                      fontSize: fontSize.title.large,
-                      lineHeight: lineHeight.title.large,
-                    },
-                    drawerItemStyle: { borderRadius: borderRadius.md },
-                    drawerIcon: ({ color }: { color: string }) => (
-                      <FontAwesome name="home" size={24} color={color} />
+                        <DevModeBadge />
+                        <TouchableOpacity
+                          onPress={() => {
+                            // TODO: Add info functionality later
+                          }}
+                          style={{ padding: spacing.xs }}
+                        >
+                          <FontAwesome
+                            name="info-circle"
+                            size={24}
+                            color={colors.neutral.white}
+                          />
+                        </TouchableOpacity>
+                      </View>
                     ),
-                  }}
-                />
-                <Drawer.Screen
-                  name="words"
-                  options={{
-                    title: "Words",
-                    drawerLabel: "Words",
-                    drawerLabelStyle: {
-                      fontFamily: fontFamily.bitter.bold,
-                      fontSize: fontSize.title.large,
-                      lineHeight: lineHeight.title.large,
+                    drawerStyle: {
+                      backgroundColor: colors.neutral.background,
                     },
-                    drawerItemStyle: { borderRadius: borderRadius.md },
-                    drawerIcon: ({ color }: { color: string }) => (
-                      <FontAwesome name="trophy" size={24} color={color} />
-                    ),
+                    drawerActiveTintColor: colors.neutral.white,
+                    drawerInactiveTintColor: colors.neutral.white,
+                    drawerItemStyle: {
+                      marginVertical: spacing.xs,
+                    },
                   }}
+                >
+                  <Drawer.Screen
+                    name="index"
+                    options={{
+                      title: "Home",
+                      drawerLabel: "Home",
+                      drawerLabelStyle: {
+                        fontFamily: fontFamily.bitter.bold,
+                        fontSize: fontSize.title.large,
+                        lineHeight: lineHeight.title.large,
+                      },
+                      drawerItemStyle: { borderRadius: borderRadius.md },
+                      drawerIcon: ({ color }: { color: string }) => (
+                        <FontAwesome name="home" size={24} color={color} />
+                      ),
+                    }}
+                  />
+                  <Drawer.Screen
+                    name="words"
+                    options={{
+                      title: "Words",
+                      drawerLabel: "Words",
+                      drawerLabelStyle: {
+                        fontFamily: fontFamily.bitter.bold,
+                        fontSize: fontSize.title.large,
+                        lineHeight: lineHeight.title.large,
+                      },
+                      drawerItemStyle: { borderRadius: borderRadius.md },
+                      drawerIcon: ({ color }: { color: string }) => (
+                        <FontAwesome name="trophy" size={24} color={color} />
+                      ),
+                    }}
+                  />
+                </Drawer>
+                <StatusBar
+                  networkActivityIndicatorVisible={true}
+                  style="light"
                 />
-              </Drawer>
-              <StatusBar networkActivityIndicatorVisible={true} style="light" />
-            </GestureHandlerRootView>
-          </GameProvider>
-        </WordDataProvider>
-      </PuzzleHistoryProvider>
-    </UserProvider>
+              </GestureHandlerRootView>
+            </GameProvider>
+          </WordDataProvider>
+        </PuzzleHistoryProvider>
+      </UserProvider>
+    </>
   );
 }
