@@ -6,16 +6,21 @@ import {
 } from "./puzzle-results.local";
 import { getAuth } from "firebase/auth";
 import { puzzleHistoryApi } from "@/utils/api";
+import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 
 // Convert PuzzleResult to backend API format
-// TODO: Fix type inconsistency - Frontend uses 'guesses', API uses 'attempts' for same data
 const puzzleResultToApiFormat = (result: PuzzleResult) => ({
   id: result.id,
   word: result.word,
-  attempts: result.guesses, // Converting frontend 'guesses' to API 'attempts'
+  guesses: result.guesses, // Number of guesses in this game session
+  attempts: result.attempts, // Number of times this puzzle has been attempted
   status: result.status === "fail" ? ("loss" as const) : result.status,
   edition: result.edition,
   hintIndex: result.hintIndex,
+  letterTracking: result.letterTracking.map((guess) => ({
+    ...guess,
+    timestamp: guess.timestamp.toISOString(), // Convert Date to string for API
+  })),
 });
 
 /**
@@ -31,37 +36,51 @@ export const savePuzzleResult = async (
   result: PuzzleResult
 ) => {
   // TODO: Replace console.log with proper logging service (e.g., Firebase Analytics, Sentry)
-  console.log("🔄 Starting to save puzzle result:", result);
+  if (isDebugLoggingEnabled()) {
+    console.log("🔄 Starting to save puzzle result:", result);
+  }
 
   // Save locally for offline support
   savePuzzleResultLocal(result);
-  console.log("✅ Saved to local storage");
+  if (isDebugLoggingEnabled()) {
+    console.log("✅ Saved to local storage");
+  }
 
   // Save to backend if user is authenticated (both wins and losses)
   const user = getAuth().currentUser;
-  console.log(
-    "👤 Current user:",
-    user ? `${user.email} (${user.uid})` : "Not authenticated"
-  );
+  if (isDebugLoggingEnabled()) {
+    console.log(
+      "👤 Current user:",
+      user ? `${user.email} (${user.uid})` : "Not authenticated"
+    );
+  }
 
   if (user) {
     try {
       const apiResult = puzzleResultToApiFormat(result);
-      console.log("📤 Sending to backend API:", apiResult);
+      if (isDebugLoggingEnabled()) {
+        console.log("📤 Sending to backend API:", apiResult);
+      }
 
       await puzzleHistoryApi.savePuzzleResult(user, apiResult);
-      console.log("✅ Puzzle result saved to backend:", apiResult);
+      if (isDebugLoggingEnabled()) {
+        console.log("✅ Puzzle result saved to backend:", apiResult);
+      }
     } catch (error) {
       // TODO: Replace console.error with proper error tracking service (e.g., Sentry, Crashlytics)
-      console.error("❌ Failed to save puzzle result to backend:", error);
-      console.error(
-        "Error details:",
-        error instanceof Error ? error.message : error
-      );
+      if (isDebugLoggingEnabled()) {
+        console.error("❌ Failed to save puzzle result to backend:", error);
+        console.error(
+          "Error details:",
+          error instanceof Error ? error.message : error
+        );
+      }
       // Don't throw - we want the local save to succeed even if backend fails
     }
   } else {
-    console.log("⚠️ User not authenticated, skipping backend save");
+    if (isDebugLoggingEnabled()) {
+      console.log("⚠️ User not authenticated, skipping backend save");
+    }
   }
 };
 
