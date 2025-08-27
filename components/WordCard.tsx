@@ -2,7 +2,6 @@ import { StyleSheet, Text, View, Pressable, Linking } from "react-native";
 import { Card } from "./base/Card";
 import {
   borderRadius,
-  colors,
   fontFamily,
   fontSize,
   lineHeight,
@@ -55,7 +54,7 @@ export const WordCard = ({ collectedWordId }: WordCardProps) => {
   const formattedDate = getShortDateString(completedDate);
 
   return (
-    <Card addStyles={styles.container}>
+    <Card addStyles={[styles.container, { borderColor: tileBackgroundColor }]}>
       <Card
         addStyles={[styles.content, { backgroundColor: tileBackgroundColor }]}
       >
@@ -95,7 +94,6 @@ const styles = StyleSheet.create({
     maxWidth: WORD_CARD_MAX_WIDTH,
     width: "100%",
     borderWidth: 2,
-    borderColor: colors.neutral.white,
   },
   content: {
     flex: 1,

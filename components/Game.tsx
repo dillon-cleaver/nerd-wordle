@@ -3,17 +3,14 @@ import { View, StyleSheet, Text } from "react-native";
 import { GuessGrid } from "./GuessGrid";
 import { Keyboard } from "./Keyboard";
 import { GameContext } from "@/context/GameContext";
-import { borderRadius, colors, spacing } from "@/constants/styles";
+import { colors, spacing } from "@/constants/styles";
 import { BannerCard } from "./BannerCard";
 import { useCountdownToNewPuzzle } from "@/utils/countdown";
-import { useTodaysPuzzleResult } from "@/hooks/useTodaysPuzzleResult";
-import { CompletedGameView } from "./CompletedGameView";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 
 export const Game = () => {
-  const { category, answer } = useContext(GameContext);
+  const { category, answer, isLoading } = useContext(GameContext);
   const timeUntilNewPuzzle = useCountdownToNewPuzzle();
-  const { hasPlayedToday, todayResult, isLoading } = useTodaysPuzzleResult();
 
   useEffect(() => {
     if (isDebugLoggingEnabled()) {
@@ -26,31 +23,7 @@ export const Game = () => {
     return <View style={styles.container} />;
   }
 
-  // If user has already played today, show completed view
-  if (hasPlayedToday && todayResult) {
-    // Ensure date is always a string for CompletedGameView
-    const safeTodayResult = {
-      ...todayResult,
-      date:
-        typeof todayResult.date === "string"
-          ? todayResult.date
-          : todayResult.date.toISOString(),
-      status: todayResult.status === "fail" ? "loss" : todayResult.status,
-    };
-    return (
-      <View
-        style={{
-          backgroundColor: colors.neutral.black,
-          padding: spacing.sm,
-          borderRadius: borderRadius.md,
-        }}
-      >
-        <CompletedGameView todayResult={safeTodayResult} />
-      </View>
-    );
-  }
-
-  // Otherwise, show the active game
+  // Always show the active game view with banner + grid + keyboard
   return (
     <View style={styles.container}>
       <View style={styles.content}>
