@@ -6,10 +6,10 @@ import { addToCollection } from "@/storage/word-collections";
 import { WordEntry, WordId, NerdWordEntry } from "@/types/word";
 import { LetterGuess } from "@/types/letter-tracking";
 import { isDebugLoggingEnabled } from "./dev-flags";
+import * as Crypto from "expo-crypto";
 
-// TODO: Replace with React Native-compatible UUID generation when building for native
-// Consider: react-native-get-random-values + uuid, or expo-crypto
-const generatePuzzleResultId = () => crypto.randomUUID();
+// Cross-platform UUID generation using expo-crypto
+const generatePuzzleResultId = () => Crypto.randomUUID();
 
 /**
  * Handles invalid word input
@@ -52,7 +52,7 @@ export const handleGameCompletion = (
       edition,
       date: new Date(),
       guesses: nextGuesses.length,
-      attempts: 1,
+      attempts: 1, // TODO: Implement proper attempt counting for puzzle retries
       hintIndex,
       status: "win",
       letterTracking,
@@ -85,7 +85,7 @@ export const handleGameCompletion = (
       edition,
       date: new Date(),
       guesses: nextGuesses.length,
-      attempts: 1,
+      attempts: 1, // TODO: Implement proper attempt counting for puzzle retries
       hintIndex,
       status: "fail",
       letterTracking,
