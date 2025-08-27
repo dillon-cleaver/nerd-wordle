@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { isDevModeEnabled, getDevEnvironmentInfo } from "@/utils/dev-flags";
+import { LetterTrackingDisplay } from "./LetterTrackingDisplay";
 import {
   colors,
   fontFamily,
@@ -46,6 +47,9 @@ export const DrawerDevInfo: React.FC = () => {
             : "Production"}
         </Text>
       </View>
+
+      {/* Letter Tracking Display for Development */}
+      <LetterTrackingDisplay />
     </View>
   );
 };

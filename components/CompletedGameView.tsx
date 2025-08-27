@@ -13,7 +13,8 @@ interface CompletedGameViewProps {
   todayResult: {
     id: string;
     word: string;
-    attempts: number;
+    guesses: number; // Number of guesses in this game session
+    attempts: number; // Number of times this puzzle has been attempted
     date: string;
     status: "win" | "loss";
     edition?: number;
@@ -26,9 +27,9 @@ export const CompletedGameView = ({ todayResult }: CompletedGameViewProps) => {
 
   const getStatusMessage = () => {
     if (todayResult.status === "win") {
-      const attempts = todayResult.attempts;
-      const attemptsText = attempts === 1 ? "guess" : "guesses";
-      return `🎉 You solved today's puzzle in ${attempts} ${attemptsText}!`;
+      const guesses = todayResult.guesses;
+      const guessesText = guesses === 1 ? "guess" : "guesses";
+      return `🎉 You solved today's puzzle in ${guesses} ${guessesText}!`;
     } else {
       return `😔 You didn't solve today's puzzle. The word was ${todayResult.word}.`;
     }

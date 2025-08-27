@@ -104,7 +104,8 @@ export const useTodaysPuzzleResult = () => {
       return {
         id: localResult.id,
         word: localResult.word,
-        attempts: localResult.guesses, // TODO: Fix type inconsistency - localStorage uses 'guesses', API uses 'attempts'
+        guesses: localResult.guesses, // Number of guesses in this game session
+        attempts: localResult.attempts, // Number of times this puzzle has been attempted
         date:
           localResult.date instanceof Date
             ? localResult.date.toISOString()

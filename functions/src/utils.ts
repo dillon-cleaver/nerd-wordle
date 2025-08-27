@@ -3,20 +3,23 @@ import * as admin from "firebase-admin";
 import { PuzzleResultRequest, WordEntry, DailyPuzzleSeed } from "./types";
 import { PuzzleResult } from "../../types/puzzle-result";
 
-// TODO: Fix type inconsistency - Frontend uses 'guesses', API uses 'attempts' for same data
 export const puzzleResultToApiRequest = (
   result: PuzzleResult
 ): PuzzleResultRequest => ({
   id: result.id,
   word: result.word,
-  attempts: result.guesses, // Converting frontend 'guesses' to API 'attempts'
+  guesses: result.guesses, // Number of guesses in this game session
+  attempts: result.attempts, // Number of times this puzzle has been attempted
   date: result.date.toISOString(),
   status: result.status === "fail" ? "loss" : result.status,
   edition: result.edition,
   hintIndex: result.hintIndex,
+  letterTracking: result.letterTracking.map((guess) => ({
+    ...guess,
+    timestamp: guess.timestamp, // Keep as Date for backend processing
+  })),
 });
 
-// TODO: Fix type inconsistency - API uses 'attempts', frontend uses 'guesses' for same data
 export const apiRequestToPuzzleResult = (
   record: PuzzleResultRequest
 ): Omit<PuzzleResult, "status"> => ({
@@ -24,8 +27,13 @@ export const apiRequestToPuzzleResult = (
   word: record.word,
   edition: record.edition || 1,
   date: new Date(record.date),
-  guesses: record.attempts, // Converting API 'attempts' to frontend 'guesses'
+  guesses: record.guesses, // Number of guesses in this game session
+  attempts: record.attempts, // Number of times this puzzle has been attempted
   hintIndex: record.hintIndex || 0,
+  letterTracking: record.letterTracking.map((guess) => ({
+    ...guess,
+    timestamp: new Date(guess.timestamp), // Convert string back to Date
+  })),
 });
 
 /**

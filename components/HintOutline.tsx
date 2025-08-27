@@ -31,6 +31,7 @@ export const HintOutline = ({ color }: HintOutlineProps) => {
       borderColor: color,
       borderWidth: strokeWidth,
       borderRadius: borderRadius.md,
+      zIndex: 10, // Ensure hint outline appears above other elements
     };
   });
 

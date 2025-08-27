@@ -1,7 +1,11 @@
 import { createContext, ReactNode, useState, useCallback } from "react";
-import { handleSubmitGuess, handleKeyPress } from "../utils/game-logic";
+import {
+  handleSubmitGuessWithLetterTracking,
+  handleKeyPress,
+} from "../utils/game-logic";
 import { GameStatus, Hint } from "@/types/game";
 import { WordEntry, WordId, WordCategory } from "@/types/word";
+import { LetterGuess } from "@/types/letter-tracking";
 import { useDailyPuzzle } from "@/hooks/useDailyPuzzle";
 import { useWordData } from "@/context/WordDataContext";
 
@@ -22,6 +26,12 @@ type GameContextType = {
   resetGame: () => void;
   // Loading state for async puzzle fetch
   isLoading: boolean;
+  // Letter tracking
+  letterGuesses: LetterGuess[];
+  getGuessesForRow: (row: number) => LetterGuess[];
+  hasLetterBeenGuessed: (letter: string) => boolean;
+  getFirstRowForLetter: (letter: string) => number | null;
+  getGuessedLetters: () => string[];
 };
 
 export const GameContext = createContext<GameContextType>({
@@ -38,6 +48,12 @@ export const GameContext = createContext<GameContextType>({
   handleSubmitGuess: () => {},
   resetGame: () => {},
   isLoading: true,
+  // Letter tracking defaults
+  letterGuesses: [],
+  getGuessesForRow: () => [],
+  hasLetterBeenGuessed: () => false,
+  getFirstRowForLetter: () => null,
+  getGuessedLetters: () => [],
 });
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
@@ -46,11 +62,45 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const { getWordEntry, isValidWord } = useWordData();
   const { category, originalCategory, answer } = gameState;
 
+  // Local letter tracking state - will be saved in puzzle results
+  const [letterGuesses, setLetterGuesses] = useState<LetterGuess[]>([]);
+
   const [gameStatus, setGameStatus] = useState<GameStatus>("running");
   const [guesses, setGuesses] = useState<WordEntry[]>([]);
   const [tentativeGuess, setTentativeGuess] = useState("");
   const [invalidWord, setInvalidWord] = useState(false);
   const [hint, setHint] = useState<Hint>();
+
+  // Helper functions for letter tracking
+  const getGuessesForRow = useCallback(
+    (row: number) => {
+      return letterGuesses.filter((guess) => guess.row === row);
+    },
+    [letterGuesses]
+  );
+
+  const hasLetterBeenGuessed = useCallback(
+    (letter: string) => {
+      return letterGuesses.some(
+        (guess) => guess.letter === letter.toUpperCase()
+      );
+    },
+    [letterGuesses]
+  );
+
+  const getFirstRowForLetter = useCallback(
+    (letter: string) => {
+      const guess = letterGuesses.find(
+        (guess) => guess.letter === letter.toUpperCase()
+      );
+      return guess ? guess.row : null;
+    },
+    [letterGuesses]
+  );
+
+  const getGuessedLetters = useCallback(() => {
+    return Array.from(new Set(letterGuesses.map((guess) => guess.letter)));
+  }, [letterGuesses]);
 
   const handleSubmitGuessCallback = useCallback(() => {
     // Use the word entry from the daily puzzle instead of looking it up locally
@@ -61,7 +111,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
     const answerEntry = dailyPuzzle.word;
 
-    handleSubmitGuess(
+    handleSubmitGuessWithLetterTracking(
       tentativeGuess,
       guesses.map((g) => g.id),
       answerEntry,
@@ -74,7 +124,10 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       },
       hintIndex,
       getWordEntry, // Pass the Firebase-aware word lookup function
-      isValidWord // Pass the Firebase-aware word validation function
+      isValidWord, // Pass the Firebase-aware word validation function
+      letterGuesses, // Pass current letter tracking state
+      // Add callback to update letter tracking when valid guess is made
+      (newLetters: LetterGuess[]) => setLetterGuesses(newLetters)
     );
   }, [
     tentativeGuess,
@@ -83,6 +136,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     hintIndex,
     getWordEntry,
     isValidWord,
+    letterGuesses,
   ]);
 
   const handleKeyPressCallback = useCallback(
@@ -103,6 +157,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     setTentativeGuess("");
     setInvalidWord(false);
     setHint(undefined);
+    setLetterGuesses([]); // Reset letter tracking
     // Note: Game state (answer, category) comes from the puzzle and doesn't need reset
   }, []);
 
@@ -122,6 +177,12 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         handleSubmitGuess: handleSubmitGuessCallback,
         resetGame,
         isLoading,
+        // Letter tracking
+        letterGuesses,
+        getGuessesForRow,
+        hasLetterBeenGuessed,
+        getFirstRowForLetter,
+        getGuessedLetters,
       }}
     >
       {children}

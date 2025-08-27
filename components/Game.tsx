@@ -28,6 +28,15 @@ export const Game = () => {
 
   // If user has already played today, show completed view
   if (hasPlayedToday && todayResult) {
+    // Ensure date is always a string for CompletedGameView
+    const safeTodayResult = {
+      ...todayResult,
+      date:
+        typeof todayResult.date === "string"
+          ? todayResult.date
+          : todayResult.date.toISOString(),
+      status: todayResult.status === "fail" ? "loss" : todayResult.status,
+    };
     return (
       <View
         style={{
@@ -36,7 +45,7 @@ export const Game = () => {
           borderRadius: borderRadius.md,
         }}
       >
-        <CompletedGameView todayResult={todayResult} />
+        <CompletedGameView todayResult={safeTodayResult} />
       </View>
     );
   }

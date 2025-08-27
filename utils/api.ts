@@ -1,6 +1,18 @@
 import { User } from "firebase/auth";
 import { WordEntry } from "@/types/word";
 import { DailyPuzzleSeed } from "@/utils/daily-puzzle";
+import {
+  PuzzleHistoryResponse,
+  WordsResponse,
+  WordResponse,
+  DailyPuzzleResponse,
+} from "@/types/backend-types";
+import { PuzzleResult } from "@/types/puzzle-result";
+import { isDebugLoggingEnabled } from "./dev-flags";
+import {
+  fromBackendLetterGuess,
+  toBackendLetterGuess,
+} from "./backend-serialization";
 
 // Environment detection - use explicit dev mode flag
 const isDevelopment = process.env.EXPO_PUBLIC_DEV_MODE === "true";
@@ -15,7 +27,7 @@ const API_BASE_URL =
   (isDevelopment ? DEVELOPMENT_API_URL : PRODUCTION_API_URL);
 
 // Debug logging - only when debug logs are enabled
-if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+if (isDebugLoggingEnabled()) {
   console.log(`🔧 API Configuration:`, {
     isDevelopment,
     NODE_ENV: process.env.NODE_ENV,
@@ -25,41 +37,19 @@ if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
   });
 }
 
-// TODO: CRITICAL - Type inconsistency with frontend types
-// This API type uses 'attempts: number' while frontend type in types/puzzle-result.ts uses 'guesses: number'
-// Both represent the same concept (number of guesses to solve puzzle) but different property names
-// This causes 'as any' casts throughout codebase and conversion functions everywhere
-export type PuzzleResult = {
-  id: string;
-  word: string;
-  attempts: number; // Number of guesses to solve (frontend uses 'guesses' for same data)
-  date: string;
-  status: "win" | "loss";
-  edition?: number;
-  hintIndex?: number;
-};
-
-export type PuzzleHistoryResponse = {
-  results: PuzzleResult[];
-};
-
-export type WordsResponse = {
-  words: WordEntry[];
-  count: number;
-};
-
-export type WordResponse = {
-  word: WordEntry;
-};
-
-export type DailyPuzzleResponse = {
-  puzzle: DailyPuzzleSeed;
-};
-
 class ApiError extends Error {
-  constructor(public status: number, message: string) {
+  constructor(
+    public readonly status: number,
+    message: string,
+    public readonly endpoint?: string
+  ) {
     super(message);
     this.name = "ApiError";
+
+    // Maintains proper stack trace for where our error was thrown (only available on V8)
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, ApiError);
+    }
   }
 }
 
@@ -85,7 +75,8 @@ async function makeAuthenticatedRequest<T>(
       const errorText = await response.text();
       throw new ApiError(
         response.status,
-        `API Error: ${response.status} - ${errorText}`
+        `API Error: ${response.status} - ${errorText}`,
+        endpoint
       );
     }
 
@@ -119,7 +110,8 @@ async function makePublicRequest<T>(
       const errorText = await response.text();
       throw new ApiError(
         response.status,
-        `API Error: ${response.status} - ${errorText}`
+        `API Error: ${response.status} - ${errorText}`,
+        endpoint
       );
     }
 
@@ -142,13 +134,29 @@ export const puzzleHistoryApi = {
    */
   async savePuzzleResult(
     user: User,
-    puzzleResult: Omit<PuzzleResult, "date">
+    puzzleResult: PuzzleResult
   ): Promise<void> {
+    // Convert frontend PuzzleResult to API format
+    // Note: Server will override the date with its own timestamp
+    const apiPuzzleResult = {
+      id: puzzleResult.id,
+      word: puzzleResult.word,
+      guesses: puzzleResult.guesses,
+      attempts: puzzleResult.attempts,
+      status:
+        puzzleResult.status === "fail"
+          ? ("loss" as const)
+          : puzzleResult.status,
+      edition: puzzleResult.edition,
+      hintIndex: puzzleResult.hintIndex,
+      letterTracking: puzzleResult.letterTracking.map(toBackendLetterGuess),
+    };
+
     await makeAuthenticatedRequest(user, "/puzzle-result", {
       method: "POST",
       body: JSON.stringify({
-        ...puzzleResult,
-        date: new Date().toISOString(),
+        ...apiPuzzleResult,
+        date: new Date().toISOString(), // Server-authoritative timestamp
       }),
     });
   },
@@ -164,7 +172,20 @@ export const puzzleHistoryApi = {
         method: "GET",
       }
     );
-    return response.results;
+
+    // Convert API results to frontend format
+    return response.results.map((apiResult) => ({
+      id: apiResult.id,
+      word: apiResult.word,
+      edition: apiResult.edition || 0,
+      date: new Date(apiResult.date),
+      guesses: apiResult.guesses,
+      attempts: apiResult.attempts,
+      hintIndex: apiResult.hintIndex || 0,
+      status:
+        apiResult.status === "loss" ? ("fail" as const) : apiResult.status,
+      letterTracking: apiResult.letterTracking.map(fromBackendLetterGuess),
+    }));
   },
 };
 

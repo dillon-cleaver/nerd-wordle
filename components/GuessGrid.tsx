@@ -8,6 +8,7 @@ import {
   BANNER_GUESS_GRID_MAX_WIDTH,
   BANNER_GUESS_GRID_MIN_WIDTH,
 } from "@/constants/dimensions";
+import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 
 export const GuessGrid = () => {
   const {
@@ -19,6 +20,11 @@ export const GuessGrid = () => {
     originalCategory,
     isLoading,
   } = useContext(GameContext);
+
+  // Debug hint state
+  if (hint && isDebugLoggingEnabled()) {
+    console.log(`🎯 GuessGrid: Received hint:`, hint);
+  }
 
   // Prevent rendering during initial load to avoid crashes with undefined answer
   // Only block if actively loading AND no valid answer yet
