@@ -1,5 +1,5 @@
 import { LetterGuess } from "@/types/letter-tracking";
-import { BackendLetterGuess } from "../types/api-types";
+import { BackendLetterGuess } from "@/types/api-types";
 
 export function toBackendLetterGuess(guess: LetterGuess): BackendLetterGuess {
   return {
