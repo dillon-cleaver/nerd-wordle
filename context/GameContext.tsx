@@ -111,25 +111,6 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
     const answerEntry = dailyPuzzle.word;
 
-    // Track each letter in the current guess before submitting
-    const currentRow = guesses.length;
-
-    // Create new letter guesses for this round
-    const newLetterGuesses = tentativeGuess
-      .split("")
-      .map((letter, position) => ({
-        letter: letter.toUpperCase(),
-        row: currentRow,
-        position,
-        timestamp: new Date(),
-      }));
-
-    // Combine existing letter guesses with new ones for the game logic
-    const allLetterGuesses = [...letterGuesses, ...newLetterGuesses];
-
-    // Update local state
-    setLetterGuesses(allLetterGuesses);
-
     handleSubmitGuessWithLetterTracking(
       tentativeGuess,
       guesses.map((g) => g.id),
@@ -144,7 +125,9 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       hintIndex,
       getWordEntry, // Pass the Firebase-aware word lookup function
       isValidWord, // Pass the Firebase-aware word validation function
-      allLetterGuesses // Pass complete letter tracking data including new letters
+      letterGuesses, // Pass current letter tracking state
+      // Add callback to update letter tracking when valid guess is made
+      (newLetters: LetterGuess[]) => setLetterGuesses(newLetters)
     );
   }, [
     tentativeGuess,

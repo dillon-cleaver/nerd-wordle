@@ -12,7 +12,8 @@ export const handleSubmitGuessWithLetterTracking = (
   hintIndex: number,
   getWordEntry: (id: WordId) => WordEntry | undefined,
   isValidWord: (word: string) => boolean,
-  letterTracking: LetterGuess[]
+  letterTracking: LetterGuess[],
+  updateLetterTracking?: (newLetters: LetterGuess[]) => void
 ) => {
   if (tentativeGuess.length !== 5) return;
   const answerId = answerEntry.id as WordId;
@@ -22,13 +23,37 @@ export const handleSubmitGuessWithLetterTracking = (
     return;
   }
 
+  // Only track letters AFTER validation passes
+  if (updateLetterTracking) {
+    const currentRow = guesses.length;
+    const newLetterGuesses = tentativeGuess
+      .split("")
+      .map((letter, position) => ({
+        letter: letter.toUpperCase(),
+        row: currentRow,
+        position,
+        timestamp: new Date(),
+      }));
+
+    const allLetterGuesses = [...letterTracking, ...newLetterGuesses];
+    updateLetterTracking(allLetterGuesses);
+
+    // Use the updated letter tracking for game completion
+    letterTracking = allLetterGuesses;
+  }
+
   const nextGuesses: WordId[] = [
     ...guesses,
     tentativeGuess.toUpperCase() as WordId,
   ];
 
   const correctPositions = getCorrectPositions(nextGuesses, answerId);
-  const nextHint = generateHint(tentativeGuess, guesses, answerId, correctPositions);
+  const nextHint = generateHint(
+    tentativeGuess,
+    guesses,
+    answerId,
+    correctPositions
+  );
 
   const nextGuessesEntries: WordEntry[] = nextGuesses
     .map((id) => getWordEntry(id))
