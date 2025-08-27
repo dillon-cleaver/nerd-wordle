@@ -11,7 +11,8 @@ export type CollectedWord = {
   wordEntry: NerdWordEntry;
   category: Exclude<WordCategory, "common">;
   completedDate: Date;
-  attempts: number;
+  guesses: number; // Number of guesses it took to solve this puzzle
+  attempts: number; // Number of times this puzzle has been attempted
   editionNumber: number;
   hintIndex: number;
 };
@@ -44,17 +45,14 @@ export const useCollectedWords = () => {
         const nerdWordEntry = wordEntry as NerdWordEntry;
         const completedDate =
           typeof result.date === "string" ? new Date(result.date) : result.date;
-        // TODO: Fix type inconsistency - Local storage uses 'guesses', API uses 'attempts' for same data
-        // Consider unifying types or creating a proper union type instead of 'as any'
-        const attempts =
-          "guesses" in result ? result.guesses : (result as any).attempts;
 
         return {
           id: result.id,
           wordEntry: nerdWordEntry,
           category: nerdWordEntry.category,
           completedDate,
-          attempts,
+          guesses: result.guesses, // Number of guesses in this game session
+          attempts: result.attempts, // Number of times this puzzle has been attempted
           editionNumber: result.edition || 1,
           hintIndex: result.hintIndex || 0,
         };
