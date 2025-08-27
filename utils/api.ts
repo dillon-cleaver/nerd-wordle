@@ -1,7 +1,15 @@
 import { User } from "firebase/auth";
 import { WordEntry } from "@/types/word";
 import { DailyPuzzleSeed } from "@/utils/daily-puzzle";
+import {
+  PuzzleHistoryResponse,
+  WordsResponse,
+  WordResponse,
+  DailyPuzzleResponse,
+} from "@/types/api-types";
+import { PuzzleResult } from "@/types/puzzle-result";
 import { isDebugLoggingEnabled } from "./dev-flags";
+import { fromBackendLetterGuess, toBackendLetterGuess } from "./api-conversion";
 
 // Environment detection - use explicit dev mode flag
 const isDevelopment = process.env.EXPO_PUBLIC_DEV_MODE === "true";
@@ -25,46 +33,6 @@ if (isDebugLoggingEnabled()) {
     API_BASE_URL,
   });
 }
-
-// ✅ API types now match frontend types with semantic clarity
-// This causes 'as any' casts throughout codebase and conversion functions everywhere
-
-// Letter tracking types for API consistency
-export type LetterGuess = {
-  letter: string;
-  row: number;
-  position: number;
-  timestamp: string; // ISO string for API transport
-};
-
-export type PuzzleResult = {
-  id: string;
-  word: string;
-  guesses: number; // Number of guesses in this game session (1-6 for Wordle)
-  attempts: number; // Number of times this puzzle has been attempted (1 for first play, 2 for retry, etc.)
-  date: string;
-  status: "win" | "loss";
-  edition?: number;
-  hintIndex?: number;
-  letterTracking: LetterGuess[]; // Required letter tracking data
-};
-
-export type PuzzleHistoryResponse = {
-  results: PuzzleResult[];
-};
-
-export type WordsResponse = {
-  words: WordEntry[];
-  count: number;
-};
-
-export type WordResponse = {
-  word: WordEntry;
-};
-
-export type DailyPuzzleResponse = {
-  puzzle: DailyPuzzleSeed;
-};
 
 class ApiError extends Error {
   constructor(public status: number, message: string) {
@@ -152,13 +120,29 @@ export const puzzleHistoryApi = {
    */
   async savePuzzleResult(
     user: User,
-    puzzleResult: Omit<PuzzleResult, "date">
+    puzzleResult: PuzzleResult
   ): Promise<void> {
+    // Convert frontend PuzzleResult to API format
+    // Note: Server will override the date with its own timestamp
+    const apiPuzzleResult = {
+      id: puzzleResult.id,
+      word: puzzleResult.word,
+      guesses: puzzleResult.guesses,
+      attempts: puzzleResult.attempts,
+      status:
+        puzzleResult.status === "fail"
+          ? ("loss" as const)
+          : puzzleResult.status,
+      edition: puzzleResult.edition,
+      hintIndex: puzzleResult.hintIndex,
+      letterTracking: puzzleResult.letterTracking.map(toBackendLetterGuess),
+    };
+
     await makeAuthenticatedRequest(user, "/puzzle-result", {
       method: "POST",
       body: JSON.stringify({
-        ...puzzleResult,
-        date: new Date().toISOString(),
+        ...apiPuzzleResult,
+        date: new Date().toISOString(), // Server-authoritative timestamp
       }),
     });
   },
@@ -174,7 +158,20 @@ export const puzzleHistoryApi = {
         method: "GET",
       }
     );
-    return response.results;
+
+    // Convert API results to frontend format
+    return response.results.map((apiResult) => ({
+      id: apiResult.id,
+      word: apiResult.word as any, // WordId type
+      edition: apiResult.edition || 0,
+      date: new Date(apiResult.date),
+      guesses: apiResult.guesses,
+      attempts: apiResult.attempts,
+      hintIndex: apiResult.hintIndex || 0,
+      status:
+        apiResult.status === "loss" ? ("fail" as const) : apiResult.status,
+      letterTracking: apiResult.letterTracking.map(fromBackendLetterGuess),
+    }));
   },
 };
 

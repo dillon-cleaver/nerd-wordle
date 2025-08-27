@@ -8,21 +8,6 @@ import { getAuth } from "firebase/auth";
 import { puzzleHistoryApi } from "@/utils/api";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 
-// Convert PuzzleResult to backend API format
-const puzzleResultToApiFormat = (result: PuzzleResult) => ({
-  id: result.id,
-  word: result.word,
-  guesses: result.guesses, // Number of guesses in this game session
-  attempts: result.attempts, // Number of times this puzzle has been attempted
-  status: result.status === "fail" ? ("loss" as const) : result.status,
-  edition: result.edition,
-  hintIndex: result.hintIndex,
-  letterTracking: result.letterTracking.map((guess) => ({
-    ...guess,
-    timestamp: guess.timestamp.toISOString(), // Convert Date to string for API
-  })),
-});
-
 /**
  * Save puzzle result to both local storage and backend API
  *
@@ -57,14 +42,14 @@ export const savePuzzleResult = async (
 
   if (user) {
     try {
-      const apiResult = puzzleResultToApiFormat(result);
       if (isDebugLoggingEnabled()) {
-        console.log("📤 Sending to backend API:", apiResult);
+        console.log("📤 Sending to backend API:", result);
       }
 
-      await puzzleHistoryApi.savePuzzleResult(user, apiResult);
+      // Note: API will override the client date with server timestamp for security/consistency
+      await puzzleHistoryApi.savePuzzleResult(user, result);
       if (isDebugLoggingEnabled()) {
-        console.log("✅ Puzzle result saved to backend:", apiResult);
+        console.log("✅ Puzzle result saved to backend");
       }
     } catch (error) {
       // TODO: Replace console.error with proper error tracking service (e.g., Sentry, Crashlytics)
