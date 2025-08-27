@@ -1,6 +1,7 @@
 import { User } from "firebase/auth";
 import { WordEntry } from "@/types/word";
 import { DailyPuzzleSeed } from "@/utils/daily-puzzle";
+import { isDebugLoggingEnabled } from "./dev-flags";
 
 // Environment detection - use explicit dev mode flag
 const isDevelopment = process.env.EXPO_PUBLIC_DEV_MODE === "true";
@@ -15,7 +16,7 @@ const API_BASE_URL =
   (isDevelopment ? DEVELOPMENT_API_URL : PRODUCTION_API_URL);
 
 // Debug logging - only when debug logs are enabled
-if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+if (isDebugLoggingEnabled()) {
   console.log(`🔧 API Configuration:`, {
     isDevelopment,
     NODE_ENV: process.env.NODE_ENV,
@@ -25,18 +26,27 @@ if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
   });
 }
 
-// TODO: CRITICAL - Type inconsistency with frontend types
-// This API type uses 'attempts: number' while frontend type in types/puzzle-result.ts uses 'guesses: number'
-// Both represent the same concept (number of guesses to solve puzzle) but different property names
+// ✅ API types now match frontend types with semantic clarity
 // This causes 'as any' casts throughout codebase and conversion functions everywhere
+
+// Letter tracking types for API consistency
+export type LetterGuess = {
+  letter: string;
+  row: number;
+  position: number;
+  timestamp: string; // ISO string for API transport
+};
+
 export type PuzzleResult = {
   id: string;
   word: string;
-  attempts: number; // Number of guesses to solve (frontend uses 'guesses' for same data)
+  guesses: number; // Number of guesses in this game session (1-6 for Wordle)
+  attempts: number; // Number of times this puzzle has been attempted (1 for first play, 2 for retry, etc.)
   date: string;
   status: "win" | "loss";
   edition?: number;
   hintIndex?: number;
+  letterTracking: LetterGuess[]; // Required letter tracking data
 };
 
 export type PuzzleHistoryResponse = {

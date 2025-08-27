@@ -85,17 +85,28 @@ app.post(
       const {
         id,
         word,
+        guesses,
         attempts,
         date,
         status,
         edition,
         hintIndex,
+        letterTracking,
       }: PuzzleResultRequest = req.body;
 
       // Validate required fields
-      if (!id || !word || attempts === undefined || !date || !status) {
+      if (
+        !id ||
+        !word ||
+        guesses === undefined ||
+        attempts === undefined ||
+        !date ||
+        !status ||
+        !letterTracking
+      ) {
         return res.status(400).json({
-          error: "Missing required fields: id, word, attempts, date, or status",
+          error:
+            "Missing required fields: id, word, guesses, attempts, date, status, or letterTracking",
         } as ApiError);
       }
 
@@ -125,11 +136,13 @@ app.post(
       const resultData = {
         id,
         word,
+        guesses,
         attempts,
         date: new Date(date),
         status,
         edition: edition || 1,
         hintIndex: hintIndex || 0,
+        letterTracking: letterTracking || [], // Include letter tracking data
       };
 
       await resultRef.set(resultData);
@@ -138,11 +151,13 @@ app.post(
       const responseData: PuzzleResultRequest = {
         id,
         word,
+        guesses,
         attempts,
         date,
         status,
         edition,
         hintIndex,
+        letterTracking,
       };
 
       return res.status(200).json({
@@ -176,11 +191,13 @@ app.get("/puzzle-history", verifyToken, async (req, res) => {
       return {
         id: doc.id,
         word: data.word,
+        guesses: data.guesses,
         attempts: data.attempts,
         date: data.date.toDate().toISOString(),
         status: data.status,
         edition: data.edition,
         hintIndex: data.hintIndex,
+        letterTracking: data.letterTracking || [], // Include letter tracking with fallback
       };
     });
 
