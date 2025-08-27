@@ -13,7 +13,6 @@ type PuzzleResult = {
   attempts: number; // Number of times this puzzle has been attempted (1 for first play, 2 for retry, etc.)
   hintIndex: number; // Which hint was shown during this session
   status: PuzzleStatus;
-  // Letter tracking data for this puzzle - REQUIRED for all new games
   letterTracking: LetterGuess[];
 };
 
