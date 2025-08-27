@@ -19,8 +19,11 @@ export type CollectedWord = {
 
 export const useCollectedWords = () => {
   const { authUser, loading: userLoading } = useContext(UserContext);
-  const { puzzleResults: backendResults, loading: historyLoading } =
-    usePuzzleHistory();
+  const {
+    puzzleResults: backendResults,
+    loading: historyLoading,
+    loadPuzzleResults,
+  } = usePuzzleHistory();
   const { getWordEntry, isLoading: wordsLoading } = useWordData();
   const [localResults, setLocalResults] = useState<PuzzleResult[]>([]);
 
@@ -29,11 +32,25 @@ export const useCollectedWords = () => {
     setLocalResults(loadPuzzleResultsLocal());
   }, []);
 
+  // Ensure backend results are loaded for authenticated users
+  useEffect(() => {
+    if (authUser && !userLoading && backendResults.length === 0 && !historyLoading) {
+      loadPuzzleResults(authUser).catch(() => {
+        // Swallow errors; UI will rely on local results if needed
+      });
+    }
+  }, [authUser, userLoading, backendResults.length, historyLoading, loadPuzzleResults]);
+
   const collectedWords = useMemo(() => {
     if (wordsLoading) return [];
 
-    // Use backend results if authenticated, otherwise use local
-    const allResults = authUser ? backendResults : localResults;
+    // Prefer backend when authenticated, but merge with local to include
+    // any unsynced or offline results. De-duplicate by id.
+    const allResultsMap = new Map<string, PuzzleResult>();
+    const addAll = (arr: PuzzleResult[]) => arr.forEach((r) => allResultsMap.set(r.id, r));
+    if (authUser) addAll(backendResults);
+    addAll(localResults);
+    const allResults = Array.from(allResultsMap.values());
 
     return allResults
       .filter((result) => result.status === "win")

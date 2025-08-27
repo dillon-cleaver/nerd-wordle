@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState, useCallback } from "react";
+import { createContext, ReactNode, useState, useCallback, useContext } from "react";
 import {
   handleSubmitGuessWithLetterTracking,
   handleKeyPress,
@@ -8,6 +8,9 @@ import { WordEntry, WordId, WordCategory } from "@/types/word";
 import { LetterGuess } from "@/types/letter-tracking";
 import { useDailyPuzzle } from "@/hooks/useDailyPuzzle";
 import { useWordData } from "@/context/WordDataContext";
+import { useLetterTrackingFromPuzzleResults } from "@/hooks/useLetterTrackingFromPuzzleResults";
+import { UserContext } from "@/context/UserContext";
+import { useRehydrateFromLetterTracking } from "@/hooks/useRehydrateFromLetterTracking";
 
 type GameContextType = {
   gameStatus: GameStatus;
@@ -61,6 +64,14 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const { dailyPuzzle, gameState, hintIndex, isLoading } = useDailyPuzzle();
   const { getWordEntry, isValidWord } = useWordData();
   const { category, originalCategory, answer } = gameState;
+  const { authUser } = useContext(UserContext);
+
+  // Load any previously saved letter tracking for today's puzzle to restore the grid on refresh
+  const puzzleId = dailyPuzzle?.date ? `daily-${dailyPuzzle.date}` : "";
+  const { letterGuesses: savedLetterGuesses } = useLetterTrackingFromPuzzleResults(
+    puzzleId,
+    authUser
+  );
 
   // Local letter tracking state - will be saved in puzzle results
   const [letterGuesses, setLetterGuesses] = useState<LetterGuess[]>([]);
@@ -101,6 +112,19 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const getGuessedLetters = useCallback(() => {
     return Array.from(new Set(letterGuesses.map((guess) => guess.letter)));
   }, [letterGuesses]);
+
+  // Rehydrate guesses and status from saved letter tracking when available
+  useRehydrateFromLetterTracking({
+    savedLetterGuesses,
+    guessesLength: guesses.length,
+    existingLetterGuessesLength: letterGuesses.length,
+    dailyPuzzleWordId: dailyPuzzle?.word?.id,
+    answer,
+    getWordEntry,
+    setGuesses,
+    setLetterGuesses,
+    setGameStatus,
+  });
 
   const handleSubmitGuessCallback = useCallback(() => {
     // Use the word entry from the daily puzzle instead of looking it up locally

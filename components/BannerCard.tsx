@@ -10,7 +10,11 @@ import {
 } from "@/constants/dimensions";
 
 export const BannerCard = () => {
-  const { gameStatus, guesses, answer } = useContext(GameContext);
+  const { gameStatus, guesses, answer, answerEntry } = useContext(GameContext);
+  const editionNumber =
+    answerEntry && answerEntry.category !== "common"
+      ? answerEntry.edition
+      : undefined;
 
   return gameStatus === "running" ? (
     <View style={styles.categoryBannerContainer}>
@@ -22,6 +26,8 @@ export const BannerCard = () => {
         gameStatus={gameStatus}
         numGuesses={guesses.length}
         answer={answer}
+        edition={editionNumber}
+        answerEntry={answerEntry}
       />
     </View>
   );
@@ -37,5 +43,8 @@ const styles = StyleSheet.create({
   gameBannerContainer: {
     minHeight: MIN_BANNER_HEIGHT,
     justifyContent: "center",
+    width: "100%",
+    minWidth: BANNER_GUESS_GRID_MIN_WIDTH,
+    maxWidth: BANNER_GUESS_GRID_MAX_WIDTH,
   },
 });
