@@ -1,5 +1,5 @@
 import { LetterGuess } from "@/types/letter-tracking";
-import { WordEntry } from "@/types/word";
+import { WordEntry, WordId } from "@/types/word";
 import { DailyPuzzleSeed } from "@/utils/daily-puzzle";
 
 export type BackendLetterGuess = Omit<LetterGuess, "timestamp"> & {
@@ -8,7 +8,7 @@ export type BackendLetterGuess = Omit<LetterGuess, "timestamp"> & {
 
 export type BackendPuzzleResult = {
   id: string;
-  word: string;
+  word: WordId;
   guesses: number;
   attempts: number;
   date: string;

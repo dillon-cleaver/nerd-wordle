@@ -6,10 +6,13 @@ import {
   WordsResponse,
   WordResponse,
   DailyPuzzleResponse,
-} from "@/types/api-types";
+} from "@/types/backend-types";
 import { PuzzleResult } from "@/types/puzzle-result";
 import { isDebugLoggingEnabled } from "./dev-flags";
-import { fromBackendLetterGuess, toBackendLetterGuess } from "./api-conversion";
+import {
+  fromBackendLetterGuess,
+  toBackendLetterGuess,
+} from "./backend-serialization";
 
 // Environment detection - use explicit dev mode flag
 const isDevelopment = process.env.EXPO_PUBLIC_DEV_MODE === "true";
@@ -35,9 +38,18 @@ if (isDebugLoggingEnabled()) {
 }
 
 class ApiError extends Error {
-  constructor(public status: number, message: string) {
+  constructor(
+    public readonly status: number,
+    message: string,
+    public readonly endpoint?: string
+  ) {
     super(message);
     this.name = "ApiError";
+
+    // Maintains proper stack trace for where our error was thrown (only available on V8)
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, ApiError);
+    }
   }
 }
 
@@ -63,7 +75,8 @@ async function makeAuthenticatedRequest<T>(
       const errorText = await response.text();
       throw new ApiError(
         response.status,
-        `API Error: ${response.status} - ${errorText}`
+        `API Error: ${response.status} - ${errorText}`,
+        endpoint
       );
     }
 
@@ -97,7 +110,8 @@ async function makePublicRequest<T>(
       const errorText = await response.text();
       throw new ApiError(
         response.status,
-        `API Error: ${response.status} - ${errorText}`
+        `API Error: ${response.status} - ${errorText}`,
+        endpoint
       );
     }
 
@@ -162,7 +176,7 @@ export const puzzleHistoryApi = {
     // Convert API results to frontend format
     return response.results.map((apiResult) => ({
       id: apiResult.id,
-      word: apiResult.word as any, // WordId type
+      word: apiResult.word,
       edition: apiResult.edition || 0,
       date: new Date(apiResult.date),
       guesses: apiResult.guesses,
