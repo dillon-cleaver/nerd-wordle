@@ -35,9 +35,7 @@ export const useLetterTrackingFromPuzzleResults = (
         const localResults = loadPuzzleResultsLocal();
         allResults.push(...localResults);
 
-        // Note: Backend results from API don't include letterTracking field yet
-        // TODO: Update backend API to support letterTracking field
-        // For now, only local results will have letter tracking data
+        // Both local and backend results may contain letterTracking data.
 
         // Find puzzle result for this date
         const matchingResult = allResults.find((result) => {

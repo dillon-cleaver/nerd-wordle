@@ -6,17 +6,15 @@ import {
   ReactNode,
 } from "react";
 import { User } from "firebase/auth";
-import { puzzleHistoryApi, PuzzleResult } from "../utils/api";
+import { puzzleHistoryApi } from "../utils/api";
+import { PuzzleResult } from "@/types/puzzle-result";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 
 interface PuzzleHistoryContextType {
   puzzleResults: PuzzleResult[];
   loading: boolean;
   error: string | null;
-  savePuzzleResult: (
-    user: User,
-    puzzleResult: Omit<PuzzleResult, "date">
-  ) => Promise<void>;
+  savePuzzleResult: (user: User, puzzleResult: PuzzleResult) => Promise<void>;
   loadPuzzleResults: (user: User) => Promise<void>;
   clearError: () => void;
 }
@@ -41,23 +39,17 @@ export function PuzzleHistoryProvider({
   }, []);
 
   const savePuzzleResult = useCallback(
-    async (user: User, puzzleResult: Omit<PuzzleResult, "date">) => {
+    async (user: User, puzzleResult: PuzzleResult) => {
       try {
         setLoading(true);
         setError(null);
 
         await puzzleHistoryApi.savePuzzleResult(user, puzzleResult);
-
-        // Add the new puzzle result to local state
-        const newResult: PuzzleResult = {
-          ...puzzleResult,
-          date: new Date().toISOString(),
-        };
-        setPuzzleResults((prev) => [newResult, ...prev]);
+        setPuzzleResults((prev) => [puzzleResult, ...prev]);
 
         // TODO: Replace console.log with proper logging service (e.g., Firebase Analytics, Sentry)
         if (isDebugLoggingEnabled()) {
-          console.log("✅ Puzzle result saved successfully:", newResult);
+          console.log("✅ Puzzle result saved successfully:", puzzleResult);
         }
       } catch (err) {
         const errorMessage =

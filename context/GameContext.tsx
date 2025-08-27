@@ -102,7 +102,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     return Array.from(new Set(letterGuesses.map((guess) => guess.letter)));
   }, [letterGuesses]);
 
-  const handleSubmitGuessCallback = useCallback(async () => {
+  const handleSubmitGuessCallback = useCallback(() => {
     // Use the word entry from the daily puzzle instead of looking it up locally
     if (!dailyPuzzle?.word) {
       console.error("No daily puzzle word available");
