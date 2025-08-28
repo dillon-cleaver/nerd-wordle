@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useState, useCallback, useContext } from "react";
+import {
+  createContext,
+  ReactNode,
+  useState,
+  useCallback,
+  useContext,
+} from "react";
 import {
   handleSubmitGuessWithLetterTracking,
   handleKeyPress,
@@ -11,6 +17,7 @@ import { useWordData } from "@/context/WordDataContext";
 import { useLetterTrackingFromPuzzleResults } from "@/hooks/useLetterTrackingFromPuzzleResults";
 import { UserContext } from "@/context/UserContext";
 import { useRehydrateFromLetterTracking } from "@/hooks/useRehydrateFromLetterTracking";
+import { usePuzzleHistory } from "@/context/PuzzleHistoryContext";
 
 type GameContextType = {
   gameStatus: GameStatus;
@@ -65,13 +72,12 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const { getWordEntry, isValidWord } = useWordData();
   const { category, originalCategory, answer } = gameState;
   const { authUser } = useContext(UserContext);
+  const { savePuzzleResult } = usePuzzleHistory();
 
   // Load any previously saved letter tracking for today's puzzle to restore the grid on refresh
   const puzzleId = dailyPuzzle?.date ? `daily-${dailyPuzzle.date}` : "";
-  const { letterGuesses: savedLetterGuesses } = useLetterTrackingFromPuzzleResults(
-    puzzleId,
-    authUser
-  );
+  const { letterGuesses: savedLetterGuesses } =
+    useLetterTrackingFromPuzzleResults(puzzleId, authUser);
 
   // Local letter tracking state - will be saved in puzzle results
   const [letterGuesses, setLetterGuesses] = useState<LetterGuess[]>([]);
@@ -151,7 +157,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       isValidWord, // Pass the Firebase-aware word validation function
       letterGuesses, // Pass current letter tracking state
       // Add callback to update letter tracking when valid guess is made
-      (newLetters: LetterGuess[]) => setLetterGuesses(newLetters)
+      (newLetters: LetterGuess[]) => setLetterGuesses(newLetters),
+      savePuzzleResult // Pass the context save method for immediate state updates
     );
   }, [
     tentativeGuess,
@@ -161,6 +168,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     getWordEntry,
     isValidWord,
     letterGuesses,
+    savePuzzleResult,
   ]);
 
   const handleKeyPressCallback = useCallback(

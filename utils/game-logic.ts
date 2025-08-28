@@ -1,6 +1,8 @@
 import { GameStatus, GameStateUpdaters } from "@/types/game";
 import { WordEntry, WordId } from "@/types/word";
 import { LetterGuess } from "@/types/letter-tracking";
+import { PuzzleResult } from "@/types/puzzle-result";
+import { User } from "firebase/auth";
 import { getCorrectPositions, generateHint } from "./hint-logic";
 import { handleInvalidWord, handleGameCompletion } from "./game-completion";
 
@@ -13,7 +15,8 @@ export const handleSubmitGuessWithLetterTracking = (
   getWordEntry: (id: WordId) => WordEntry | undefined,
   isValidWord: (word: string) => boolean,
   letterTracking: LetterGuess[],
-  updateLetterTracking?: (newLetters: LetterGuess[]) => void
+  updateLetterTracking?: (newLetters: LetterGuess[]) => void,
+  savePuzzleResult?: (user: User, result: PuzzleResult) => Promise<void>
 ) => {
   if (tentativeGuess.length !== 5) return;
   const answerId = answerEntry.id as WordId;
@@ -69,7 +72,8 @@ export const handleSubmitGuessWithLetterTracking = (
     answerEntry,
     updaters,
     hintIndex,
-    letterTracking
+    letterTracking,
+    savePuzzleResult
   );
 };
 

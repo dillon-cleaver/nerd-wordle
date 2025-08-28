@@ -1,12 +1,13 @@
 import { NUMBER_OF_GUESSES } from "@/constants/numbers";
 import { GameStateUpdaters } from "@/types/game";
 import { PuzzleResult } from "@/types/puzzle-result";
-import { savePuzzleResult } from "@/storage/puzzle-results";
+import { savePuzzleResult as savePuzzleResultLocal } from "@/storage/puzzle-results";
 import { addToCollection } from "@/storage/word-collections";
 import { WordEntry, WordId, NerdWordEntry } from "@/types/word";
 import { LetterGuess } from "@/types/letter-tracking";
 import { isDebugLoggingEnabled } from "./dev-flags";
 import * as Crypto from "expo-crypto";
+import { User, getAuth } from "firebase/auth";
 
 // Cross-platform UUID generation using expo-crypto
 const generatePuzzleResultId = () => Crypto.randomUUID();
@@ -31,7 +32,8 @@ export const handleGameCompletion = (
   answerEntry: WordEntry,
   updaters: GameStateUpdaters,
   hintIndex: number,
-  letterTracking: LetterGuess[]
+  letterTracking: LetterGuess[],
+  savePuzzleResult?: (user: User, result: PuzzleResult) => Promise<void>
 ): void => {
   const answerId = answerEntry.id as WordId;
 
@@ -57,7 +59,19 @@ export const handleGameCompletion = (
       status: "win",
       letterTracking,
     };
-    savePuzzleResult(null, result);
+
+    // Try to save using context method (updates React state immediately)
+    // If not provided, fallback to local storage method
+    const currentUser = getAuth().currentUser;
+    if (savePuzzleResult && currentUser) {
+      savePuzzleResult(currentUser, result).catch(() => {
+        // Fallback to local storage if context save fails
+        savePuzzleResultLocal(null, result);
+      });
+    } else {
+      // Fallback to local storage method
+      savePuzzleResultLocal(null, result);
+    }
 
     // Add to collection for nerd words
     if (answerEntry.category !== "common") {
@@ -90,6 +104,18 @@ export const handleGameCompletion = (
       status: "fail",
       letterTracking,
     };
-    savePuzzleResult(null, result);
+
+    // Try to save using context method (updates React state immediately)
+    // If not provided, fallback to local storage method
+    const currentUser = getAuth().currentUser;
+    if (savePuzzleResult && currentUser) {
+      savePuzzleResult(currentUser, result).catch(() => {
+        // Fallback to local storage if context save fails
+        savePuzzleResultLocal(null, result);
+      });
+    } else {
+      // Fallback to local storage method
+      savePuzzleResultLocal(null, result);
+    }
   }
 };
