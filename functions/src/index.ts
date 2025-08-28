@@ -10,6 +10,7 @@ import {
   WordsResponse,
   WordResponse,
   DailyPuzzleResponse,
+  DailyPuzzleSeed,
 } from "./types";
 import {
   wordsCollection,
@@ -52,15 +53,13 @@ app.use(express.json());
 // Middleware to verify Firebase ID token
 const verifyToken = async (
   req: express.Request,
-  res: express.Response,
+  res: express.Response<ApiError>,
   next: express.NextFunction
 ): Promise<void> => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      res
-        .status(401)
-        .json({ error: "Unauthorized: No token provided" } as ApiError);
+      res.status(401).json({ error: "Unauthorized: No token provided" });
       return;
     }
 
@@ -70,7 +69,7 @@ const verifyToken = async (
     next(); // Call next() to continue to the next middleware/route handler
   } catch (err) {
     console.error("Token verification error:", err);
-    res.status(401).json({ error: "Unauthorized: Invalid token" } as ApiError);
+    res.status(401).json({ error: "Unauthorized: Invalid token" });
     return;
   }
 };
@@ -79,7 +78,10 @@ const verifyToken = async (
 app.post(
   "/puzzle-result",
   verifyToken,
-  async (req: express.Request, res: express.Response) => {
+  async (
+    req: express.Request,
+    res: express.Response<PuzzleResultResponse | ApiError>
+  ) => {
     try {
       const { uid } = req.user!;
       const {
@@ -107,14 +109,14 @@ app.post(
         return res.status(400).json({
           error:
             "Missing required fields: id, word, guesses, attempts, date, status, or letterTracking",
-        } as ApiError);
+        });
       }
 
       // Validate status
       if (status !== "win" && status !== "loss") {
         return res.status(400).json({
           error: "Status must be either 'win' or 'loss'",
-        } as ApiError);
+        });
       }
 
       // Check if result with this id already exists
@@ -129,7 +131,7 @@ app.post(
       if (existingResult.exists) {
         return res.status(409).json({
           error: "A puzzle result with this id already exists",
-        } as ApiError);
+        });
       }
 
       // Store the puzzle result data (convert date string to Firestore timestamp)
@@ -163,18 +165,22 @@ app.post(
       return res.status(200).json({
         message: "Puzzle result recorded successfully",
         data: responseData,
-      } as PuzzleResultResponse);
+      });
     } catch (err) {
       console.error("Error recording puzzle result:", err);
-      return res
-        .status(500)
-        .json({ error: "Internal server error" } as ApiError);
+      return res.status(500).json({ error: "Internal server error" });
     }
   }
 );
 
 // GET /puzzle-history route
-app.get("/puzzle-history", verifyToken, async (req, res) => {
+app.get(
+  "/puzzle-history",
+  verifyToken,
+  async (
+    req: express.Request,
+    res: express.Response<PuzzleHistoryResponse | ApiError>
+  ) => {
   try {
     const { uid } = req.user!;
 
@@ -201,17 +207,21 @@ app.get("/puzzle-history", verifyToken, async (req, res) => {
       };
     });
 
-    return res
-      .status(200)
-      .json({ results, count: results.length } as PuzzleHistoryResponse);
+    return res.status(200).json({ results, count: results.length });
   } catch (err) {
     console.error("Error fetching puzzle history:", err);
-    return res.status(500).json({ error: "Internal server error" } as ApiError);
+    return res.status(500).json({ error: "Internal server error" });
   }
-});
+}
+);
 
 // GET /words route - fetch all words
-app.get("/words", async (_req: express.Request, res: express.Response) => {
+app.get(
+  "/words",
+  async (
+    _req: express.Request,
+    res: express.Response<WordsResponse | ApiError>
+  ) => {
   try {
     const now = Date.now();
 
@@ -221,7 +231,7 @@ app.get("/words", async (_req: express.Request, res: express.Response) => {
       return res.status(200).json({
         words: wordsCache,
         count: wordsCache.length,
-      } as WordsResponse);
+      });
     }
 
     // Cache miss or expired, fetch from Firestore
@@ -238,15 +248,21 @@ app.get("/words", async (_req: express.Request, res: express.Response) => {
     return res.status(200).json({
       words,
       count: words.length,
-    } as WordsResponse);
+    });
   } catch (err) {
     console.error("Error fetching words:", err);
-    return res.status(500).json({ error: "Internal server error" } as ApiError);
+    return res.status(500).json({ error: "Internal server error" });
   }
-});
+}
+);
 
 // GET /words/:id route - fetch specific word
-app.get("/words/:id", async (req: express.Request, res: express.Response) => {
+app.get(
+  "/words/:id",
+  async (
+    req: express.Request,
+    res: express.Response<WordResponse | ApiError>
+  ) => {
   try {
     const { id } = req.params;
     const wordDoc = await wordsCollection().doc(id.toUpperCase()).get();
@@ -255,21 +271,25 @@ app.get("/words/:id", async (req: express.Request, res: express.Response) => {
     if (!word) {
       return res.status(404).json({
         error: `Word with id "${id}" not found`,
-      } as ApiError);
+      });
     }
 
-    return res.status(200).json({ word } as WordResponse);
+    return res.status(200).json({ word });
   } catch (err) {
     console.error(`Error fetching word ${req.params.id}:`, err);
-    return res.status(500).json({ error: "Internal server error" } as ApiError);
+    return res.status(500).json({ error: "Internal server error" });
   }
-});
+}
+);
 
 // GET /daily-puzzle/today route - fetch current puzzle
 // NOTE: This route must come BEFORE the generic /:date route to match correctly
 app.get(
   "/daily-puzzle/today",
-  async (_req: express.Request, res: express.Response) => {
+  async (
+    _req: express.Request,
+    res: express.Response<DailyPuzzleResponse | ApiError>
+  ) => {
     try {
       const today = getTodayDateString();
       const puzzleDoc = await dailyPuzzlesCollection().doc(today).get();
@@ -278,15 +298,13 @@ app.get(
       if (!puzzle) {
         return res.status(404).json({
           error: `No puzzle found for today (${today})`,
-        } as ApiError);
+        });
       }
 
-      return res.status(200).json({ puzzle } as DailyPuzzleResponse);
+      return res.status(200).json({ puzzle });
     } catch (err) {
       console.error("Error fetching today's puzzle:", err);
-      return res
-        .status(500)
-        .json({ error: "Internal server error" } as ApiError);
+      return res.status(500).json({ error: "Internal server error" });
     }
   }
 );
@@ -294,14 +312,17 @@ app.get(
 // GET /daily-puzzle/:date route - fetch puzzle for specific date
 app.get(
   "/daily-puzzle/:date",
-  async (req: express.Request, res: express.Response) => {
+  async (
+    req: express.Request,
+    res: express.Response<DailyPuzzleResponse | ApiError>
+  ) => {
     try {
       const { date } = req.params;
 
       if (!isValidDateFormat(date)) {
         return res.status(400).json({
           error: "Invalid date format. Use YYYY-MM-DD",
-        } as ApiError);
+        });
       }
 
       const puzzleDoc = await dailyPuzzlesCollection().doc(date).get();
@@ -310,15 +331,13 @@ app.get(
       if (!puzzle) {
         return res.status(404).json({
           error: `No puzzle found for date ${date}`,
-        } as ApiError);
+        });
       }
 
-      return res.status(200).json({ puzzle } as DailyPuzzleResponse);
+      return res.status(200).json({ puzzle });
     } catch (err) {
       console.error(`Error fetching puzzle for date ${req.params.date}:`, err);
-      return res
-        .status(500)
-        .json({ error: "Internal server error" } as ApiError);
+      return res.status(500).json({ error: "Internal server error" });
     }
   }
 );
@@ -329,7 +348,10 @@ app.get(
 app.post(
   "/daily-puzzle",
   verifyToken,
-  async (req: express.Request, res: express.Response) => {
+  async (
+    req: express.Request,
+    res: express.Response<{ message: string; puzzle: DailyPuzzleSeed } | ApiError>
+  ) => {
     try {
       const { date, wordId } = req.body;
 
@@ -337,13 +359,13 @@ app.post(
       if (!date || !wordId) {
         return res.status(400).json({
           error: "Missing required fields: date and wordId",
-        } as ApiError);
+        });
       }
 
       if (!isValidDateFormat(date)) {
         return res.status(400).json({
           error: "Invalid date format. Use YYYY-MM-DD",
-        } as ApiError);
+        });
       }
 
       // Check if word exists
@@ -353,7 +375,7 @@ app.post(
       if (!word) {
         return res.status(404).json({
           error: `Word with id "${wordId}" not found`,
-        } as ApiError);
+        });
       }
 
       // Check if puzzle for this date already exists
@@ -361,11 +383,11 @@ app.post(
       if (existingPuzzleDoc.exists) {
         return res.status(409).json({
           error: `A puzzle for date ${date} already exists`,
-        } as ApiError);
+        });
       }
 
       // Create the daily puzzle
-      const puzzle = { date, word };
+      const puzzle: DailyPuzzleSeed = { date, word };
       await dailyPuzzlesCollection().doc(date).set({
         word: word,
       });
@@ -376,9 +398,7 @@ app.post(
       });
     } catch (err) {
       console.error("Error creating daily puzzle:", err);
-      return res
-        .status(500)
-        .json({ error: "Internal server error" } as ApiError);
+      return res.status(500).json({ error: "Internal server error" });
     }
   }
 );
