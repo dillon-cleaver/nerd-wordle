@@ -25,13 +25,19 @@ import { DrawerDevInfo } from "./DrawerDevInfo";
 import { DevModeBadge } from "./DevModeBadge";
 import { usePlatform } from "@/hooks/usePlatform";
 import { useUser } from "@/hooks/useUser";
+import { useContext } from "react";
+import { GameContext } from "@/context/GameContext";
 
 export const DrawerNavigationWrapper = () => {
-  const { loading } = useUser();
+  const { loading: userLoading } = useUser();
+  const { isLoading: gameLoading } = useContext(GameContext);
   const { isWeb } = usePlatform();
 
-  // On web, show loading indicator while user state resolves to prevent drawer flicker
-  if (isWeb && loading) {
+  // Combined loading state for user authentication and game initialization
+  const isAppLoading = userLoading || gameLoading;
+
+  // On web, show loading indicator while app is loading to prevent flicker and maintain consistent position
+  if (isWeb && isAppLoading) {
     return (
       <View style={loadingStyles.container}>
         <ActivityIndicator size="large" color={colors.neutral.white} />
