@@ -32,6 +32,36 @@ export const isDebugLoggingEnabled = (): boolean => {
 };
 
 /**
+ * Check if state restoration debugging is enabled
+ */
+export const isStateRestorationDebugEnabled = (): boolean => {
+  return (
+    process.env.EXPO_PUBLIC_DEBUG_STATE_RESTORATION === "true" ||
+    isDebugLoggingEnabled()
+  );
+};
+
+/**
+ * Check if puzzle history debugging is enabled
+ */
+export const isPuzzleHistoryDebugEnabled = (): boolean => {
+  return (
+    process.env.EXPO_PUBLIC_DEBUG_PUZZLE_HISTORY === "true" ||
+    isDebugLoggingEnabled()
+  );
+};
+
+/**
+ * Check if local storage should be cleared on app start (dev only)
+ */
+export const shouldClearLocalStorageOnStart = (): boolean => {
+  return (
+    process.env.EXPO_PUBLIC_CLEAR_STORAGE_ON_START === "true" &&
+    isDevModeEnabled()
+  );
+};
+
+/**
  * Developer override to bypass daily puzzle lock
  * Returns true if the user should be allowed to play multiple times per day
  */
@@ -47,6 +77,11 @@ export function getDevEnvironmentInfo() {
     devMode: isDevModeEnabled(),
     bypassDailyLimit: process.env.EXPO_PUBLIC_BYPASS_DAILY_LIMIT === "true",
     debugLogging: process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true",
+    debugStateRestoration:
+      process.env.EXPO_PUBLIC_DEBUG_STATE_RESTORATION === "true",
+    debugPuzzleHistory: process.env.EXPO_PUBLIC_DEBUG_PUZZLE_HISTORY === "true",
+    clearStorageOnStart:
+      process.env.EXPO_PUBLIC_CLEAR_STORAGE_ON_START === "true",
     showDevBadge: shouldShowDevBadge(),
     firestoreMode: getFirestoreMode(),
   };

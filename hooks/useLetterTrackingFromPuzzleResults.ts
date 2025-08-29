@@ -26,8 +26,22 @@ export const useLetterTrackingFromPuzzleResults = (
       try {
         setLoading(true);
 
+        // Don't try to load if we don't have a puzzle ID yet
+        if (!puzzleId) {
+          setLetterGuesses([]);
+          return;
+        }
+
         // Extract date from puzzle ID (e.g., "daily-2025-08-26" -> "2025-08-26")
         const puzzleDate = puzzleId.replace("daily-", "");
+
+        console.log("🔍 Loading letter tracking for puzzle:", {
+          puzzleId,
+          puzzleDate,
+          authUser: !!authUser,
+          backendResultsCount: backendResults.length,
+          historyLoading
+        });
 
         let allResults: PuzzleResult[] = [];
 
@@ -35,7 +49,16 @@ export const useLetterTrackingFromPuzzleResults = (
         const localResults = loadPuzzleResultsLocal();
         allResults.push(...localResults);
 
-        // Both local and backend results may contain letterTracking data.
+        // Add backend results if available
+        if (backendResults.length > 0) {
+          allResults.push(...backendResults);
+        }
+
+        console.log("📊 All puzzle results loaded:", {
+          localCount: localResults.length,
+          backendCount: backendResults.length,
+          totalCount: allResults.length
+        });
 
         // Find puzzle result for this date
         const matchingResult = allResults.find((result) => {
@@ -47,11 +70,21 @@ export const useLetterTrackingFromPuzzleResults = (
               ? result.date.toISOString().split("T")[0]
               : new Date(result.date).toISOString().split("T")[0];
 
-          return resultDate === puzzleDate;
+          const matches = resultDate === puzzleDate;
+          if (matches) {
+            console.log("✅ Found matching puzzle result:", {
+              resultDate,
+              puzzleDate,
+              letterTrackingCount: result.letterTracking?.length || 0,
+              status: result.status
+            });
+          }
+          return matches;
         });
 
         // Extract letter tracking data from puzzle result
         const letters = matchingResult?.letterTracking || [];
+        console.log("📝 Setting letter guesses:", letters.length, "letters");
         setLetterGuesses(letters);
       } catch (error) {
         console.error(
@@ -64,7 +97,9 @@ export const useLetterTrackingFromPuzzleResults = (
       }
     };
 
-    if (puzzleId) {
+    // Wait for user loading to complete and backend results to be available
+    // This ensures we have all the data we need before trying to load
+    if (!historyLoading) {
       loadLetterTracking();
     }
   }, [puzzleId, authUser, backendResults, historyLoading]);
