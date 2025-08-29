@@ -4,6 +4,7 @@ import {
   useState,
   useCallback,
   useContext,
+  useEffect,
 } from "react";
 import {
   handleSubmitGuessWithLetterTracking,
@@ -72,11 +73,16 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const { getWordEntry, isValidWord } = useWordData();
   const { category, originalCategory, answer } = gameState;
   const { authUser } = useContext(UserContext);
-  const { savePuzzleResult } = usePuzzleHistory();
+  const { savePuzzleResult, autoLoadResults } = usePuzzleHistory();
+
+  // Auto-load puzzle history when user auth state changes
+  useEffect(() => {
+    autoLoadResults(authUser, false); // UserContext handles its own loading state
+  }, [authUser, autoLoadResults]);
 
   // Load any previously saved letter tracking for today's puzzle to restore the grid on refresh
   const puzzleId = dailyPuzzle?.date ? `daily-${dailyPuzzle.date}` : "";
-  const { letterGuesses: savedLetterGuesses } =
+  const { letterGuesses: savedLetterGuesses, loading: letterTrackingLoading } =
     useLetterTrackingFromPuzzleResults(puzzleId, authUser);
 
   // Local letter tracking state - will be saved in puzzle results
@@ -208,7 +214,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         handleKeyPress: handleKeyPressCallback,
         handleSubmitGuess: handleSubmitGuessCallback,
         resetGame,
-        isLoading,
+        isLoading: isLoading || letterTrackingLoading,
         // Letter tracking
         letterGuesses,
         getGuessesForRow,
