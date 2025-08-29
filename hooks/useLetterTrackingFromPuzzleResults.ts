@@ -4,6 +4,7 @@ import { LetterGuess } from "@/types/letter-tracking";
 import { PuzzleResult } from "@/types/puzzle-result"; // Use frontend type with letterTracking
 import { loadPuzzleResultsLocal } from "@/storage/puzzle-results.local";
 import { usePuzzleHistory } from "@/context/PuzzleHistoryContext";
+import { isPuzzleHistoryDebugEnabled } from "@/utils/dev-flags";
 
 /**
  * Hook to read letter tracking data from puzzle results instead of separate storage.
@@ -35,13 +36,15 @@ export const useLetterTrackingFromPuzzleResults = (
         // Extract date from puzzle ID (e.g., "daily-2025-08-26" -> "2025-08-26")
         const puzzleDate = puzzleId.replace("daily-", "");
 
-        console.log("🔍 Loading letter tracking for puzzle:", {
-          puzzleId,
-          puzzleDate,
-          authUser: !!authUser,
-          backendResultsCount: backendResults.length,
-          historyLoading
-        });
+        if (isPuzzleHistoryDebugEnabled()) {
+          console.log("🔍 Loading letter tracking for puzzle:", {
+            puzzleId,
+            puzzleDate,
+            authUser: !!authUser,
+            backendResultsCount: backendResults.length,
+            historyLoading,
+          });
+        }
 
         let allResults: PuzzleResult[] = [];
 
@@ -54,11 +57,13 @@ export const useLetterTrackingFromPuzzleResults = (
           allResults.push(...backendResults);
         }
 
-        console.log("📊 All puzzle results loaded:", {
-          localCount: localResults.length,
-          backendCount: backendResults.length,
-          totalCount: allResults.length
-        });
+        if (isPuzzleHistoryDebugEnabled()) {
+          console.log("📊 All puzzle results loaded:", {
+            localCount: localResults.length,
+            backendCount: backendResults.length,
+            totalCount: allResults.length,
+          });
+        }
 
         // Find puzzle result for this date
         const matchingResult = allResults.find((result) => {
@@ -71,12 +76,12 @@ export const useLetterTrackingFromPuzzleResults = (
               : new Date(result.date).toISOString().split("T")[0];
 
           const matches = resultDate === puzzleDate;
-          if (matches) {
+          if (matches && isPuzzleHistoryDebugEnabled()) {
             console.log("✅ Found matching puzzle result:", {
               resultDate,
               puzzleDate,
               letterTrackingCount: result.letterTracking?.length || 0,
-              status: result.status
+              status: result.status,
             });
           }
           return matches;
@@ -84,7 +89,9 @@ export const useLetterTrackingFromPuzzleResults = (
 
         // Extract letter tracking data from puzzle result
         const letters = matchingResult?.letterTracking || [];
-        console.log("📝 Setting letter guesses:", letters.length, "letters");
+        if (isPuzzleHistoryDebugEnabled()) {
+          console.log("📝 Setting letter guesses:", letters.length, "letters");
+        }
         setLetterGuesses(letters);
       } catch (error) {
         console.error(

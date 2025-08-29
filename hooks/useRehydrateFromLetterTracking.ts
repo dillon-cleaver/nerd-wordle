@@ -3,6 +3,7 @@ import { NUMBER_OF_GUESSES } from "@/constants/numbers";
 import { GameStatus } from "@/types/game";
 import { LetterGuess } from "@/types/letter-tracking";
 import { WordEntry, WordId } from "@/types/word";
+import { isStateRestorationDebugEnabled } from "@/utils/dev-flags";
 
 type Params = {
   savedLetterGuesses: LetterGuess[];
@@ -39,7 +40,7 @@ export const useRehydrateFromLetterTracking = ({
     // Only run rehydration when:
     // 1. We have saved letter guesses to restore
     // 2. Current guesses are empty (haven't restored yet)
-    // 3. Current letter guesses are empty (haven't restored yet)  
+    // 3. Current letter guesses are empty (haven't restored yet)
     // 4. We have the daily puzzle word and answer loaded
     // 5. Answer is not the loading placeholder
     if (
@@ -51,13 +52,15 @@ export const useRehydrateFromLetterTracking = ({
       answer &&
       answer !== ("LOADING" as unknown as WordId)
     ) {
-      console.log("🔄 Rehydrating game state from saved letter tracking:", {
-        savedLetterCount: savedLetterGuesses.length,
-        currentGuesses: guessesLength,
-        currentLetters: existingLetterGuessesLength,
-        puzzleWord: dailyPuzzleWordId,
-        answer: answer
-      });
+      if (isStateRestorationDebugEnabled()) {
+        console.log("🔄 Rehydrating game state from saved letter tracking:", {
+          savedLetterCount: savedLetterGuesses.length,
+          currentGuesses: guessesLength,
+          currentLetters: existingLetterGuessesLength,
+          puzzleWord: dailyPuzzleWordId,
+          answer: answer,
+        });
+      }
 
       // Group letters by row and reconstruct each guess word
       const rows = new Map<number, string[]>();
@@ -77,27 +80,35 @@ export const useRehydrateFromLetterTracking = ({
         .filter((entry): entry is WordEntry => entry !== undefined);
 
       if (reconstructedEntries.length > 0) {
-        console.log("✅ Restoring game state:", {
-          words: reconstructedWords,
-          entries: reconstructedEntries.length
-        });
-        
+        if (isStateRestorationDebugEnabled()) {
+          console.log("✅ Restoring game state:", {
+            words: reconstructedWords,
+            entries: reconstructedEntries.length,
+          });
+        }
+
         setGuesses(reconstructedEntries);
         setLetterGuesses(savedLetterGuesses);
-        
+
         // Determine game status from reconstructed guesses
         const won = reconstructedWords.some((w) => w === answer);
         if (won) {
           setGameStatus("won");
-          console.log("🎉 Restored completed puzzle - game won");
+          if (isStateRestorationDebugEnabled()) {
+            console.log("🎉 Restored completed puzzle - game won");
+          }
         } else if (reconstructedEntries.length >= NUMBER_OF_GUESSES) {
           setGameStatus("lost");
-          console.log("😞 Restored completed puzzle - game lost");
-        } else {
+          if (isStateRestorationDebugEnabled()) {
+            console.log("😞 Restored completed puzzle - game lost");
+          }
+        } else if (isStateRestorationDebugEnabled()) {
           console.log("🎮 Restored in-progress puzzle");
         }
-      } else {
-        console.warn("⚠️ Failed to reconstruct word entries from saved letters");
+      } else if (isStateRestorationDebugEnabled()) {
+        console.warn(
+          "⚠️ Failed to reconstruct word entries from saved letters"
+        );
       }
     }
   }, [
@@ -112,4 +123,3 @@ export const useRehydrateFromLetterTracking = ({
     setGameStatus,
   ]);
 };
-
