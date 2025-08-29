@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, ActivityIndicator } from "react-native";
 import { GuessGrid } from "./GuessGrid";
 import { Keyboard } from "./Keyboard";
 import { GameContext } from "@/context/GameContext";
@@ -18,9 +18,13 @@ export const Game = () => {
     }
   }, [answer, category]);
 
-  // If loading, show empty container to prevent flashing
+  // If loading, show loading indicator to prevent empty background
   if (isLoading) {
-    return <View style={styles.container} />;
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={colors.neutral.white} />
+      </View>
+    );
   }
 
   // Always show the active game view with banner + grid + keyboard
@@ -44,6 +48,13 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: spacing.md,
     gap: spacing.xl,
+    width: "100%",
+  },
+  loadingContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: spacing.md,
     width: "100%",
   },
   content: {
