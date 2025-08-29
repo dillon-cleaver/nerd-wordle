@@ -15,6 +15,7 @@ type Params = {
   setGuesses: (entries: WordEntry[]) => void;
   setLetterGuesses: (letters: LetterGuess[]) => void;
   setGameStatus: (status: GameStatus) => void;
+  setIsRehydrationComplete: (complete: boolean) => void;
 };
 
 /**
@@ -35,8 +36,23 @@ export const useRehydrateFromLetterTracking = ({
   setGuesses,
   setLetterGuesses,
   setGameStatus,
+  setIsRehydrationComplete,
 }: Params) => {
   useEffect(() => {
+    // Mark rehydration as complete early if conditions suggest no restoration is needed
+    if (
+      !savedLetterGuesses ||
+      savedLetterGuesses.length === 0 ||
+      !dailyPuzzleWordId ||
+      !answer ||
+      answer === ("LOADING" as unknown as WordId) ||
+      guessesLength > 0 ||
+      existingLetterGuessesLength > 0
+    ) {
+      setIsRehydrationComplete(true);
+      return;
+    }
+
     // Only run rehydration when:
     // 1. We have saved letter guesses to restore
     // 2. Current guesses are empty (haven't restored yet)
@@ -110,6 +126,9 @@ export const useRehydrateFromLetterTracking = ({
           "⚠️ Failed to reconstruct word entries from saved letters"
         );
       }
+
+      // Mark rehydration as complete regardless of whether restoration succeeded
+      setIsRehydrationComplete(true);
     }
   }, [
     savedLetterGuesses,
@@ -121,5 +140,6 @@ export const useRehydrateFromLetterTracking = ({
     setGuesses,
     setLetterGuesses,
     setGameStatus,
+    setIsRehydrationComplete,
   ]);
 };
