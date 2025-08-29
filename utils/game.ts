@@ -3,7 +3,7 @@ import { colors } from "@/constants/styles";
 import { WordCategory, WordEntry } from "@/types/word";
 import { sample } from "./sample";
 
-const convertCategory = (word: WordCategory): string => {
+export const convertCategory = (word: WordCategory): string => {
   switch (word) {
     case "animeAndManga":
       return "Anime and Manga";

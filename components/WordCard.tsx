@@ -16,6 +16,7 @@ import {
   getCategoryTextColor,
   getHintForWord,
   getSummaryForWord,
+  convertCategory,
 } from "@/utils/game";
 import { useCollectedWords } from "@/hooks/useCollectedWords";
 import { getShortDateString } from "@/utils/time";
@@ -43,6 +44,9 @@ export const WordCard = ({ collectedWordId }: WordCardProps) => {
   const summary = getSummaryForWord(wordEntry, category);
   const tileBackgroundColor = getCategoryColor(category);
   const textColor = getCategoryTextColor(category);
+
+  // Format the category display name
+  const formattedCategory = convertCategory(category);
 
   const handleWikipediaPress = () => {
     if (wordEntry.wikipediaUrl) {
@@ -81,7 +85,7 @@ export const WordCard = ({ collectedWordId }: WordCardProps) => {
           </Text>
         </Pressable>
         <Text style={[styles.categoryText, { color: textColor }]}>
-          {category}
+          {formattedCategory}
         </Text>
       </Card>
     </Card>
