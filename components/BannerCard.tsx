@@ -2,12 +2,14 @@ import { useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import { GameContext } from "@/context/GameContext";
 import { GameBanner } from "./GameBanner";
-import { CategoryBanner } from "./CategoryBanner";
 import {
-  BANNER_GUESS_GRID_MAX_WIDTH,
-  BANNER_GUESS_GRID_MIN_WIDTH,
+  DESKTOP_BANNER_GUESS_GRID_MAX_WIDTH,
+  DESKTOP_BANNER_GUESS_GRID_MIN_WIDTH,
   MIN_BANNER_HEIGHT,
+  MOBILE_BANNER_GUESS_GRID_MAX_WIDTH,
+  MOBILE_BANNER_GUESS_GRID_MIN_WIDTH,
 } from "@/constants/dimensions";
+import { useDevice } from "@/hooks/useDevice";
 
 export const BannerCard = () => {
   const { gameStatus, guesses, answer, answerEntry } = useContext(GameContext);
@@ -16,35 +18,40 @@ export const BannerCard = () => {
       ? answerEntry.edition
       : undefined;
 
-  return gameStatus === "running" ? (
-    <View style={styles.categoryBannerContainer}>
-      <CategoryBanner />
-    </View>
-  ) : (
-    <View style={styles.gameBannerContainer}>
-      <GameBanner
-        gameStatus={gameStatus}
-        numGuesses={guesses.length}
-        answer={answer}
-        edition={editionNumber}
-        answerEntry={answerEntry}
-      />
-    </View>
+  const { isDesktop } = useDevice();
+
+  const containerStyle = [
+    styles.container,
+    !isDesktop
+      ? {
+          minWidth: MOBILE_BANNER_GUESS_GRID_MIN_WIDTH,
+          maxWidth: MOBILE_BANNER_GUESS_GRID_MAX_WIDTH,
+        }
+      : {
+          minWidth: DESKTOP_BANNER_GUESS_GRID_MIN_WIDTH,
+          maxWidth: DESKTOP_BANNER_GUESS_GRID_MAX_WIDTH,
+        },
+  ];
+
+  return (
+    gameStatus !== "running" && (
+      <View style={containerStyle}>
+        <GameBanner
+          gameStatus={gameStatus}
+          numGuesses={guesses.length}
+          answer={answer}
+          edition={editionNumber}
+          answerEntry={answerEntry}
+        />
+      </View>
+    )
   );
 };
 
 const styles = StyleSheet.create({
-  categoryBannerContainer: {
-    width: "100%",
-    minHeight: MIN_BANNER_HEIGHT,
-    minWidth: BANNER_GUESS_GRID_MIN_WIDTH,
-    maxWidth: BANNER_GUESS_GRID_MAX_WIDTH,
-  },
-  gameBannerContainer: {
+  container: {
     minHeight: MIN_BANNER_HEIGHT,
     justifyContent: "center",
     width: "100%",
-    minWidth: BANNER_GUESS_GRID_MIN_WIDTH,
-    maxWidth: BANNER_GUESS_GRID_MAX_WIDTH,
   },
 });

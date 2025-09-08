@@ -5,10 +5,13 @@ import { GameContext } from "@/context/GameContext";
 import { NUMBER_OF_GUESSES } from "@/constants/numbers";
 import { View, StyleSheet } from "react-native";
 import {
-  BANNER_GUESS_GRID_MAX_WIDTH,
-  BANNER_GUESS_GRID_MIN_WIDTH,
+  MOBILE_BANNER_GUESS_GRID_MIN_WIDTH,
+  DESKTOP_BANNER_GUESS_GRID_MIN_WIDTH,
+  MOBILE_BANNER_GUESS_GRID_MAX_WIDTH,
+  DESKTOP_BANNER_GUESS_GRID_MAX_WIDTH,
 } from "@/constants/dimensions";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
+import { useDevice } from "@/hooks/useDevice";
 
 export const GuessGrid = () => {
   const {
@@ -21,6 +24,8 @@ export const GuessGrid = () => {
     isLoading,
   } = useContext(GameContext);
 
+  const { isDesktop } = useDevice();
+
   // Debug hint state
   if (hint && isDebugLoggingEnabled()) {
     console.log(`🎯 GuessGrid: Received hint:`, hint);
@@ -32,8 +37,21 @@ export const GuessGrid = () => {
     return <View style={styles.container} />;
   }
 
+  const containerStyle = [
+    styles.container,
+    !isDesktop
+      ? {
+          minWidth: MOBILE_BANNER_GUESS_GRID_MIN_WIDTH,
+          maxWidth: MOBILE_BANNER_GUESS_GRID_MAX_WIDTH,
+        }
+      : {
+          minWidth: DESKTOP_BANNER_GUESS_GRID_MIN_WIDTH,
+          maxWidth: DESKTOP_BANNER_GUESS_GRID_MAX_WIDTH,
+        },
+  ];
+
   return (
-    <View style={styles.container}>
+    <View style={containerStyle}>
       {range(0, NUMBER_OF_GUESSES).map((rowIndex) => {
         const currentGuess =
           rowIndex === guesses.length
@@ -64,8 +82,6 @@ export const GuessGrid = () => {
 
 const styles = StyleSheet.create({
   container: {
-    minWidth: BANNER_GUESS_GRID_MIN_WIDTH,
-    maxWidth: BANNER_GUESS_GRID_MAX_WIDTH,
     width: "100%",
   },
 });

@@ -7,10 +7,17 @@ import { colors, spacing } from "@/constants/styles";
 import { BannerCard } from "./BannerCard";
 import { useCountdownToNewPuzzle } from "@/utils/countdown";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
+import { useDevice } from "@/hooks/useDevice";
 
 export const Game = () => {
   const { category, answer, isLoading } = useContext(GameContext);
   const timeUntilNewPuzzle = useCountdownToNewPuzzle();
+
+  const { isDesktop } = useDevice();
+  const containerStyle = [
+    styles.container,
+    !isDesktop && { gap: spacing.sm, paddingVertical: spacing.xs },
+  ];
 
   useEffect(() => {
     if (isDebugLoggingEnabled()) {
@@ -25,7 +32,7 @@ export const Game = () => {
 
   // Always show the active game view with banner + grid + keyboard
   return (
-    <View style={styles.container}>
+    <View style={containerStyle}>
       <View style={styles.content}>
         <BannerCard />
         <GuessGrid />
@@ -47,7 +54,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   content: {
-    gap: spacing.xl,
     alignItems: "center",
     paddingHorizontal: spacing.md,
   },

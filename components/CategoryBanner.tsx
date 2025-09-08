@@ -1,4 +1,7 @@
-import { BANNER_GUESS_GRID_MIN_WIDTH } from "@/constants/dimensions";
+import {
+  MOBILE_BANNER_GUESS_GRID_MIN_WIDTH,
+  DESKTOP_BANNER_GUESS_GRID_MIN_WIDTH,
+} from "@/constants/dimensions";
 import {
   colors,
   fontFamily,
@@ -10,14 +13,25 @@ import { GameContext } from "@/context/GameContext";
 import { getHintForWord } from "@/utils/game";
 import { useContext } from "react";
 import { Text, View, StyleSheet } from "react-native";
+import { useDevice } from "@/hooks/useDevice";
 
 export const CategoryBanner = () => {
   const { answerEntry, originalCategory, category } = useContext(GameContext);
+  const { isDesktop } = useDevice();
 
   const hint = getHintForWord(answerEntry, originalCategory);
 
+  const contentStyle = [
+    styles.content,
+    {
+      minWidth: isDesktop
+        ? DESKTOP_BANNER_GUESS_GRID_MIN_WIDTH
+        : MOBILE_BANNER_GUESS_GRID_MIN_WIDTH,
+    },
+  ];
+
   return (
-    <View style={styles.content}>
+    <View style={contentStyle}>
       <Text style={styles.category}>{category}</Text>
       <Text style={styles.hint}>{hint}</Text>
     </View>
@@ -26,7 +40,6 @@ export const CategoryBanner = () => {
 
 const styles = StyleSheet.create({
   content: {
-    minWidth: BANNER_GUESS_GRID_MIN_WIDTH,
     gap: spacing.xs,
   },
   category: {
