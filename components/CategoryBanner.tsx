@@ -1,7 +1,4 @@
-import {
-  MOBILE_BANNER_GUESS_GRID_MIN_WIDTH,
-  DESKTOP_BANNER_GUESS_GRID_MIN_WIDTH,
-} from "@/constants/dimensions";
+import { MOBILE_BANNER_GUESS_GRID_MIN_WIDTH, DESKTOP_BANNER_GUESS_GRID_MIN_WIDTH } from "@/constants/dimensions";
 import {
   colors,
   fontFamily,
@@ -24,8 +21,8 @@ export const CategoryBanner = () => {
   const contentStyle = [
     styles.content,
     {
-      minWidth: isDesktop
-        ? DESKTOP_BANNER_GUESS_GRID_MIN_WIDTH
+      minWidth: isDesktop 
+        ? DESKTOP_BANNER_GUESS_GRID_MIN_WIDTH 
         : MOBILE_BANNER_GUESS_GRID_MIN_WIDTH,
     },
   ];

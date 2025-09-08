@@ -26,7 +26,13 @@ import { DevModeBadge } from "./DevModeBadge";
 import { usePlatform } from "@/hooks/usePlatform";
 import { useUser } from "@/hooks/useUser";
 
-export const DrawerNavigationWrapper = () => {
+type DrawerNavigationWrapperProps = {
+  onPress: () => void;
+};
+
+export const DrawerNavigationWrapper = ({
+  onPress,
+}: DrawerNavigationWrapperProps) => {
   const { loading } = useUser();
   const { isWeb } = usePlatform();
 
@@ -87,9 +93,7 @@ export const DrawerNavigationWrapper = () => {
             >
               <DevModeBadge />
               <TouchableOpacity
-                onPress={() => {
-                  // TODO: Add info functionality later
-                }}
+                onPress={onPress}
                 style={{ padding: spacing.xs }}
               >
                 <FontAwesome

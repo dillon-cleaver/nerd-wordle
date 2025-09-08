@@ -1,5 +1,5 @@
 import "@/firebase/firebaseConfig";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import Head from "expo-router/head";
@@ -9,6 +9,8 @@ import { GameProvider } from "@/context/GameContext";
 import { PuzzleHistoryProvider } from "@/context/PuzzleHistoryContext";
 import { WordDataProvider } from "@/context/WordDataContext";
 import { DrawerNavigationWrapper } from "@/components/DrawerNavigationWrapper";
+import { BaseModal } from "@/components/base/BaseModal";
+import { CategoryBanner } from "@/components/CategoryBanner";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -42,6 +44,10 @@ export default function RootLayout() {
 }
 
 function RootLayoutContent() {
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpenModal = () => setOpenModal((prev) => !prev);
+
   return (
     <>
       <Head>
@@ -57,7 +63,10 @@ function RootLayoutContent() {
         <PuzzleHistoryProvider>
           <WordDataProvider>
             <GameProvider>
-              <DrawerNavigationWrapper />
+              <DrawerNavigationWrapper onPress={handleOpenModal} />
+              <BaseModal visible={openModal} onRequestClose={handleOpenModal}>
+                <CategoryBanner />
+              </BaseModal>
             </GameProvider>
           </WordDataProvider>
         </PuzzleHistoryProvider>
