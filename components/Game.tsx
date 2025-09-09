@@ -35,9 +35,10 @@ export const Game = () => {
     }
   }, [answer, category]);
 
-  // If loading, show empty container to prevent flashing
+  // The DrawerNavigationWrapper handles loading state display
+  // If loading, don't render the game content to avoid layout shifts
   if (isLoading) {
-    return <View style={styles.container} />;
+    return null;
   }
 
   // Always show the active game view with banner + grid + keyboard

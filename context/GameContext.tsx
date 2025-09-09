@@ -4,6 +4,7 @@ import {
   useState,
   useCallback,
   useContext,
+  useEffect,
 } from "react";
 import {
   handleSubmitGuessWithLetterTracking,
@@ -72,21 +73,32 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const { getWordEntry, isValidWord } = useWordData();
   const { category, originalCategory, answer } = gameState;
   const { authUser } = useContext(UserContext);
-  const { savePuzzleResult } = usePuzzleHistory();
+  const { savePuzzleResult, autoLoadResults } = usePuzzleHistory();
+
+  // Auto-load puzzle history when user auth state changes
+  useEffect(() => {
+    autoLoadResults(authUser, false); // UserContext handles its own loading state
+  }, [authUser, autoLoadResults]);
 
   // Load any previously saved letter tracking for today's puzzle to restore the grid on refresh
   const puzzleId = dailyPuzzle?.date ? `daily-${dailyPuzzle.date}` : "";
-  const { letterGuesses: savedLetterGuesses } =
+  const { letterGuesses: savedLetterGuesses, loading: letterTrackingLoading } =
     useLetterTrackingFromPuzzleResults(puzzleId, authUser);
 
   // Local letter tracking state - will be saved in puzzle results
   const [letterGuesses, setLetterGuesses] = useState<LetterGuess[]>([]);
+  const [isRehydrationComplete, setIsRehydrationComplete] = useState(false);
 
   const [gameStatus, setGameStatus] = useState<GameStatus>("running");
   const [guesses, setGuesses] = useState<WordEntry[]>([]);
   const [tentativeGuess, setTentativeGuess] = useState("");
   const [invalidWord, setInvalidWord] = useState(false);
   const [hint, setHint] = useState<Hint>();
+
+  // Wrap setIsRehydrationComplete in useCallback to prevent unnecessary re-renders
+  const setIsRehydrationCompleteCallback = useCallback((complete: boolean) => {
+    setIsRehydrationComplete(complete);
+  }, []);
 
   // Helper functions for letter tracking
   const getGuessesForRow = useCallback(
@@ -130,6 +142,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     setGuesses,
     setLetterGuesses,
     setGameStatus,
+    setIsRehydrationComplete: setIsRehydrationCompleteCallback,
   });
 
   const handleSubmitGuessCallback = useCallback(() => {
@@ -193,6 +206,10 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     // Note: Game state (answer, category) comes from the puzzle and doesn't need reset
   }, []);
 
+  // Comprehensive loading state that includes puzzle loading, letter tracking, and state restoration
+  const isGameLoading =
+    isLoading || letterTrackingLoading || !isRehydrationComplete;
+
   return (
     <GameContext.Provider
       value={{
@@ -208,8 +225,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         handleKeyPress: handleKeyPressCallback,
         handleSubmitGuess: handleSubmitGuessCallback,
         resetGame,
-        isLoading,
-        // Letter tracking
+        isLoading: isGameLoading,
         letterGuesses,
         getGuessesForRow,
         hasLetterBeenGuessed,
