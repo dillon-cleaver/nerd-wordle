@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   StyleSheet,
 } from "react-native";
+import { useState, useEffect, useContext } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
 import {
@@ -19,25 +20,51 @@ import {
   fontSize,
   lineHeight,
   spacing,
+  animation,
 } from "@/constants/styles";
 import { DrawerSignOutButton } from "./DrawerSignOutButton";
 import { DrawerDevInfo } from "./DrawerDevInfo";
 import { DevModeBadge } from "./DevModeBadge";
+import { InfoModal } from "./InfoModal";
 import { usePlatform } from "@/hooks/usePlatform";
 import { useUser } from "@/hooks/useUser";
-import { useContext } from "react";
 import { GameContext } from "@/context/GameContext";
+import {
+  hasInfoModalBeenShown,
+  saveInfoModalShown,
+} from "@/storage/app-state.local";
 
 export const DrawerNavigationWrapper = () => {
-  const { loading: userLoading } = useUser();
+  const { loading } = useUser();
   const { isLoading: gameLoading } = useContext(GameContext);
   const { isWeb } = usePlatform();
+  const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
 
-  // Combined loading state for user authentication and game initialization
-  const isAppLoading = userLoading || gameLoading;
+  // Check if InfoModal should be shown on first load
+  // Wait for both user and game to finish loading, then show after delay
+  useEffect(() => {
+    if (!loading && !gameLoading && isWeb) {
+      const hasBeenShown = hasInfoModalBeenShown();
+      if (!hasBeenShown) {
+        // Wait for the long animation duration before showing modal
+        const timer = setTimeout(() => {
+          setIsInfoModalVisible(true);
+        }, animation.duration.long);
 
-  // On web, show loading indicator while app is loading to prevent flicker and maintain consistent position
-  if (isWeb && isAppLoading) {
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [loading, gameLoading, isWeb]);
+
+  const handleCloseInfoModal = () => {
+    setIsInfoModalVisible(false);
+    // Save that the modal has been shown
+    saveInfoModalShown();
+  };
+
+  // On web, show loading indicator while user state or game resolves to prevent drawer flicker
+  // Mobile platforms handle loading through splash screens and don't experience the same flicker issue
+  if (isWeb && (loading || gameLoading)) {
     return (
       <View style={loadingStyles.container}>
         <ActivityIndicator size="large" color={colors.neutral.white} />
@@ -93,9 +120,7 @@ export const DrawerNavigationWrapper = () => {
             >
               <DevModeBadge />
               <TouchableOpacity
-                onPress={() => {
-                  // TODO: Add info functionality later
-                }}
+                onPress={() => setIsInfoModalVisible(true)}
                 style={{ padding: spacing.xs }}
               >
                 <FontAwesome
@@ -154,6 +179,10 @@ export const DrawerNavigationWrapper = () => {
         />
       </Drawer>
       <StatusBar networkActivityIndicatorVisible={true} style="light" />
+      <InfoModal
+        visible={isInfoModalVisible}
+        onRequestClose={handleCloseInfoModal}
+      />
     </GestureHandlerRootView>
   );
 };

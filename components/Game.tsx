@@ -1,16 +1,33 @@
-import { useContext, useEffect } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { useContext, useEffect, useState } from "react";
+import { View, StyleSheet } from "react-native";
+import Animated, { FadeInUp } from "react-native-reanimated";
 import { GuessGrid } from "./GuessGrid";
 import { Keyboard } from "./Keyboard";
 import { GameContext } from "@/context/GameContext";
-import { colors, spacing } from "@/constants/styles";
+import { spacing, animation } from "@/constants/styles";
 import { BannerCard } from "./BannerCard";
-import { useCountdownToNewPuzzle } from "@/utils/countdown";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
+import { useDevice } from "@/hooks/useDevice";
+import { HintModal } from "./HintModal";
 
 export const Game = () => {
   const { category, answer, isLoading } = useContext(GameContext);
-  const timeUntilNewPuzzle = useCountdownToNewPuzzle();
+
+  const [hintModalVisible, setHintModalVisible] = useState(false);
+
+  const { isDesktop } = useDevice();
+  const containerStyle = [
+    styles.container,
+    isDesktop && { gap: spacing.xl, paddingVertical: spacing.md },
+  ];
+
+  const handlePressHint = () => {
+    setHintModalVisible(true);
+  };
+
+  const handleCloseHintModal = () => {
+    setHintModalVisible(false);
+  };
 
   useEffect(() => {
     if (isDebugLoggingEnabled()) {
@@ -26,43 +43,40 @@ export const Game = () => {
 
   // Always show the active game view with banner + grid + keyboard
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
+    <View style={containerStyle}>
+      <Animated.View
+        style={styles.content}
+        entering={FadeInUp.duration(animation.duration.medium).springify()}
+      >
         <BannerCard />
-        <GuessGrid />
-      </View>
-      <View style={styles.keyboardContainer}>
+        <GuessGrid onPressHint={handlePressHint} />
+      </Animated.View>
+      <Animated.View
+        style={styles.keyboardContainer}
+        entering={FadeInUp.duration(animation.duration.medium).springify()}
+      >
         <Keyboard />
-      </View>
-      <View style={styles.timerContainer}>
-        <Text style={styles.timerText}>{timeUntilNewPuzzle}</Text>
-      </View>
+      </Animated.View>
+      <HintModal
+        visible={hintModalVisible}
+        onRequestClose={handleCloseHintModal}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: spacing.md,
-    gap: spacing.xl,
+    paddingVertical: spacing.xs,
+    gap: spacing.md,
     width: "100%",
   },
   content: {
-    gap: spacing.xl,
     alignItems: "center",
     paddingHorizontal: spacing.md,
+    gap: spacing.md,
   },
   keyboardContainer: {
     paddingHorizontal: spacing.sm,
-  },
-  timerContainer: {
-    paddingHorizontal: spacing.md,
-    alignItems: "center",
-  },
-  // TODO: Stylize this
-  timerText: {
-    fontSize: 14,
-    opacity: 0.7,
-    color: colors.neutral.white,
   },
 });

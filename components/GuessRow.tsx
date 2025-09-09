@@ -14,6 +14,7 @@ export type GuessRowProps = {
     letter: string;
   };
   category: string;
+  onPressHint?: () => void;
 };
 
 const GuessRow = ({
@@ -23,6 +24,7 @@ const GuessRow = ({
   invalidWord,
   hint,
   category,
+  onPressHint,
 }: GuessRowProps) => {
   const WORD_LENGTH = 5;
 
@@ -55,6 +57,7 @@ const GuessRow = ({
               showHint={shouldShowHint}
               hintLetter={hint?.letter ?? ""}
               category={category}
+              onPressHint={shouldShowHint ? onPressHint : undefined}
             />
           </View>
         );

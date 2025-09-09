@@ -85,15 +85,18 @@ const getDefaultSummary = (category: WordCategory): string => {
 
 export const getHintForWord = (
   wordEntry: WordEntry | null,
-  category: WordCategory
+  category: WordCategory,
+  hintIndex: number = 0
 ): string => {
   if (
     wordEntry &&
     wordEntry.category !== "common" &&
     "hints" in wordEntry &&
-    wordEntry.hints.length > 0
+    Number.isInteger(hintIndex) &&
+    hintIndex >= 0 &&
+    wordEntry.hints.length > hintIndex
   ) {
-    return wordEntry.hints[0];
+    return wordEntry.hints[hintIndex];
   }
 
   return getDefaultHint(category);
