@@ -92,6 +92,7 @@ export const getHintForWord = (
     wordEntry &&
     wordEntry.category !== "common" &&
     "hints" in wordEntry &&
+    Number.isInteger(hintIndex) &&
     hintIndex >= 0 &&
     wordEntry.hints.length > hintIndex
   ) {

@@ -63,6 +63,7 @@ export const DrawerNavigationWrapper = () => {
   };
 
   // On web, show loading indicator while user state or game resolves to prevent drawer flicker
+  // Mobile platforms handle loading through splash screens and don't experience the same flicker issue
   if (isWeb && (loading || gameLoading)) {
     return (
       <View style={loadingStyles.container}>

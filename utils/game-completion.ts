@@ -68,22 +68,46 @@ export const handleGameCompletion = (
       // Use the context method to update React state immediately
       savePuzzleResult(currentUser, result).catch((error) => {
         if (isDebugLoggingEnabled()) {
-          console.error("❌ Failed to save via context, falling back to dual save:", error);
+          console.error(
+            "❌ Failed to save via context, falling back to dual save:",
+            error
+          );
         }
         // Fallback to dual save method (localStorage + backend)
         savePuzzleResultDual(null, result).catch(() => {
           // Final fallback to just localStorage
-          savePuzzleResultLocal(result);
+          try {
+            savePuzzleResultLocal(result);
+          } catch (localError) {
+            if (isDebugLoggingEnabled()) {
+              console.error(
+                "❌ Final fallback localStorage save failed:",
+                localError
+              );
+            }
+          }
         });
       });
-      
+
       // Also save to localStorage immediately for the "already played" check
-      savePuzzleResultLocal(result);
+      try {
+        savePuzzleResultLocal(result);
+      } catch (localError) {
+        if (isDebugLoggingEnabled()) {
+          console.error("❌ Immediate localStorage save failed:", localError);
+        }
+      }
     } else {
       // Use dual save method for both localStorage and backend
       savePuzzleResultDual(null, result).catch(() => {
         // Fallback to just localStorage if dual save fails
-        savePuzzleResultLocal(result);
+        try {
+          savePuzzleResultLocal(result);
+        } catch (localError) {
+          if (isDebugLoggingEnabled()) {
+            console.error("❌ Fallback localStorage save failed:", localError);
+          }
+        }
       });
     }
 
@@ -126,22 +150,46 @@ export const handleGameCompletion = (
       // Use the context method to update React state immediately
       savePuzzleResult(currentUser, result).catch((error) => {
         if (isDebugLoggingEnabled()) {
-          console.error("❌ Failed to save via context, falling back to dual save:", error);
+          console.error(
+            "❌ Failed to save via context, falling back to dual save:",
+            error
+          );
         }
         // Fallback to dual save method (localStorage + backend)
         savePuzzleResultDual(null, result).catch(() => {
           // Final fallback to just localStorage
-          savePuzzleResultLocal(result);
+          try {
+            savePuzzleResultLocal(result);
+          } catch (localError) {
+            if (isDebugLoggingEnabled()) {
+              console.error(
+                "❌ Final fallback localStorage save failed:",
+                localError
+              );
+            }
+          }
         });
       });
-      
+
       // Also save to localStorage immediately for the "already played" check
-      savePuzzleResultLocal(result);
+      try {
+        savePuzzleResultLocal(result);
+      } catch (localError) {
+        if (isDebugLoggingEnabled()) {
+          console.error("❌ Immediate localStorage save failed:", localError);
+        }
+      }
     } else {
       // Use dual save method for both localStorage and backend
       savePuzzleResultDual(null, result).catch(() => {
         // Fallback to just localStorage if dual save fails
-        savePuzzleResultLocal(result);
+        try {
+          savePuzzleResultLocal(result);
+        } catch (localError) {
+          if (isDebugLoggingEnabled()) {
+            console.error("❌ Fallback localStorage save failed:", localError);
+          }
+        }
       });
     }
   }

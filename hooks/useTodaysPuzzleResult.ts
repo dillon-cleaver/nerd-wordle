@@ -35,7 +35,7 @@ export const useTodaysPuzzleResult = () => {
       const localPuzzleResults = loadPuzzleResultsLocal();
       setLocalResults(localPuzzleResults);
     };
-    
+
     // Small delay to allow any pending localStorage writes to complete
     const timer = setTimeout(refreshLocalResults, 100);
     return () => clearTimeout(timer);
