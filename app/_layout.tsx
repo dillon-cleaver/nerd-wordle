@@ -57,7 +57,7 @@ function RootLayoutContent() {
         <PuzzleHistoryProvider>
           <WordDataProvider>
             <GameProvider>
-              <DrawerNavigationWrapper onPress={() => {}} />
+              <DrawerNavigationWrapper />
             </GameProvider>
           </WordDataProvider>
         </PuzzleHistoryProvider>

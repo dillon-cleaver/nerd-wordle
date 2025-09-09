@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   StyleSheet,
 } from "react-native";
+import { useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
 import {
@@ -23,18 +24,14 @@ import {
 import { DrawerSignOutButton } from "./DrawerSignOutButton";
 import { DrawerDevInfo } from "./DrawerDevInfo";
 import { DevModeBadge } from "./DevModeBadge";
+import { InfoModal } from "./InfoModal";
 import { usePlatform } from "@/hooks/usePlatform";
 import { useUser } from "@/hooks/useUser";
 
-type DrawerNavigationWrapperProps = {
-  onPress: () => void;
-};
-
-export const DrawerNavigationWrapper = ({
-  onPress,
-}: DrawerNavigationWrapperProps) => {
+export const DrawerNavigationWrapper = () => {
   const { loading } = useUser();
   const { isWeb } = usePlatform();
+  const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
 
   // On web, show loading indicator while user state resolves to prevent drawer flicker
   if (isWeb && loading) {
@@ -93,7 +90,7 @@ export const DrawerNavigationWrapper = ({
             >
               <DevModeBadge />
               <TouchableOpacity
-                onPress={onPress}
+                onPress={() => setIsInfoModalVisible(true)}
                 style={{ padding: spacing.xs }}
               >
                 <FontAwesome
@@ -152,6 +149,10 @@ export const DrawerNavigationWrapper = ({
         />
       </Drawer>
       <StatusBar networkActivityIndicatorVisible={true} style="light" />
+      <InfoModal
+        visible={isInfoModalVisible}
+        onRequestClose={() => setIsInfoModalVisible(false)}
+      />
     </GestureHandlerRootView>
   );
 };
