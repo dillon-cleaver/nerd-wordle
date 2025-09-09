@@ -1,7 +1,8 @@
 import { NUMBER_OF_GUESSES } from "@/constants/numbers";
 import { GameStateUpdaters } from "@/types/game";
 import { PuzzleResult } from "@/types/puzzle-result";
-import { savePuzzleResult as savePuzzleResultLocal } from "@/storage/puzzle-results";
+import { savePuzzleResult as savePuzzleResultDual } from "@/storage/puzzle-results";
+import { savePuzzleResultLocal } from "@/storage/puzzle-results.local";
 import { addToCollection } from "@/storage/word-collections";
 import { WordEntry, WordId, NerdWordEntry } from "@/types/word";
 import { LetterGuess } from "@/types/letter-tracking";
@@ -60,17 +61,30 @@ export const handleGameCompletion = (
       letterTracking,
     };
 
-    // Try to save using context method (updates React state immediately)
-    // If not provided, fallback to local storage method
+    // Save result to both localStorage and backend (if authenticated)
+    // This ensures the result is immediately available for the "already played" check
     const currentUser = getAuth().currentUser;
     if (savePuzzleResult && currentUser) {
-      savePuzzleResult(currentUser, result).catch(() => {
-        // Fallback to local storage if context save fails
-        savePuzzleResultLocal(null, result);
+      // Use the context method to update React state immediately
+      savePuzzleResult(currentUser, result).catch((error) => {
+        if (isDebugLoggingEnabled()) {
+          console.error("❌ Failed to save via context, falling back to dual save:", error);
+        }
+        // Fallback to dual save method (localStorage + backend)
+        savePuzzleResultDual(null, result).catch(() => {
+          // Final fallback to just localStorage
+          savePuzzleResultLocal(result);
+        });
       });
+      
+      // Also save to localStorage immediately for the "already played" check
+      savePuzzleResultLocal(result);
     } else {
-      // Fallback to local storage method
-      savePuzzleResultLocal(null, result);
+      // Use dual save method for both localStorage and backend
+      savePuzzleResultDual(null, result).catch(() => {
+        // Fallback to just localStorage if dual save fails
+        savePuzzleResultLocal(result);
+      });
     }
 
     // Add to collection for nerd words
@@ -105,17 +119,30 @@ export const handleGameCompletion = (
       letterTracking,
     };
 
-    // Try to save using context method (updates React state immediately)
-    // If not provided, fallback to local storage method
+    // Save result to both localStorage and backend (if authenticated)
+    // This ensures the result is immediately available for the "already played" check
     const currentUser = getAuth().currentUser;
     if (savePuzzleResult && currentUser) {
-      savePuzzleResult(currentUser, result).catch(() => {
-        // Fallback to local storage if context save fails
-        savePuzzleResultLocal(null, result);
+      // Use the context method to update React state immediately
+      savePuzzleResult(currentUser, result).catch((error) => {
+        if (isDebugLoggingEnabled()) {
+          console.error("❌ Failed to save via context, falling back to dual save:", error);
+        }
+        // Fallback to dual save method (localStorage + backend)
+        savePuzzleResultDual(null, result).catch(() => {
+          // Final fallback to just localStorage
+          savePuzzleResultLocal(result);
+        });
       });
+      
+      // Also save to localStorage immediately for the "already played" check
+      savePuzzleResultLocal(result);
     } else {
-      // Fallback to local storage method
-      savePuzzleResultLocal(null, result);
+      // Use dual save method for both localStorage and backend
+      savePuzzleResultDual(null, result).catch(() => {
+        // Fallback to just localStorage if dual save fails
+        savePuzzleResultLocal(result);
+      });
     }
   }
 };

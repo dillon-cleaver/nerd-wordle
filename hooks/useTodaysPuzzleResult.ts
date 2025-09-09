@@ -23,11 +23,23 @@ export const useTodaysPuzzleResult = () => {
   const [localResults, setLocalResults] = useState<PuzzleResult[]>([]);
   const [hasTriedLoadingBackend, setHasTriedLoadingBackend] = useState(false);
 
-  // Load localStorage results immediately
+  // Load localStorage results immediately and when puzzle results change
   useEffect(() => {
     const localPuzzleResults = loadPuzzleResultsLocal();
     setLocalResults(localPuzzleResults);
   }, []);
+
+  // Also refresh localStorage when backend results change (in case context saved to backend)
+  useEffect(() => {
+    const refreshLocalResults = () => {
+      const localPuzzleResults = loadPuzzleResultsLocal();
+      setLocalResults(localPuzzleResults);
+    };
+    
+    // Small delay to allow any pending localStorage writes to complete
+    const timer = setTimeout(refreshLocalResults, 100);
+    return () => clearTimeout(timer);
+  }, [backendResults]);
 
   // Load backend results when user is authenticated and we haven't tried yet
   useEffect(() => {
