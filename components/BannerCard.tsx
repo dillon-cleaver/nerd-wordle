@@ -1,5 +1,6 @@
 import { useContext } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
+import Animated, { FadeInUp } from "react-native-reanimated";
 import { GameContext } from "@/context/GameContext";
 import { GameBanner } from "./GameBanner";
 import {
@@ -9,6 +10,7 @@ import {
   MOBILE_BANNER_GUESS_GRID_MAX_WIDTH,
   MOBILE_BANNER_GUESS_GRID_MIN_WIDTH,
 } from "@/constants/dimensions";
+import { animation } from "@/constants/styles";
 import { useDevice } from "@/hooks/useDevice";
 
 export const BannerCard = () => {
@@ -35,7 +37,10 @@ export const BannerCard = () => {
 
   return (
     gameStatus !== "running" && (
-      <View style={containerStyle}>
+      <Animated.View
+        style={containerStyle}
+        entering={FadeInUp.duration(animation.duration.medium).springify()}
+      >
         <GameBanner
           gameStatus={gameStatus}
           numGuesses={guesses.length}
@@ -43,7 +48,7 @@ export const BannerCard = () => {
           edition={editionNumber}
           answerEntry={answerEntry}
         />
-      </View>
+      </Animated.View>
     )
   );
 };

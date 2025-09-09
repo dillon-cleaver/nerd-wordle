@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
+import Animated, { FadeInUp } from "react-native-reanimated";
 import { GuessGrid } from "./GuessGrid";
 import { Keyboard } from "./Keyboard";
 import { GameContext } from "@/context/GameContext";
-import { spacing } from "@/constants/styles";
+import { spacing, animation } from "@/constants/styles";
 import { BannerCard } from "./BannerCard";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 import { useDevice } from "@/hooks/useDevice";
@@ -42,13 +43,19 @@ export const Game = () => {
   // Always show the active game view with banner + grid + keyboard
   return (
     <View style={containerStyle}>
-      <View style={styles.content}>
+      <Animated.View
+        style={styles.content}
+        entering={FadeInUp.duration(animation.duration.medium).springify()}
+      >
         <BannerCard />
         <GuessGrid onPressHint={handlePressHint} />
-      </View>
-      <View style={styles.keyboardContainer}>
+      </Animated.View>
+      <Animated.View
+        style={styles.keyboardContainer}
+        entering={FadeInUp.duration(animation.duration.medium).springify()}
+      >
         <Keyboard />
-      </View>
+      </Animated.View>
       <HintModal
         visible={hintModalVisible}
         onRequestClose={handleCloseHintModal}
@@ -66,6 +73,7 @@ const styles = StyleSheet.create({
   content: {
     alignItems: "center",
     paddingHorizontal: spacing.md,
+    gap: spacing.md,
   },
   keyboardContainer: {
     paddingHorizontal: spacing.sm,

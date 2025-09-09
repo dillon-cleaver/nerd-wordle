@@ -91,4 +91,12 @@ const borderRadius = {
   round: "50%",
 } as const;
 
-export { colors, fontFamily, fontSize, lineHeight, spacing, borderRadius };
+const animation = {
+  duration: {
+    short: 300,
+    medium: 600,
+    long: 1000,
+  },
+} as const;
+
+export { colors, fontFamily, fontSize, lineHeight, spacing, borderRadius, animation };
