@@ -57,6 +57,7 @@ const fontSize = {
     large: 20,
     medium: 18,
     base: 16,
+    small: 14,
   },
 };
 
@@ -71,6 +72,7 @@ const lineHeight = {
     large: 24,
     medium: 24,
     base: 24,
+    small: 18,
   },
 };
 
