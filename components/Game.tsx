@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { GuessGrid } from "./GuessGrid";
 import { Keyboard } from "./Keyboard";
@@ -8,16 +8,27 @@ import { BannerCard } from "./BannerCard";
 import { useCountdownToNewPuzzle } from "@/utils/countdown";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 import { useDevice } from "@/hooks/useDevice";
+import { HintModal } from "./HintModal";
 
 export const Game = () => {
   const { category, answer, isLoading } = useContext(GameContext);
   const timeUntilNewPuzzle = useCountdownToNewPuzzle();
+
+  const [hintModalVisible, setHintModalVisible] = useState(false);
 
   const { isDesktop } = useDevice();
   const containerStyle = [
     styles.container,
     !isDesktop && { gap: spacing.sm, paddingVertical: spacing.xs },
   ];
+
+  const handlePressHint = () => {
+    setHintModalVisible(true);
+  };
+
+  const handleCloseHintModal = () => {
+    setHintModalVisible(false);
+  };
 
   useEffect(() => {
     if (isDebugLoggingEnabled()) {
@@ -35,7 +46,7 @@ export const Game = () => {
     <View style={containerStyle}>
       <View style={styles.content}>
         <BannerCard />
-        <GuessGrid />
+        <GuessGrid onPressHint={handlePressHint} />
       </View>
       <View style={styles.keyboardContainer}>
         <Keyboard />
@@ -43,6 +54,10 @@ export const Game = () => {
       <View style={styles.timerContainer}>
         <Text style={styles.timerText}>{timeUntilNewPuzzle}</Text>
       </View>
+      <HintModal
+        visible={hintModalVisible}
+        onRequestClose={handleCloseHintModal}
+      />
     </View>
   );
 };

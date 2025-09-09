@@ -1,4 +1,11 @@
-import { View, StyleSheet, Text, StyleProp, ViewStyle } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  StyleProp,
+  ViewStyle,
+  Pressable,
+} from "react-native";
 import { borderRadius, colors, fontSize } from "@/constants/styles";
 import { HintOutline } from "./HintOutline";
 import { getCategoryColor } from "@/utils/game";
@@ -12,6 +19,7 @@ export type LetterBoxProps = {
   showHint?: boolean;
   hintLetter?: string;
   category: string;
+  onPressHint?: () => void;
 };
 
 const LetterBox = ({
@@ -23,6 +31,7 @@ const LetterBox = ({
   showHint = false,
   hintLetter = "",
   category,
+  onPressHint,
 }: LetterBoxProps) => {
   const cellStyles: StyleProp<ViewStyle> = [styles.container];
 
@@ -42,7 +51,7 @@ const LetterBox = ({
     cellStyles.push(styles.invalid);
   }
 
-  return (
+  const letterBox = (
     <View style={cellStyles}>
       <Text style={styles.letter}>{letter}</Text>
       {showHint && (
@@ -55,11 +64,30 @@ const LetterBox = ({
       )}
     </View>
   );
+
+  // If showing hint and onPressHint is provided, make it pressable
+  if (showHint && onPressHint) {
+    return (
+      <Pressable
+        onPress={onPressHint}
+        accessibilityRole="button"
+        accessibilityLabel="Show hint modal"
+        style={styles.pressableContainer}
+      >
+        {letterBox}
+      </Pressable>
+    );
+  }
+
+  return letterBox;
 };
 
 export default LetterBox;
 
 const styles = StyleSheet.create({
+  pressableContainer: {
+    flexGrow: 1,
+  },
   container: {
     flexGrow: 1,
     aspectRatio: 1,

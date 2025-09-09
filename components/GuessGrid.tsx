@@ -13,7 +13,7 @@ import {
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 import { useDevice } from "@/hooks/useDevice";
 
-export const GuessGrid = () => {
+export const GuessGrid = ({ onPressHint }: { onPressHint?: () => void }) => {
   const {
     guesses,
     answer,
@@ -73,6 +73,7 @@ export const GuessGrid = () => {
             invalidWord={invalidWord && isCurrentGuess}
             hint={hintForThisRow}
             category={originalCategory}
+            onPressHint={onPressHint}
           />
         );
       })}
