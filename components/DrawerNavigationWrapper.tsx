@@ -4,7 +4,7 @@ import {
   ActivityIndicator,
   StyleSheet,
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
 import {
@@ -27,11 +27,31 @@ import { DevModeBadge } from "./DevModeBadge";
 import { InfoModal } from "./InfoModal";
 import { usePlatform } from "@/hooks/usePlatform";
 import { useUser } from "@/hooks/useUser";
+import { 
+  hasInfoModalBeenShown, 
+  saveInfoModalShown 
+} from "@/storage/app-state.local";
 
 export const DrawerNavigationWrapper = () => {
   const { loading } = useUser();
   const { isWeb } = usePlatform();
   const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
+
+  // Check if InfoModal should be shown on first load
+  useEffect(() => {
+    if (!loading && isWeb) {
+      const hasBeenShown = hasInfoModalBeenShown();
+      if (!hasBeenShown) {
+        setIsInfoModalVisible(true);
+      }
+    }
+  }, [loading, isWeb]);
+
+  const handleCloseInfoModal = () => {
+    setIsInfoModalVisible(false);
+    // Save that the modal has been shown
+    saveInfoModalShown();
+  };
 
   // On web, show loading indicator while user state resolves to prevent drawer flicker
   if (isWeb && loading) {
@@ -151,7 +171,7 @@ export const DrawerNavigationWrapper = () => {
       <StatusBar networkActivityIndicatorVisible={true} style="light" />
       <InfoModal
         visible={isInfoModalVisible}
-        onRequestClose={() => setIsInfoModalVisible(false)}
+        onRequestClose={handleCloseInfoModal}
       />
     </GestureHandlerRootView>
   );
