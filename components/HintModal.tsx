@@ -57,13 +57,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: spacing.lg,
   },
-  title: {
-    fontFamily: fontFamily.bitter.bold,
-    fontSize: fontSize.title.large,
-    lineHeight: lineHeight.title.large,
-    color: colors.neutral.black,
-    textAlign: "center",
-  },
   category: {
     fontFamily: fontFamily.bitter.bold,
     fontSize: fontSize.title.medium,
