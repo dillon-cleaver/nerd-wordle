@@ -9,7 +9,10 @@ export const saveInfoModalShown = (): void => {
       console.log("✅ Saved InfoModal shown state to localStorage");
     }
   } catch (error) {
-    console.error("Failed to save InfoModal shown state to localStorage:", error);
+    console.error(
+      "Failed to save InfoModal shown state to localStorage:",
+      error
+    );
   }
 };
 
@@ -18,7 +21,10 @@ export const hasInfoModalBeenShown = (): boolean => {
     const shown = localStorage.getItem(INFO_MODAL_SHOWN_KEY);
     return shown === "true";
   } catch (error) {
-    console.error("Failed to read InfoModal shown state from localStorage:", error);
+    console.error(
+      "Failed to read InfoModal shown state from localStorage:",
+      error
+    );
     return false; // Default to showing the modal if we can't read the state
   }
 };

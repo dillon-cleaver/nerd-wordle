@@ -27,9 +27,9 @@ import { DevModeBadge } from "./DevModeBadge";
 import { InfoModal } from "./InfoModal";
 import { usePlatform } from "@/hooks/usePlatform";
 import { useUser } from "@/hooks/useUser";
-import { 
-  hasInfoModalBeenShown, 
-  saveInfoModalShown 
+import {
+  hasInfoModalBeenShown,
+  saveInfoModalShown,
 } from "@/storage/app-state.local";
 
 export const DrawerNavigationWrapper = () => {
