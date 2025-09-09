@@ -8,6 +8,7 @@ import {
   ViewStyle,
   Platform,
 } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 import { borderRadius, colors, spacing } from "@/constants/styles";
 
 type BaseModalProps = {
@@ -23,6 +24,10 @@ type BaseModalProps = {
    * Disable closing the modal by tapping the backdrop
    */
   disableBackdropDismiss?: boolean;
+  /**
+   * Show a close button (X) in the top-right corner
+   */
+  showCloseButton?: boolean;
 };
 
 export const BaseModal = ({
@@ -32,6 +37,7 @@ export const BaseModal = ({
   animationType = "fade",
   contentStyle,
   disableBackdropDismiss = false,
+  showCloseButton = false,
 }: BaseModalProps) => {
   return (
     <Modal
@@ -60,6 +66,20 @@ export const BaseModal = ({
         ) : null}
 
         <View style={[styles.content, contentStyle]} accessibilityViewIsModal>
+          {showCloseButton && (
+            <Pressable
+              onPress={onRequestClose}
+              style={styles.closeButton}
+              accessibilityRole="button"
+              accessibilityLabel="Close modal"
+            >
+              <FontAwesome
+                name="close"
+                size={20}
+                color={colors.neutral.white}
+              />
+            </Pressable>
+          )}
           {children}
         </View>
       </View>
@@ -87,6 +107,19 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 4 },
     elevation: 6,
+    position: "relative",
+  },
+  closeButton: {
+    position: "absolute",
+    top: spacing.sm,
+    right: spacing.sm,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: colors.neutral.darkGray,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1,
   },
 });
 
