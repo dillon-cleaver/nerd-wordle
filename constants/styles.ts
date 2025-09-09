@@ -99,4 +99,12 @@ const animation = {
   },
 } as const;
 
-export { colors, fontFamily, fontSize, lineHeight, spacing, borderRadius, animation };
+export {
+  colors,
+  fontFamily,
+  fontSize,
+  lineHeight,
+  spacing,
+  borderRadius,
+  animation,
+};
