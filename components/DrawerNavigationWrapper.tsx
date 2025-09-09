@@ -4,7 +4,7 @@ import {
   ActivityIndicator,
   StyleSheet,
 } from "react-native";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
 import {
@@ -20,6 +20,7 @@ import {
   fontSize,
   lineHeight,
   spacing,
+  animation,
 } from "@/constants/styles";
 import { DrawerSignOutButton } from "./DrawerSignOutButton";
 import { DrawerDevInfo } from "./DrawerDevInfo";
@@ -27,6 +28,7 @@ import { DevModeBadge } from "./DevModeBadge";
 import { InfoModal } from "./InfoModal";
 import { usePlatform } from "@/hooks/usePlatform";
 import { useUser } from "@/hooks/useUser";
+import { GameContext } from "@/context/GameContext";
 import {
   hasInfoModalBeenShown,
   saveInfoModalShown,
@@ -34,18 +36,25 @@ import {
 
 export const DrawerNavigationWrapper = () => {
   const { loading } = useUser();
+  const { isLoading: gameLoading } = useContext(GameContext);
   const { isWeb } = usePlatform();
   const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
 
   // Check if InfoModal should be shown on first load
+  // Wait for both user and game to finish loading, then show after delay
   useEffect(() => {
-    if (!loading && isWeb) {
+    if (!loading && !gameLoading && isWeb) {
       const hasBeenShown = hasInfoModalBeenShown();
       if (!hasBeenShown) {
-        setIsInfoModalVisible(true);
+        // Wait for the long animation duration before showing modal
+        const timer = setTimeout(() => {
+          setIsInfoModalVisible(true);
+        }, animation.duration.long);
+
+        return () => clearTimeout(timer);
       }
     }
-  }, [loading, isWeb]);
+  }, [loading, gameLoading, isWeb]);
 
   const handleCloseInfoModal = () => {
     setIsInfoModalVisible(false);
@@ -53,8 +62,8 @@ export const DrawerNavigationWrapper = () => {
     saveInfoModalShown();
   };
 
-  // On web, show loading indicator while user state resolves to prevent drawer flicker
-  if (isWeb && loading) {
+  // On web, show loading indicator while user state or game resolves to prevent drawer flicker
+  if (isWeb && (loading || gameLoading)) {
     return (
       <View style={loadingStyles.container}>
         <ActivityIndicator size="large" color={colors.neutral.white} />
