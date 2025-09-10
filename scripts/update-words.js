@@ -157,9 +157,27 @@ if (!["emulator", "production"].includes(environment)) {
   process.exit(1);
 }
 
+// CI environment detection:
+// The following check prevents accidental production deployments unless running in CI or
+// with --force.
+// Supported CI environments are those that set one of the following variables:
+//   - CI (common: GitHub Actions, Travis CI, CircleCI, etc.)
+//   - GITHUB_ACTIONS (GitHub Actions)
+//   - TRAVIS (Travis CI)
+//   - CIRCLECI (CircleCI)
+//   - BUILDKITE (Buildkite)
+//   - JENKINS_URL (Jenkins)
+// Add more as needed for your CI provider.
 if (
   environment === "production" &&
-  !process.env.CI &&
+  !(
+    process.env.CI ||
+    process.env.GITHUB_ACTIONS ||
+    process.env.TRAVIS ||
+    process.env.CIRCLECI ||
+    process.env.BUILDKITE ||
+    process.env.JENKINS_URL
+  ) &&
   !args.includes("--force")
 ) {
   console.log("⚠️  Production environment detected.");
