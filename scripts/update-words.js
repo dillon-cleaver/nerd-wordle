@@ -48,7 +48,9 @@ async function execCommand(command, description) {
   console.log(`🔄 ${description}...`);
   try {
     const { stdout, stderr } = await execAsync(command);
-    if (stderr && !stderr.includes("Warning")) {
+    // Print warnings unless they match common warning patterns (case-insensitive)
+    const warningPattern = /(warning|warn|deprecationwarning)/i;
+    if (stderr && !warningPattern.test(stderr)) {
       console.warn(`⚠️  ${stderr.trim()}`);
     }
     if (stdout) {
