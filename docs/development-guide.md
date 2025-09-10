@@ -776,10 +776,25 @@ cd functions && pnpm run deploy:functions
 
 ### Adding New Words/Puzzles
 
+**New Optimized Workflow (Post-CDN Migration):**
+
+1. **Update the source data**: Edit `constants/words.json`
+2. **Build static dictionary**: `npm run build:dictionary`
+3. **Deploy static files**: `firebase deploy --only hosting`
+4. **Update Firestore (for admin functions)**: 
+   ```bash
+   cd functions && npm run build
+   node lib/migrations/seed-words.js
+   ```
+5. **Test the changes**: Verify both CDN and fallback work
+
+**Legacy Workflow (if not using CDN optimization):**
 1. Update data in `constants/words.json` or equivalent
 2. Run migrations: `pnpm run migrate` (production)
 3. Deploy backend: `cd functions && pnpm run deploy:functions`
 4. Test the changes
+
+**Note**: The new workflow prioritizes CDN delivery for performance while maintaining Firestore as a backup for admin functions and individual word lookups.
 
 ### Troubleshooting Development
 

@@ -41,4 +41,7 @@ functions/firebase-debug.log
 functions/firestore-debug.log
 firestore-debug.log
 
+# Firebase Hosting Cache
+.firebase/
+
 app-example
