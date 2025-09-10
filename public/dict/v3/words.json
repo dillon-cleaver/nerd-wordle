@@ -208,11 +208,11 @@
     "category": "common"
   },
   {
-    "id": "ABYSS",
+    "id": "ABYSM",
     "category": "common"
   },
   {
-    "id": "ABYSM",
+    "id": "ABYSS",
     "category": "common"
   },
   {
@@ -380,10 +380,6 @@
     "category": "common"
   },
   {
-    "id": "ADOBE",
-    "category": "common"
-  },
-  {
     "id": "ADEEM",
     "category": "common"
   },
@@ -416,11 +412,15 @@
     "category": "common"
   },
   {
+    "id": "ADMIT",
+    "category": "common"
+  },
+  {
     "id": "ADMIX",
     "category": "common"
   },
   {
-    "id": "ADMIT",
+    "id": "ADOBE",
     "category": "common"
   },
   {
@@ -592,11 +592,11 @@
     "category": "common"
   },
   {
-    "id": "AGENT",
+    "id": "AGENE",
     "category": "common"
   },
   {
-    "id": "AGENE",
+    "id": "AGENT",
     "category": "common"
   },
   {
@@ -628,11 +628,11 @@
     "category": "common"
   },
   {
-    "id": "AGILE",
+    "id": "AGILA",
     "category": "common"
   },
   {
-    "id": "AGILA",
+    "id": "AGILE",
     "category": "common"
   },
   {
@@ -668,11 +668,11 @@
     "category": "common"
   },
   {
-    "id": "AGLOW",
+    "id": "AGLOO",
     "category": "common"
   },
   {
-    "id": "AGLOO",
+    "id": "AGLOW",
     "category": "common"
   },
   {
@@ -1036,10 +1036,6 @@
     "category": "common"
   },
   {
-    "id": "ALPHA",
-    "category": "common"
-  },
-  {
     "id": "ALGAL",
     "category": "common"
   },
@@ -1092,11 +1088,22 @@
     "category": "common"
   },
   {
-    "id": "ALIYA",
-    "category": "common"
+    "id": "ALITA",
+    "category": "animeAndManga",
+    "edition": 63,
+    "summary": "Cyborg heroine of Battle Angel Alita, set in a post-apocalyptic world.",
+    "hints": [
+      "Discovered in a scrapyard by cybernetics doctor Ido",
+      "Excels in the martial art Panzer Kunst"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Battle_Angel_Alita"
   },
   {
     "id": "ALIVE",
+    "category": "common"
+  },
+  {
+    "id": "ALIYA",
     "category": "common"
   },
   {
@@ -1136,11 +1143,11 @@
     "category": "common"
   },
   {
-    "id": "ALLOY",
+    "id": "ALLOW",
     "category": "common"
   },
   {
-    "id": "ALLOW",
+    "id": "ALLOY",
     "category": "common"
   },
   {
@@ -1184,10 +1191,6 @@
     "category": "common"
   },
   {
-    "id": "ALOOF",
-    "category": "common"
-  },
-  {
     "id": "ALOHA",
     "category": "common"
   },
@@ -1204,11 +1207,19 @@
     "category": "common"
   },
   {
+    "id": "ALOOF",
+    "category": "common"
+  },
+  {
     "id": "ALOOS",
     "category": "common"
   },
   {
     "id": "ALOWE",
+    "category": "common"
+  },
+  {
+    "id": "ALPHA",
     "category": "common"
   },
   {
@@ -1480,15 +1491,15 @@
     "category": "common"
   },
   {
+    "id": "ANGAS",
+    "category": "common"
+  },
+  {
     "id": "ANGEL",
     "category": "common"
   },
   {
     "id": "ANGER",
-    "category": "common"
-  },
-  {
-    "id": "ANGAS",
     "category": "common"
   },
   {
@@ -1518,6 +1529,17 @@
   {
     "id": "ANIMA",
     "category": "common"
+  },
+  {
+    "id": "ANIME",
+    "category": "animeAndManga",
+    "edition": 18,
+    "summary": "Japanese animated works, covering diverse genres and art styles.",
+    "hints": [
+      "May adapt manga, light novels, or be entirely original",
+      "Character designs often feature exaggerated expressions and large eyes"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Anime"
   },
   {
     "id": "ANIMI",
@@ -1960,11 +1982,11 @@
     "category": "common"
   },
   {
-    "id": "ARISH",
+    "id": "ARISE",
     "category": "common"
   },
   {
-    "id": "ARISE",
+    "id": "ARISH",
     "category": "common"
   },
   {
@@ -2052,11 +2074,11 @@
     "category": "common"
   },
   {
-    "id": "ARROZ",
+    "id": "ARROW",
     "category": "common"
   },
   {
-    "id": "ARROW",
+    "id": "ARROZ",
     "category": "common"
   },
   {
@@ -2116,6 +2138,17 @@
     "category": "common"
   },
   {
+    "id": "ARWEN",
+    "category": "fantasyAndSciFi",
+    "edition": 6,
+    "summary": "Elven princess in Tolkien's Lord of the Rings, daughter of Elrond who chooses mortality to be with Aragorn.",
+    "hints": [
+      "Her name means 'noble maiden' in Sindarin",
+      "Gives up her immortality for love in the films"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Arwen"
+  },
+  {
     "id": "ARYLS",
     "category": "common"
   },
@@ -2140,11 +2173,11 @@
     "category": "common"
   },
   {
-    "id": "ASHEN",
+    "id": "ASHED",
     "category": "common"
   },
   {
-    "id": "ASHED",
+    "id": "ASHEN",
     "category": "common"
   },
   {
@@ -2234,6 +2267,17 @@
   {
     "id": "ASTIR",
     "category": "common"
+  },
+  {
+    "id": "ASTRO",
+    "category": "animeAndManga",
+    "edition": 54,
+    "summary": "Astro Boy, a classic robot hero created by Osamu Tezuka.",
+    "hints": [
+      "A robot with emotions who fights for justice",
+      "Known as Tetsuwan Atom in Japan"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Astro_Boy"
   },
   {
     "id": "ASTUN",
@@ -3156,6 +3200,17 @@
     "category": "common"
   },
   {
+    "id": "BASIC",
+    "category": "techAndInternetCulture",
+    "edition": 3,
+    "summary": "An early high-level programming language designed for beginners, standing for 'Beginner's All-purpose Symbolic Instruction Code'.",
+    "hints": [
+      "Popular programming language on early personal computers like the Apple II",
+      "Designed to be simple enough for beginners to learn coding"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/BASIC"
+  },
+  {
     "id": "BASON",
     "category": "common"
   },
@@ -3358,6 +3413,17 @@
   {
     "id": "BEARS",
     "category": "common"
+  },
+  {
+    "id": "BEAST",
+    "category": "superheroes",
+    "edition": 124,
+    "summary": "Dr. Hank McCoy, the brilliant scientist and X-Men member with blue fur, enhanced agility, and genius-level intellect.",
+    "hints": [
+      "Originally had normal appearance before secondary mutation",
+      "Known for his scholarly nature and acrobatic fighting style"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Beast_(character)"
   },
   {
     "id": "BEATH",
@@ -4188,6 +4254,17 @@
     "category": "common"
   },
   {
+    "id": "BLADE",
+    "category": "superheroes",
+    "edition": 25,
+    "summary": "Eric Brooks, the vampire hunter known as Blade, a half-vampire with all their strengths but none of their weaknesses.",
+    "hints": [
+      "Immune to vampire bites and can walk in daylight",
+      "Uses silver weapons and martial arts to fight the undead"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Blade_(character)"
+  },
+  {
     "id": "BLADS",
     "category": "common"
   },
@@ -4496,6 +4573,17 @@
     "category": "common"
   },
   {
+    "id": "BLUFF",
+    "category": "tabletopAndBoardGames",
+    "edition": 80,
+    "summary": "A hidden‑information/deduction tactic central to games like poker and Liar’s Dice.",
+    "hints": [
+      "Success hinges on probabilistic claims and table image",
+      "Often countered by forced reveals or challenge mechanics"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Bluffing"
+  },
+  {
     "id": "BLUME",
     "category": "common"
   },
@@ -4530,6 +4618,17 @@
   {
     "id": "BOAKS",
     "category": "common"
+  },
+  {
+    "id": "BOARD",
+    "category": "tabletopAndBoardGames",
+    "edition": 107,
+    "summary": "The surface or layout on which a tabletop game is played.",
+    "hints": [
+      "May be modular, folding, or tile‑based for replayability",
+      "Its topology defines adjacency and movement costs"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Board_game"
   },
   {
     "id": "BOARS",
@@ -5256,6 +5355,17 @@
     "category": "common"
   },
   {
+    "id": "BRAIN",
+    "category": "science",
+    "edition": 103,
+    "summary": "The central organ of the nervous system that controls thought, memory, emotion, and vital functions in vertebrates.",
+    "hints": [
+      "Contains approximately 86 billion neurons in humans",
+      "Uses about 20% of the body's total energy despite being only 2% of body weight"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Brain"
+  },
+  {
     "id": "BRAKE",
     "category": "common"
   },
@@ -5574,6 +5684,18 @@
   {
     "id": "BRRRR",
     "category": "common"
+  },
+  {
+    "id": "BRUCE",
+    "category": "superheroes",
+    "edition": 106,
+    "summary": "Bruce Wayne, the billionaire orphan who becomes Batman to fight crime in Gotham City using his intellect, training, and gadgets.",
+    "hints": [
+      "Witnessed his parents' murder as a child in Crime Alley",
+      "Uses the bat as his symbol to strike fear into criminals"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Bruce_Wayne",
+    "beta": true
   },
   {
     "id": "BRUGH",
@@ -6188,6 +6310,17 @@
     "category": "common"
   },
   {
+    "id": "CACHE",
+    "category": "techAndInternetCulture",
+    "edition": 57,
+    "summary": "A hardware or software component that stores data temporarily to serve future requests faster than accessing the original storage.",
+    "hints": [
+      "Helps improve performance by reducing access times",
+      "Found in CPUs, web browsers, and database systems"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Cache_(computing)"
+  },
+  {
     "id": "CACTI",
     "category": "common"
   },
@@ -6244,8 +6377,30 @@
     "category": "common"
   },
   {
+    "id": "CAMEO",
+    "category": "movies",
+    "edition": 19,
+    "summary": "A brief appearance by a well-known person in a film, often as themselves or in a small role for novelty value.",
+    "hints": [
+      "Stan Lee was famous for these appearances in Marvel movies",
+      "Alfred Hitchcock often appeared briefly in his own films"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Cameo_appearance"
+  },
+  {
     "id": "CAMPS",
     "category": "common"
+  },
+  {
+    "id": "CAMUS",
+    "category": "literature",
+    "edition": 119,
+    "summary": "Albert Camus, French existentialist writer and philosopher, known for The Stranger and The Myth of Sisyphus.",
+    "hints": [
+      "Won the Nobel Prize in Literature at age 44",
+      "Explored themes of absurdity and the human condition"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Albert_Camus"
   },
   {
     "id": "CANAL",
@@ -6266,6 +6421,17 @@
   {
     "id": "CANOE",
     "category": "common"
+  },
+  {
+    "id": "CANON",
+    "category": "literature",
+    "edition": 110,
+    "summary": "The body of works considered essential or authoritative in a particular literary tradition or culture.",
+    "hints": [
+      "A collection of literary works considered most important to study",
+      "The Western version traditionally includes Shakespeare and Homer"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Literary_canon"
   },
   {
     "id": "CANST",
@@ -6302,6 +6468,18 @@
   {
     "id": "CARGO",
     "category": "common"
+  },
+  {
+    "id": "CAROL",
+    "category": "superheroes",
+    "edition": 16,
+    "summary": "Carol Danvers, also known as Captain Marvel, a former Air Force pilot with cosmic powers including flight, super strength, and energy projection.",
+    "hints": [
+      "Originally known as Ms. Marvel before taking the Captain Marvel title",
+      "Gained her powers from Kree technology and Mar-Vell"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Carol_Danvers",
+    "alpha": true
   },
   {
     "id": "CAROM",
@@ -6342,6 +6520,18 @@
   {
     "id": "CASTS",
     "category": "common"
+  },
+  {
+    "id": "CATAN",
+    "category": "tabletopAndBoardGames",
+    "edition": 35,
+    "summary": "A seminal Eurogame about trading and building on a modular hex map.",
+    "hints": [
+      "Wool, ore, brick — trade ratios shape your tempo",
+      "The robber freezes production on a tile until displaced"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Catan",
+    "beta": true
   },
   {
     "id": "CATCH",
@@ -6396,6 +6586,17 @@
     "category": "common"
   },
   {
+    "id": "CELTY",
+    "category": "animeAndManga",
+    "edition": 108,
+    "summary": "Celty Sturluson, headless dullahan from Durarara!!.",
+    "hints": [
+      "Rides a black motorcycle in Ikebukuro",
+      "Searching for her missing head"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/List_of_Durarara!!_characters#Celty_Sturluson"
+  },
+  {
     "id": "CENTS",
     "category": "common"
   },
@@ -6418,6 +6619,18 @@
   {
     "id": "CHAMP",
     "category": "common"
+  },
+  {
+    "id": "CHANI",
+    "category": "fantasyAndSciFi",
+    "edition": 51,
+    "summary": "Chani, the Fremen warrior and Paul Atreides' love interest in Frank Herbert's Dune series.",
+    "hints": [
+      "Daughter of Liet-Kynes, skilled in desert survival",
+      "Calls Paul 'Usul' and teaches him Fremen ways"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Chani",
+    "beta": true
   },
   {
     "id": "CHANT",
@@ -6464,6 +6677,17 @@
     "category": "common"
   },
   {
+    "id": "CHECK",
+    "category": "tabletopAndBoardGames",
+    "edition": 53,
+    "summary": "In chess, a direct attack on the king that must be addressed immediately.",
+    "hints": [
+      "Avoidable by capture, interposition, or king movement only",
+      "Declare this before mate ends the game"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Check_(chess)"
+  },
+  {
     "id": "CHEEK",
     "category": "common"
   },
@@ -6474,6 +6698,17 @@
   {
     "id": "CHEFS",
     "category": "common"
+  },
+  {
+    "id": "CHESS",
+    "category": "tabletopAndBoardGames",
+    "edition": 44,
+    "summary": "A classic two‑player strategy game on an 8×8 board with asymmetric piece movement.",
+    "hints": [
+      "One special king move requires untouched pieces and a clear path",
+      "A pawn may capture en passant under precise timing"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Chess"
   },
   {
     "id": "CHEST",
@@ -6660,6 +6895,17 @@
     "category": "common"
   },
   {
+    "id": "CLICK",
+    "category": "techAndInternetCulture",
+    "edition": 75,
+    "summary": "The action of pressing and releasing a computer mouse button, or the sound it makes, fundamental to graphical user interfaces.",
+    "hints": [
+      "Double-clicking performs different actions than single clicks",
+      "Right-clicking usually opens context menus"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Click_(computing)"
+  },
+  {
     "id": "CLIFF",
     "category": "common"
   },
@@ -6700,6 +6946,17 @@
     "category": "common"
   },
   {
+    "id": "CLONE",
+    "category": "science",
+    "edition": 120,
+    "summary": "A genetically identical organism or cell produced through asexual reproduction or biotechnology techniques.",
+    "hints": [
+      "Dolly the sheep was the first mammal cloned from adult cells",
+      "Occurs naturally in plants and some animals like starfish"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Cloning"
+  },
+  {
     "id": "CLOSE",
     "category": "common"
   },
@@ -6710,6 +6967,17 @@
   {
     "id": "CLOTS",
     "category": "common"
+  },
+  {
+    "id": "CLOUD",
+    "category": "videoGames",
+    "edition": 68,
+    "summary": "Cloud Strife, the spiky-haired protagonist of Final Fantasy VII, wielding the massive Buster Sword against the Shinra Corporation.",
+    "hints": [
+      "Ex-SOLDIER with false memories and a mysterious past",
+      "His limit breaks include Cross-Slash and Omnislash"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Cloud_Strife"
   },
   {
     "id": "CLOUT",
@@ -6792,6 +7060,17 @@
     "category": "common"
   },
   {
+    "id": "CRASH",
+    "category": "videoGames",
+    "edition": 59,
+    "summary": "A spinning orange marsupial from the PlayStation platformer series, known for collecting Wumpa fruit and fighting Dr. Neo Cortex.",
+    "hints": [
+      "Originally Naughty Dog's mascot before moving to other developers",
+      "Famous for his spinning attack and 'Woah!' exclamation"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Crash_Bandicoot"
+  },
+  {
     "id": "CRATE",
     "category": "common"
   },
@@ -6840,10 +7119,6 @@
     "category": "common"
   },
   {
-    "id": "CROPS",
-    "category": "common"
-  },
-  {
     "id": "CRONE",
     "category": "common"
   },
@@ -6853,6 +7128,10 @@
   },
   {
     "id": "CROOK",
+    "category": "common"
+  },
+  {
+    "id": "CROPS",
     "category": "common"
   },
   {
@@ -6938,6 +7217,17 @@
   {
     "id": "DANDY",
     "category": "common"
+  },
+  {
+    "id": "DANTE",
+    "category": "literature",
+    "edition": 101,
+    "summary": "Dante Alighieri, Italian poet who wrote The Divine Comedy, an epic journey through Hell, Purgatory, and Paradise.",
+    "hints": [
+      "Created the modern Italian language with his writings",
+      "Guided by Virgil through the afterlife in his masterwork"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Dante_Alighieri"
   },
   {
     "id": "DARED",
@@ -7292,6 +7582,17 @@
     "category": "common"
   },
   {
+    "id": "DONNA",
+    "category": "superheroes",
+    "edition": 115,
+    "summary": "Donna Troy, the original Wonder Girl and founding member of the Teen Titans with strength, flight, and Amazonian training.",
+    "hints": [
+      "Sister figure to Wonder Woman and former protégé",
+      "Has a complex origin story that's been retold multiple times"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Donna_Troy"
+  },
+  {
     "id": "DONOR",
     "category": "common"
   },
@@ -7352,12 +7653,36 @@
     "category": "common"
   },
   {
+    "id": "DRACO",
+    "category": "fantasyAndSciFi",
+    "edition": 15,
+    "summary": "Draco Malfoy, Harry Potter's Slytherin rival known for his pure-blood supremacist views and platinum blonde hair.",
+    "hints": [
+      "His name means 'dragon' in Latin",
+      "Son of Lucius and Narcissa, marked as a Death Eater"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Draco_Malfoy",
+    "alpha": true
+  },
+  {
     "id": "DRAFT",
     "category": "common"
   },
   {
     "id": "DRAIN",
     "category": "common"
+  },
+  {
+    "id": "DRAKE",
+    "category": "videoGames",
+    "edition": 14,
+    "summary": "Nathan Drake, the charming treasure hunter protagonist of the Uncharted series, known for his wit and parkour skills.",
+    "hints": [
+      "Voiced by Nolan North in the popular action-adventure series",
+      "Often compared to Indiana Jones for his archaeological adventures"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Nathan_Drake_(Uncharted)",
+    "alpha": true
   },
   {
     "id": "DRAMA",
@@ -7432,6 +7757,17 @@
     "category": "common"
   },
   {
+    "id": "DROID",
+    "category": "fantasyAndSciFi",
+    "edition": 96,
+    "summary": "Mechanical beings in Star Wars, ranging from protocol droids like C-3PO to astromech droids like R2-D2.",
+    "hints": [
+      "These mechanical beings often have specialized functions in a galaxy far, far away",
+      "Some develop personalities and form bonds with organic beings"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Droid"
+  },
+  {
     "id": "DROIT",
     "category": "common"
   },
@@ -7462,6 +7798,17 @@
   {
     "id": "DRUGS",
     "category": "common"
+  },
+  {
+    "id": "DRUID",
+    "category": "tabletopAndBoardGames",
+    "edition": 26,
+    "summary": "A D&D spellcaster tied to nature, known for Wild Shape and circle traditions.",
+    "hints": [
+      "Can prepare spells from the entire list after each long rest",
+      "Transforms into beasts while retaining class features"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Character_classes_in_Dungeons_%26_Dragons#Druid"
   },
   {
     "id": "DRUNK",
@@ -7556,6 +7903,17 @@
     "category": "common"
   },
   {
+    "id": "DWARF",
+    "category": "fantasyAndSciFi",
+    "edition": 105,
+    "summary": "Short, stout humanoid beings in fantasy, typically skilled miners, smiths, and warriors with magnificent beards.",
+    "hints": [
+      "Often live underground in mountains and mine precious metals",
+      "Tolkien's dwarves are known for their craftsmanship and gold-love"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Dwarf_(folklore)"
+  },
+  {
     "id": "DWELL",
     "category": "common"
   },
@@ -7630,6 +7988,17 @@
   {
     "id": "ECHOS",
     "category": "common"
+  },
+  {
+    "id": "EDGAR",
+    "category": "literature",
+    "edition": 92,
+    "summary": "Edgar Allan Poe, American writer known for dark, Gothic tales like The Raven and The Tell-Tale Heart.",
+    "hints": [
+      "Master of the macabre and inventor of the detective story",
+      "Famous for 'Nevermore' and premature burial themes"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Edgar_Allan_Poe"
   },
   {
     "id": "EDGED",
@@ -7708,6 +8077,17 @@
     "category": "common"
   },
   {
+    "id": "EMAIL",
+    "category": "techAndInternetCulture",
+    "edition": 121,
+    "summary": "Electronic mail system for sending digital messages across computer networks, fundamental to internet communication.",
+    "hints": [
+      "Invented in the 1970s, predating the World Wide Web",
+      "Uses @ symbol to separate username from domain name"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Email"
+  },
+  {
     "id": "EMBED",
     "category": "common"
   },
@@ -7722,6 +8102,18 @@
   {
     "id": "EMERY",
     "category": "common"
+  },
+  {
+    "id": "EMOJI",
+    "category": "techAndInternetCulture",
+    "edition": 39,
+    "summary": "Small digital images or icons used to express ideas or emotions in electronic communication, originating in Japan.",
+    "hints": [
+      "First created in Japan in the late 1990s",
+      "Now standardized by the Unicode Consortium"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Emoji",
+    "beta": true
   },
   {
     "id": "EMPTY",
@@ -7896,6 +8288,17 @@
     "category": "common"
   },
   {
+    "id": "EXTRA",
+    "category": "movies",
+    "edition": 64,
+    "summary": "A background actor who appears in a scene but has no speaking lines, used to create realistic crowd scenes and atmosphere.",
+    "hints": [
+      "Often called 'background artists' in modern productions",
+      "May be asked to mime conversations during filming"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Extra_(acting)"
+  },
+  {
     "id": "EXUDE",
     "category": "common"
   },
@@ -7906,6 +8309,17 @@
   {
     "id": "EYING",
     "category": "common"
+  },
+  {
+    "id": "FABLE",
+    "category": "literature",
+    "edition": 29,
+    "summary": "A short story that teaches a moral lesson, often featuring animals as characters, like Aesop's Fables.",
+    "hints": [
+      "Brief tale where animals talk and teach wisdom",
+      "The tortoise and the hare compete in a famous one"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Fable"
   },
   {
     "id": "FACED",
@@ -7976,6 +8390,17 @@
     "category": "common"
   },
   {
+    "id": "FARGO",
+    "category": "movies",
+    "edition": 118,
+    "summary": "1996 Coen Brothers film about a car salesman's kidnapping scheme gone wrong, set in snowy Minnesota and North Dakota.",
+    "hints": [
+      "Frances McDormand won an Oscar for her role as police chief",
+      "Famous for its Minnesota accents and dark humor"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Fargo_(film)"
+  },
+  {
     "id": "FATAL",
     "category": "common"
   },
@@ -7994,6 +8419,18 @@
   {
     "id": "FAULT",
     "category": "common"
+  },
+  {
+    "id": "FAUNA",
+    "category": "science",
+    "edition": 40,
+    "summary": "The animal life found in a particular region, habitat, or geological period, studied in zoology and ecology.",
+    "hints": [
+      "Companion term to 'flora' in biological studies",
+      "Includes everything from microscopic organisms to large mammals"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Fauna",
+    "beta": true
   },
   {
     "id": "FAVOR",
@@ -8024,11 +8461,11 @@
     "category": "common"
   },
   {
-    "id": "FEEKS",
+    "id": "FEEDS",
     "category": "common"
   },
   {
-    "id": "FEEDS",
+    "id": "FEEKS",
     "category": "common"
   },
   {
@@ -8208,6 +8645,17 @@
     "category": "common"
   },
   {
+    "id": "FLASH",
+    "category": "superheroes",
+    "edition": 79,
+    "summary": "The fastest man alive, various speedsters have taken this mantle, most notably Barry Allen and Wally West, who can run at super-speed.",
+    "hints": [
+      "Can vibrate through solid objects and travel through time",
+      "Connected to the Speed Force, the source of speedster powers"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Flash_(character)"
+  },
+  {
     "id": "FLASK",
     "category": "common"
   },
@@ -8276,6 +8724,18 @@
     "category": "common"
   },
   {
+    "id": "FLORA",
+    "category": "science",
+    "edition": 13,
+    "summary": "The plant life found in a particular region, habitat, or geological period, studied in botany and ecology.",
+    "hints": [
+      "Often paired with 'fauna' when describing ecosystems",
+      "Can refer to both individual species and entire plant communities"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Flora",
+    "alpha": true
+  },
+  {
     "id": "FLOUR",
     "category": "common"
   },
@@ -8336,12 +8796,35 @@
     "category": "common"
   },
   {
+    "id": "FORCE",
+    "category": "fantasyAndSciFi",
+    "edition": 78,
+    "summary": "The mystical energy field in Star Wars that connects all living things and grants Jedi and Sith their powers.",
+    "hints": [
+      "Has both Light and Dark sides representing good and evil",
+      "Allows users to move objects, see the future, and influence minds"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/The_Force",
+    "beta": true
+  },
+  {
     "id": "FORTH",
     "category": "common"
   },
   {
     "id": "FORTY",
     "category": "common"
+  },
+  {
+    "id": "FORZA",
+    "category": "videoGames",
+    "edition": 23,
+    "summary": "Microsoft's premier racing game franchise, known for realistic car physics and stunning graphics in both simulation and arcade styles.",
+    "hints": [
+      "Italian word meaning 'force' or 'strength'",
+      "Split into Motorsport (simulation) and Horizon (open-world) series"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Forza_(series)"
   },
   {
     "id": "FOUND",
@@ -8386,6 +8869,17 @@
   {
     "id": "FRISK",
     "category": "common"
+  },
+  {
+    "id": "FRODO",
+    "category": "fantasyAndSciFi",
+    "edition": 33,
+    "summary": "Frodo Baggins, the hobbit ring-bearer who undertakes the quest to destroy the One Ring in Tolkien's Lord of the Rings.",
+    "hints": [
+      "Inherits the Ring from his cousin Bilbo Baggins",
+      "Accompanied by his loyal gardener Samwise Gamgee"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Frodo_Baggins"
   },
   {
     "id": "FROGS",
@@ -8464,11 +8958,22 @@
     "category": "common"
   },
   {
-    "id": "GANJA",
-    "category": "common"
+    "id": "GAMMA",
+    "category": "science",
+    "edition": 31,
+    "summary": "High-energy electromagnetic radiation with the shortest wavelength and highest frequency, often emitted by radioactive decay.",
+    "hints": [
+      "More energetic than X-rays and extremely penetrating",
+      "Used in cancer treatment and sterilization processes"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Gamma_ray"
   },
   {
     "id": "GANGS",
+    "category": "common"
+  },
+  {
+    "id": "GANJA",
     "category": "common"
   },
   {
@@ -8578,6 +9083,17 @@
   {
     "id": "GILLS",
     "category": "common"
+  },
+  {
+    "id": "GIMLI",
+    "category": "fantasyAndSciFi",
+    "edition": 60,
+    "summary": "Gimli the Dwarf, member of the Fellowship of the Ring known for his axe, beard, and unlikely friendship with Legolas.",
+    "hints": [
+      "Son of Glóin, one of Bilbo's companions from The Hobbit",
+      "Becomes the first dwarf to enter Lothlórien in ages"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Gimli_(Middle-earth)"
   },
   {
     "id": "GIMME",
@@ -8786,6 +9302,17 @@
   {
     "id": "GRAND",
     "category": "common"
+  },
+  {
+    "id": "GRANT",
+    "category": "movies",
+    "edition": 82,
+    "summary": "Cary Grant, iconic British-American actor known for his debonair style in classics like North by Northwest and To Catch a Thief.",
+    "hints": [
+      "Classic Hollywood leading man known for sophisticated roles",
+      "Starred in Hitchcock films like North by Northwest and To Catch a Thief"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Cary_Grant"
   },
   {
     "id": "GRAPE",
@@ -9008,6 +9535,17 @@
     "category": "common"
   },
   {
+    "id": "HADES",
+    "category": "videoGames",
+    "edition": 77,
+    "summary": "Critically acclaimed roguelike by Supergiant Games where you play as Zagreus trying to escape the underworld.",
+    "hints": [
+      "Features excellent voice acting and dynamic storytelling",
+      "Each failed escape attempt reveals more plot and character development"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Hades_(video_game)"
+  },
+  {
     "id": "HAIRY",
     "category": "common"
   },
@@ -9084,6 +9622,17 @@
     "category": "common"
   },
   {
+    "id": "HAVOK",
+    "category": "superheroes",
+    "edition": 88,
+    "summary": "Alex Summers, Cyclops' younger brother with the ability to absorb cosmic energy and convert it into devastating plasma blasts.",
+    "hints": [
+      "Member of X-Factor and brother to Scott Summers",
+      "Can absorb ambient cosmic radiation to fuel his powers"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Havok_(comics)"
+  },
+  {
     "id": "HAWKS",
     "category": "common"
   },
@@ -9106,6 +9655,17 @@
   {
     "id": "HEARD",
     "category": "common"
+  },
+  {
+    "id": "HEART",
+    "category": "science",
+    "edition": 111,
+    "summary": "The muscular organ that pumps blood throughout the circulatory system, delivering oxygen and nutrients to body tissues.",
+    "hints": [
+      "Beats approximately 100,000 times per day",
+      "Has four chambers: two atria and two ventricles"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Heart"
   },
   {
     "id": "HEATH",
@@ -9156,12 +9716,35 @@
     "category": "common"
   },
   {
+    "id": "HIDEO",
+    "category": "videoGames",
+    "edition": 104,
+    "summary": "Hideo Kojima, legendary game designer known for the Metal Gear series and innovative storytelling in video games.",
+    "hints": [
+      "Famous for breaking the fourth wall and meta-commentary",
+      "Created Snake, Big Boss, and Death Stranding"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Hideo_Kojima",
+    "beta": true
+  },
+  {
     "id": "HIDES",
     "category": "common"
   },
   {
     "id": "HIGHS",
     "category": "common"
+  },
+  {
+    "id": "HIKAR",
+    "category": "animeAndManga",
+    "edition": 117,
+    "summary": "Hikaru Shindo, protagonist of Hikaru no Go.",
+    "hints": [
+      "Haunted by the spirit of an ancient Go master",
+      "Learns strategy through the board game Go"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/List_of_Hikaru_no_Go_characters#Hikaru_Shindo"
   },
   {
     "id": "HIKED",
@@ -9210,6 +9793,17 @@
   {
     "id": "HOKES",
     "category": "common"
+  },
+  {
+    "id": "HOMER",
+    "category": "literature",
+    "edition": 47,
+    "summary": "Ancient Greek epic poet traditionally credited with composing the Iliad and the Odyssey, foundational works of Western literature.",
+    "hints": [
+      "Ancient Greek poet who wrote some of the world's first great epics",
+      "His epics tell of the Trojan War and Odysseus's journey home"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Homer"
   },
   {
     "id": "HOMES",
@@ -9332,11 +9926,11 @@
     "category": "common"
   },
   {
-    "id": "ICING",
+    "id": "ICILY",
     "category": "common"
   },
   {
-    "id": "ICILY",
+    "id": "ICING",
     "category": "common"
   },
   {
@@ -9660,6 +10254,17 @@
     "category": "common"
   },
   {
+    "id": "JOKER",
+    "category": "superheroes",
+    "edition": 7,
+    "summary": "Batman's arch-nemesis, the Clown Prince of Crime known for his maniacal laugh, purple suit, and chaotic evil schemes.",
+    "hints": [
+      "Often portrayed with green hair and a permanent smile",
+      "His origin story varies, but often involves falling into chemicals"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Joker_(character)"
+  },
+  {
     "id": "JOKES",
     "category": "common"
   },
@@ -9770,6 +10375,17 @@
   {
     "id": "JUTTY",
     "category": "common"
+  },
+  {
+    "id": "KAFKA",
+    "category": "literature",
+    "edition": 2,
+    "summary": "Franz Kafka, influential Czech writer known for surreal and nightmarish works like The Metamorphosis and The Trial.",
+    "hints": [
+      "His name became an adjective describing bureaucratic absurdity",
+      "Wrote about a man who wakes up transformed into an insect"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Franz_Kafka"
   },
   {
     "id": "KAPPA",
@@ -10120,6 +10736,17 @@
     "category": "common"
   },
   {
+    "id": "LASER",
+    "category": "science",
+    "edition": 67,
+    "summary": "Light Amplification by Stimulated Emission of Radiation - a device that emits focused, coherent light beams.",
+    "hints": [
+      "Acronym that became so common it's now treated as a word",
+      "Used in surgery, manufacturing, communications, and entertainment"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Laser"
+  },
+  {
     "id": "LASSO",
     "category": "common"
   },
@@ -10216,6 +10843,17 @@
     "category": "common"
   },
   {
+    "id": "LEELA",
+    "category": "fantasyAndSciFi",
+    "edition": 42,
+    "summary": "Turanga Leela, the one-eyed mutant captain of the Planet Express ship in the animated series Futurama.",
+    "hints": [
+      "Purple hair and a single large eye in the center of her forehead",
+      "Works as a delivery captain in the 31st century"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Leela_(Futurama)"
+  },
+  {
     "id": "LEERY",
     "category": "common"
   },
@@ -10236,8 +10874,30 @@
     "category": "common"
   },
   {
+    "id": "LEONE",
+    "category": "movies",
+    "edition": 91,
+    "summary": "Sergio Leone, Italian director who defined the Spaghetti Western genre with films like The Good, the Bad and the Ugly.",
+    "hints": [
+      "Known for extreme close-ups and Ennio Morricone's scores",
+      "Directed the 'Dollars Trilogy' starring Clint Eastwood"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sergio_Leone"
+  },
+  {
     "id": "LEPER",
     "category": "common"
+  },
+  {
+    "id": "LEVEL",
+    "category": "videoGames",
+    "edition": 41,
+    "summary": "A distinct section or stage in a video game, often with specific objectives, enemies, and environments to complete.",
+    "hints": [
+      "Can refer to both game stages and character progression",
+      "Often numbered sequentially or named thematically"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Level_(video_gaming)"
   },
   {
     "id": "LEVER",
@@ -10258,6 +10918,17 @@
   {
     "id": "LIFTS",
     "category": "common"
+  },
+  {
+    "id": "LIGHT",
+    "category": "animeAndManga",
+    "edition": 27,
+    "summary": "Light Yagami, protagonist of Death Note, who gains a supernatural notebook of deadly power.",
+    "hints": [
+      "Thinks of himself as a god of a new world",
+      "Outwitted in a high-stakes cat-and-mouse game with a detective known only as L"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Light_Yagami"
   },
   {
     "id": "LIKED",
@@ -10396,6 +11067,29 @@
     "category": "common"
   },
   {
+    "id": "LOGAN",
+    "category": "superheroes",
+    "edition": 52,
+    "summary": "James 'Logan' Howlett, also known as Wolverine, the Canadian mutant with adamantium claws, healing factor, and berserker rage.",
+    "hints": [
+      "Part of the Weapon X program that bonded metal to his skeleton",
+      "Member of the X-Men known for his gruff personality"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Wolverine_(character)"
+  },
+  {
+    "id": "LOGIC",
+    "category": "techAndInternetCulture",
+    "edition": 12,
+    "summary": "The application of formal logical systems in computer science for program verification, artificial intelligence, and computational reasoning.",
+    "hints": [
+      "Mathematical reasoning applied to programming and algorithms",
+      "Helps computers make decisions and solve problems systematically"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Logic_in_computer_science",
+    "alpha": true
+  },
+  {
     "id": "LOINS",
     "category": "common"
   },
@@ -10504,6 +11198,30 @@
     "category": "common"
   },
   {
+    "id": "LUMEN",
+    "category": "science",
+    "edition": 58,
+    "summary": "The SI unit of luminous flux, measuring the total amount of visible light emitted by a source.",
+    "hints": [
+      "Used to measure brightness of light bulbs and projectors",
+      "Different from watts, which measure electrical power consumption"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Lumen_(unit)",
+    "beta": true
+  },
+  {
+    "id": "LUMET",
+    "category": "movies",
+    "edition": 73,
+    "summary": "Sidney Lumet, acclaimed director known for character-driven dramas like 12 Angry Men, Serpico, and Network.",
+    "hints": [
+      "Director of acclaimed films like 12 Angry Men and Network",
+      "Directed over 50 films including Dog Day Afternoon"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sidney_Lumet",
+    "beta": true
+  },
+  {
     "id": "LUMPY",
     "category": "common"
   },
@@ -10522,6 +11240,17 @@
   {
     "id": "LUNGS",
     "category": "common"
+  },
+  {
+    "id": "LUPIN",
+    "category": "animeAndManga",
+    "edition": 72,
+    "summary": "Lupin III, gentleman thief from the long-running manga and anime series.",
+    "hints": [
+      "Grandson of a famous fictional French burglar",
+      "Often pursued by Inspector Zenigata"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Lupin_III"
   },
   {
     "id": "LUPUS",
@@ -10578,6 +11307,17 @@
   {
     "id": "MAFIA",
     "category": "common"
+  },
+  {
+    "id": "MAGIC",
+    "category": "tabletopAndBoardGames",
+    "edition": 62,
+    "summary": "Magic: The Gathering — a trading card game built on a five‑color resource system.",
+    "hints": [
+      "Lands enter tapped or untapped to fuel spells",
+      "The color pie divides philosophies like blue control and red burn"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Magic:_The_Gathering"
   },
   {
     "id": "MAGMA",
@@ -10640,6 +11380,17 @@
     "category": "common"
   },
   {
+    "id": "MANGA",
+    "category": "animeAndManga",
+    "edition": 9,
+    "summary": "Japanese comics and graphic novels, often adapted into anime and read right to left.",
+    "hints": [
+      "Printed format often adapted into animated series",
+      "Typically read from right to left in its country of origin"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Manga"
+  },
+  {
     "id": "MANGO",
     "category": "common"
   },
@@ -10690,6 +11441,18 @@
   {
     "id": "MARIA",
     "category": "common"
+  },
+  {
+    "id": "MARIO",
+    "category": "videoGames",
+    "edition": 50,
+    "summary": "Nintendo's iconic plumber mascot who jumps through platformer levels to rescue Princess Peach from Bowser.",
+    "hints": [
+      "Originally called 'Jumpman' in Donkey Kong",
+      "Named after Nintendo's landlord Mario Segale"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Mario",
+    "beta": true
   },
   {
     "id": "MARKS",
@@ -10804,6 +11567,17 @@
     "category": "common"
   },
   {
+    "id": "MEIER",
+    "category": "videoGames",
+    "edition": 122,
+    "summary": "Sid Meier, legendary game designer known for creating the Civilization series and pioneering turn-based strategy games.",
+    "hints": [
+      "His name appears in many game titles like 'Sid Meier's Civilization'",
+      "Known for the quote 'A game is a series of interesting choices'"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sid_Meier"
+  },
+  {
     "id": "MELEE",
     "category": "common"
   },
@@ -10884,6 +11658,17 @@
     "category": "common"
   },
   {
+    "id": "MILES",
+    "category": "superheroes",
+    "edition": 97,
+    "summary": "Miles Morales, the Spider-Man of the Ultimate Universe who gained spider powers including invisibility and bio-electric venom blasts.",
+    "hints": [
+      "Took over as Spider-Man after Peter Parker's death in Ultimate Comics",
+      "Has unique powers like camouflage and venom strike"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Miles_Morales"
+  },
+  {
     "id": "MILKS",
     "category": "common"
   },
@@ -10894,6 +11679,17 @@
   {
     "id": "MILLS",
     "category": "common"
+  },
+  {
+    "id": "MIMIC",
+    "category": "tabletopAndBoardGames",
+    "edition": 125,
+    "summary": "A classic D&D monster that disguises itself as a chest or door to ambush adventurers.",
+    "hints": [
+      "Often adhesive — making escape checks necessary",
+      "Perception tests fail when you treat treasure like a trap"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Mimic_(Dungeons_%26_Dragons)"
   },
   {
     "id": "MINCE",
@@ -11028,6 +11824,17 @@
     "category": "common"
   },
   {
+    "id": "MORIA",
+    "category": "fantasyAndSciFi",
+    "edition": 123,
+    "summary": "The ancient dwarven city of Khazad-dûm in Tolkien's Middle-earth, later called Moria after being overrun by orcs and a Balrog.",
+    "hints": [
+      "Also known as Khazad-dûm",
+      "Where Gandalf falls fighting the Balrog on the Bridge of Khazad-dûm"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Moria,_Middle-earth"
+  },
+  {
     "id": "MOSSY",
     "category": "common"
   },
@@ -11120,11 +11927,11 @@
     "category": "common"
   },
   {
-    "id": "MUSKY",
+    "id": "MUSIC",
     "category": "common"
   },
   {
-    "id": "MUSIC",
+    "id": "MUSKY",
     "category": "common"
   },
   {
@@ -11174,6 +11981,17 @@
   {
     "id": "NAKED",
     "category": "common"
+  },
+  {
+    "id": "NAMCO",
+    "category": "videoGames",
+    "edition": 95,
+    "summary": "Japanese video game company famous for Pac-Man, Tekken, and Tales series, now part of Bandai Namco Entertainment.",
+    "hints": [
+      "Created the iconic yellow dot-eating character in 1980",
+      "Known for arcade classics and fighting game tournaments"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Namco"
   },
   {
     "id": "NAMED",
@@ -11392,6 +12210,18 @@
     "category": "common"
   },
   {
+    "id": "NOLAN",
+    "category": "movies",
+    "edition": 46,
+    "summary": "Christopher Nolan, acclaimed director known for complex narratives, practical effects, and films like Inception, The Dark Knight, and Interstellar.",
+    "hints": [
+      "Known for non-linear storytelling and minimal use of CGI",
+      "Directed the Dark Knight trilogy and Oppenheimer"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Christopher_Nolan",
+    "beta": true
+  },
+  {
     "id": "NOMAD",
     "category": "common"
   },
@@ -11450,6 +12280,17 @@
   {
     "id": "NOVAS",
     "category": "common"
+  },
+  {
+    "id": "NOVEL",
+    "category": "literature",
+    "edition": 83,
+    "summary": "A long fictional narrative in prose, typically focusing on character development and complex plots.",
+    "hints": [
+      "Don Quixote is often considered the first modern example",
+      "Usually longer than novellas and short stories"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Novel"
   },
   {
     "id": "NOWAY",
@@ -11644,6 +12485,17 @@
     "category": "common"
   },
   {
+    "id": "ORBIT",
+    "category": "science",
+    "edition": 22,
+    "summary": "The curved path that an object follows around another object due to gravitational forces, like planets around the sun.",
+    "hints": [
+      "Kepler's laws describe the elliptical nature of these paths",
+      "Satellites use these to stay in space without falling to Earth"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Orbit"
+  },
+  {
     "id": "ORDER",
     "category": "common"
   },
@@ -11654,6 +12506,17 @@
   {
     "id": "ORIEL",
     "category": "common"
+  },
+  {
+    "id": "OSCAR",
+    "category": "movies",
+    "edition": 37,
+    "summary": "The Academy Award statuette, given annually for excellence in filmmaking by the Academy of Motion Picture Arts and Sciences.",
+    "hints": [
+      "The ceremony is often called 'Hollywood's biggest night'",
+      "Named after Academy librarian's uncle, according to popular legend"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Academy_Awards"
   },
   {
     "id": "OTHER",
@@ -11726,6 +12589,17 @@
   {
     "id": "OXBOW",
     "category": "common"
+  },
+  {
+    "id": "OXIDE",
+    "category": "science",
+    "edition": 49,
+    "summary": "A chemical compound containing oxygen bonded to other elements, such as water (H₂O) or carbon dioxide (CO₂).",
+    "hints": [
+      "Rust is iron oxide formed by oxidation",
+      "Essential in many industrial processes and biological reactions"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Oxide"
   },
   {
     "id": "OXLIP",
@@ -11876,6 +12750,17 @@
     "category": "common"
   },
   {
+    "id": "PIECE",
+    "category": "tabletopAndBoardGames",
+    "edition": 89,
+    "summary": "A movable unit used to represent players or powers on a board.",
+    "hints": [
+      "Its shape may encode movement or ownership",
+      "In abstracts, material advantage is measured in these units"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Game_piece"
+  },
+  {
     "id": "PIERS",
     "category": "common"
   },
@@ -11894,6 +12779,29 @@
   {
     "id": "PITCH",
     "category": "common"
+  },
+  {
+    "id": "PIXAR",
+    "category": "movies",
+    "edition": 1,
+    "summary": "Computer animation studio founded by John Lasseter, Steve Jobs, and others, known for Toy Story, Finding Nemo, and other groundbreaking animated films.",
+    "hints": [
+      "Computer animation studio known for pioneering CGI films",
+      "Created the first fully computer-animated feature film in 1995"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Pixar"
+  },
+  {
+    "id": "PIXEL",
+    "category": "techAndInternetCulture",
+    "edition": 102,
+    "summary": "The smallest unit of a digital image, short for 'picture element', containing color and brightness information.",
+    "hints": [
+      "Digital images are made up of millions of these tiny squares",
+      "Higher resolution means more of these per inch"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Pixel",
+    "beta": true
   },
   {
     "id": "PLAID",
@@ -11922,6 +12830,17 @@
   {
     "id": "PLATE",
     "category": "common"
+  },
+  {
+    "id": "PLATH",
+    "category": "literature",
+    "edition": 74,
+    "summary": "Sylvia Plath, American poet known for confessional poetry, including The Bell Jar and the posthumous collection Ariel.",
+    "hints": [
+      "Won a posthumous Pulitzer Prize for poetry collection 'Ariel'",
+      "Known for her semi-autobiographical novel about depression"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sylvia_Plath"
   },
   {
     "id": "PLATO",
@@ -12032,6 +12951,17 @@
     "category": "common"
   },
   {
+    "id": "PROSE",
+    "category": "literature",
+    "edition": 65,
+    "summary": "Written or spoken language in its ordinary form, without metrical structure, as distinguished from poetry or verse.",
+    "hints": [
+      "The opposite of poetry in terms of structure and rhythm",
+      "The form used for novels, essays, and everyday writing"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Prose"
+  },
+  {
     "id": "PROUD",
     "category": "common"
   },
@@ -12046,6 +12976,17 @@
   {
     "id": "PSALM",
     "category": "common"
+  },
+  {
+    "id": "PSION",
+    "category": "tabletopAndBoardGames",
+    "edition": 17,
+    "summary": "A psionic character class in some D&D editions, wielding mental disciplines and power points.",
+    "hints": [
+      "Manifests abilities via disciplines instead of spell schools",
+      "Often associated with crystal foci and the Far Realm"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Psion_(Dungeons_%26_Dragons)"
   },
   {
     "id": "PUFFS",
@@ -12112,6 +13053,17 @@
     "category": "common"
   },
   {
+    "id": "QUARK",
+    "category": "science",
+    "edition": 4,
+    "summary": "Fundamental particles that combine to form protons and neutrons, coming in six 'flavors': up, down, charm, strange, top, and bottom.",
+    "hints": [
+      "Named by physicist Murray Gell-Mann after a line from James Joyce",
+      "Cannot exist alone in nature, only in groups of two or three"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Quark"
+  },
+  {
     "id": "QUART",
     "category": "common"
   },
@@ -12150,6 +13102,28 @@
   {
     "id": "QUENA",
     "category": "common"
+  },
+  {
+    "id": "QUERY",
+    "category": "techAndInternetCulture",
+    "edition": 66,
+    "summary": "A request for information from a database or search system, typically written in a structured language like SQL.",
+    "hints": [
+      "SQL is the most common language for database requests",
+      "Can filter, sort, and aggregate data from tables"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Query_(computing)"
+  },
+  {
+    "id": "QUEST",
+    "category": "tabletopAndBoardGames",
+    "edition": 71,
+    "summary": "A core RPG objective structure — narrative goals that drive adventures.",
+    "hints": [
+      "Often formalized in modules with hooks, milestones, and rewards",
+      "May be tracked alongside side objectives and downtime tasks"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Role-playing_game"
   },
   {
     "id": "QUEUE",
@@ -12256,6 +13230,17 @@
     "category": "common"
   },
   {
+    "id": "RADAR",
+    "category": "science",
+    "edition": 85,
+    "summary": "Radio Detection and Ranging - a system that uses radio waves to detect objects and determine their distance, speed, and direction.",
+    "hints": [
+      "Originally developed for military purposes during WWII",
+      "Now used in weather forecasting, air traffic control, and speed detection"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Radar"
+  },
+  {
     "id": "RADII",
     "category": "common"
   },
@@ -12298,6 +13283,17 @@
   {
     "id": "RAILS",
     "category": "common"
+  },
+  {
+    "id": "RAIMI",
+    "category": "movies",
+    "edition": 100,
+    "summary": "Sam Raimi, director known for the Evil Dead series and the original Spider-Man trilogy, famous for his kinetic camera work.",
+    "hints": [
+      "Known for horror-comedy films and dynamic camera movements",
+      "Directed Tobey Maguire in the Spider-Man trilogy"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sam_Raimi"
   },
   {
     "id": "RAINS",
@@ -12448,6 +13444,17 @@
     "category": "common"
   },
   {
+    "id": "RAVEN",
+    "category": "superheroes",
+    "edition": 61,
+    "summary": "Rachel Roth, the half-demon daughter of Trigon, known for her dark magic, teleportation, and dry wit as a Teen Titan.",
+    "hints": [
+      "Often says 'Azarath Metrion Zinthos' when casting spells",
+      "Struggles with her demonic heritage and emotions"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Raven_(DC_Comics)"
+  },
+  {
     "id": "RAVER",
     "category": "common"
   },
@@ -12540,6 +13547,17 @@
     "category": "common"
   },
   {
+    "id": "RENJI",
+    "category": "animeAndManga",
+    "edition": 90,
+    "summary": "Renji Abarai, lieutenant in Bleach’s Soul Society.",
+    "hints": [
+      "Wields a zanpakuto named Zabimaru",
+      "Known for his striking red hair and tattoos"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/List_of_Bleach_characters#Renji_Abarai"
+  },
+  {
     "id": "REPLY",
     "category": "common"
   },
@@ -12562,6 +13580,18 @@
   {
     "id": "RIGHT",
     "category": "common"
+  },
+  {
+    "id": "RILKE",
+    "category": "literature",
+    "edition": 20,
+    "summary": "Rainer Maria Rilke, Austrian poet and writer known for the Duino Elegies and Letters to a Young Poet.",
+    "hints": [
+      "Austrian poet who wrote Letters to a Young Poet",
+      "Famous for 'You must change your life' from a poem about Apollo"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Rainer_Maria_Rilke",
+    "beta": true
   },
   {
     "id": "RILLE",
@@ -12612,12 +13642,34 @@
     "category": "common"
   },
   {
+    "id": "ROBOT",
+    "category": "science",
+    "edition": 94,
+    "summary": "An autonomous or programmable machine designed to perform tasks, often replacing human labor in manufacturing, exploration, or service.",
+    "hints": [
+      "Term coined by Czech playwright Karel Čapek in 1920",
+      "Can range from simple assembly line machines to advanced AI systems"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Robot"
+  },
+  {
     "id": "ROCKS",
     "category": "common"
   },
   {
     "id": "ROGER",
     "category": "common"
+  },
+  {
+    "id": "ROGUE",
+    "category": "tabletopAndBoardGames",
+    "edition": 8,
+    "summary": "A stealth‑focused D&D class known for Sneak Attack, skills, and subterfuge.",
+    "hints": [
+      "Skilled with Thieves’ Cant and expertise rather than heavy armor",
+      "Its signature damage feature triggers when an ally is adjacent"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Character_classes_in_Dungeons_%26_Dragons#Rogue"
   },
   {
     "id": "ROLLS",
@@ -12630,6 +13682,18 @@
   {
     "id": "ROUND",
     "category": "common"
+  },
+  {
+    "id": "ROUTE",
+    "category": "tabletopAndBoardGames",
+    "edition": 116,
+    "summary": "Ticket to Ride’s central mechanic — claiming connections between cities to score.",
+    "hints": [
+      "Set collection enables longer claims for higher points",
+      "Hidden objectives reward completing specific paths"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Ticket_to_Ride_(board_game)",
+    "beta": true
   },
   {
     "id": "ROYAL",
@@ -12654,6 +13718,18 @@
   {
     "id": "RURAL",
     "category": "common"
+  },
+  {
+    "id": "RYUKO",
+    "category": "animeAndManga",
+    "edition": 36,
+    "summary": "Ryuko Matoi, scissor blade-wielding heroine of Kill la Kill.",
+    "hints": [
+      "Seeks the truth behind her father's murder",
+      "Wears a sentient sailor uniform named Senketsu"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/List_of_Kill_la_Kill_characters#Ry%C5%ABko_Matoi",
+    "beta": true
   },
   {
     "id": "SABLE",
@@ -12688,6 +13764,17 @@
     "category": "common"
   },
   {
+    "id": "SAIYA",
+    "category": "animeAndManga",
+    "edition": 126,
+    "summary": "Saiyan, warrior race from the Dragon Ball series.",
+    "hints": [
+      "Known for spiky hair and incredible power boosts",
+      "Transformations often change hair color to gold"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Saiyan"
+  },
+  {
     "id": "SALAD",
     "category": "common"
   },
@@ -12714,6 +13801,17 @@
   {
     "id": "SANER",
     "category": "common"
+  },
+  {
+    "id": "SANJI",
+    "category": "animeAndManga",
+    "edition": 99,
+    "summary": "Sanji, cook of the Straw Hat Pirates in One Piece.",
+    "hints": [
+      "Fights primarily using powerful kicks",
+      "Dreams of finding the All Blue"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/List_of_One_Piece_characters#Sanji"
   },
   {
     "id": "SARIN",
@@ -12748,11 +13846,11 @@
     "category": "common"
   },
   {
-    "id": "SCALE",
+    "id": "SCALD",
     "category": "common"
   },
   {
-    "id": "SCALD",
+    "id": "SCALE",
     "category": "common"
   },
   {
@@ -12770,6 +13868,17 @@
   {
     "id": "SCARY",
     "category": "common"
+  },
+  {
+    "id": "SCENE",
+    "category": "movies",
+    "edition": 55,
+    "summary": "A sequence of continuous action in a film, taking place in a single location and time, forming a unit of the narrative.",
+    "hints": [
+      "Directors often shoot these out of chronological order",
+      "The basic building block of film storytelling"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Scene_(filmmaking)"
   },
   {
     "id": "SCENT",
@@ -12790,6 +13899,18 @@
   {
     "id": "SCOPE",
     "category": "common"
+  },
+  {
+    "id": "SCORE",
+    "category": "movies",
+    "edition": 10,
+    "summary": "The musical accompaniment to a film, composed specifically to enhance the emotional impact and narrative of the movie.",
+    "hints": [
+      "John Williams is famous for creating these for Star Wars and Jaws",
+      "Can include leitmotifs that represent specific characters or themes"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Film_score",
+    "alpha": true
   },
   {
     "id": "SCOUT",
@@ -12952,6 +14073,17 @@
     "category": "common"
   },
   {
+    "id": "SHORT",
+    "category": "movies",
+    "edition": 28,
+    "summary": "A brief film, typically under 40 minutes, often used to showcase new talent or experimental techniques.",
+    "hints": [
+      "Academy Awards have a category specifically for these films",
+      "Many famous directors started their careers making these"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Short_film"
+  },
+  {
     "id": "SHOUT",
     "category": "common"
   },
@@ -12974,6 +14106,17 @@
   {
     "id": "SIGHT",
     "category": "common"
+  },
+  {
+    "id": "SIGIL",
+    "category": "fantasyAndSciFi",
+    "edition": 114,
+    "summary": "A magical symbol or seal used in fantasy and occult practices to focus power, cast spells, or represent entities.",
+    "hints": [
+      "Often inscribed on objects or drawn in the air for magical effects",
+      "Can represent houses, guilds, or magical concepts"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sigil_(magic)"
   },
   {
     "id": "SIGMA",
@@ -13052,11 +14195,11 @@
     "category": "common"
   },
   {
-    "id": "SLEET",
+    "id": "SLEEP",
     "category": "common"
   },
   {
-    "id": "SLEEP",
+    "id": "SLEET",
     "category": "common"
   },
   {
@@ -13102,6 +14245,17 @@
   {
     "id": "SMART",
     "category": "common"
+  },
+  {
+    "id": "SMAUG",
+    "category": "fantasyAndSciFi",
+    "edition": 69,
+    "summary": "Smaug the Magnificent, the fire-breathing dragon who hoards treasure in the Lonely Mountain in Tolkien's The Hobbit.",
+    "hints": [
+      "Known as 'Smaug the Chiefest and Greatest of Calamities'",
+      "Has a weakness where a scale is missing from his armor"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Smaug"
   },
   {
     "id": "SMEAR",
@@ -13200,6 +14354,17 @@
     "category": "common"
   },
   {
+    "id": "SONIC",
+    "category": "videoGames",
+    "edition": 32,
+    "summary": "Sega's blue hedgehog mascot known for incredible speed, collecting rings, and battling the evil Dr. Robotnik/Eggman.",
+    "hints": [
+      "Can run faster than the speed of sound",
+      "His nemesis is a scientist who turns animals into robots"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sonic_the_Hedgehog"
+  },
+  {
     "id": "SORRY",
     "category": "common"
   },
@@ -13218,6 +14383,17 @@
   {
     "id": "SOUTH",
     "category": "common"
+  },
+  {
+    "id": "SPACE",
+    "category": "tabletopAndBoardGames",
+    "edition": 98,
+    "summary": "A discrete position on a board that constrains movement and placement.",
+    "hints": [
+      "Landing here can trigger card draws, penalties, or bonuses",
+      "Grids and hexes partition these locations"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Board_game"
   },
   {
     "id": "SPADE",
@@ -13268,6 +14444,17 @@
     "category": "common"
   },
   {
+    "id": "SPIKE",
+    "category": "animeAndManga",
+    "edition": 45,
+    "summary": "Spike Spiegel, the laid-back bounty hunter protagonist of Cowboy Bebop.",
+    "hints": [
+      "Former member of the Red Dragon Crime Syndicate",
+      "Haunted by a past love and a deadly rival"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Spike_Spiegel"
+  },
+  {
     "id": "SPILL",
     "category": "common"
   },
@@ -13286,6 +14473,17 @@
   {
     "id": "SPLIT",
     "category": "common"
+  },
+  {
+    "id": "SPOCK",
+    "category": "fantasyAndSciFi",
+    "edition": 87,
+    "summary": "Mr. Spock, the half-Vulcan science officer of the USS Enterprise in Star Trek, known for logic and the Vulcan salute.",
+    "hints": [
+      "Famous for saying 'Live long and prosper' and 'Fascinating'",
+      "Struggles between Vulcan logic and human emotion"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Spock"
   },
   {
     "id": "SPOIL",
@@ -13312,8 +14510,42 @@
     "category": "common"
   },
   {
+    "id": "STACK",
+    "category": "techAndInternetCulture",
+    "edition": 93,
+    "summary": "A data structure that follows Last-In-First-Out (LIFO) principle, where elements are added and removed from the top.",
+    "hints": [
+      "Like a stack of plates - you add and remove from the top",
+      "Used in function calls, expression evaluation, and undo operations"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Stack_(abstract_data_type)"
+  },
+  {
+    "id": "STARK",
+    "category": "superheroes",
+    "edition": 34,
+    "summary": "Tony Stark, the genius billionaire playboy philanthropist who becomes Iron Man using his advanced powered armor technology.",
+    "hints": [
+      "CEO of Stark Industries and founding member of the Avengers",
+      "His arc reactor keeps shrapnel from reaching his heart"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Tony_Stark",
+    "beta": true
+  },
+  {
     "id": "START",
     "category": "common"
+  },
+  {
+    "id": "STEAM",
+    "category": "videoGames",
+    "edition": 86,
+    "summary": "Valve's digital distribution platform for PC gaming, revolutionizing how players buy, download, and play games.",
+    "hints": [
+      "Launched in 2003, now the largest PC gaming platform",
+      "Features sales, achievements, and community marketplace"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Steam_(service)"
   },
   {
     "id": "STEPS",
@@ -13508,6 +14740,17 @@
     "category": "common"
   },
   {
+    "id": "THEME",
+    "category": "movies",
+    "edition": 109,
+    "summary": "A recurring musical motif associated with a character, location, or concept in film, also known as a leitmotif.",
+    "hints": [
+      "The Imperial March is one for Darth Vader",
+      "John Williams is a master of creating these musical signatures"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Leitmotif"
+  },
+  {
     "id": "THERE",
     "category": "common"
   },
@@ -13538,6 +14781,17 @@
   {
     "id": "THINE",
     "category": "common"
+  },
+  {
+    "id": "THING",
+    "category": "superheroes",
+    "edition": 70,
+    "summary": "Ben Grimm, the rock-skinned member of the Fantastic Four with superhuman strength and durability, known for saying 'It's clobberin' time!'",
+    "hints": [
+      "Pilot and best friend of Reed Richards before cosmic ray exposure",
+      "His orange rocky exterior hides a heart of gold"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Thing_(character)"
   },
   {
     "id": "THINK",
@@ -13654,6 +14908,17 @@
   {
     "id": "TODDY",
     "category": "common"
+  },
+  {
+    "id": "TOKEN",
+    "category": "techAndInternetCulture",
+    "edition": 30,
+    "summary": "A unit of data used for authentication, authorization, or representing access rights in computing systems.",
+    "hints": [
+      "Often used in web APIs and authentication systems",
+      "Can expire and be refreshed for security purposes"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Token_(computing)"
   },
   {
     "id": "TONAL",
@@ -13832,6 +15097,17 @@
     "category": "common"
   },
   {
+    "id": "TROLL",
+    "category": "techAndInternetCulture",
+    "edition": 21,
+    "summary": "A person who posts inflammatory or off-topic messages online to provoke emotional responses or disrupt discussions.",
+    "hints": [
+      "Mythical creature's name now describes disruptive online behavior",
+      "Internet advice says 'Don't feed' these disruptive users"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Internet_troll"
+  },
+  {
     "id": "TROOP",
     "category": "common"
   },
@@ -13936,6 +15212,17 @@
     "category": "common"
   },
   {
+    "id": "TWEET",
+    "category": "techAndInternetCulture",
+    "edition": 112,
+    "summary": "A message posted on Twitter (now X), originally limited to 140 characters, later expanded to 280 characters.",
+    "hints": [
+      "Named after the sound birds make",
+      "Can include hashtags, mentions, and media attachments"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Tweet"
+  },
+  {
     "id": "TYPES",
     "category": "common"
   },
@@ -14024,6 +15311,17 @@
     "category": "common"
   },
   {
+    "id": "UNITY",
+    "category": "videoGames",
+    "edition": 113,
+    "summary": "Popular cross-platform game engine used to develop 2D and 3D games for multiple platforms including mobile, PC, and consoles.",
+    "hints": [
+      "Game engine that powers titles like Hearthstone and Cities: Skylines",
+      "Allows developers to 'write once, deploy everywhere' across platforms"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Unity_(game_engine)"
+  },
+  {
     "id": "UNLIT",
     "category": "common"
   },
@@ -14084,6 +15382,18 @@
     "category": "common"
   },
   {
+    "id": "USAGI",
+    "category": "animeAndManga",
+    "edition": 81,
+    "summary": "Usagi Tsukino, magical girl heroine of Sailor Moon.",
+    "hints": [
+      "Transforms into a guardian of love and justice",
+      "Carries a brooch and wields a Moon Tiara"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sailor_Moon_(character)",
+    "beta": true
+  },
+  {
     "id": "USERS",
     "category": "common"
   },
@@ -14110,6 +15420,17 @@
   {
     "id": "UTTER",
     "category": "common"
+  },
+  {
+    "id": "VADER",
+    "category": "fantasyAndSciFi",
+    "edition": 24,
+    "summary": "Darth Vader, the iconic Dark Lord of the Sith and former Jedi Anakin Skywalker, central antagonist of the original Star Wars trilogy.",
+    "hints": [
+      "His breathing sound is one of cinema's most recognizable",
+      "Reveals he is Luke's father in The Empire Strikes Back"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Darth_Vader"
   },
   {
     "id": "VAGUE",
@@ -14172,8 +15493,30 @@
     "category": "common"
   },
   {
+    "id": "VENOM",
+    "category": "superheroes",
+    "edition": 43,
+    "summary": "An alien symbiote that bonds with hosts, most famously Eddie Brock, granting superhuman abilities but requiring consumption of brains.",
+    "hints": [
+      "Originally bonded with Spider-Man before finding Eddie Brock",
+      "Has a distinctive white spider symbol and sharp teeth"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Venom_(character)"
+  },
+  {
     "id": "VENTS",
     "category": "common"
+  },
+  {
+    "id": "VENUS",
+    "category": "science",
+    "edition": 76,
+    "summary": "The second planet from the Sun, known for its thick atmosphere, extreme greenhouse effect, and surface temperatures hot enough to melt lead.",
+    "hints": [
+      "Often called Earth's 'twin' due to similar size and mass",
+      "Hottest planet in the solar system despite not being closest to the Sun"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Venus"
   },
   {
     "id": "VERGE",
@@ -14232,8 +15575,30 @@
     "category": "common"
   },
   {
+    "id": "VIRAL",
+    "category": "techAndInternetCulture",
+    "edition": 84,
+    "summary": "Content that spreads rapidly and widely across the internet through social sharing, often unexpectedly popular.",
+    "hints": [
+      "Named after how biological viruses spread",
+      "Can include memes, videos, or social media posts"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Viral_phenomenon"
+  },
+  {
     "id": "VIRID",
     "category": "common"
+  },
+  {
+    "id": "VIRUS",
+    "category": "techAndInternetCulture",
+    "edition": 48,
+    "summary": "Malicious software designed to replicate itself and spread to other computers, often causing damage or stealing data.",
+    "hints": [
+      "Early examples included the Morris Worm and ILOVEYOU",
+      "Modern antivirus software helps detect and prevent these"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Computer_virus"
   },
   {
     "id": "VISIT",
@@ -14368,6 +15733,17 @@
     "category": "common"
   },
   {
+    "id": "WELLS",
+    "category": "literature",
+    "edition": 38,
+    "summary": "H.G. Wells, English writer known as the 'father of science fiction' for works like The Time Machine and War of the Worlds.",
+    "hints": [
+      "Wrote about time travel, alien invasion, and invisible men",
+      "Also wrote realistic social novels and historical works"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/H._G._Wells"
+  },
+  {
     "id": "WHALE",
     "category": "common"
   },
@@ -14460,11 +15836,11 @@
     "category": "common"
   },
   {
-    "id": "WINCH",
+    "id": "WINCE",
     "category": "common"
   },
   {
-    "id": "WINCE",
+    "id": "WINCH",
     "category": "common"
   },
   {
@@ -14510,6 +15886,18 @@
   {
     "id": "WOOER",
     "category": "common"
+  },
+  {
+    "id": "WOOLF",
+    "category": "literature",
+    "edition": 56,
+    "summary": "Virginia Woolf, modernist English writer known for stream-of-consciousness novels like Mrs. Dalloway and To the Lighthouse.",
+    "hints": [
+      "British author who wrote Mrs. Dalloway and To the Lighthouse",
+      "Early 20th century feminist writer known for exploring women's inner lives"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Virginia_Woolf",
+    "beta": true
   },
   {
     "id": "WORKS",
@@ -14652,11 +16040,11 @@
     "category": "common"
   },
   {
-    "id": "YEARS",
+    "id": "YEARN",
     "category": "common"
   },
   {
-    "id": "YEARN",
+    "id": "YEARS",
     "category": "common"
   },
   {
@@ -14700,6 +16088,18 @@
     "category": "common"
   },
   {
+    "id": "ZADIE",
+    "category": "literature",
+    "edition": 11,
+    "summary": "Zadie Smith, British novelist known for White Teeth and On Beauty, acclaimed for her multicultural storytelling.",
+    "hints": [
+      "British author known for novels about multicultural London",
+      "Wrote White Teeth and On Beauty"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Zadie_Smith",
+    "alpha": true
+  },
+  {
     "id": "ZAPPY",
     "category": "common"
   },
@@ -14710,6 +16110,17 @@
   {
     "id": "ZEBUS",
     "category": "common"
+  },
+  {
+    "id": "ZELDA",
+    "category": "videoGames",
+    "edition": 5,
+    "summary": "Legendary Nintendo action-adventure game series featuring Link's quest to save Princess Zelda and the kingdom of Hyrule.",
+    "hints": [
+      "Princess's name inspired by F. Scott Fitzgerald's wife",
+      "Features the Triforce and Master Sword as iconic elements"
+    ],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/The_Legend_of_Zelda"
   },
   {
     "id": "ZESTY",
@@ -14742,1416 +16153,5 @@
   {
     "id": "ZORIL",
     "category": "common"
-  },
-  {
-    "id": "PIXAR",
-    "category": "movies",
-    "edition": 1,
-    "summary": "Computer animation studio founded by John Lasseter, Steve Jobs, and others, known for Toy Story, Finding Nemo, and other groundbreaking animated films.",
-    "hints": [
-      "Computer animation studio known for pioneering CGI films",
-      "Created the first fully computer-animated feature film in 1995"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Pixar"
-  },
-  {
-    "id": "SCORE",
-    "category": "movies",
-    "edition": 10,
-    "summary": "The musical accompaniment to a film, composed specifically to enhance the emotional impact and narrative of the movie.",
-    "hints": [
-      "John Williams is famous for creating these for Star Wars and Jaws",
-      "Can include leitmotifs that represent specific characters or themes"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Film_score",
-    "alpha": true
-  },
-  {
-    "id": "CAMEO",
-    "category": "movies",
-    "edition": 19,
-    "summary": "A brief appearance by a well-known person in a film, often as themselves or in a small role for novelty value.",
-    "hints": [
-      "Stan Lee was famous for these appearances in Marvel movies",
-      "Alfred Hitchcock often appeared briefly in his own films"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Cameo_appearance"
-  },
-  {
-    "id": "SHORT",
-    "category": "movies",
-    "edition": 28,
-    "summary": "A brief film, typically under 40 minutes, often used to showcase new talent or experimental techniques.",
-    "hints": [
-      "Academy Awards have a category specifically for these films",
-      "Many famous directors started their careers making these"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Short_film"
-  },
-  {
-    "id": "OSCAR",
-    "category": "movies",
-    "edition": 37,
-    "summary": "The Academy Award statuette, given annually for excellence in filmmaking by the Academy of Motion Picture Arts and Sciences.",
-    "hints": [
-      "The ceremony is often called 'Hollywood's biggest night'",
-      "Named after Academy librarian's uncle, according to popular legend"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Academy_Awards"
-  },
-  {
-    "id": "NOLAN",
-    "category": "movies",
-    "edition": 46,
-    "summary": "Christopher Nolan, acclaimed director known for complex narratives, practical effects, and films like Inception, The Dark Knight, and Interstellar.",
-    "hints": [
-      "Known for non-linear storytelling and minimal use of CGI",
-      "Directed the Dark Knight trilogy and Oppenheimer"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Christopher_Nolan",
-    "beta": true
-  },
-  {
-    "id": "SCENE",
-    "category": "movies",
-    "edition": 55,
-    "summary": "A sequence of continuous action in a film, taking place in a single location and time, forming a unit of the narrative.",
-    "hints": [
-      "Directors often shoot these out of chronological order",
-      "The basic building block of film storytelling"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Scene_(filmmaking)"
-  },
-  {
-    "id": "EXTRA",
-    "category": "movies",
-    "edition": 64,
-    "summary": "A background actor who appears in a scene but has no speaking lines, used to create realistic crowd scenes and atmosphere.",
-    "hints": [
-      "Often called 'background artists' in modern productions",
-      "May be asked to mime conversations during filming"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Extra_(acting)"
-  },
-  {
-    "id": "LUMET",
-    "category": "movies",
-    "edition": 73,
-    "summary": "Sidney Lumet, acclaimed director known for character-driven dramas like 12 Angry Men, Serpico, and Network.",
-    "hints": [
-      "Director of acclaimed films like 12 Angry Men and Network",
-      "Directed over 50 films including Dog Day Afternoon"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sidney_Lumet",
-    "beta": true
-  },
-  {
-    "id": "GRANT",
-    "category": "movies",
-    "edition": 82,
-    "summary": "Cary Grant, iconic British-American actor known for his debonair style in classics like North by Northwest and To Catch a Thief.",
-    "hints": [
-      "Classic Hollywood leading man known for sophisticated roles",
-      "Starred in Hitchcock films like North by Northwest and To Catch a Thief"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Cary_Grant"
-  },
-  {
-    "id": "LEONE",
-    "category": "movies",
-    "edition": 91,
-    "summary": "Sergio Leone, Italian director who defined the Spaghetti Western genre with films like The Good, the Bad and the Ugly.",
-    "hints": [
-      "Known for extreme close-ups and Ennio Morricone's scores",
-      "Directed the 'Dollars Trilogy' starring Clint Eastwood"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sergio_Leone"
-  },
-  {
-    "id": "RAIMI",
-    "category": "movies",
-    "edition": 100,
-    "summary": "Sam Raimi, director known for the Evil Dead series and the original Spider-Man trilogy, famous for his kinetic camera work.",
-    "hints": [
-      "Known for horror-comedy films and dynamic camera movements",
-      "Directed Tobey Maguire in the Spider-Man trilogy"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sam_Raimi"
-  },
-  {
-    "id": "THEME",
-    "category": "movies",
-    "edition": 109,
-    "summary": "A recurring musical motif associated with a character, location, or concept in film, also known as a leitmotif.",
-    "hints": [
-      "The Imperial March is one for Darth Vader",
-      "John Williams is a master of creating these musical signatures"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Leitmotif"
-  },
-  {
-    "id": "FARGO",
-    "category": "movies",
-    "edition": 118,
-    "summary": "1996 Coen Brothers film about a car salesman's kidnapping scheme gone wrong, set in snowy Minnesota and North Dakota.",
-    "hints": [
-      "Frances McDormand won an Oscar for her role as police chief",
-      "Famous for its Minnesota accents and dark humor"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Fargo_(film)"
-  },
-  {
-    "id": "KAFKA",
-    "category": "literature",
-    "edition": 2,
-    "summary": "Franz Kafka, influential Czech writer known for surreal and nightmarish works like The Metamorphosis and The Trial.",
-    "hints": [
-      "His name became an adjective describing bureaucratic absurdity",
-      "Wrote about a man who wakes up transformed into an insect"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Franz_Kafka"
-  },
-  {
-    "id": "ZADIE",
-    "category": "literature",
-    "edition": 11,
-    "summary": "Zadie Smith, British novelist known for White Teeth and On Beauty, acclaimed for her multicultural storytelling.",
-    "hints": [
-      "British author known for novels about multicultural London",
-      "Wrote White Teeth and On Beauty"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Zadie_Smith",
-    "alpha": true
-  },
-  {
-    "id": "RILKE",
-    "category": "literature",
-    "edition": 20,
-    "summary": "Rainer Maria Rilke, Austrian poet and writer known for the Duino Elegies and Letters to a Young Poet.",
-    "hints": [
-      "Austrian poet who wrote Letters to a Young Poet",
-      "Famous for 'You must change your life' from a poem about Apollo"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Rainer_Maria_Rilke",
-    "beta": true
-  },
-  {
-    "id": "FABLE",
-    "category": "literature",
-    "edition": 29,
-    "summary": "A short story that teaches a moral lesson, often featuring animals as characters, like Aesop's Fables.",
-    "hints": [
-      "Brief tale where animals talk and teach wisdom",
-      "The tortoise and the hare compete in a famous one"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Fable"
-  },
-  {
-    "id": "WELLS",
-    "category": "literature",
-    "edition": 38,
-    "summary": "H.G. Wells, English writer known as the 'father of science fiction' for works like The Time Machine and War of the Worlds.",
-    "hints": [
-      "Wrote about time travel, alien invasion, and invisible men",
-      "Also wrote realistic social novels and historical works"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/H._G._Wells"
-  },
-  {
-    "id": "HOMER",
-    "category": "literature",
-    "edition": 47,
-    "summary": "Ancient Greek epic poet traditionally credited with composing the Iliad and the Odyssey, foundational works of Western literature.",
-    "hints": [
-      "Ancient Greek poet who wrote some of the world's first great epics",
-      "His epics tell of the Trojan War and Odysseus's journey home"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Homer"
-  },
-  {
-    "id": "WOOLF",
-    "category": "literature",
-    "edition": 56,
-    "summary": "Virginia Woolf, modernist English writer known for stream-of-consciousness novels like Mrs. Dalloway and To the Lighthouse.",
-    "hints": [
-      "British author who wrote Mrs. Dalloway and To the Lighthouse",
-      "Early 20th century feminist writer known for exploring women's inner lives"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Virginia_Woolf",
-    "beta": true
-  },
-  {
-    "id": "PROSE",
-    "category": "literature",
-    "edition": 65,
-    "summary": "Written or spoken language in its ordinary form, without metrical structure, as distinguished from poetry or verse.",
-    "hints": [
-      "The opposite of poetry in terms of structure and rhythm",
-      "The form used for novels, essays, and everyday writing"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Prose"
-  },
-  {
-    "id": "PLATH",
-    "category": "literature",
-    "edition": 74,
-    "summary": "Sylvia Plath, American poet known for confessional poetry, including The Bell Jar and the posthumous collection Ariel.",
-    "hints": [
-      "Won a posthumous Pulitzer Prize for poetry collection 'Ariel'",
-      "Known for her semi-autobiographical novel about depression"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sylvia_Plath"
-  },
-  {
-    "id": "NOVEL",
-    "category": "literature",
-    "edition": 83,
-    "summary": "A long fictional narrative in prose, typically focusing on character development and complex plots.",
-    "hints": [
-      "Don Quixote is often considered the first modern example",
-      "Usually longer than novellas and short stories"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Novel"
-  },
-  {
-    "id": "EDGAR",
-    "category": "literature",
-    "edition": 92,
-    "summary": "Edgar Allan Poe, American writer known for dark, Gothic tales like The Raven and The Tell-Tale Heart.",
-    "hints": [
-      "Master of the macabre and inventor of the detective story",
-      "Famous for 'Nevermore' and premature burial themes"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Edgar_Allan_Poe"
-  },
-  {
-    "id": "DANTE",
-    "category": "literature",
-    "edition": 101,
-    "summary": "Dante Alighieri, Italian poet who wrote The Divine Comedy, an epic journey through Hell, Purgatory, and Paradise.",
-    "hints": [
-      "Created the modern Italian language with his writings",
-      "Guided by Virgil through the afterlife in his masterwork"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Dante_Alighieri"
-  },
-  {
-    "id": "CANON",
-    "category": "literature",
-    "edition": 110,
-    "summary": "The body of works considered essential or authoritative in a particular literary tradition or culture.",
-    "hints": [
-      "A collection of literary works considered most important to study",
-      "The Western version traditionally includes Shakespeare and Homer"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Literary_canon"
-  },
-  {
-    "id": "CAMUS",
-    "category": "literature",
-    "edition": 119,
-    "summary": "Albert Camus, French existentialist writer and philosopher, known for The Stranger and The Myth of Sisyphus.",
-    "hints": [
-      "Won the Nobel Prize in Literature at age 44",
-      "Explored themes of absurdity and the human condition"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Albert_Camus"
-  },
-  {
-    "id": "BASIC",
-    "category": "techAndInternetCulture",
-    "edition": 3,
-    "summary": "An early high-level programming language designed for beginners, standing for 'Beginner's All-purpose Symbolic Instruction Code'.",
-    "hints": [
-      "Popular programming language on early personal computers like the Apple II",
-      "Designed to be simple enough for beginners to learn coding"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/BASIC"
-  },
-  {
-    "id": "LOGIC",
-    "category": "techAndInternetCulture",
-    "edition": 12,
-    "summary": "The application of formal logical systems in computer science for program verification, artificial intelligence, and computational reasoning.",
-    "hints": [
-      "Mathematical reasoning applied to programming and algorithms",
-      "Helps computers make decisions and solve problems systematically"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Logic_in_computer_science",
-    "alpha": true
-  },
-  {
-    "id": "TROLL",
-    "category": "techAndInternetCulture",
-    "edition": 21,
-    "summary": "A person who posts inflammatory or off-topic messages online to provoke emotional responses or disrupt discussions.",
-    "hints": [
-      "Mythical creature's name now describes disruptive online behavior",
-      "Internet advice says 'Don't feed' these disruptive users"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Internet_troll"
-  },
-  {
-    "id": "TOKEN",
-    "category": "techAndInternetCulture",
-    "edition": 30,
-    "summary": "A unit of data used for authentication, authorization, or representing access rights in computing systems.",
-    "hints": [
-      "Often used in web APIs and authentication systems",
-      "Can expire and be refreshed for security purposes"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Token_(computing)"
-  },
-  {
-    "id": "EMOJI",
-    "category": "techAndInternetCulture",
-    "edition": 39,
-    "summary": "Small digital images or icons used to express ideas or emotions in electronic communication, originating in Japan.",
-    "hints": [
-      "First created in Japan in the late 1990s",
-      "Now standardized by the Unicode Consortium"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Emoji",
-    "beta": true
-  },
-  {
-    "id": "VIRUS",
-    "category": "techAndInternetCulture",
-    "edition": 48,
-    "summary": "Malicious software designed to replicate itself and spread to other computers, often causing damage or stealing data.",
-    "hints": [
-      "Early examples included the Morris Worm and ILOVEYOU",
-      "Modern antivirus software helps detect and prevent these"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Computer_virus"
-  },
-  {
-    "id": "CACHE",
-    "category": "techAndInternetCulture",
-    "edition": 57,
-    "summary": "A hardware or software component that stores data temporarily to serve future requests faster than accessing the original storage.",
-    "hints": [
-      "Helps improve performance by reducing access times",
-      "Found in CPUs, web browsers, and database systems"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Cache_(computing)"
-  },
-  {
-    "id": "QUERY",
-    "category": "techAndInternetCulture",
-    "edition": 66,
-    "summary": "A request for information from a database or search system, typically written in a structured language like SQL.",
-    "hints": [
-      "SQL is the most common language for database requests",
-      "Can filter, sort, and aggregate data from tables"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Query_(computing)"
-  },
-  {
-    "id": "CLICK",
-    "category": "techAndInternetCulture",
-    "edition": 75,
-    "summary": "The action of pressing and releasing a computer mouse button, or the sound it makes, fundamental to graphical user interfaces.",
-    "hints": [
-      "Double-clicking performs different actions than single clicks",
-      "Right-clicking usually opens context menus"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Click_(computing)"
-  },
-  {
-    "id": "VIRAL",
-    "category": "techAndInternetCulture",
-    "edition": 84,
-    "summary": "Content that spreads rapidly and widely across the internet through social sharing, often unexpectedly popular.",
-    "hints": [
-      "Named after how biological viruses spread",
-      "Can include memes, videos, or social media posts"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Viral_phenomenon"
-  },
-  {
-    "id": "STACK",
-    "category": "techAndInternetCulture",
-    "edition": 93,
-    "summary": "A data structure that follows Last-In-First-Out (LIFO) principle, where elements are added and removed from the top.",
-    "hints": [
-      "Like a stack of plates - you add and remove from the top",
-      "Used in function calls, expression evaluation, and undo operations"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Stack_(abstract_data_type)"
-  },
-  {
-    "id": "PIXEL",
-    "category": "techAndInternetCulture",
-    "edition": 102,
-    "summary": "The smallest unit of a digital image, short for 'picture element', containing color and brightness information.",
-    "hints": [
-      "Digital images are made up of millions of these tiny squares",
-      "Higher resolution means more of these per inch"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Pixel",
-    "beta": true
-  },
-  {
-    "id": "TWEET",
-    "category": "techAndInternetCulture",
-    "edition": 112,
-    "summary": "A message posted on Twitter (now X), originally limited to 140 characters, later expanded to 280 characters.",
-    "hints": [
-      "Named after the sound birds make",
-      "Can include hashtags, mentions, and media attachments"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Tweet"
-  },
-  {
-    "id": "EMAIL",
-    "category": "techAndInternetCulture",
-    "edition": 121,
-    "summary": "Electronic mail system for sending digital messages across computer networks, fundamental to internet communication.",
-    "hints": [
-      "Invented in the 1970s, predating the World Wide Web",
-      "Uses @ symbol to separate username from domain name"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Email"
-  },
-  {
-    "id": "QUARK",
-    "category": "science",
-    "edition": 4,
-    "summary": "Fundamental particles that combine to form protons and neutrons, coming in six 'flavors': up, down, charm, strange, top, and bottom.",
-    "hints": [
-      "Named by physicist Murray Gell-Mann after a line from James Joyce",
-      "Cannot exist alone in nature, only in groups of two or three"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Quark"
-  },
-  {
-    "id": "FLORA",
-    "category": "science",
-    "edition": 13,
-    "summary": "The plant life found in a particular region, habitat, or geological period, studied in botany and ecology.",
-    "hints": [
-      "Often paired with 'fauna' when describing ecosystems",
-      "Can refer to both individual species and entire plant communities"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Flora",
-    "alpha": true
-  },
-  {
-    "id": "ORBIT",
-    "category": "science",
-    "edition": 22,
-    "summary": "The curved path that an object follows around another object due to gravitational forces, like planets around the sun.",
-    "hints": [
-      "Kepler's laws describe the elliptical nature of these paths",
-      "Satellites use these to stay in space without falling to Earth"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Orbit"
-  },
-  {
-    "id": "GAMMA",
-    "category": "science",
-    "edition": 31,
-    "summary": "High-energy electromagnetic radiation with the shortest wavelength and highest frequency, often emitted by radioactive decay.",
-    "hints": [
-      "More energetic than X-rays and extremely penetrating",
-      "Used in cancer treatment and sterilization processes"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Gamma_ray"
-  },
-  {
-    "id": "FAUNA",
-    "category": "science",
-    "edition": 40,
-    "summary": "The animal life found in a particular region, habitat, or geological period, studied in zoology and ecology.",
-    "hints": [
-      "Companion term to 'flora' in biological studies",
-      "Includes everything from microscopic organisms to large mammals"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Fauna",
-    "beta": true
-  },
-  {
-    "id": "OXIDE",
-    "category": "science",
-    "edition": 49,
-    "summary": "A chemical compound containing oxygen bonded to other elements, such as water (H₂O) or carbon dioxide (CO₂).",
-    "hints": [
-      "Rust is iron oxide formed by oxidation",
-      "Essential in many industrial processes and biological reactions"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Oxide"
-  },
-  {
-    "id": "LUMEN",
-    "category": "science",
-    "edition": 58,
-    "summary": "The SI unit of luminous flux, measuring the total amount of visible light emitted by a source.",
-    "hints": [
-      "Used to measure brightness of light bulbs and projectors",
-      "Different from watts, which measure electrical power consumption"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Lumen_(unit)",
-    "beta": true
-  },
-  {
-    "id": "LASER",
-    "category": "science",
-    "edition": 67,
-    "summary": "Light Amplification by Stimulated Emission of Radiation - a device that emits focused, coherent light beams.",
-    "hints": [
-      "Acronym that became so common it's now treated as a word",
-      "Used in surgery, manufacturing, communications, and entertainment"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Laser"
-  },
-  {
-    "id": "VENUS",
-    "category": "science",
-    "edition": 76,
-    "summary": "The second planet from the Sun, known for its thick atmosphere, extreme greenhouse effect, and surface temperatures hot enough to melt lead.",
-    "hints": [
-      "Often called Earth's 'twin' due to similar size and mass",
-      "Hottest planet in the solar system despite not being closest to the Sun"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Venus"
-  },
-  {
-    "id": "RADAR",
-    "category": "science",
-    "edition": 85,
-    "summary": "Radio Detection and Ranging - a system that uses radio waves to detect objects and determine their distance, speed, and direction.",
-    "hints": [
-      "Originally developed for military purposes during WWII",
-      "Now used in weather forecasting, air traffic control, and speed detection"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Radar"
-  },
-  {
-    "id": "ROBOT",
-    "category": "science",
-    "edition": 94,
-    "summary": "An autonomous or programmable machine designed to perform tasks, often replacing human labor in manufacturing, exploration, or service.",
-    "hints": [
-      "Term coined by Czech playwright Karel Čapek in 1920",
-      "Can range from simple assembly line machines to advanced AI systems"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Robot"
-  },
-  {
-    "id": "BRAIN",
-    "category": "science",
-    "edition": 103,
-    "summary": "The central organ of the nervous system that controls thought, memory, emotion, and vital functions in vertebrates.",
-    "hints": [
-      "Contains approximately 86 billion neurons in humans",
-      "Uses about 20% of the body's total energy despite being only 2% of body weight"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Brain"
-  },
-  {
-    "id": "HEART",
-    "category": "science",
-    "edition": 111,
-    "summary": "The muscular organ that pumps blood throughout the circulatory system, delivering oxygen and nutrients to body tissues.",
-    "hints": [
-      "Beats approximately 100,000 times per day",
-      "Has four chambers: two atria and two ventricles"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Heart"
-  },
-  {
-    "id": "CLONE",
-    "category": "science",
-    "edition": 120,
-    "summary": "A genetically identical organism or cell produced through asexual reproduction or biotechnology techniques.",
-    "hints": [
-      "Dolly the sheep was the first mammal cloned from adult cells",
-      "Occurs naturally in plants and some animals like starfish"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Cloning"
-  },
-  {
-    "id": "ZELDA",
-    "category": "videoGames",
-    "edition": 5,
-    "summary": "Legendary Nintendo action-adventure game series featuring Link's quest to save Princess Zelda and the kingdom of Hyrule.",
-    "hints": [
-      "Princess's name inspired by F. Scott Fitzgerald's wife",
-      "Features the Triforce and Master Sword as iconic elements"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/The_Legend_of_Zelda"
-  },
-  {
-    "id": "DRAKE",
-    "category": "videoGames",
-    "edition": 14,
-    "summary": "Nathan Drake, the charming treasure hunter protagonist of the Uncharted series, known for his wit and parkour skills.",
-    "hints": [
-      "Voiced by Nolan North in the popular action-adventure series",
-      "Often compared to Indiana Jones for his archaeological adventures"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Nathan_Drake_(Uncharted)",
-    "alpha": true
-  },
-  {
-    "id": "FORZA",
-    "category": "videoGames",
-    "edition": 23,
-    "summary": "Microsoft's premier racing game franchise, known for realistic car physics and stunning graphics in both simulation and arcade styles.",
-    "hints": [
-      "Italian word meaning 'force' or 'strength'",
-      "Split into Motorsport (simulation) and Horizon (open-world) series"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Forza_(series)"
-  },
-  {
-    "id": "SONIC",
-    "category": "videoGames",
-    "edition": 32,
-    "summary": "Sega's blue hedgehog mascot known for incredible speed, collecting rings, and battling the evil Dr. Robotnik/Eggman.",
-    "hints": [
-      "Can run faster than the speed of sound",
-      "His nemesis is a scientist who turns animals into robots"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sonic_the_Hedgehog"
-  },
-  {
-    "id": "LEVEL",
-    "category": "videoGames",
-    "edition": 41,
-    "summary": "A distinct section or stage in a video game, often with specific objectives, enemies, and environments to complete.",
-    "hints": [
-      "Can refer to both game stages and character progression",
-      "Often numbered sequentially or named thematically"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Level_(video_gaming)"
-  },
-  {
-    "id": "MARIO",
-    "category": "videoGames",
-    "edition": 50,
-    "summary": "Nintendo's iconic plumber mascot who jumps through platformer levels to rescue Princess Peach from Bowser.",
-    "hints": [
-      "Originally called 'Jumpman' in Donkey Kong",
-      "Named after Nintendo's landlord Mario Segale"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Mario",
-    "beta": true
-  },
-  {
-    "id": "CRASH",
-    "category": "videoGames",
-    "edition": 59,
-    "summary": "A spinning orange marsupial from the PlayStation platformer series, known for collecting Wumpa fruit and fighting Dr. Neo Cortex.",
-    "hints": [
-      "Originally Naughty Dog's mascot before moving to other developers",
-      "Famous for his spinning attack and 'Woah!' exclamation"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Crash_Bandicoot"
-  },
-  {
-    "id": "CLOUD",
-    "category": "videoGames",
-    "edition": 68,
-    "summary": "Cloud Strife, the spiky-haired protagonist of Final Fantasy VII, wielding the massive Buster Sword against the Shinra Corporation.",
-    "hints": [
-      "Ex-SOLDIER with false memories and a mysterious past",
-      "His limit breaks include Cross-Slash and Omnislash"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Cloud_Strife"
-  },
-  {
-    "id": "HADES",
-    "category": "videoGames",
-    "edition": 77,
-    "summary": "Critically acclaimed roguelike by Supergiant Games where you play as Zagreus trying to escape the underworld.",
-    "hints": [
-      "Features excellent voice acting and dynamic storytelling",
-      "Each failed escape attempt reveals more plot and character development"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Hades_(video_game)"
-  },
-  {
-    "id": "STEAM",
-    "category": "videoGames",
-    "edition": 86,
-    "summary": "Valve's digital distribution platform for PC gaming, revolutionizing how players buy, download, and play games.",
-    "hints": [
-      "Launched in 2003, now the largest PC gaming platform",
-      "Features sales, achievements, and community marketplace"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Steam_(service)"
-  },
-  {
-    "id": "NAMCO",
-    "category": "videoGames",
-    "edition": 95,
-    "summary": "Japanese video game company famous for Pac-Man, Tekken, and Tales series, now part of Bandai Namco Entertainment.",
-    "hints": [
-      "Created the iconic yellow dot-eating character in 1980",
-      "Known for arcade classics and fighting game tournaments"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Namco"
-  },
-  {
-    "id": "HIDEO",
-    "category": "videoGames",
-    "edition": 104,
-    "summary": "Hideo Kojima, legendary game designer known for the Metal Gear series and innovative storytelling in video games.",
-    "hints": [
-      "Famous for breaking the fourth wall and meta-commentary",
-      "Created Snake, Big Boss, and Death Stranding"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Hideo_Kojima",
-    "beta": true
-  },
-  {
-    "id": "UNITY",
-    "category": "videoGames",
-    "edition": 113,
-    "summary": "Popular cross-platform game engine used to develop 2D and 3D games for multiple platforms including mobile, PC, and consoles.",
-    "hints": [
-      "Game engine that powers titles like Hearthstone and Cities: Skylines",
-      "Allows developers to 'write once, deploy everywhere' across platforms"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Unity_(game_engine)"
-  },
-  {
-    "id": "MEIER",
-    "category": "videoGames",
-    "edition": 122,
-    "summary": "Sid Meier, legendary game designer known for creating the Civilization series and pioneering turn-based strategy games.",
-    "hints": [
-      "His name appears in many game titles like 'Sid Meier's Civilization'",
-      "Known for the quote 'A game is a series of interesting choices'"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sid_Meier"
-  },
-  {
-    "id": "ARWEN",
-    "category": "fantasyAndSciFi",
-    "edition": 6,
-    "summary": "Elven princess in Tolkien's Lord of the Rings, daughter of Elrond who chooses mortality to be with Aragorn.",
-    "hints": [
-      "Her name means 'noble maiden' in Sindarin",
-      "Gives up her immortality for love in the films"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Arwen"
-  },
-  {
-    "id": "DRACO",
-    "category": "fantasyAndSciFi",
-    "edition": 15,
-    "summary": "Draco Malfoy, Harry Potter's Slytherin rival known for his pure-blood supremacist views and platinum blonde hair.",
-    "hints": [
-      "His name means 'dragon' in Latin",
-      "Son of Lucius and Narcissa, marked as a Death Eater"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Draco_Malfoy",
-    "alpha": true
-  },
-  {
-    "id": "VADER",
-    "category": "fantasyAndSciFi",
-    "edition": 24,
-    "summary": "Darth Vader, the iconic Dark Lord of the Sith and former Jedi Anakin Skywalker, central antagonist of the original Star Wars trilogy.",
-    "hints": [
-      "His breathing sound is one of cinema's most recognizable",
-      "Reveals he is Luke's father in The Empire Strikes Back"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Darth_Vader"
-  },
-  {
-    "id": "FRODO",
-    "category": "fantasyAndSciFi",
-    "edition": 33,
-    "summary": "Frodo Baggins, the hobbit ring-bearer who undertakes the quest to destroy the One Ring in Tolkien's Lord of the Rings.",
-    "hints": [
-      "Inherits the Ring from his cousin Bilbo Baggins",
-      "Accompanied by his loyal gardener Samwise Gamgee"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Frodo_Baggins"
-  },
-  {
-    "id": "LEELA",
-    "category": "fantasyAndSciFi",
-    "edition": 42,
-    "summary": "Turanga Leela, the one-eyed mutant captain of the Planet Express ship in the animated series Futurama.",
-    "hints": [
-      "Purple hair and a single large eye in the center of her forehead",
-      "Works as a delivery captain in the 31st century"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Leela_(Futurama)"
-  },
-  {
-    "id": "CHANI",
-    "category": "fantasyAndSciFi",
-    "edition": 51,
-    "summary": "Chani, the Fremen warrior and Paul Atreides' love interest in Frank Herbert's Dune series.",
-    "hints": [
-      "Daughter of Liet-Kynes, skilled in desert survival",
-      "Calls Paul 'Usul' and teaches him Fremen ways"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Chani",
-    "beta": true
-  },
-  {
-    "id": "GIMLI",
-    "category": "fantasyAndSciFi",
-    "edition": 60,
-    "summary": "Gimli the Dwarf, member of the Fellowship of the Ring known for his axe, beard, and unlikely friendship with Legolas.",
-    "hints": [
-      "Son of Glóin, one of Bilbo's companions from The Hobbit",
-      "Becomes the first dwarf to enter Lothlórien in ages"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Gimli_(Middle-earth)"
-  },
-  {
-    "id": "SMAUG",
-    "category": "fantasyAndSciFi",
-    "edition": 69,
-    "summary": "Smaug the Magnificent, the fire-breathing dragon who hoards treasure in the Lonely Mountain in Tolkien's The Hobbit.",
-    "hints": [
-      "Known as 'Smaug the Chiefest and Greatest of Calamities'",
-      "Has a weakness where a scale is missing from his armor"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Smaug"
-  },
-  {
-    "id": "FORCE",
-    "category": "fantasyAndSciFi",
-    "edition": 78,
-    "summary": "The mystical energy field in Star Wars that connects all living things and grants Jedi and Sith their powers.",
-    "hints": [
-      "Has both Light and Dark sides representing good and evil",
-      "Allows users to move objects, see the future, and influence minds"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/The_Force",
-    "beta": true
-  },
-  {
-    "id": "SPOCK",
-    "category": "fantasyAndSciFi",
-    "edition": 87,
-    "summary": "Mr. Spock, the half-Vulcan science officer of the USS Enterprise in Star Trek, known for logic and the Vulcan salute.",
-    "hints": [
-      "Famous for saying 'Live long and prosper' and 'Fascinating'",
-      "Struggles between Vulcan logic and human emotion"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Spock"
-  },
-  {
-    "id": "DROID",
-    "category": "fantasyAndSciFi",
-    "edition": 96,
-    "summary": "Mechanical beings in Star Wars, ranging from protocol droids like C-3PO to astromech droids like R2-D2.",
-    "hints": [
-      "These mechanical beings often have specialized functions in a galaxy far, far away",
-      "Some develop personalities and form bonds with organic beings"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Droid"
-  },
-  {
-    "id": "DWARF",
-    "category": "fantasyAndSciFi",
-    "edition": 105,
-    "summary": "Short, stout humanoid beings in fantasy, typically skilled miners, smiths, and warriors with magnificent beards.",
-    "hints": [
-      "Often live underground in mountains and mine precious metals",
-      "Tolkien's dwarves are known for their craftsmanship and gold-love"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Dwarf_(folklore)"
-  },
-  {
-    "id": "SIGIL",
-    "category": "fantasyAndSciFi",
-    "edition": 114,
-    "summary": "A magical symbol or seal used in fantasy and occult practices to focus power, cast spells, or represent entities.",
-    "hints": [
-      "Often inscribed on objects or drawn in the air for magical effects",
-      "Can represent houses, guilds, or magical concepts"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sigil_(magic)"
-  },
-  {
-    "id": "MORIA",
-    "category": "fantasyAndSciFi",
-    "edition": 123,
-    "summary": "The ancient dwarven city of Khazad-dûm in Tolkien's Middle-earth, later called Moria after being overrun by orcs and a Balrog.",
-    "hints": [
-      "Also known as Khazad-dûm",
-      "Where Gandalf falls fighting the Balrog on the Bridge of Khazad-dûm"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Moria,_Middle-earth"
-  },
-  {
-    "id": "JOKER",
-    "category": "superheroes",
-    "edition": 7,
-    "summary": "Batman's arch-nemesis, the Clown Prince of Crime known for his maniacal laugh, purple suit, and chaotic evil schemes.",
-    "hints": [
-      "Often portrayed with green hair and a permanent smile",
-      "His origin story varies, but often involves falling into chemicals"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Joker_(character)"
-  },
-  {
-    "id": "CAROL",
-    "category": "superheroes",
-    "edition": 16,
-    "summary": "Carol Danvers, also known as Captain Marvel, a former Air Force pilot with cosmic powers including flight, super strength, and energy projection.",
-    "hints": [
-      "Originally known as Ms. Marvel before taking the Captain Marvel title",
-      "Gained her powers from Kree technology and Mar-Vell"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Carol_Danvers",
-    "alpha": true
-  },
-  {
-    "id": "BLADE",
-    "category": "superheroes",
-    "edition": 25,
-    "summary": "Eric Brooks, the vampire hunter known as Blade, a half-vampire with all their strengths but none of their weaknesses.",
-    "hints": [
-      "Immune to vampire bites and can walk in daylight",
-      "Uses silver weapons and martial arts to fight the undead"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Blade_(character)"
-  },
-  {
-    "id": "STARK",
-    "category": "superheroes",
-    "edition": 34,
-    "summary": "Tony Stark, the genius billionaire playboy philanthropist who becomes Iron Man using his advanced powered armor technology.",
-    "hints": [
-      "CEO of Stark Industries and founding member of the Avengers",
-      "His arc reactor keeps shrapnel from reaching his heart"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Tony_Stark",
-    "beta": true
-  },
-  {
-    "id": "VENOM",
-    "category": "superheroes",
-    "edition": 43,
-    "summary": "An alien symbiote that bonds with hosts, most famously Eddie Brock, granting superhuman abilities but requiring consumption of brains.",
-    "hints": [
-      "Originally bonded with Spider-Man before finding Eddie Brock",
-      "Has a distinctive white spider symbol and sharp teeth"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Venom_(character)"
-  },
-  {
-    "id": "LOGAN",
-    "category": "superheroes",
-    "edition": 52,
-    "summary": "James 'Logan' Howlett, also known as Wolverine, the Canadian mutant with adamantium claws, healing factor, and berserker rage.",
-    "hints": [
-      "Part of the Weapon X program that bonded metal to his skeleton",
-      "Member of the X-Men known for his gruff personality"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Wolverine_(character)"
-  },
-  {
-    "id": "RAVEN",
-    "category": "superheroes",
-    "edition": 61,
-    "summary": "Rachel Roth, the half-demon daughter of Trigon, known for her dark magic, teleportation, and dry wit as a Teen Titan.",
-    "hints": [
-      "Often says 'Azarath Metrion Zinthos' when casting spells",
-      "Struggles with her demonic heritage and emotions"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Raven_(DC_Comics)"
-  },
-  {
-    "id": "THING",
-    "category": "superheroes",
-    "edition": 70,
-    "summary": "Ben Grimm, the rock-skinned member of the Fantastic Four with superhuman strength and durability, known for saying 'It's clobberin' time!'",
-    "hints": [
-      "Pilot and best friend of Reed Richards before cosmic ray exposure",
-      "His orange rocky exterior hides a heart of gold"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Thing_(character)"
-  },
-  {
-    "id": "FLASH",
-    "category": "superheroes",
-    "edition": 79,
-    "summary": "The fastest man alive, various speedsters have taken this mantle, most notably Barry Allen and Wally West, who can run at super-speed.",
-    "hints": [
-      "Can vibrate through solid objects and travel through time",
-      "Connected to the Speed Force, the source of speedster powers"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Flash_(character)"
-  },
-  {
-    "id": "HAVOK",
-    "category": "superheroes",
-    "edition": 88,
-    "summary": "Alex Summers, Cyclops' younger brother with the ability to absorb cosmic energy and convert it into devastating plasma blasts.",
-    "hints": [
-      "Member of X-Factor and brother to Scott Summers",
-      "Can absorb ambient cosmic radiation to fuel his powers"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Havok_(comics)"
-  },
-  {
-    "id": "MILES",
-    "category": "superheroes",
-    "edition": 97,
-    "summary": "Miles Morales, the Spider-Man of the Ultimate Universe who gained spider powers including invisibility and bio-electric venom blasts.",
-    "hints": [
-      "Took over as Spider-Man after Peter Parker's death in Ultimate Comics",
-      "Has unique powers like camouflage and venom strike"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Miles_Morales"
-  },
-  {
-    "id": "BRUCE",
-    "category": "superheroes",
-    "edition": 106,
-    "summary": "Bruce Wayne, the billionaire orphan who becomes Batman to fight crime in Gotham City using his intellect, training, and gadgets.",
-    "hints": [
-      "Witnessed his parents' murder as a child in Crime Alley",
-      "Uses the bat as his symbol to strike fear into criminals"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Bruce_Wayne",
-    "beta": true
-  },
-  {
-    "id": "DONNA",
-    "category": "superheroes",
-    "edition": 115,
-    "summary": "Donna Troy, the original Wonder Girl and founding member of the Teen Titans with strength, flight, and Amazonian training.",
-    "hints": [
-      "Sister figure to Wonder Woman and former protégé",
-      "Has a complex origin story that's been retold multiple times"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Donna_Troy"
-  },
-  {
-    "id": "BEAST",
-    "category": "superheroes",
-    "edition": 124,
-    "summary": "Dr. Hank McCoy, the brilliant scientist and X-Men member with blue fur, enhanced agility, and genius-level intellect.",
-    "hints": [
-      "Originally had normal appearance before secondary mutation",
-      "Known for his scholarly nature and acrobatic fighting style"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Beast_(character)"
-  },
-  {
-    "id": "ROGUE",
-    "category": "tabletopAndBoardGames",
-    "edition": 8,
-    "summary": "A stealth‑focused D&D class known for Sneak Attack, skills, and subterfuge.",
-    "hints": [
-      "Skilled with Thieves’ Cant and expertise rather than heavy armor",
-      "Its signature damage feature triggers when an ally is adjacent"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Character_classes_in_Dungeons_%26_Dragons#Rogue"
-  },
-  {
-    "id": "PSION",
-    "category": "tabletopAndBoardGames",
-    "edition": 17,
-    "summary": "A psionic character class in some D&D editions, wielding mental disciplines and power points.",
-    "hints": [
-      "Manifests abilities via disciplines instead of spell schools",
-      "Often associated with crystal foci and the Far Realm"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Psion_(Dungeons_%26_Dragons)"
-  },
-  {
-    "id": "DRUID",
-    "category": "tabletopAndBoardGames",
-    "edition": 26,
-    "summary": "A D&D spellcaster tied to nature, known for Wild Shape and circle traditions.",
-    "hints": [
-      "Can prepare spells from the entire list after each long rest",
-      "Transforms into beasts while retaining class features"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Character_classes_in_Dungeons_%26_Dragons#Druid"
-  },
-  {
-    "id": "CATAN",
-    "category": "tabletopAndBoardGames",
-    "edition": 35,
-    "summary": "A seminal Eurogame about trading and building on a modular hex map.",
-    "hints": [
-      "Wool, ore, brick — trade ratios shape your tempo",
-      "The robber freezes production on a tile until displaced"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Catan",
-    "beta": true
-  },
-  {
-    "id": "CHESS",
-    "category": "tabletopAndBoardGames",
-    "edition": 44,
-    "summary": "A classic two‑player strategy game on an 8×8 board with asymmetric piece movement.",
-    "hints": [
-      "One special king move requires untouched pieces and a clear path",
-      "A pawn may capture en passant under precise timing"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Chess"
-  },
-  {
-    "id": "CHECK",
-    "category": "tabletopAndBoardGames",
-    "edition": 53,
-    "summary": "In chess, a direct attack on the king that must be addressed immediately.",
-    "hints": [
-      "Avoidable by capture, interposition, or king movement only",
-      "Declare this before mate ends the game"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Check_(chess)"
-  },
-  {
-    "id": "MAGIC",
-    "category": "tabletopAndBoardGames",
-    "edition": 62,
-    "summary": "Magic: The Gathering — a trading card game built on a five‑color resource system.",
-    "hints": [
-      "Lands enter tapped or untapped to fuel spells",
-      "The color pie divides philosophies like blue control and red burn"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Magic:_The_Gathering"
-  },
-  {
-    "id": "QUEST",
-    "category": "tabletopAndBoardGames",
-    "edition": 71,
-    "summary": "A core RPG objective structure — narrative goals that drive adventures.",
-    "hints": [
-      "Often formalized in modules with hooks, milestones, and rewards",
-      "May be tracked alongside side objectives and downtime tasks"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Role-playing_game"
-  },
-  {
-    "id": "BLUFF",
-    "category": "tabletopAndBoardGames",
-    "edition": 80,
-    "summary": "A hidden‑information/deduction tactic central to games like poker and Liar’s Dice.",
-    "hints": [
-      "Success hinges on probabilistic claims and table image",
-      "Often countered by forced reveals or challenge mechanics"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Bluffing"
-  },
-  {
-    "id": "PIECE",
-    "category": "tabletopAndBoardGames",
-    "edition": 89,
-    "summary": "A movable unit used to represent players or powers on a board.",
-    "hints": [
-      "Its shape may encode movement or ownership",
-      "In abstracts, material advantage is measured in these units"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Game_piece"
-  },
-  {
-    "id": "SPACE",
-    "category": "tabletopAndBoardGames",
-    "edition": 98,
-    "summary": "A discrete position on a board that constrains movement and placement.",
-    "hints": [
-      "Landing here can trigger card draws, penalties, or bonuses",
-      "Grids and hexes partition these locations"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Board_game"
-  },
-  {
-    "id": "BOARD",
-    "category": "tabletopAndBoardGames",
-    "edition": 107,
-    "summary": "The surface or layout on which a tabletop game is played.",
-    "hints": [
-      "May be modular, folding, or tile‑based for replayability",
-      "Its topology defines adjacency and movement costs"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Board_game"
-  },
-  {
-    "id": "ROUTE",
-    "category": "tabletopAndBoardGames",
-    "edition": 116,
-    "summary": "Ticket to Ride’s central mechanic — claiming connections between cities to score.",
-    "hints": [
-      "Set collection enables longer claims for higher points",
-      "Hidden objectives reward completing specific paths"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Ticket_to_Ride_(board_game)",
-    "beta": true
-  },
-  {
-    "id": "MIMIC",
-    "category": "tabletopAndBoardGames",
-    "edition": 125,
-    "summary": "A classic D&D monster that disguises itself as a chest or door to ambush adventurers.",
-    "hints": [
-      "Often adhesive — making escape checks necessary",
-      "Perception tests fail when you treat treasure like a trap"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Mimic_(Dungeons_%26_Dragons)"
-  },
-  {
-    "id": "MANGA",
-    "category": "animeAndManga",
-    "edition": 9,
-    "summary": "Japanese comics and graphic novels, often adapted into anime and read right to left.",
-    "hints": [
-      "Printed format often adapted into animated series",
-      "Typically read from right to left in its country of origin"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Manga"
-  },
-  {
-    "id": "ANIME",
-    "category": "animeAndManga",
-    "edition": 18,
-    "summary": "Japanese animated works, covering diverse genres and art styles.",
-    "hints": [
-      "May adapt manga, light novels, or be entirely original",
-      "Character designs often feature exaggerated expressions and large eyes"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Anime"
-  },
-  {
-    "id": "LIGHT",
-    "category": "animeAndManga",
-    "edition": 27,
-    "summary": "Light Yagami, protagonist of Death Note, who gains a supernatural notebook of deadly power.",
-    "hints": [
-      "Thinks of himself as a god of a new world",
-      "Outwitted in a high-stakes cat-and-mouse game with a detective known only as L"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Light_Yagami"
-  },
-  {
-    "id": "RYUKO",
-    "category": "animeAndManga",
-    "edition": 36,
-    "summary": "Ryuko Matoi, scissor blade-wielding heroine of Kill la Kill.",
-    "hints": [
-      "Seeks the truth behind her father's murder",
-      "Wears a sentient sailor uniform named Senketsu"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/List_of_Kill_la_Kill_characters#Ry%C5%ABko_Matoi",
-    "beta": true
-  },
-  {
-    "id": "SPIKE",
-    "category": "animeAndManga",
-    "edition": 45,
-    "summary": "Spike Spiegel, the laid-back bounty hunter protagonist of Cowboy Bebop.",
-    "hints": [
-      "Former member of the Red Dragon Crime Syndicate",
-      "Haunted by a past love and a deadly rival"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Spike_Spiegel"
-  },
-  {
-    "id": "ASTRO",
-    "category": "animeAndManga",
-    "edition": 54,
-    "summary": "Astro Boy, a classic robot hero created by Osamu Tezuka.",
-    "hints": [
-      "A robot with emotions who fights for justice",
-      "Known as Tetsuwan Atom in Japan"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Astro_Boy"
-  },
-  {
-    "id": "ALITA",
-    "category": "animeAndManga",
-    "edition": 63,
-    "summary": "Cyborg heroine of Battle Angel Alita, set in a post-apocalyptic world.",
-    "hints": [
-      "Discovered in a scrapyard by cybernetics doctor Ido",
-      "Excels in the martial art Panzer Kunst"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Battle_Angel_Alita"
-  },
-  {
-    "id": "LUPIN",
-    "category": "animeAndManga",
-    "edition": 72,
-    "summary": "Lupin III, gentleman thief from the long-running manga and anime series.",
-    "hints": [
-      "Grandson of a famous fictional French burglar",
-      "Often pursued by Inspector Zenigata"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Lupin_III"
-  },
-  {
-    "id": "USAGI",
-    "category": "animeAndManga",
-    "edition": 81,
-    "summary": "Usagi Tsukino, magical girl heroine of Sailor Moon.",
-    "hints": [
-      "Transforms into a guardian of love and justice",
-      "Carries a brooch and wields a Moon Tiara"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sailor_Moon_(character)",
-    "beta": true
-  },
-  {
-    "id": "RENJI",
-    "category": "animeAndManga",
-    "edition": 90,
-    "summary": "Renji Abarai, lieutenant in Bleach’s Soul Society.",
-    "hints": [
-      "Wields a zanpakuto named Zabimaru",
-      "Known for his striking red hair and tattoos"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/List_of_Bleach_characters#Renji_Abarai"
-  },
-  {
-    "id": "SANJI",
-    "category": "animeAndManga",
-    "edition": 99,
-    "summary": "Sanji, cook of the Straw Hat Pirates in One Piece.",
-    "hints": [
-      "Fights primarily using powerful kicks",
-      "Dreams of finding the All Blue"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/List_of_One_Piece_characters#Sanji"
-  },
-  {
-    "id": "CELTY",
-    "category": "animeAndManga",
-    "edition": 108,
-    "summary": "Celty Sturluson, headless dullahan from Durarara!!.",
-    "hints": [
-      "Rides a black motorcycle in Ikebukuro",
-      "Searching for her missing head"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/List_of_Durarara!!_characters#Celty_Sturluson"
-  },
-  {
-    "id": "HIKAR",
-    "category": "animeAndManga",
-    "edition": 117,
-    "summary": "Hikaru Shindo, protagonist of Hikaru no Go.",
-    "hints": [
-      "Haunted by the spirit of an ancient Go master",
-      "Learns strategy through the board game Go"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/List_of_Hikaru_no_Go_characters#Hikaru_Shindo"
-  },
-  {
-    "id": "SAIYA",
-    "category": "animeAndManga",
-    "edition": 126,
-    "summary": "Saiyan, warrior race from the Dragon Ball series.",
-    "hints": [
-      "Known for spiky hair and incredible power boosts",
-      "Transformations often change hair color to gold"
-    ],
-    "wikipediaUrl": "https://en.wikipedia.org/wiki/Saiyan"
   }
 ]
