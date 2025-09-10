@@ -6,6 +6,7 @@ import {
   useContext,
 } from "react";
 import { WordEntry, WordId } from "@/types/word";
+import { getDictionaryUrl } from "@/constants/api";
 import { wordsApi } from "@/utils/api";
 import {
   saveWordsLocal,
@@ -60,9 +61,7 @@ export const WordDataProvider = ({ children }: { children: ReactNode }) => {
 
         try {
           // Try Firebase Hosting CDN first
-          const DICTIONARY_URL =
-            process.env.EXPO_PUBLIC_DICTIONARY_URL ||
-            "https://nerd-word-cfda3.web.app/dict/v3/words.json";
+          const DICTIONARY_URL = getDictionaryUrl();
 
           if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
             console.log(`Attempting to fetch from: ${DICTIONARY_URL}`);
