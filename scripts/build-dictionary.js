@@ -51,7 +51,7 @@ function validateWords(words) {
 
   words.forEach((word, index) => {
     requiredFields.forEach((field) => {
-      if (!word[field]) {
+      if (word[field] == null) {
         issues.push(`Word at index ${index} missing required field: ${field}`);
       }
     });
