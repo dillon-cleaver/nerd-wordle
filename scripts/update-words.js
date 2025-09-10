@@ -14,6 +14,7 @@
 
 const { exec } = require("child_process");
 const util = require("util");
+const { WARNING_PATTERN } = require("./validation-constants");
 const execAsync = util.promisify(exec);
 
 // Parse command line arguments
@@ -49,8 +50,7 @@ async function execCommand(command, description) {
   try {
     const { stdout, stderr } = await execAsync(command);
     // Print warnings unless they match common warning patterns (case-insensitive)
-    const warningPattern = /(warning|warn|deprecationwarning)/i;
-    if (stderr && !warningPattern.test(stderr)) {
+    if (stderr && !WARNING_PATTERN.test(stderr)) {
       console.warn(`⚠️  ${stderr.trim()}`);
     }
     if (stdout) {

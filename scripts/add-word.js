@@ -14,22 +14,12 @@
 const fs = require("fs");
 const path = require("path");
 const readline = require("readline");
+const { WORD_ID_PATTERN, WORD_CATEGORIES } = require("./validation-constants");
 
 const WORDS_FILE = path.join(process.cwd(), "constants", "words.json");
 
-// Available categories (extracted from existing words)
-const CATEGORIES = [
-  "common",
-  "movies",
-  "literature",
-  "techAndInternetCulture",
-  "science",
-  "videoGames",
-  "fantasyAndSciFi",
-  "superheroes",
-  "tabletopAndBoardGames",
-  "animeAndManga",
-];
+// Available categories (imported from validation constants)
+const CATEGORIES = WORD_CATEGORIES;
 
 function loadWords() {
   try {
@@ -62,7 +52,7 @@ function validateWord(id, category) {
     issues.push("Word ID should be uppercase (will be auto-converted)");
   }
 
-  if (id && !/^[A-Z]+$/.test(id.toUpperCase())) {
+  if (id && !WORD_ID_PATTERN.test(id.toUpperCase())) {
     issues.push("Word ID should only contain letters");
   }
 
