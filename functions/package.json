@@ -6,18 +6,15 @@
     "lint": "eslint . --ext .js,.ts",
     "shell": "pnpm run build && firebase functions:shell",
     "logs": "firebase functions:log",
-    
     "dev": "pnpm run build:watch",
     "dev:emulator": "pnpm run build && firebase emulators:start --only functions,firestore --import=./emulator-data --export-on-exit=./emulator-data",
     "dev:clean": "pnpm run build && firebase emulators:start --only functions,firestore",
     "dev:prod-data": "firebase emulators:exec --only functions,firestore 'pnpm run migrate:from-prod' --export-on-exit=./emulator-data",
     "dev:reset": "rm -rf ./emulator-data && firebase emulators:exec --only firestore 'firebase firestore:delete --all-collections -f'",
-    
     "deploy": "firebase deploy --only functions",
     "deploy:rules": "firebase deploy --only firestore:rules",
-    "deploy:indexes": "firebase deploy --only firestore:indexes", 
+    "deploy:indexes": "firebase deploy --only firestore:indexes",
     "deploy:all": "firebase deploy",
-    
     "seed:words:production": "pnpm run build && node lib/functions/src/migrations/seed-words.js",
     "seed:words:emulator": "pnpm run build && FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node lib/functions/src/migrations/seed-words.js",
     "migrate:from-prod": "pnpm run build && FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node lib/functions/src/migrations/import-from-production.js"

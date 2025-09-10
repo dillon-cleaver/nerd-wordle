@@ -26,6 +26,7 @@ pnpm dev
 ## ⚡ Most Common Commands
 
 ### Adding New Words (Primary Workflow)
+
 ```bash
 # 1. Edit constants/words.json
 # 2. Deploy to CDN
@@ -36,15 +37,17 @@ pnpm words:admin
 ```
 
 ### Daily Development
+
 ```bash
 # Frontend development
 pnpm dev
 
-# Backend development  
+# Backend development
 cd functions && pnpm dev:emulator
 ```
 
 ### Deployment
+
 ```bash
 # Deploy new words
 pnpm words:deploy
@@ -105,26 +108,26 @@ pnpm run env:check
 
 #### Frontend (from root directory)
 
-| Command            | Description                     |
-| ------------------ | ------------------------------- |
-| `pnpm start`       | Start Expo dev server           |
-| `pnpm dev`         | Start development with env vars |
-| `pnpm dev:web`     | Start web development           |
-| `pnpm dev:bypass`  | Start with testing flags        |
-| `pnpm clean`       | Start Expo with cleared cache   |
+| Command           | Description                     |
+| ----------------- | ------------------------------- |
+| `pnpm start`      | Start Expo dev server           |
+| `pnpm dev`        | Start development with env vars |
+| `pnpm dev:web`    | Start web development           |
+| `pnpm dev:bypass` | Start with testing flags        |
+| `pnpm clean`      | Start Expo with cleared cache   |
 
 #### Backend (from functions/ directory)
 
-| Command                      | Description                                      |
-| ---------------------------- | ------------------------------------------------ |
-| `pnpm build`                 | Compile TypeScript to JavaScript                 |
-| `pnpm dev`                   | Continuous TypeScript compilation                |
-| `pnpm shell`                 | Interactive Firebase Functions debugging         |
-| `pnpm logs`                  | View production function logs                    |
-| `pnpm dev:emulator`          | Start Firebase emulators with data persistence  |
-| `pnpm dev:clean`             | Start fresh emulator (no saved data)            |
-| `pnpm dev:prod-data`         | Start emulators with production data seeded      |
-| `pnpm dev:reset`             | Reset emulator data and start fresh              |
+| Command              | Description                                    |
+| -------------------- | ---------------------------------------------- |
+| `pnpm build`         | Compile TypeScript to JavaScript               |
+| `pnpm dev`           | Continuous TypeScript compilation              |
+| `pnpm shell`         | Interactive Firebase Functions debugging       |
+| `pnpm logs`          | View production function logs                  |
+| `pnpm dev:emulator`  | Start Firebase emulators with data persistence |
+| `pnpm dev:clean`     | Start fresh emulator (no saved data)           |
+| `pnpm dev:prod-data` | Start emulators with production data seeded    |
+| `pnpm dev:reset`     | Reset emulator data and start fresh            |
 
 ### Code Quality
 
@@ -138,12 +141,12 @@ pnpm run env:check
 
 ### Quick Deployment Commands
 
-| Command               | Description                           |
-| --------------------- | ------------------------------------- |
-| `pnpm words:deploy`   | **Deploy new words to CDN**          |
-| `pnpm deploy:app`     | Deploy frontend to production         |
-| `pnpm deploy:backend` | Deploy backend functions              |
-| `pnpm deploy:all`     | Deploy everything (backend + frontend)|
+| Command               | Description                            |
+| --------------------- | -------------------------------------- |
+| `pnpm words:deploy`   | **Deploy new words to CDN**            |
+| `pnpm deploy:app`     | Deploy frontend to production          |
+| `pnpm deploy:backend` | Deploy backend functions               |
+| `pnpm deploy:all`     | Deploy everything (backend + frontend) |
 
 ### Web Deployment
 
@@ -218,6 +221,7 @@ pnpm words:admin
 ```
 
 **What `pnpm words:deploy` does:**
+
 - ✅ Validates word data (checks for duplicates, required fields)
 - ✅ Builds static dictionary for CDN
 - ✅ Deploys to Firebase Hosting CDN
@@ -225,12 +229,12 @@ pnpm words:admin
 
 ### Individual Word Management Commands
 
-| Command              | Description                           |
-| -------------------- | ------------------------------------- |
-| `pnpm words:add`     | Show instructions for adding words    |
-| `pnpm words:validate`| Validate words.json for issues        |
-| `pnpm words:deploy`  | **Main workflow:** validate + deploy to CDN |
-| `pnpm words:admin`   | Update Firestore for admin functions |
+| Command               | Description                                 |
+| --------------------- | ------------------------------------------- |
+| `pnpm words:add`      | Show instructions for adding words          |
+| `pnpm words:validate` | Validate words.json for issues              |
+| `pnpm words:deploy`   | **Main workflow:** validate + deploy to CDN |
+| `pnpm words:admin`    | Update Firestore for admin functions        |
 
 ### Legacy Workflow (if CDN is unavailable)
 
@@ -652,18 +656,22 @@ pnpm shell
 
 #### Pre-Deployment Verification
 
-```bash
+````bash
 ```bash
 cd functions
 pnpm build         # Ensure clean compilation
 pnpm deploy:all    # Deploy functions + rules + indexes
 pnpm logs          # Monitor deployment
-```
-pnpm run lint          # Check code quality
-pnpm run shell         # Test key functions manually
+````
+
+pnpm run lint # Check code quality
+pnpm run shell # Test key functions manually
+
 # Then deploy:
+
 pnpm run deploy:functions
-```
+
+````
 
 #### Production Issue Investigation
 
@@ -680,7 +688,7 @@ pnpm run shell
 # 3. Fix and redeploy
 pnpm run build
 pnpm run deploy:functions
-```
+````
 
 #### Clean Development Reset
 

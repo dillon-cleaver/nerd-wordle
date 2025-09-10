@@ -9,20 +9,16 @@
     "lint": "expo lint --max-warnings 0",
     "typecheck": "tsc --noEmit",
     "prepare": "husky",
-    
     "words:add": "echo 'Add words to constants/words.json, then run: pnpm words:deploy'",
     "words:validate": "node scripts/build-dictionary.js --validate",
     "words:deploy": "pnpm words:validate && pnpm run build:dictionary && firebase deploy --only hosting && echo '✅ New words deployed to CDN!'",
     "words:admin": "cd functions && pnpm run seed:words:production",
-    
     "dev": "pnpm run env:development && expo start",
     "dev:web": "pnpm run env:development && expo start --web",
     "dev:bypass": "pnpm run env:testing && expo start",
-    
     "deploy:app": "pnpm run env:production && expo export --platform web && eas deploy",
     "deploy:backend": "cd functions && pnpm run deploy:all",
     "deploy:all": "pnpm deploy:backend && pnpm deploy:app",
-    
     "build:dictionary": "node scripts/build-dictionary.js",
     "env:development": "node scripts/env-helper.js development",
     "env:testing": "node scripts/env-helper.js testing",
