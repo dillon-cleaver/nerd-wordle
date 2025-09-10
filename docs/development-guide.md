@@ -289,10 +289,12 @@ pnpm run dev:prod-data
 The Firebase emulator host can be configured using the `FIRESTORE_EMULATOR_HOST` environment variable. This is useful for different development setups or when using alternative localhost configurations.
 
 **Default Configuration:**
+
 - Default host: `127.0.0.1:8080`
 - Scripts automatically use this default if no environment variable is set
 
 **Custom Configuration:**
+
 ```bash
 # Use a different emulator host (e.g., different port)
 export FIRESTORE_EMULATOR_HOST=localhost:9999
@@ -303,10 +305,12 @@ FIRESTORE_EMULATOR_HOST=localhost:9999 pnpm seed:words:emulator
 ```
 
 **Scripts with configurable emulator host:**
+
 - `pnpm seed:words:emulator` - Seed words to emulator
 - `pnpm migrate:from-prod` - Import production data to emulator
 
 **Environment variable syntax:**
+
 ```bash
 FIRESTORE_EMULATOR_HOST=${FIRESTORE_EMULATOR_HOST:-127.0.0.1:8080}
 ```

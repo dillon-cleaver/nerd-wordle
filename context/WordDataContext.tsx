@@ -13,6 +13,7 @@ import {
   loadWordsLocal,
   isWordsCacheValid,
 } from "@/storage/words.local";
+import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 
 type WordDataContextType = {
   words: WordEntry[];
@@ -44,7 +45,7 @@ export const WordDataProvider = ({ children }: { children: ReactNode }) => {
         // Check if we have cached words
         const cachedData = loadWordsLocal();
         if (cachedData && isWordsCacheValid(cachedData)) {
-          if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+          if (isDebugLoggingEnabled()) {
             console.log("Loading words from localStorage cache");
           }
           setWords(cachedData.words);
@@ -53,7 +54,7 @@ export const WordDataProvider = ({ children }: { children: ReactNode }) => {
         }
 
         // Cache miss or expired, try static hosting first, then fallback to API
-        if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+        if (isDebugLoggingEnabled()) {
           console.log("Cache miss, trying static hosting first");
         }
 
@@ -63,8 +64,17 @@ export const WordDataProvider = ({ children }: { children: ReactNode }) => {
           // Try Firebase Hosting CDN first
           const DICTIONARY_URL = getDictionaryUrl();
 
-          if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
-            console.log(`Attempting to fetch from: ${DICTIONARY_URL}`);
+          if (isDebugLoggingEnabled()) {
+            try {
+              const urlObj = new URL(DICTIONARY_URL);
+              // Only log origin and pathname, omitting query and sensitive info
+              console.log(
+                `Attempting to fetch from: ${urlObj.origin}${urlObj.pathname}`
+              );
+            } catch {
+              // Fallback: log generic message if URL parsing fails
+              console.log("Attempting to fetch from dictionary URL");
+            }
           }
 
           const response = await fetch(DICTIONARY_URL);
@@ -75,17 +85,17 @@ export const WordDataProvider = ({ children }: { children: ReactNode }) => {
           }
           firebaseWords = await response.json();
 
-          if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+          if (isDebugLoggingEnabled()) {
             console.log(`✅ Loaded ${firebaseWords.length} words from CDN`);
           }
         } catch (cdnError) {
           // Fallback to original API if CDN fails
-          if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+          if (isDebugLoggingEnabled()) {
             console.log("CDN failed, falling back to API:", cdnError);
           }
           firebaseWords = await wordsApi.getAllWords();
 
-          if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+          if (isDebugLoggingEnabled()) {
             console.log(
               `✅ Loaded ${firebaseWords.length} words from API (fallback)`
             );
@@ -97,7 +107,7 @@ export const WordDataProvider = ({ children }: { children: ReactNode }) => {
         // Cache the words using utility function
         saveWordsLocal(firebaseWords);
 
-        if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+        if (isDebugLoggingEnabled()) {
           console.log(`📊 Words loaded and cached successfully`);
         }
       } catch (err) {
