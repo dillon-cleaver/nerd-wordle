@@ -2,12 +2,15 @@
  * Shared validation constants for word management scripts
  */
 
-// Word ID validation pattern - only uppercase letters allowed
-export const WORD_ID_PATTERN = /^[A-Z]+$/;
+// Word ID validation pattern - exactly 5 uppercase letters (Wordle standard)
+export const WORD_ID_PATTERN = /^[A-Z]{5}$/;
+
+// Special category for basic words (no additional metadata required)
+export const COMMON_CATEGORY = "common";
 
 // Available word categories
 export const WORD_CATEGORIES = [
-  "common",
+  COMMON_CATEGORY,
   "movies",
   "literature",
   "techAndInternetCulture",

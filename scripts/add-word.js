@@ -14,7 +14,11 @@
 const fs = require("fs");
 const path = require("path");
 const readline = require("readline");
-const { WORD_ID_PATTERN, WORD_CATEGORIES } = require("./validation-constants");
+const {
+  WORD_ID_PATTERN,
+  WORD_CATEGORIES,
+  COMMON_CATEGORY,
+} = require("./validation-constants");
 
 const WORDS_FILE = path.join(process.cwd(), "constants", "words.json");
 
@@ -52,8 +56,12 @@ function validateWord(id, category) {
     issues.push("Word ID should be uppercase (will be auto-converted)");
   }
 
+  if (id && id.length !== 5) {
+    issues.push(`Word ID must be exactly 5 characters (got ${id.length})`);
+  }
+
   if (id && !WORD_ID_PATTERN.test(id.toUpperCase())) {
-    issues.push("Word ID should only contain letters");
+    issues.push("Word ID must be exactly 5 uppercase letters");
   }
 
   if (!category || !CATEGORIES.includes(category)) {
@@ -84,7 +92,7 @@ async function interactiveAdd() {
 
   try {
     // Get word ID
-    const wordId = (await askQuestion(rl, "Enter word ID (letters only): "))
+    const wordId = (await askQuestion(rl, "Enter word ID (exactly 5 letters): "))
       .toUpperCase()
       .trim();
 
@@ -137,7 +145,7 @@ async function interactiveAdd() {
 
     // Add the word
     let newWord;
-    if (category === "common") {
+    if (category === COMMON_CATEGORY) {
       // Common words only need id and category
       newWord = { id: wordId, category };
     } else {
@@ -166,7 +174,7 @@ async function interactiveAdd() {
     console.log(`\n✅ Added "${wordId}" to category "${category}"`);
     console.log(`📊 Total words: ${words.length}`);
 
-    if (category !== "common") {
+    if (category !== COMMON_CATEGORY) {
       console.log("\n📝 NerdWord created with placeholder data:");
       console.log("   - 2 TODO hints");
       console.log("   - TODO summary");
