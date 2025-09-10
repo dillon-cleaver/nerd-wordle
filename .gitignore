@@ -41,6 +41,9 @@ functions/firebase-debug.log
 functions/firestore-debug.log
 firestore-debug.log
 
+# Firebase Functions Build Output
+functions/lib/
+
 # Firebase Hosting Cache
 .firebase/
 
