@@ -9,7 +9,7 @@
     "lint": "expo lint --max-warnings 0",
     "typecheck": "tsc --noEmit",
     "prepare": "husky",
-    "words:add": "echo 'Add words to constants/words.json, then run: pnpm words:deploy'",
+    "words:add": "node scripts/add-word.js",
     "words:validate": "node scripts/build-dictionary.js --validate",
     "words:deploy": "pnpm words:validate && pnpm run build:dictionary && firebase deploy --only hosting && echo '✅ New words deployed to CDN!'",
     "words:admin": "cd functions && pnpm run seed:words:production",
