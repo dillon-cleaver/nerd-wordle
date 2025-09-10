@@ -347,16 +347,15 @@ graph TD
 ### Adding New Words (Updated Process)
 
 1. **Edit source**: Update `constants/words.json`
-2. **Build dictionary**: `npm run build:dictionary`
-3. **Deploy CDN**: `firebase deploy --only hosting`
-4. **Update Firestore**: `cd functions && node lib/migrations/seed-words.js` _(for admin functions)_
-5. **Test**: Verify CDN + fallback work
+2. **Deploy everything**: `pnpm words:deploy`
+3. **Optional - Update Firestore**: `pnpm words:admin` _(for admin functions)_
+4. **Test**: Verify CDN + fallback work
 
 ### Version Management
 
 ```bash
 # Create new version for cache busting
-npm run build:dictionary --version v4
+pnpm build:dictionary --version v4
 
 # Update client code to use new version
 # Edit WordDataContext.tsx: .../dict/v4/words.json

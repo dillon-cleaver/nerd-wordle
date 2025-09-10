@@ -16,11 +16,44 @@ cd functions && pnpm install && cd ..
 # Start development: Backend first, then frontend
 # Terminal 1: Start Firebase emulators
 cd functions
-pnpm run emulator:start
+pnpm dev:emulator
 
 # Terminal 2: Start frontend dev server
 cd ..  # back to root
-pnpm start
+pnpm dev
+```
+
+## ⚡ Most Common Commands
+
+### Adding New Words (Primary Workflow)
+```bash
+# 1. Edit constants/words.json
+# 2. Deploy to CDN
+pnpm words:deploy
+
+# 3. Optional: Update admin database
+pnpm words:admin
+```
+
+### Daily Development
+```bash
+# Frontend development
+pnpm dev
+
+# Backend development  
+cd functions && pnpm dev:emulator
+```
+
+### Deployment
+```bash
+# Deploy new words
+pnpm words:deploy
+
+# Deploy app updates
+pnpm deploy:app
+
+# Deploy everything
+pnpm deploy:all
 ```
 
 ## 📁 Project Structure
@@ -75,23 +108,23 @@ pnpm run env:check
 | Command            | Description                     |
 | ------------------ | ------------------------------- |
 | `pnpm start`       | Start Expo dev server           |
-| `pnpm run clean`   | Start Expo with cleared cache   |
-| `pnpm run android` | Open on Android device/emulator |
-| `pnpm run ios`     | Open on iOS device/simulator    |
-| `pnpm run web`     | Open in web browser             |
+| `pnpm dev`         | Start development with env vars |
+| `pnpm dev:web`     | Start web development           |
+| `pnpm dev:bypass`  | Start with testing flags        |
+| `pnpm clean`       | Start Expo with cleared cache   |
 
 #### Backend (from functions/ directory)
 
 | Command                      | Description                                      |
 | ---------------------------- | ------------------------------------------------ |
-| `pnpm run build`             | Compile TypeScript to JavaScript                 |
-| `pnpm run build:watch`       | Continuous TypeScript compilation                |
-| `pnpm run shell`             | Interactive Firebase Functions debugging         |
-| `pnpm run logs`              | View production function logs                    |
-| `pnpm run emulator:start`    | Start Firebase emulators (Firestore + Functions) |
-| `pnpm run dev:prod-data`     | Start emulators with production data seeded      |
-| `pnpm run emulator:reset`    | Reset emulator data and start fresh              |
-| `pnpm run migrate:from-prod` | Import production data to local emulator         |
+| `pnpm build`                 | Compile TypeScript to JavaScript                 |
+| `pnpm dev`                   | Continuous TypeScript compilation                |
+| `pnpm shell`                 | Interactive Firebase Functions debugging         |
+| `pnpm logs`                  | View production function logs                    |
+| `pnpm dev:emulator`          | Start Firebase emulators with data persistence  |
+| `pnpm dev:clean`             | Start fresh emulator (no saved data)            |
+| `pnpm dev:prod-data`         | Start emulators with production data seeded      |
+| `pnpm dev:reset`             | Reset emulator data and start fresh              |
 
 ### Code Quality
 
@@ -103,14 +136,23 @@ pnpm run env:check
 
 ## 🏗️ Building & Deployment
 
+### Quick Deployment Commands
+
+| Command               | Description                           |
+| --------------------- | ------------------------------------- |
+| `pnpm words:deploy`   | **Deploy new words to CDN**          |
+| `pnpm deploy:app`     | Deploy frontend to production         |
+| `pnpm deploy:backend` | Deploy backend functions              |
+| `pnpm deploy:all`     | Deploy everything (backend + frontend)|
+
 ### Web Deployment
 
 ```bash
 # Deploy web app to production
-pnpm run deploy:web
+pnpm deploy:app
 
 # Deploy everything (backend + web)
-pnpm run deploy:all
+pnpm deploy:all
 ```
 
 ### Backend Deployment (from functions/ directory)
@@ -119,15 +161,10 @@ pnpm run deploy:all
 cd functions
 
 # Deploy functions only
-pnpm run deploy:functions
+pnpm deploy
 
 # Deploy all Firebase services (functions + rules + indexes)
-pnpm run deploy:firebase
-
-# Deploy specific services
-pnpm run deploy:functions
-pnpm run deploy:rules
-pnpm run deploy:indexes
+pnpm deploy:all
 ```
 
 ### Mobile App Updates (EAS Update)
@@ -163,7 +200,46 @@ pnpm run deploy:functions
 firebase functions:log
 ```
 
-## 🗄️ Database Management & Setup
+## 🗄️ Word Management
+
+### Adding New Words - Simplified Workflow ⭐
+
+The streamlined process for adding words to the game:
+
+```bash
+# 1. Add words to the source file
+# Edit constants/words.json
+
+# 2. Validate and deploy to CDN (one command!)
+pnpm words:deploy
+
+# 3. Optional: Update Firestore for admin functions
+pnpm words:admin
+```
+
+**What `pnpm words:deploy` does:**
+- ✅ Validates word data (checks for duplicates, required fields)
+- ✅ Builds static dictionary for CDN
+- ✅ Deploys to Firebase Hosting CDN
+- ✅ Shows success confirmation with word count
+
+### Individual Word Management Commands
+
+| Command              | Description                           |
+| -------------------- | ------------------------------------- |
+| `pnpm words:add`     | Show instructions for adding words    |
+| `pnpm words:validate`| Validate words.json for issues        |
+| `pnpm words:deploy`  | **Main workflow:** validate + deploy to CDN |
+| `pnpm words:admin`   | Update Firestore for admin functions |
+
+### Legacy Workflow (if CDN is unavailable)
+
+If you need to use the old Firestore-only approach:
+
+```bash
+# Update Firestore only (fallback method)
+cd functions && pnpm seed:words:production
+```
 
 ### Firebase Setup
 
@@ -187,11 +263,11 @@ firebase deploy --only functions
 ```bash
 # Import production data to local emulator (from functions/ directory)
 cd functions
-pnpm run migrate:from-prod
+pnpm migrate:from-prod
 
 # Or start emulator with production data seeded
 cd functions
-pnpm run dev:prod-data
+pnpm dev:prod-data
 ```
 
 ### Production Database Setup
@@ -220,11 +296,11 @@ pnpm run emulator:serve
 - **Data persistence**: None - all data created during the session is lost when stopped
 - **Best for**: Clean testing, initial development, debugging edge cases
 
-#### `emulator:start` - Persistent Development
+#### `dev:emulator` - Persistent Development
 
 ```bash
 cd functions
-pnpm run emulator:start
+pnpm dev:emulator
 ```
 
 - **Purpose**: Start emulator with data persistence between sessions
@@ -233,11 +309,11 @@ pnpm run emulator:start
 - **Use case**: Daily development work where you want to keep your test data
 - **Best for**: Iterative development, maintaining consistent test environment
 
-#### `emulator:reset` - Factory Reset
+#### `dev:reset` - Factory Reset
 
 ```bash
 cd functions
-pnpm run emulator:reset
+pnpm dev:reset
 ```
 
 - **Purpose**: Complete cleanup of all emulator data
@@ -251,7 +327,7 @@ pnpm run emulator:reset
 
 ```bash
 cd functions
-pnpm run dev:prod-data
+pnpm dev:prod-data
 ```
 
 - **Purpose**: Import fresh production data for development
@@ -266,7 +342,7 @@ pnpm run dev:prod-data
 
 ```bash
 cd functions
-pnpm run migrate:from-prod
+pnpm migrate:from-prod
 ```
 
 - **Purpose**: Directly copy entire production database to currently running emulator
@@ -364,15 +440,15 @@ functions/emulator-data/
 
 ```bash
 cd functions
-pnpm run dev:prod-data          # Get initial production data
-pnpm run emulator:start         # Start with persistent data for development
+pnpm dev:prod-data          # Get initial production data
+pnpm dev:emulator           # Start with persistent data for development
 ```
 
 #### Daily Development
 
 ```bash
 cd functions
-pnpm run emulator:start         # Use your saved data from yesterday
+pnpm dev:emulator           # Use your saved data from yesterday
 # Work on features...
 # Data automatically saved when you stop the emulator
 ```
@@ -381,7 +457,7 @@ pnpm run emulator:start         # Use your saved data from yesterday
 
 ```bash
 cd functions
-pnpm run emulator:serve         # Start fresh without existing data
+pnpm dev:clean              # Start fresh without existing data
 # Test your feature...
 # No data is saved when stopped
 ```
@@ -390,8 +466,8 @@ pnpm run emulator:serve         # Start fresh without existing data
 
 ```bash
 cd functions
-pnpm run emulator:reset         # Clear everything
-pnpm run dev:prod-data          # Re-import fresh production data
+pnpm dev:reset              # Clear everything
+pnpm dev:prod-data          # Re-import fresh production data
 ```
 
 #### Sharing Test Data with Team
@@ -399,7 +475,7 @@ pnpm run dev:prod-data          # Re-import fresh production data
 ```bash
 # Export your current emulator state
 cd functions
-pnpm run emulator:start         # Your data gets exported on exit
+pnpm dev:emulator         # Your data gets exported on exit
 
 # Commit the emulator-data directory (be mindful of sensitive data)
 git add emulator-data/
@@ -408,7 +484,7 @@ git commit -m "Add test data for feature X"
 # Team members can then use your data
 git pull
 cd functions
-pnpm run emulator:start         # Imports the shared data
+pnpm dev:emulator         # Imports the shared data
 ```
 
 ### Data Management Best Practices
@@ -441,11 +517,11 @@ pnpm run build
 - **Output**: Creates/updates `lib/` directory with compiled JavaScript
 - **Required for**: Deployment, shell testing, migration scripts
 
-#### `build:watch` - Continuous Compilation
+#### `dev` - Continuous Compilation
 
 ```bash
 cd functions
-pnpm run build:watch
+pnpm dev
 ```
 
 - **What it does**: `tsc --watch` - Automatically recompiles when TypeScript files change
@@ -462,7 +538,7 @@ pnpm run build:watch
 
 ```bash
 cd functions
-pnpm run shell
+pnpm shell
 ```
 
 - **What it does**: `pnpm run build && firebase functions:shell` - Opens Node.js REPL with your functions loaded
@@ -518,7 +594,7 @@ admin.app();
 
 ```bash
 cd functions
-pnpm run logs
+pnpm logs
 ```
 
 - **What it does**: `firebase functions:log` - Streams real-time logs from production functions
@@ -551,34 +627,38 @@ pnpm run logs
 ```bash
 # Terminal 1: Continuous compilation
 cd functions
-pnpm run build:watch
+pnpm dev
 
 # Terminal 2: Emulator with persistent data
 cd functions
-pnpm run emulator:start
+pnpm dev:emulator
 
 # Terminal 3: Frontend development
 cd ..
-pnpm start
+pnpm dev
 ```
 
 #### Function Development & Testing
 
 ```bash
 # 1. Make changes to TypeScript files
-# 2. build:watch automatically compiles
+# 2. pnpm dev automatically compiles
 # 3. Test in emulator by calling API endpoints
 # 4. For complex debugging:
 cd functions
-pnpm run shell
+pnpm shell
 # Test functions interactively
 ```
 
 #### Pre-Deployment Verification
 
 ```bash
+```bash
 cd functions
-pnpm run build         # Ensure clean compilation
+pnpm build         # Ensure clean compilation
+pnpm deploy:all    # Deploy functions + rules + indexes
+pnpm logs          # Monitor deployment
+```
 pnpm run lint          # Check code quality
 pnpm run shell         # Test key functions manually
 # Then deploy:
