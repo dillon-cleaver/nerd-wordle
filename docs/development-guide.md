@@ -781,7 +781,7 @@ cd functions && pnpm run deploy:functions
 1. **Update the source data**: Edit `constants/words.json`
 2. **Build static dictionary**: `npm run build:dictionary`
 3. **Deploy static files**: `firebase deploy --only hosting`
-4. **Update Firestore (for admin functions)**: 
+4. **Update Firestore (for admin functions)**:
    ```bash
    cd functions && npm run build
    node lib/migrations/seed-words.js
@@ -789,6 +789,7 @@ cd functions && pnpm run deploy:functions
 5. **Test the changes**: Verify both CDN and fallback work
 
 **Legacy Workflow (if not using CDN optimization):**
+
 1. Update data in `constants/words.json` or equivalent
 2. Run migrations: `pnpm run migrate` (production)
 3. Deploy backend: `cd functions && pnpm run deploy:functions`

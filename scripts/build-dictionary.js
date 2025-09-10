@@ -58,7 +58,9 @@ function validateWords(words) {
 
     // Validate word ID format
     if (word.id && typeof word.id !== "string") {
-      issues.push(`Word at index ${index} has invalid ID type: ${typeof word.id}`);
+      issues.push(
+        `Word at index ${index} has invalid ID type: ${typeof word.id}`
+      );
     }
   });
 
@@ -68,7 +70,7 @@ function validateWords(words) {
 
   return {
     totalWords: words.length,
-    categories: [...new Set(words.map(w => w.category))],
+    categories: [...new Set(words.map((w) => w.category))],
     duplicateIds: findDuplicateIds(words),
   };
 }
@@ -77,7 +79,7 @@ function validateWords(words) {
  * Find duplicate word IDs
  */
 function findDuplicateIds(words) {
-  const ids = words.map(w => w.id);
+  const ids = words.map((w) => w.id);
   const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
   return [...new Set(duplicates)];
 }
@@ -85,7 +87,7 @@ function findDuplicateIds(words) {
 async function buildDictionary() {
   try {
     console.log(`🔨 Building dictionary version ${version}...`);
-    
+
     // Ensure target directory exists
     fs.mkdirSync(TARGET_VERSION_DIR, { recursive: true });
 
@@ -98,9 +100,13 @@ async function buildDictionary() {
     if (shouldValidate) {
       console.log("🔍 Validating word data...");
       validationResults = validateWords(words);
-      
+
       if (validationResults.duplicateIds.length > 0) {
-        console.warn(`⚠️  Found duplicate IDs: ${validationResults.duplicateIds.join(", ")}`);
+        console.warn(
+          `⚠️  Found duplicate IDs: ${validationResults.duplicateIds.join(
+            ", "
+          )}`
+        );
       }
     }
 
@@ -122,15 +128,20 @@ async function buildDictionary() {
     console.log(`✅ Dictionary built successfully!`);
     console.log(`   Version: ${version}`);
     console.log(`   Words: ${words.length}`);
-    console.log(`   Categories: ${validationResults?.categories?.length || 'unknown'}`);
+    console.log(
+      `   Categories: ${validationResults?.categories?.length || "unknown"}`
+    );
     console.log(`   Output: ${TARGET_FILE}`);
-    console.log(`   Size: ${(fs.statSync(TARGET_FILE).size / 1024).toFixed(1)}KB`);
+    console.log(
+      `   Size: ${(fs.statSync(TARGET_FILE).size / 1024).toFixed(1)}KB`
+    );
     console.log(`   Metadata: ${metadataFile}`);
 
     if (validationResults?.duplicateIds.length > 0) {
-      console.log(`   ⚠️  Duplicates: ${validationResults.duplicateIds.length}`);
+      console.log(
+        `   ⚠️  Duplicates: ${validationResults.duplicateIds.length}`
+      );
     }
-
   } catch (error) {
     console.error("❌ Failed to build dictionary:", error.message);
     process.exit(1);

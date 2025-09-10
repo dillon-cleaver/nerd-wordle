@@ -63,7 +63,7 @@ We implemented a **three-layer optimization strategy** to eliminate Firestore re
         "source": "/dict/**",
         "headers": [
           {
-            "key": "Cache-Control", 
+            "key": "Cache-Control",
             "value": "public, max-age=31536000, immutable"
           }
         ]
@@ -86,7 +86,8 @@ useEffect(() => {
 
     // Try CDN first, fallback to API
     try {
-      const DICTIONARY_URL = 'https://nerd-word-cfda3.web.app/dict/v3/words.json';
+      const DICTIONARY_URL =
+        "https://nerd-word-cfda3.web.app/dict/v3/words.json";
       const response = await fetch(DICTIONARY_URL);
       const firebaseWords = await response.json();
       setWords(firebaseWords);
@@ -292,15 +293,15 @@ Result: ~0-50 Firestore reads/month (vs 11.5M/month) 🎉
 
 ### The Numbers
 
-| Metric                | Before    | After CDN | Improvement |
-| --------------------- | --------- | --------- | ----------- |
-| Reads per app load    | 3,850     | 0         | **100%**    |
-| Monthly Firestore reads | 11.5M   | ~50       | **99.999%** |
-| API response time     | ~2-3s     | ~50ms     | **98%**     |
-| Cost per month        | ~$690     | ~$0.003   | **99.999%** |
-| CDN bandwidth cost    | $0        | ~$0.30    | Negligible  |
+| Metric                  | Before | After CDN | Improvement |
+| ----------------------- | ------ | --------- | ----------- |
+| Reads per app load      | 3,850  | 0         | **100%**    |
+| Monthly Firestore reads | 11.5M  | ~50       | **99.999%** |
+| API response time       | ~2-3s  | ~50ms     | **98%**     |
+| Cost per month          | ~$690  | ~$0.003   | **99.999%** |
+| CDN bandwidth cost      | $0     | ~$0.30    | Negligible  |
 
-*CDN serves 245KB dictionary file vs 3,850 Firestore document reads*
+_CDN serves 245KB dictionary file vs 3,850 Firestore document reads_
 
 ## 🏗️ System Architecture
 
@@ -346,9 +347,9 @@ graph TD
 ### Adding New Words (Updated Process)
 
 1. **Edit source**: Update `constants/words.json`
-2. **Build dictionary**: `npm run build:dictionary` 
+2. **Build dictionary**: `npm run build:dictionary`
 3. **Deploy CDN**: `firebase deploy --only hosting`
-4. **Update Firestore**: `cd functions && node lib/migrations/seed-words.js` *(for admin functions)*
+4. **Update Firestore**: `cd functions && node lib/migrations/seed-words.js` _(for admin functions)_
 5. **Test**: Verify CDN + fallback work
 
 ### Version Management
