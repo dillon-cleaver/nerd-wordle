@@ -92,7 +92,9 @@ async function interactiveAdd() {
 
   try {
     // Get word ID
-    const wordId = (await askQuestion(rl, "Enter word ID (exactly 5 letters): "))
+    const wordId = (
+      await askQuestion(rl, "Enter word ID (exactly 5 letters): ")
+    )
       .toUpperCase()
       .trim();
 
