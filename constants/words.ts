@@ -7,7 +7,7 @@ import wordsData from "./words.json";
  */
 
 // Import and type the word data from JSON
-export const WORD_DATA: WordEntry[] = wordsData;
+export const WORD_DATA: WordEntry[] = wordsData as WordEntry[];
 
 export const getWordEntry = (id: WordId): WordEntry => {
   const entry = WORD_DATA.find((word) => word.id === id);
