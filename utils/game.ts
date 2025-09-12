@@ -117,9 +117,31 @@ export const getCategoryColor = (category: string): string => {
   }
 };
 
-export const getCategoryTextColor = (_category: string) => {
-  // Use white text for better contrast on colored backgrounds
-  return colors.neutral.white;
+export const getCategoryTextColor = (category: string) => {
+  switch (category) {
+    case "videoGames":
+      return colors.neutral.black;
+    case "science":
+      return colors.neutral.black;
+    case "fantasyAndSciFi":
+      return colors.neutral.black;
+    case "animeAndManga":
+      return colors.neutral.black;
+    case "tabletopAndBoardGames":
+      return colors.neutral.black;
+    case "techAndInternetCulture":
+      return colors.neutral.black;
+    case "superheroes":
+      return colors.neutral.white;
+    case "movies":
+      return colors.neutral.black;
+    case "literature":
+      return colors.neutral.white;
+    case "common":
+      return colors.neutral.white; // Dark gray background needs white text
+    default:
+      return colors.neutral.black;
+  }
 };
 
 /**
