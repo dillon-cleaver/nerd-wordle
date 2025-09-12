@@ -15,7 +15,7 @@
     "words:check-bundle": "node scripts/check-bundle-size.js",
     "analyze:bundle": "node scripts/analyze-bundle.js",
     "analyze:deps": "node scripts/check-unused-deps.js",
-    "words:deploy": "pnpm words:validate && node scripts/auto-version-dictionary.js && firebase deploy --only hosting && echo '✅ New words deployed to CDN with auto-versioning!'",
+    "words:deploy": "node scripts/deploy-words.js",
     "words:admin": "cd functions && pnpm run seed:words:production",
     "dev": "pnpm run env:development && expo start",
     "dev:web": "pnpm run env:development && expo start --web",
