@@ -48,6 +48,28 @@ pnpm run analyze:bundle
 pnpm run analyze:deps
 ```
 
+## Word Management (CRITICAL)
+
+**Adding words requires deploying to BOTH CDN and Firestore (separate systems):**
+
+```bash
+# Complete workflow (recommended)
+pnpm run words:add                    # Interactive word addition
+git add . && git commit -m "Add [WORD] to dictionary"
+pnpm run words:deploy:all             # Deploy to both CDN + Firestore
+pnpm run words:verify [WORD]          # Verify deployment
+
+# Alternative: Deploy individually
+pnpm run words:deploy                 # CDN only (user-facing app)
+pnpm run words:firestore              # Firestore only (server operations)
+```
+
+**CRITICAL: If words aren't showing in live app, check both systems:**
+- CDN: Fast loading for users (primary)
+- Firestore: Server operations, admin functions (fallback)
+
+See `docs/word-management-guide.md` for complete details.
+
 ## Validation Scenarios
 
 **ALWAYS test these complete scenarios after making changes:**
