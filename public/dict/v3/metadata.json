@@ -1,7 +1,22 @@
 {
   "version": "v3",
-  "buildDate": "2025-09-12T18:42:50.654Z",
+  "buildDate": "2025-09-12T19:01:35.211Z",
   "wordCount": 3812,
   "source": "data/words.json",
-  "validation": null
+  "validation": {
+    "totalWords": 3812,
+    "categories": [
+      "common",
+      "animeAndManga",
+      "fantasyAndSciFi",
+      "techAndInternetCulture",
+      "superheroes",
+      "tabletopAndBoardGames",
+      "science",
+      "movies",
+      "literature",
+      "videoGames"
+    ],
+    "duplicateIds": []
+  }
 }
