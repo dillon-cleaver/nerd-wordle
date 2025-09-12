@@ -11,7 +11,7 @@
     "prepare": "husky",
     "words:add": "node scripts/add-word.js",
     "words:validate": "node scripts/build-dictionary.js --validate",
-    "words:deploy": "pnpm words:validate && pnpm run build:dictionary && firebase deploy --only hosting && echo '✅ New words deployed to CDN!'",
+    "words:deploy": "pnpm words:validate && node scripts/auto-version-dictionary.js && firebase deploy --only hosting && echo '✅ New words deployed to CDN with auto-versioning!'",
     "words:admin": "cd functions && pnpm run seed:words:production",
     "dev": "pnpm run env:development && expo start",
     "dev:web": "pnpm run env:development && expo start --web",
