@@ -10,6 +10,7 @@ import {
   WordResponse,
   DailyPuzzleResponse,
   DailyPuzzleSeed,
+  WordEntry,
 } from "./types";
 import {
   wordsCollection,
@@ -215,7 +216,7 @@ app.get(
   async (
     req: express.Request,
     res: express.Response<
-      { words: any[]; count: number; bundleVersion: string } | ApiError
+      { words: WordEntry[]; count: number; bundleVersion: string } | ApiError
     >
   ) => {
     try {

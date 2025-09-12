@@ -122,7 +122,25 @@ export const getCategoryTextColor = (_category: string) => {
   return colors.neutral.white;
 };
 
-// Simple version for backward compatibility with daily puzzle hook
+/**
+ * Initialize game with daily word (simplified version)
+ *
+ * @deprecated Use initializeGameWithData() or initializeGameWithWords() for new code
+ *
+ * This function is kept for backward compatibility with the daily puzzle hook.
+ * It only returns basic game metadata (category, answer) without full game state.
+ *
+ * When to use:
+ * - Legacy daily puzzle hook integration
+ * - When you only need category/answer metadata
+ *
+ * When to use alternatives:
+ * - initializeGameWithData(): When you need full game state (guesses, status, etc.)
+ * - initializeGameWithWords(): When you need random word selection fallback
+ *
+ * @param dailyWord - The word entry for today's puzzle
+ * @returns Basic game metadata for backward compatibility
+ */
 export function initializeGame(dailyWord: WordEntry) {
   const convertedCategory = convertCategory(dailyWord.category);
   return {
@@ -136,7 +154,10 @@ export function initializeGame(dailyWord: WordEntry) {
  * Initialize game with word data (pure function)
  * This version requires words to be passed in rather than importing them
  */
-export function initializeGameWithData(words: WordEntry[], dailyWord?: WordEntry) {
+export function initializeGameWithData(
+  words: WordEntry[],
+  dailyWord?: WordEntry
+) {
   if (dailyWord) {
     return {
       currentWord: dailyWord,
