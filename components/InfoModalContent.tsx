@@ -33,10 +33,7 @@ export const InfoModalContent = ({
         categoryTextColor={categoryTextColor}
       />
 
-      <InfoModalInstructionsSection
-        categoryColor={categoryColor}
-        categoryTextColor={categoryTextColor}
-      />
+      <InfoModalInstructionsSection />
 
       <InfoModalTimerSection timeUntilNewPuzzle={timeUntilNewPuzzle} />
     </View>

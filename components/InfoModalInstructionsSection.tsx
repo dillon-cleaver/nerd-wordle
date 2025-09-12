@@ -8,15 +8,7 @@ import {
   borderRadius,
 } from "@/constants/styles";
 
-type InfoModalInstructionsSectionProps = {
-  categoryColor: string;
-  categoryTextColor: string;
-};
-
-export const InfoModalInstructionsSection = ({
-  categoryColor,
-  categoryTextColor,
-}: InfoModalInstructionsSectionProps) => {
+export const InfoModalInstructionsSection = () => {
   return (
     <View style={styles.instructionsSection}>
       <Text style={styles.instructions}>
@@ -29,19 +21,8 @@ export const InfoModalInstructionsSection = ({
         word.
       </Text>
       <Text style={styles.instructions}>
-        Tiles will turn the{" "}
-        <Text
-          style={[
-            styles.categoryHighlight,
-            {
-              backgroundColor: categoryColor,
-              color: categoryTextColor,
-            },
-          ]}
-        >
-          color of today&apos;s category
-        </Text>{" "}
-        if the letter is in the word and in the correct position.{" "}
+        Tiles will turn <Text style={[styles.greenHighlight]}>green</Text> if
+        the letter is in the word and in the correct position.{" "}
         <Text style={styles.mustardHighlight}>Yellow</Text> means the letter is
         in the word but in the wrong position.{" "}
         <Text style={styles.blackHighlight}>Black</Text> means the letter is not
@@ -63,6 +44,13 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   categoryHighlight: {
+    paddingHorizontal: spacing.xs,
+    paddingVertical: 2,
+    borderRadius: borderRadius.sm,
+  },
+  greenHighlight: {
+    backgroundColor: colors.semantic.success,
+    color: colors.neutral.white,
     paddingHorizontal: spacing.xs,
     paddingVertical: 2,
     borderRadius: borderRadius.sm,
