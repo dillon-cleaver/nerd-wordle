@@ -8,7 +8,6 @@ import {
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { useContext } from "react";
 import { GameContext } from "@/context/GameContext";
-import { getCategoryColor } from "@/utils/game";
 
 // TODO: Clean up this code: make it more modular, etc.
 
@@ -25,10 +24,7 @@ const KEYBOARD_ROWS = [
 ];
 
 export const Keyboard = () => {
-  const { guesses, answer, handleKeyPress, originalCategory } =
-    useContext(GameContext);
-
-  const tileBackgroundColor = getCategoryColor(originalCategory);
+  const { guesses, answer, handleKeyPress } = useContext(GameContext);
 
   const getKeyStatus = (key: string) => {
     const hasBeenUsed = guesses.some((guess) => guess.id.includes(key));
@@ -62,7 +58,7 @@ export const Keyboard = () => {
                   styles.key,
                   isWideKey && styles.wideKey,
                   status === "correct" && {
-                    backgroundColor: tileBackgroundColor,
+                    backgroundColor: colors.semantic.success,
                   },
                   status === "present" && styles.presentKey,
                   status === "absent" && styles.absentKey,
