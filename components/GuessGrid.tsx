@@ -31,9 +31,9 @@ export const GuessGrid = ({ onPressHint }: { onPressHint?: () => void }) => {
     console.log(`🎯 GuessGrid: Received hint:`, hint);
   }
 
-  // Prevent rendering during initial load to avoid crashes with undefined answer
-  // Only block if actively loading AND no valid answer yet
-  if (isLoading && (!answer || answer === "LOADING")) {
+  // Prevent rendering during initial load to avoid layout shifts and empty tile flashing
+  // Wait for all loading states including rehydration to complete
+  if (isLoading) {
     return <View style={styles.container} />;
   }
 
