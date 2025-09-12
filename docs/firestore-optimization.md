@@ -88,7 +88,7 @@ useEffect(() => {
     }
 
     // Cache miss - use bundled words (no network request!)
-    const { WORD_DATA } = await import("@/constants/words");
+    const { WORD_DATA } = await import("../functions/src/data/words");
     setWords(WORD_DATA);
     saveWordsLocal(WORD_DATA);
   };
@@ -333,7 +333,7 @@ graph TD
 
 ### Adding New Words (Updated Process)
 
-1. **Edit source**: Update `constants/words.json`
+1. **Edit source**: Update `data/words.json`
 2. **Deploy everything**: `pnpm words:deploy`
 3. **Optional - Update Firestore**: `pnpm words:admin` _(for admin functions)_
 4. **Test**: Verify CDN + fallback work
@@ -397,7 +397,7 @@ firebase deploy --only hosting
 
 ### Bundle Size Decision
 
-**Why we keep `constants/words.json` in the app bundle:**
+**Why we keep `data/words.json` separate from the app bundle:**
 
 - **Size**: 245KB for 3,800+ words (~65 bytes/word) - reasonable for functionality provided
 - **Utilities**: Instant access to `getCategoryColor`, `CATEGORY_WORDS`, etc. without loading states

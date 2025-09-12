@@ -47,7 +47,7 @@ npm run words:deploy
 ```typescript
 // storage/words.local.ts
 export async function fetchWordsFromCDN(version: string = "v6") {
-  const url = `https://nerd-wordle.web.app/dict/${version}/words.json`;
+  const url = `https://nerd-word-cfda3.web.app/dict/${version}/words.json`;
 
   const response = await fetch(url, {
     cache: "force-cache", // Aggressive browser cache
@@ -243,7 +243,7 @@ node scripts/auto-version-dictionary.js
 # Should show: v6 → v7
 
 # Restore and check no-change behavior
-git checkout constants/words.json
+git checkout data/words.json
 node scripts/auto-version-dictionary.js
 # Should show: No changes detected
 ```
@@ -255,7 +255,7 @@ node scripts/auto-version-dictionary.js
 const isDebugLoggingEnabled = () => process.env.NODE_ENV === "development";
 
 // Logs show:
-// 🔄 Fetching words from CDN: https://nerd-wordle.web.app/dict/v7/words.json
+// 🔄 Fetching words from CDN: https://nerd-word-cfda3.web.app/dict/v7/words.json
 // ✅ Loaded 3813 words from CDN (browser cache)
 ```
 

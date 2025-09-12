@@ -34,7 +34,7 @@ graph TD
 
 ### Word Dictionary Deployment (CDN-First)
 
-- **CDN**: Firebase Hosting (`https://nerd-wordle.web.app/dict/`)
+- **CDN**: Firebase Hosting (`https://nerd-word-cfda3.web.app/dict/`)
 - **Versioning**: Auto-incrementing versions (v1, v2, v3...)
 - **Cache Strategy**: Aggressive browser cache with URL versioning
 - **Bundle Optimization**: Words excluded from app bundle (243KB saved)

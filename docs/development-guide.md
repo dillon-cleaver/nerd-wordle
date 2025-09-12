@@ -235,7 +235,7 @@ The streamlined process for adding words to the game:
 
 ```bash
 # 1. Add words to the source file
-# Edit constants/words.json
+# Edit data/words.json
 
 # 2. Validate and deploy to CDN (one command!)
 pnpm words:deploy
@@ -927,7 +927,7 @@ cd functions && pnpm run deploy:functions
 
 **New Optimized Workflow (Post-CDN Migration):**
 
-1. **Update the source data**: Edit `constants/words.json`
+1. **Update the source data**: Edit `data/words.json`
 2. **Build static dictionary**: `npm run build:dictionary`
 3. **Deploy static files**: `firebase deploy --only hosting`
 4. **Update Firestore (for admin functions)**:
@@ -939,7 +939,7 @@ cd functions && pnpm run deploy:functions
 
 **Legacy Workflow (if not using CDN optimization):**
 
-1. Update data in `constants/words.json` or equivalent
+1. Update data in `data/words.json` or equivalent
 2. Run migrations: `pnpm run migrate` (production)
 3. Deploy backend: `cd functions && pnpm run deploy:functions`
 4. Test the changes

@@ -3,7 +3,7 @@
 /**
  * Interactive script to add words to the dictionary
  *
- * This script helps users add new words to constants/words.json
+ * This script helps users add new words to data/words.json
  * with validation and category selection.
  *
  * Usage:
@@ -20,7 +20,7 @@ const {
   COMMON_CATEGORY,
 } = require("./validation-constants");
 
-const WORDS_FILE = path.join(process.cwd(), "constants", "words.json");
+const WORDS_FILE = path.join(process.cwd(), "data", "words.json");
 
 // Available categories (imported from validation constants)
 const CATEGORIES = WORD_CATEGORIES;

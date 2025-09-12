@@ -6,7 +6,10 @@
  */
 
 import { WordEntry } from "@/types/word";
-import { isDebugLoggingEnabled } from "@/utils/dev-flags";
+import {
+  isDebugLoggingEnabled,
+  shouldClearLocalStorageOnStart,
+} from "@/utils/dev-flags";
 
 // Minimal metadata storage in localStorage
 type WordMetadata = {
@@ -75,15 +78,15 @@ export function shouldRefreshWords(): boolean {
 export async function fetchWordsFromCDN(
   version: string = "v6"
 ): Promise<WordEntry[]> {
-  const url = `https://nerd-wordle.web.app/dict/${version}/words.json`;
+  const url = `https://nerd-word-cfda3.web.app/dict/${version}/words.json`;
 
   if (isDebugLoggingEnabled()) {
     console.log(`🔄 Fetching words from CDN: ${url}`);
   }
 
-  // Let browser cache handle this with proper headers
   const response = await fetch(url, {
     cache: "force-cache", // Use browser cache aggressively
+    mode: "cors",
   });
 
   if (!response.ok) {
@@ -112,6 +115,9 @@ export async function fetchWordsFromCDN(
  */
 export async function loadWords(): Promise<WordEntry[]> {
   try {
+    // Auto-clear cache if dev flag is enabled
+    clearWordsCacheIfNeeded();
+
     // Always try browser cache first (fastest)
     const words = await fetchWordsFromCDN();
     return words;
@@ -157,6 +163,19 @@ export const clearWordsCache = (): void => {
     }
   } catch (error) {
     console.error("Failed to clear words cache:", error);
+  }
+};
+
+/**
+ * Clear words cache if dev flag is enabled
+ * Useful for development when you want fresh data on each app start
+ */
+export const clearWordsCacheIfNeeded = (): void => {
+  if (shouldClearLocalStorageOnStart()) {
+    clearWordsCache();
+    if (isDebugLoggingEnabled()) {
+      console.log("🧹 Auto-cleared words cache (dev mode)");
+    }
   }
 };
 
