@@ -5,8 +5,7 @@ import { BaseSafeAreaView } from "@/components/base/BaseSafeAreaView";
 
 export default function Index() {
   return (
-    // TODO: Look into how edges is actually supposed to work. I think my implementation could be improved.
-    <BaseSafeAreaView addStyles={styles.container} edges={[]}>
+    <BaseSafeAreaView addStyles={styles.container}>
       <Game />
     </BaseSafeAreaView>
   );

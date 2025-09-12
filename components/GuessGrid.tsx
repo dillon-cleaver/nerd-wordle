@@ -14,15 +14,8 @@ import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 import { useDevice } from "@/hooks/useDevice";
 
 export const GuessGrid = ({ onPressHint }: { onPressHint?: () => void }) => {
-  const {
-    guesses,
-    answer,
-    tentativeGuess,
-    invalidWord,
-    hint,
-    originalCategory,
-    isLoading,
-  } = useContext(GameContext);
+  const { guesses, answer, tentativeGuess, invalidWord, hint, isLoading } =
+    useContext(GameContext);
 
   const { isDesktop } = useDevice();
 
@@ -72,7 +65,6 @@ export const GuessGrid = ({ onPressHint }: { onPressHint?: () => void }) => {
             isCurrentGuess={isCurrentGuess}
             invalidWord={invalidWord && isCurrentGuess}
             hint={hintForThisRow}
-            category={originalCategory}
             onPressHint={onPressHint}
           />
         );

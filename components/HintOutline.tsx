@@ -1,4 +1,4 @@
-import { borderRadius } from "@/constants/styles";
+import { borderRadius, colors } from "@/constants/styles";
 import { useEffect } from "react";
 import Animated, {
   useAnimatedStyle,
@@ -7,11 +7,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-type HintOutlineProps = {
-  color: string;
-};
-
-export const HintOutline = ({ color }: HintOutlineProps) => {
+export const HintOutline = () => {
   const strokeWidth = 4;
   const duration = 900;
   const animatedScale = useSharedValue(1);
@@ -28,7 +24,7 @@ export const HintOutline = ({ color }: HintOutlineProps) => {
       right: -1,
       bottom: -1,
       transform: [{ scale: animatedScale.value }],
-      borderColor: color,
+      borderColor: colors.neutral.white,
       borderWidth: strokeWidth,
       borderRadius: borderRadius.md,
       zIndex: 10, // Ensure hint outline appears above other elements

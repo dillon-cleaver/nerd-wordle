@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import { borderRadius, colors, fontSize } from "@/constants/styles";
 import { HintOutline } from "./HintOutline";
-import { getCategoryColor } from "@/utils/game";
 
 export type LetterBoxProps = {
   letter: string;
@@ -18,7 +17,6 @@ export type LetterBoxProps = {
   invalidWord: boolean;
   showHint?: boolean;
   hintLetter?: string;
-  category: string;
   onPressHint?: () => void;
 };
 
@@ -30,16 +28,13 @@ const LetterBox = ({
   invalidWord,
   showHint = false,
   hintLetter = "",
-  category,
   onPressHint,
 }: LetterBoxProps) => {
   const cellStyles: StyleProp<ViewStyle> = [styles.container];
 
-  const tileBackgroundColor = getCategoryColor(category);
-
   if (!isCurrentGuess && letter) {
     if (isCorrect) {
-      cellStyles.push({ backgroundColor: tileBackgroundColor });
+      cellStyles.push({ backgroundColor: colors.semantic.success });
     } else if (isPresent) {
       cellStyles.push(styles.present);
     } else {
@@ -56,7 +51,7 @@ const LetterBox = ({
       <Text style={styles.letter}>{letter}</Text>
       {showHint && (
         <>
-          <HintOutline color={tileBackgroundColor} />
+          <HintOutline />
           <View style={styles.previewLetterWrapper}>
             <Text style={styles.previewLetter}>{hintLetter.toUpperCase()}</Text>
           </View>
