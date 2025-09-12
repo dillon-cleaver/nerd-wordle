@@ -37,6 +37,7 @@ pnpm run words:add
 ```
 
 **What this does:**
+
 - ✅ Updates `data/words.json` (source of truth)
 - ✅ Rebuilds CDN dictionary files with auto-versioning
 - ✅ Updates version tracking
@@ -50,6 +51,7 @@ git commit -m "Add GRAZE to dictionary"
 ```
 
 **What gets committed:**
+
 - `data/words.json` - Source data update
 - `public/dict/v*/` - New/updated CDN dictionary files
 - `public/dict/current-version.json` - Version tracking
@@ -57,12 +59,14 @@ git commit -m "Add GRAZE to dictionary"
 ### 3. Deploy to Production
 
 **Option A: Complete Deployment (Recommended)**
+
 ```bash
 # Deploy to both CDN and Firestore
 pnpm run words:deploy:all
 ```
 
 **Option B: Step-by-Step Deployment**
+
 ```bash
 # Step 1: Deploy to CDN (for user-facing app)
 pnpm run words:deploy
@@ -83,19 +87,23 @@ pnpm run words:verify [WORD]
 ## 📋 Script Reference
 
 ### Word Management
+
 - `pnpm run words:add` - Interactive word addition
 - `pnpm run words:validate` - Validate word data structure
 
 ### Deployment
+
 - `pnpm run words:deploy:all` - Deploy to both CDN and Firestore ⭐
 - `pnpm run words:deploy` - Deploy to CDN only
 - `pnpm run words:firestore` - Deploy to Firestore only
 
 ### Verification
+
 - `pnpm run words:verify [WORD]` - Check word exists in both systems
 - `pnpm run words:check-bundle` - Verify words aren't bundled (CDN working)
 
 ### Analysis
+
 - `pnpm run analyze:bundle` - Bundle size analysis
 - `pnpm run analyze:deps` - Dependency analysis
 
@@ -104,6 +112,7 @@ pnpm run words:verify [WORD]
 ### "Word not showing up in live app"
 
 **Symptoms:**
+
 - Word exists in `data/words.json`
 - CDN deployed successfully
 - But word doesn't appear in live application
@@ -111,6 +120,7 @@ pnpm run words:verify [WORD]
 **Cause:** Only CDN was deployed, Firestore wasn't updated
 
 **Solution:**
+
 ```bash
 pnpm run words:firestore
 # or
@@ -120,10 +130,12 @@ pnpm run words:deploy:all
 ### "Version mismatch errors"
 
 **Symptoms:**
+
 - App loading old word list
 - Version conflicts in browser
 
 **Solution:**
+
 ```bash
 # Clear and rebuild everything
 pnpm run words:deploy:all
@@ -132,10 +144,12 @@ pnpm run words:deploy:all
 ### "Bundle size too large"
 
 **Symptoms:**
+
 - Web export > 3MB
 - Words appear to be bundled
 
 **Solution:**
+
 ```bash
 # Verify CDN optimization is working
 pnpm run words:check-bundle
@@ -196,6 +210,7 @@ pnpm run words:check-bundle
 ### Debug Logging
 
 Enable debug logging in development:
+
 ```bash
 pnpm run env:development
 # Logs will show CDN fetching: "🔄 Fetching words from CDN: ..."

@@ -103,7 +103,9 @@ async function deployWords() {
         "Setting production environment"
       )
     ) {
-      console.error("\n💥 Firestore deployment failed: Environment setup failed");
+      console.error(
+        "\n💥 Firestore deployment failed: Environment setup failed"
+      );
       deploymentResults.push("❌ Firestore: Environment setup failed");
     } else {
       // Deploy to Firestore
@@ -113,7 +115,9 @@ async function deployWords() {
           "Deploying to Firestore database"
         )
       ) {
-        console.error("\n💥 Firestore deployment failed: Database seeding failed");
+        console.error(
+          "\n💥 Firestore deployment failed: Database seeding failed"
+        );
         deploymentResults.push("❌ Firestore: Database seeding failed");
       } else {
         deploymentResults.push("✅ Firestore: Deployed successfully");
@@ -132,9 +136,7 @@ async function deployWords() {
   console.log("====================");
   deploymentResults.forEach((result) => console.log(`   ${result}`));
 
-  const hasFailures = deploymentResults.some((result) =>
-    result.includes("❌")
-  );
+  const hasFailures = deploymentResults.some((result) => result.includes("❌"));
 
   if (hasFailures) {
     console.log("\n⚠️  Some deployments failed. Check the logs above.");
@@ -144,11 +146,11 @@ async function deployWords() {
     process.exit(1);
   } else {
     console.log("\n🎉 All deployments completed successfully!");
-    
+
     if (deployCDN) {
       console.log("🌐 CDN: https://nerd-word-cfda3.web.app/dict/");
     }
-    
+
     if (deployFirestore) {
       console.log("🗄️  Firestore: nerd-word-cfda3 project");
     }

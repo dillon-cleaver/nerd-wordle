@@ -9,31 +9,25 @@
     "lint": "expo lint --max-warnings 0",
     "typecheck": "tsc --noEmit",
     "prepare": "husky",
-    
     "dev": "pnpm run env:development && expo start",
     "dev:web": "pnpm run env:development && expo start --web",
     "dev:bypass": "pnpm run env:testing && expo start",
-    
     "deploy:app": "pnpm run env:production && expo export --platform web && eas deploy",
     "deploy:backend": "cd functions && pnpm run deploy:all",
     "deploy:all": "pnpm deploy:backend && pnpm deploy:app",
-    
     "env:development": "node scripts/env-helper.js development",
     "env:testing": "node scripts/env-helper.js testing",
     "env:production": "node scripts/env-helper.js production",
-    
     "words:add": "node scripts/add-word.js",
     "words:validate": "node scripts/build-dictionary.js --validate",
     "words:deploy": "node scripts/deploy-words.js",
     "words:firestore": "pnpm run env:production && cd functions && pnpm run seed:words:production && cd .. && pnpm run env:development",
     "words:deploy:all": "node scripts/deploy-words-all.js",
     "words:verify": "node scripts/verify-word.js",
-    
     "words:verify-bundle": "node scripts/verify-bundle-size.js",
     "words:check-bundle": "node scripts/check-bundle-size.js",
     "analyze:bundle": "node scripts/analyze-bundle.js",
     "analyze:deps": "node scripts/check-unused-deps.js",
-    
     "build:dictionary": "node scripts/build-dictionary.js",
     "words:admin": "cd functions && pnpm run seed:words:production"
   },

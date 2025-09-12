@@ -29,31 +29,33 @@ const word = wordToCheck.toUpperCase();
 async function checkCDN() {
   try {
     console.log("🌐 Checking CDN...");
-    
+
     // Get current version
     const versionResponse = await fetch(
       "https://nerd-word-cfda3.web.app/dict/current-version.json"
     );
-    
+
     if (!versionResponse.ok) {
-      throw new Error(`CDN version check failed: ${versionResponse.statusText}`);
+      throw new Error(
+        `CDN version check failed: ${versionResponse.statusText}`
+      );
     }
-    
+
     const versionInfo = await versionResponse.json();
     const version = versionInfo.version;
-    
+
     // Check word exists in current version
     const wordsResponse = await fetch(
       `https://nerd-word-cfda3.web.app/dict/${version}/words.json`
     );
-    
+
     if (!wordsResponse.ok) {
       throw new Error(`CDN words fetch failed: ${wordsResponse.statusText}`);
     }
-    
+
     const words = await wordsResponse.json();
     const wordEntry = words.find((w) => w.id === word);
-    
+
     if (wordEntry) {
       console.log(`   ✅ Found in CDN (${version})`);
       if (detailed) {
@@ -73,7 +75,7 @@ async function checkCDN() {
 async function checkFirestore() {
   try {
     console.log("🗄️  Checking Firestore...");
-    
+
     // Use Node.js to check Firestore (requires firebase-admin)
     const checkScript = `
       const admin = require('firebase-admin');
@@ -96,13 +98,13 @@ async function checkFirestore() {
       
       checkWord();
     `;
-    
+
     const result = execSync(`cd functions && node -e "${checkScript}"`, {
       encoding: "utf8",
     });
-    
+
     const parsed = JSON.parse(result.trim());
-    
+
     if (parsed.success) {
       console.log("   ✅ Found in Firestore");
       if (detailed) {
@@ -110,7 +112,9 @@ async function checkFirestore() {
       }
       return { success: true, data: parsed.data };
     } else {
-      console.log(`   ❌ Not found in Firestore: ${parsed.reason || parsed.error}`);
+      console.log(
+        `   ❌ Not found in Firestore: ${parsed.reason || parsed.error}`
+      );
       return { success: false, error: parsed.error };
     }
   } catch (error) {
@@ -121,46 +125,50 @@ async function checkFirestore() {
 
 async function verifyWord() {
   console.log(`🔍 Verifying word: ${word}\n`);
-  
+
   const [cdnResult, firestoreResult] = await Promise.all([
     checkCDN(),
     checkFirestore(),
   ]);
-  
+
   console.log("\n📊 Summary");
   console.log("==========");
   console.log(`CDN: ${cdnResult.success ? "✅ Found" : "❌ Missing"}`);
-  console.log(`Firestore: ${firestoreResult.success ? "✅ Found" : "❌ Missing"}`);
-  
+  console.log(
+    `Firestore: ${firestoreResult.success ? "✅ Found" : "❌ Missing"}`
+  );
+
   if (cdnResult.success && firestoreResult.success) {
     console.log("\n🎉 Word is properly deployed to both systems!");
-    
+
     // Check for consistency
     if (detailed && cdnResult.data && firestoreResult.data) {
       const cdnCategory = cdnResult.data.category;
       const firestoreCategory = firestoreResult.data.category;
-      
+
       if (cdnCategory === firestoreCategory) {
         console.log(`✅ Categories match: ${cdnCategory}`);
       } else {
-        console.log(`⚠️  Category mismatch: CDN(${cdnCategory}) vs Firestore(${firestoreCategory})`);
+        console.log(
+          `⚠️  Category mismatch: CDN(${cdnCategory}) vs Firestore(${firestoreCategory})`
+        );
       }
     }
-    
+
     process.exit(0);
   } else {
     console.log("\n⚠️  Word is not fully deployed. Check the errors above.");
-    
+
     if (!cdnResult.success) {
       console.log("💡 To fix CDN: pnpm run words:deploy");
     }
-    
+
     if (!firestoreResult.success) {
       console.log("💡 To fix Firestore: pnpm run words:firestore");
     }
-    
+
     console.log("💡 To fix both: pnpm run words:deploy:all");
-    
+
     process.exit(1);
   }
 }

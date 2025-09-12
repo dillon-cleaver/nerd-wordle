@@ -65,6 +65,7 @@ pnpm run words:firestore              # Firestore only (server operations)
 ```
 
 **CRITICAL: If words aren't showing in live app, check both systems:**
+
 - CDN: Fast loading for users (primary)
 - Firestore: Server operations, admin functions (fallback)
 
@@ -75,6 +76,7 @@ See `docs/word-management-guide.md` for complete details.
 **ALWAYS test these complete scenarios after making changes:**
 
 ### Frontend Changes
+
 ```bash
 # 1. Build successfully
 npx expo export --platform web  # 80 seconds, creates 2.69MB bundle
@@ -89,6 +91,7 @@ pnpm run analyze:deps
 ```
 
 ### Backend Changes
+
 ```bash
 # 1. TypeScript compilation
 cd functions && pnpm run build  # 5 seconds
@@ -101,6 +104,7 @@ cd .. && pnpm run words:validate  # 1 second, should show 3812 words
 ```
 
 ### Word Data Changes
+
 ```bash
 # 1. Validate word data structure
 pnpm run words:validate  # 1 second
@@ -117,7 +121,7 @@ pnpm run words:check-bundle  # Requires prior build
 **NEVER CANCEL these operations. Always set appropriate timeouts:**
 
 - **Dependency installation**: 75 seconds (main), 14 seconds (functions) - Set timeout to 120+ seconds
-- **Web build**: 80 seconds - Set timeout to 180+ seconds  
+- **Web build**: 80 seconds - Set timeout to 180+ seconds
 - **TypeScript build**: 5 seconds - Set timeout to 30+ seconds
 - **Linting**: 5 seconds each - Set timeout to 30+ seconds
 - **Word validation**: 1 second - Set timeout to 15+ seconds
@@ -125,12 +129,14 @@ pnpm run words:check-bundle  # Requires prior build
 ## Environment Setup
 
 **Required tools and versions:**
+
 - Node.js 20+ (tested with 20.19.5)
 - pnpm package manager: `npm install -g pnpm`
 - Expo CLI (optional): `npm install -g @expo/cli`
 - Firebase CLI (optional): `npm install -g firebase-tools`
 
 **Environment configuration:**
+
 ```bash
 # Development mode
 pnpm run env:development
@@ -146,6 +152,7 @@ pnpm run env:production
 ## Build Commands
 
 ### Frontend Development
+
 ```bash
 # Start development server (requires manual interaction - not suitable for automation)
 pnpm start  # Interactive Expo dev server
@@ -157,7 +164,8 @@ pnpm run dev  # Sets development env and starts Expo
 pnpm run dev:web
 ```
 
-### Backend Development  
+### Backend Development
+
 ```bash
 # Compile TypeScript - 5 seconds
 cd functions && pnpm run build
@@ -170,6 +178,7 @@ cd functions && npx eslint src/
 ```
 
 ### Production Builds
+
 ```bash
 # Web application build - 80 seconds. NEVER CANCEL.
 npx expo export --platform web
@@ -182,11 +191,12 @@ cd functions && pnpm run build
 ## Word Management
 
 **Primary workflow for adding/updating words:**
+
 ```bash
 # 1. Validate current word data - 1 second
 pnpm run words:validate
 
-# 2. Build dictionary for CDN deployment - 1 second  
+# 2. Build dictionary for CDN deployment - 1 second
 pnpm run build:dictionary
 
 # 3. Deploy to CDN (requires Firebase auth)
@@ -194,6 +204,7 @@ pnpm run words:deploy
 ```
 
 **Analysis and optimization:**
+
 ```bash
 # Check bundle doesn't include word data
 pnpm run words:check-bundle
@@ -208,11 +219,12 @@ pnpm run analyze:deps
 ## Quality Assurance
 
 **Always run before committing changes:**
+
 ```bash
 # Frontend validation - 10 seconds total
 pnpm run lint && pnpm run typecheck
 
-# Backend validation - 8 seconds total  
+# Backend validation - 8 seconds total
 cd functions && pnpm run build && npx eslint src/ && cd ..
 
 # Word data validation - 1 second
@@ -224,7 +236,7 @@ pnpm run words:validate
 ```
 nerd-wordle/
 ├── app/                    # Expo Router pages and screens
-├── components/             # Reusable React components  
+├── components/             # Reusable React components
 ├── data/                   # Source data (words.json - single source of truth)
 ├── functions/              # Firebase Cloud Functions (backend)
 │   ├── src/               # TypeScript source code
@@ -240,12 +252,14 @@ nerd-wordle/
 ## Important Files and Locations
 
 ### Frequently Modified Files
+
 - `data/words.json` - Single source of truth for all word data (3812 words, 243KB)
 - `app/` - Main application screens and navigation
 - `components/` - Reusable UI components
 - `functions/src/` - Backend API and database logic
 
 ### Build and Configuration
+
 - `package.json` - Main project dependencies and scripts
 - `functions/package.json` - Backend dependencies and deployment scripts
 - `app.json` - Expo configuration
@@ -253,6 +267,7 @@ nerd-wordle/
 - `firebase.json` - Firebase hosting and functions configuration
 
 ### Generated/Compiled (Do Not Edit)
+
 - `dist/` - Web build output (deleted on each build)
 - `functions/lib/` - Compiled JavaScript (generated from TypeScript)
 - `public/dict/v*/` - Built dictionary files for CDN
@@ -260,6 +275,7 @@ nerd-wordle/
 ## Common Issues and Solutions
 
 ### Build Failures
+
 ```bash
 # Clear caches and rebuild
 pnpm run clean  # Clears Expo cache
@@ -269,6 +285,7 @@ cd functions && rm -rf lib && pnpm run build
 ```
 
 ### Dependency Issues
+
 ```bash
 # Reinstall dependencies
 rm -rf node_modules pnpm-lock.yaml
@@ -279,6 +296,7 @@ cd functions && rm -rf node_modules pnpm-lock.yaml && pnpm install
 ```
 
 ### Environment Issues
+
 ```bash
 # Reset environment configuration
 pnpm run env:development
@@ -299,12 +317,14 @@ node scripts/env-helper.js show
 ## Performance Notes
 
 **Current optimization status:**
+
 - Bundle size: 2.69MB (optimized from ~3.2MB)
 - Word dictionary: 243KB externalized to CDN (not in bundle)
 - Total savings: ~600KB through CDN + icon optimization
 - Build time: 80 seconds (normal for React Native web export)
 
 **Expected file sizes:**
+
 - Main bundle: ~2.6-2.7MB
 - Word dictionary: 243KB (separate CDN file)
 - Individual pages: ~21KB each
