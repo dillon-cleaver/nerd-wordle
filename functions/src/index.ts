@@ -7,7 +7,6 @@ import {
   PuzzleHistoryResponse,
   PuzzleResultRequest,
   PuzzleResultResponse,
-  WordsResponse,
   WordResponse,
   DailyPuzzleResponse,
   DailyPuzzleSeed,
@@ -26,11 +25,6 @@ const db = admin.firestore();
 
 // Create Express app
 const app = express();
-
-// Cache for words to reduce Firestore reads
-let wordsCache: any[] | null = null;
-let wordsCacheTimestamp = 0;
-const WORDS_CACHE_TTL = 60 * 60 * 1000; // 1 hour in milliseconds
 
 // Configure CORS for local development and Expo requests
 const corsOptions = {
@@ -181,105 +175,102 @@ app.get(
     req: express.Request,
     res: express.Response<PuzzleHistoryResponse | ApiError>
   ) => {
-  try {
-    const { uid } = req.user!;
+    try {
+      const { uid } = req.user!;
 
-    const resultsSnapshot = await db
-      .collection("users")
-      .doc(uid)
-      .collection("puzzleHistory")
-      .orderBy("date", "desc")
-      .get();
+      const resultsSnapshot = await db
+        .collection("users")
+        .doc(uid)
+        .collection("puzzleHistory")
+        .orderBy("date", "desc")
+        .get();
 
-    const results: PuzzleResultRequest[] = resultsSnapshot.docs.map((doc) => {
-      const data = doc.data();
+      const results: PuzzleResultRequest[] = resultsSnapshot.docs.map((doc) => {
+        const data = doc.data();
 
-      return {
-        id: doc.id,
-        word: data.word,
-        guesses: data.guesses,
-        attempts: data.attempts,
-        date: data.date.toDate().toISOString(),
-        status: data.status,
-        edition: data.edition,
-        hintIndex: data.hintIndex,
-        letterTracking: data.letterTracking || [], // Include letter tracking with fallback
-      };
-    });
-
-    return res.status(200).json({ results, count: results.length });
-  } catch (err) {
-    console.error("Error fetching puzzle history:", err);
-    return res.status(500).json({ error: "Internal server error" });
-  }
-}
-);
-
-// GET /words route - fetch all words
-app.get(
-  "/words",
-  async (
-    _req: express.Request,
-    res: express.Response<WordsResponse | ApiError>
-  ) => {
-  try {
-    const now = Date.now();
-
-    // Check if cache is valid
-    if (wordsCache && now - wordsCacheTimestamp < WORDS_CACHE_TTL) {
-      console.log("Serving words from cache");
-      return res.status(200).json({
-        words: wordsCache,
-        count: wordsCache.length,
+        return {
+          id: doc.id,
+          word: data.word,
+          guesses: data.guesses,
+          attempts: data.attempts,
+          date: data.date.toDate().toISOString(),
+          status: data.status,
+          edition: data.edition,
+          hintIndex: data.hintIndex,
+          letterTracking: data.letterTracking || [], // Include letter tracking with fallback
+        };
       });
+
+      return res.status(200).json({ results, count: results.length });
+    } catch (err) {
+      console.error("Error fetching puzzle history:", err);
+      return res.status(500).json({ error: "Internal server error" });
     }
-
-    // Cache miss or expired, fetch from Firestore
-    console.log("Cache miss, fetching words from Firestore");
-    const wordsSnapshot = await wordsCollection().get();
-    const words = wordsSnapshot.docs
-      .map((doc) => firestoreToWordEntry(doc))
-      .filter((word) => word !== null);
-
-    // Update cache
-    wordsCache = words;
-    wordsCacheTimestamp = now;
-
-    return res.status(200).json({
-      words,
-      count: words.length,
-    });
-  } catch (err) {
-    console.error("Error fetching words:", err);
-    return res.status(500).json({ error: "Internal server error" });
   }
-}
 );
 
-// GET /words/:id route - fetch specific word
+// GET /words/new-since/:version - fetch words added after a specific app version
+app.get(
+  "/words/new-since/:version",
+  async (
+    req: express.Request,
+    res: express.Response<
+      { words: any[]; count: number; bundleVersion: string } | ApiError
+    >
+  ) => {
+    try {
+      const { version } = req.params;
+
+      console.log(`Fetching words newer than bundle version: ${version}`);
+
+      // Query words added after the bundle version
+      // This assumes words have a 'version' or 'dateAdded' field
+      const wordsSnapshot = await wordsCollection()
+        .where("version", ">", version)
+        .get();
+
+      const newWords = wordsSnapshot.docs
+        .map((doc) => firestoreToWordEntry(doc))
+        .filter((word) => word !== null);
+
+      console.log(`Found ${newWords.length} words newer than ${version}`);
+
+      return res.status(200).json({
+        words: newWords,
+        count: newWords.length,
+        bundleVersion: version,
+      });
+    } catch (err) {
+      console.error("Error fetching new words:", err);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+);
+
+// GET /words/:id route - fetch specific word (admin/debug only)
 app.get(
   "/words/:id",
   async (
     req: express.Request,
     res: express.Response<WordResponse | ApiError>
   ) => {
-  try {
-    const { id } = req.params;
-    const wordDoc = await wordsCollection().doc(id.toUpperCase()).get();
-    const word = firestoreToWordEntry(wordDoc);
+    try {
+      const { id } = req.params;
+      const wordDoc = await wordsCollection().doc(id.toUpperCase()).get();
+      const word = firestoreToWordEntry(wordDoc);
 
-    if (!word) {
-      return res.status(404).json({
-        error: `Word with id "${id}" not found`,
-      });
+      if (!word) {
+        return res.status(404).json({
+          error: `Word with id "${id}" not found`,
+        });
+      }
+
+      return res.status(200).json({ word });
+    } catch (err) {
+      console.error(`Error fetching word ${req.params.id}:`, err);
+      return res.status(500).json({ error: "Internal server error" });
     }
-
-    return res.status(200).json({ word });
-  } catch (err) {
-    console.error(`Error fetching word ${req.params.id}:`, err);
-    return res.status(500).json({ error: "Internal server error" });
   }
-}
 );
 
 // GET /daily-puzzle/today route - fetch current puzzle
@@ -350,7 +341,9 @@ app.post(
   verifyToken,
   async (
     req: express.Request,
-    res: express.Response<{ message: string; puzzle: DailyPuzzleSeed } | ApiError>
+    res: express.Response<
+      { message: string; puzzle: DailyPuzzleSeed } | ApiError
+    >
   ) => {
     try {
       const { date, wordId } = req.body;
