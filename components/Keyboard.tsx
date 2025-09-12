@@ -9,6 +9,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { useContext } from "react";
 import { GameContext } from "@/context/GameContext";
 import { getCategoryColor } from "@/utils/game";
+import { getKeyboardLetterState } from "@/utils/letter-validation";
 
 // TODO: Clean up this code: make it more modular, etc.
 
@@ -31,20 +32,8 @@ export const Keyboard = () => {
   const tileBackgroundColor = getCategoryColor(originalCategory);
 
   const getKeyStatus = (key: string) => {
-    const hasBeenUsed = guesses.some((guess) => guess.id.includes(key));
-    if (!hasBeenUsed) return null;
-
-    const isCorrect = guesses.some((guess) =>
-      guess.id
-        .split("")
-        .some((letter, index) => letter === key && key === answer[index])
-    );
-    if (isCorrect) return "correct";
-
-    const isPresent = answer.includes(key);
-    if (isPresent) return "present";
-
-    return "absent";
+    const guessStrings = guesses.map(guess => guess.id);
+    return getKeyboardLetterState(key, guessStrings, answer);
   };
 
   return (
