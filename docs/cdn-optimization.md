@@ -78,7 +78,7 @@ config.resolver.blockList = [/constants\/words\.json$/];
 
 **Result:**
 
-- `constants/words.ts` - Build-time only (server functions)
+- `functions/src/data/words.ts` - Build-time only (server functions)
 - Client runtime never imports bundled words
 - 243KB eliminated from app bundle
 
@@ -134,6 +134,9 @@ npm run words:deploy
 ## 🔧 File Structure
 
 ```
+data/
+└── words.json                   # Single source of truth
+
 public/dict/
 ├── current-version.json          # Version tracking
 ├── v3/
@@ -150,6 +153,9 @@ scripts/
 ├── auto-version-dictionary.js   # Auto-versioning logic
 ├── add-word.js                  # Interactive word addition
 └── build-dictionary.js         # Manual dictionary build
+
+functions/src/data/
+└── words.ts                     # Server-side wrapper
 
 storage/
 └── words.local.ts               # CDN-first loading logic

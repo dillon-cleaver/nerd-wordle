@@ -89,6 +89,7 @@ pnpm deploy:all
 nerd-wordle/
 ├── app/                    # Expo Router pages
 ├── components/             # React components
+├── data/                   # Raw data (words.json source of truth)
 ├── functions/              # Firebase Functions (backend API)
 ├── utils/                  # Utility functions
 ├── types/                  # TypeScript type definitions
@@ -227,7 +228,38 @@ pnpm run deploy:functions
 firebase functions:log
 ```
 
-## 🗄️ Word Management
+## � Data Architecture & File Organization
+
+### Word Data Flow
+
+The word dictionary follows a clear, CDN-first architecture:
+
+```
+data/words.json
+    ↓ (build scripts read)
+public/dict/v6/words.json
+    ↓ (CDN serves)
+User's browser cache
+    ↓ (React context loads)
+App runtime
+```
+
+### File Organization
+
+- **`data/words.json`** - Single source of truth for all word data
+- **`scripts/`** - Build and management scripts (read from `data/words.json`)
+- **`functions/src/data/words.ts`** - Server-side wrapper (imports from `data/words.json`)
+- **`public/dict/`** - CDN-deployed versions with auto-versioning
+- **`constants/`** - Frontend constants only (no word data)
+
+### Why This Structure?
+
+1. **Clear ownership** - `data/` is neutral, shared between systems
+2. **No bundle bloat** - Words never bundled with client app (243KB saved)
+3. **Instant updates** - CDN + versioning enables immediate word updates
+4. **Developer clarity** - No confusion about what gets bundled vs. served
+
+## �🗄️ Word Management
 
 ### Adding New Words - Simplified Workflow ⭐
 
@@ -253,12 +285,36 @@ pnpm words:admin
 
 ### Individual Word Management Commands
 
-| Command               | Description                                 |
-| --------------------- | ------------------------------------------- |
-| `pnpm words:add`      | Show instructions for adding words          |
-| `pnpm words:validate` | Validate words.json for issues              |
-| `pnpm words:deploy`   | **Main workflow:** validate + deploy to CDN |
-| `pnpm words:admin`    | Update Firestore for admin functions        |
+| Command                    | Description                                        |
+| -------------------------- | -------------------------------------------------- |
+| `pnpm words:add`           | Show instructions for adding words                 |
+| `pnpm words:validate`      | Validate words.json for issues                     |
+| `pnpm words:deploy`        | **Main workflow:** validate + deploy to CDN        |
+| `pnpm words:admin`         | Update Firestore for admin functions               |
+| `pnpm words:check-bundle`  | Quick check: verify words aren't bundled           |
+| `pnpm words:verify-bundle` | **Full verification:** build + analyze bundle size |
+
+### Bundle Optimization Verification
+
+To verify that words.json is NOT bundled with your app (saving 243KB):
+
+```bash
+# Quick check (uses existing build)
+pnpm words:check-bundle
+
+# Full verification (rebuilds + analyzes)
+pnpm words:verify-bundle
+```
+
+**Expected output:**
+
+**Expected output:**
+
+- Bundle size: ~2.6MB (optimized from original ~3.2MB)
+- No word dictionary found in bundle ✅
+- CDN references present ✅
+- Only fallback puzzle data (ZELDA) in bundle ✅
+- **Total savings: ~600KB (words + icons optimization)**
 
 ### Legacy Workflow (if CDN is unavailable)
 
