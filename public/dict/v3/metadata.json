@@ -1,8 +1,8 @@
 {
   "version": "v3",
-  "buildDate": "2025-09-12T13:53:44.058Z",
+  "buildDate": "2025-09-12T19:01:35.211Z",
   "wordCount": 3812,
-  "source": "constants/words.json",
+  "source": "data/words.json",
   "validation": {
     "totalWords": 3812,
     "categories": [
