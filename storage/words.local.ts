@@ -36,7 +36,7 @@ export function saveWordsMetadata(metadata: WordMetadata): void {
     localStorage.setItem(WORDS_METADATA_KEY, JSON.stringify(metadata));
     if (isDebugLoggingEnabled()) {
       console.log(
-        `✅ Saved words metadata (v${metadata.version}, ${metadata.totalWords} words)`
+        `✅ Saved words metadata (${metadata.version}, ${metadata.totalWords} words)`
       );
     }
   } catch (error) {
@@ -72,13 +72,42 @@ export function shouldRefreshWords(): boolean {
 }
 
 /**
+ * Get the current dictionary version from CDN
+ */
+export async function getCurrentVersion(): Promise<string> {
+  try {
+    const response = await fetch(
+      `https://nerd-word-cfda3.web.app/dict/current-version.json`,
+      {
+        cache: "no-cache", // Always get the latest version info
+        mode: "cors",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch current version: ${response.statusText}`
+      );
+    }
+
+    const versionInfo = await response.json();
+    return versionInfo.version;
+  } catch (error) {
+    console.warn("Failed to get current version, falling back to v6:", error);
+    return "v6"; // Fallback to known working version
+  }
+}
+
+/**
  * Fetch words from CDN with proper cache headers
  * Browser cache handles the heavy lifting with HTTP caching
  */
 export async function fetchWordsFromCDN(
-  version: string = "v6"
+  version?: string
 ): Promise<WordEntry[]> {
-  const url = `https://nerd-word-cfda3.web.app/dict/${version}/words.json`;
+  // Get current version if not specified
+  const actualVersion = version || (await getCurrentVersion());
+  const url = `https://nerd-word-cfda3.web.app/dict/${actualVersion}/words.json`;
 
   if (isDebugLoggingEnabled()) {
     console.log(`🔄 Fetching words from CDN: ${url}`);
@@ -97,7 +126,7 @@ export async function fetchWordsFromCDN(
 
   // Save metadata only (not the full word data)
   saveWordsMetadata({
-    version,
+    version: actualVersion,
     lastUpdated: new Date().toISOString(),
     totalWords: words.length,
   });

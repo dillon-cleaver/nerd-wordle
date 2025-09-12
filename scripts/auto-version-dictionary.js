@@ -17,7 +17,7 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 
-const SOURCE_FILE = path.join(process.cwd(), "constants", "words.json");
+const SOURCE_FILE = path.join(process.cwd(), "data", "words.json");
 const TARGET_DIR = path.join(process.cwd(), "public", "dict");
 const VERSION_FILE = path.join(TARGET_DIR, "current-version.json");
 const CONTEXT_FILE = path.join(process.cwd(), "storage", "words.local.ts");
