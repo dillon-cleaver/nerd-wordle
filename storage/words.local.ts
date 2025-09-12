@@ -93,8 +93,8 @@ export async function getCurrentVersion(): Promise<string> {
     const versionInfo = await response.json();
     return versionInfo.version;
   } catch (error) {
-    console.warn("Failed to get current version, falling back to v6:", error);
-    return "v6"; // Fallback to known working version
+    console.warn("Failed to get current version, falling back to v7:", error);
+    return "v7"; // Fallback to known working version
   }
 }
 
