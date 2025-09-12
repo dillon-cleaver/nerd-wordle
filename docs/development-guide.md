@@ -25,15 +25,39 @@ pnpm dev
 
 ## ⚡ Most Common Commands
 
-### Adding New Words (Primary Workflow)
+### Adding New Words (CDN-First Workflow)
 
 ```bash
-# 1. Edit constants/words.json
-# 2. Deploy to CDN
-pnpm words:deploy
+# Interactive word addition
+npm run words:add
 
-# 3. Optional: Update admin database
-pnpm words:admin
+# Direct word addition
+npm run words:add ROBOT videoGames
+
+# Deploy new words to CDN (auto-versioning)
+npm run words:deploy
+# This will:
+# - Validate words.json
+# - Auto-increment version (v6 → v7)
+# - Update client to fetch new version
+# - Deploy to Firebase Hosting CDN
+# - Users get new words on next app session (no app redeploy!)
+
+# Optional: Update Firebase database
+npm run words:admin
+```
+
+### Word Management Scripts
+
+```bash
+# Validate words without deploying
+npm run words:validate
+
+# Manual dictionary build (for testing)
+npm run build:dictionary
+
+# Auto-version dictionary (detects changes)
+node scripts/auto-version-dictionary.js
 ```
 
 ### Daily Development
@@ -757,11 +781,13 @@ pnpm run emulator:start    # Start clean
 
 ### Available Endpoints
 
-| Endpoint              | Method | Description                   |
-| --------------------- | ------ | ----------------------------- |
-| `/words`              | GET    | Get all words with categories |
-| `/daily-puzzle`       | GET    | Get today's puzzle            |
-| `/daily-puzzle/:date` | GET    | Get puzzle for specific date  |
+| Endpoint              | Method | Description                     |
+| --------------------- | ------ | ------------------------------- |
+| `/words/:id`          | GET    | Get specific word (admin/debug) |
+| `/daily-puzzle`       | GET    | Get today's puzzle              |
+| `/daily-puzzle/:date` | GET    | Get puzzle for specific date    |
+
+**Note**: The bulk `/words` endpoint was removed as words are now loaded from the app bundle.
 
 ### Frontend Integration
 
@@ -777,13 +803,13 @@ const { dailyPuzzle, isLoading, error } = useDailyPuzzle();
 For direct API access:
 
 ```typescript
-import { wordsApi, dailyPuzzleApi } from "@/utils/api";
+import { dailyPuzzleApi } from "@/utils/api";
 
 // Get today's puzzle
 const puzzle = await dailyPuzzleApi.getTodaysPuzzle();
 
-// Get all words
-const words = await wordsApi.getAllWords();
+// Note: wordsApi was removed - words are now loaded via WordDataContext
+// For word data, use: const { words, getWordEntry } = useWordData();
 ```
 
 ## 🗃️ Database Structure

@@ -1,6 +1,38 @@
 # NerdWord 🤓
 
-A Wordle-style word guessing game focused on nerdy topics including movies, science, video games, anime, literature, and more! Built with React Native and Expo.
+A Wordle-style word guessing game focused on nerdy topics including movies, sc## 🏗️ Tech Stack
+
+- **Frontend**: React Native, Expo, TypeScript
+- **Backend**: Firebase (Functions, Firestore, Auth)
+- **Word Dictionary**: CDN-first with auto-versioning
+- **Deployment**: EAS Build/Update, Firebase Hosting
+- **Development**: Expo Router, React Context, Jest
+
+## ⚡ Performance Optimizations
+
+- **CDN-First Loading**: 243KB bundle reduction, words loaded from Firebase Hosting CDN
+- **Auto-Versioning**: Instant word updates without app redeployment  
+- **Browser Cache**: Aggressive caching with URL-based cache busting
+- **Bundle Exclusion**: Word dictionary excluded from app bundle
+- **Minimal localStorage**: 99.96% reduction (metadata only)
+
+See [docs/cdn-optimization.md](./docs/cdn-optimization.md) for technical details.
+
+## 📁 Project Structure
+
+```
+nerd-wordle/
+├── app/                    # Expo Router pages
+├── components/             # Reusable UI components
+├── functions/              # Firebase Cloud Functions
+├── constants/              # Game data and styling (build-time only)
+├── public/dict/            # CDN word dictionary (versioned)
+├── scripts/                # Word management & auto-versioning
+├── storage/                # CDN-first loading logic
+├── utils/                  # Helper functions
+├── docs/                   # Documentation
+└── package.json            # Dependencies & scripts
+``` anime, literature, and more! Built with React Native and Expo.
 
 [![Web App](https://img.shields.io/badge/Play%20Online-nerd--wordle.expo.app-blue)](https://nerd-wordle.expo.app)
 [![Firebase](https://img.shields.io/badge/Backend-Firebase-orange)](https://firebase.google.com/)
@@ -27,6 +59,17 @@ Each puzzle includes hints and Wikipedia links to help you learn more about the 
 ### Play Online
 
 Visit [nerd-wordle.expo.app](https://nerd-wordle.expo.app) to play in your browser!
+
+### Adding New Words (Instant Updates)
+
+```bash
+# Interactive word addition
+npm run words:add
+
+# Deploy to CDN with auto-versioning
+npm run words:deploy
+# Users get new words on next app session (no app store update needed!)
+```
 
 ### Mobile Development
 
