@@ -1,7 +1,11 @@
-import { WORD_DATA } from "@/constants/words";
 import { colors } from "@/constants/styles";
-import { WordCategory, WordEntry } from "@/types/word";
+import { WordCategory, WordEntry, NerdWordEntry } from "@/types/word";
 import { sample } from "./sample";
+
+/**
+ * Pure utility functions that don't depend on word data
+ * These can be used without WordDataContext
+ */
 
 export const convertCategory = (word: WordCategory): string => {
   switch (word) {
@@ -50,125 +54,136 @@ const getDefaultHint = (category: WordCategory): string => {
     case "movies":
       return "Lights, camera, action!";
     case "literature":
-      return "A word that tells a story.";
+      return "From the pages of great literature.";
     case "common":
+      return "A common word that's essential to know.";
     default:
-      return "A common word that's anything but ordinary.";
-  }
-};
-
-const getDefaultSummary = (category: WordCategory): string => {
-  switch (category) {
-    case "animeAndManga":
-      return "A summary of a word from Japanese anime and manga culture.";
-    case "fantasyAndSciFi":
-      return "A summary of a word from the realms of fantasy and science fiction.";
-    case "science":
-      return "A summary of a fundamental scientific term.";
-    case "tabletopAndBoardGames":
-      return "A summary of a word from tabletop and board games.";
-    case "techAndInternetCulture":
-      return "A summary of a word from technology and internet culture.";
-    case "videoGames":
-      return "A summary of a word from the world of video games.";
-    case "superheroes":
-      return "A summary of a word from superhero lore.";
-    case "movies":
-      return "A summary of a word from the world of movies.";
-    case "literature":
-      return "A summary of a word from literature.";
-    case "common":
-    default:
-      return "A summary of a common word.";
+      return "A mysterious word from the vast universe of knowledge.";
   }
 };
 
 export const getHintForWord = (
-  wordEntry: WordEntry | null,
-  category: WordCategory,
+  wordEntry: WordEntry,
   hintIndex: number = 0
 ): string => {
-  if (
-    wordEntry &&
-    wordEntry.category !== "common" &&
-    "hints" in wordEntry &&
-    Number.isInteger(hintIndex) &&
-    hintIndex >= 0 &&
-    wordEntry.hints.length > hintIndex
-  ) {
-    return wordEntry.hints[hintIndex];
+  // If word has custom hints, use them (only NerdWordEntry has hints)
+  if (wordEntry.category !== "common") {
+    const nerdWord = wordEntry as NerdWordEntry;
+    if (nerdWord.hints && nerdWord.hints.length > 0) {
+      const validIndex = Math.max(
+        0,
+        Math.min(hintIndex, nerdWord.hints.length - 1)
+      );
+      return nerdWord.hints[validIndex];
+    }
   }
 
-  return getDefaultHint(category);
+  // Fallback to default hint for category
+  return getDefaultHint(wordEntry.category);
 };
 
-export const getSummaryForWord = (
-  wordEntry: WordEntry | null,
-  category: WordCategory
-): string => {
-  if (
-    wordEntry &&
-    wordEntry.category !== "common" &&
-    "summary" in wordEntry &&
-    wordEntry.summary
-  ) {
-    return wordEntry.summary;
+export const getSummaryForWord = (wordEntry: WordEntry): string | undefined => {
+  // Only NerdWordEntry has summary
+  if (wordEntry.category !== "common") {
+    return (wordEntry as NerdWordEntry).summary;
   }
-
-  return getDefaultSummary(category);
+  return undefined;
 };
 
 export const getCategoryColor = (category: string): string => {
   switch (category) {
-    case "videoGames":
-      return colors.categories.videoGames;
-    case "science":
-      return colors.categories.science;
-    case "fantasyAndSciFi":
-      return colors.categories.fantasyAndSciFi;
     case "animeAndManga":
       return colors.categories.animeAndManga;
+    case "fantasyAndSciFi":
+      return colors.categories.fantasyAndSciFi;
+    case "science":
+      return colors.categories.science;
     case "tabletopAndBoardGames":
       return colors.categories.tabletopAndBoardGames;
     case "techAndInternetCulture":
       return colors.categories.techAndInternetCulture;
+    case "videoGames":
+      return colors.categories.videoGames;
     case "superheroes":
       return colors.categories.superheroes;
     case "movies":
       return colors.categories.movies;
     case "literature":
       return colors.categories.literature;
+    case "common":
+      return colors.neutral.darkGray; // Use dark gray for common words
     default:
-      return colors.categories.techAndInternetCulture;
+      return colors.categories.fantasyAndSciFi;
   }
 };
 
-export const getCategoryTextColor = (category: string) => {
-  switch (category) {
-    case "videoGames":
-      return colors.neutral.black;
-    case "science":
-      return colors.neutral.black;
-    case "fantasyAndSciFi":
-      return colors.neutral.black;
-    case "animeAndManga":
-      return colors.neutral.black;
-    case "tabletopAndBoardGames":
-      return colors.neutral.black;
-    case "techAndInternetCulture":
-      return colors.neutral.black;
-    case "superheroes":
-      return colors.neutral.white;
-    case "movies":
-      return colors.neutral.black;
-    case "literature":
-      return colors.neutral.white;
-    default:
-      return colors.categories.techAndInternetCulture;
-  }
+export const getCategoryTextColor = (_category: string) => {
+  // Use white text for better contrast on colored backgrounds
+  return colors.neutral.white;
 };
 
-export function initializeGame(dailyWord?: WordEntry) {
+// Simple version for backward compatibility with daily puzzle hook
+export function initializeGame(dailyWord: WordEntry) {
+  const convertedCategory = convertCategory(dailyWord.category);
+  return {
+    category: convertedCategory,
+    originalCategory: dailyWord.category,
+    answer: dailyWord.id,
+  };
+}
+
+/**
+ * Initialize game with word data (pure function)
+ * This version requires words to be passed in rather than importing them
+ */
+export function initializeGameWithData(words: WordEntry[], dailyWord?: WordEntry) {
+  if (dailyWord) {
+    return {
+      currentWord: dailyWord,
+      guesses: [],
+      currentGuess: "",
+      gameStatus: "playing" as const,
+      attempts: 1,
+    };
+  }
+
+  // Filter to nerd words only (exclude common)
+  const nerdWords = words.filter((word) => word.category !== "common");
+
+  if (nerdWords.length === 0) {
+    throw new Error("No nerd words available for game initialization");
+  }
+
+  // Pick a random nerd word
+  const randomWord = sample(nerdWords);
+
+  return {
+    currentWord: randomWord,
+    guesses: [],
+    currentGuess: "",
+    gameStatus: "playing" as const,
+    attempts: 1,
+  };
+}
+
+/**
+ * Get words by category (pure function)
+ * This version requires words to be passed in rather than importing them
+ */
+export function getWordsByCategory(
+  words: WordEntry[],
+  category: WordCategory
+): WordEntry[] {
+  return words.filter((word) => word.category === category);
+}
+
+/**
+ * Initialize game with daily word or random selection (pure function)
+ */
+export function initializeGameWithWords(
+  words: WordEntry[],
+  dailyWord?: WordEntry
+) {
   // If a daily word is provided, use it instead of random selection
   if (dailyWord) {
     const convertedCategory = convertCategory(dailyWord.category);
@@ -182,18 +197,18 @@ export function initializeGame(dailyWord?: WordEntry) {
   // Fallback to random word selection (for development/testing)
   const categoriesExcludingCommon = Array.from(
     new Set(
-      WORD_DATA.filter((word) => word.category !== "common").map(
-        (word) => word.category
-      )
+      words
+        .filter((word) => word.category !== "common")
+        .map((word) => word.category)
     )
   ) as WordCategory[];
 
   const selectedCategory = sample(categoriesExcludingCommon);
   const convertedCategory = convertCategory(selectedCategory);
 
-  const wordsInCategory = WORD_DATA.filter(
-    (word) => word.category === selectedCategory
-  ).map((word) => word.id);
+  const wordsInCategory = words
+    .filter((word) => word.category === selectedCategory)
+    .map((word) => word.id);
 
   const answer = sample(wordsInCategory);
 
@@ -202,4 +217,16 @@ export function initializeGame(dailyWord?: WordEntry) {
     originalCategory: selectedCategory,
     answer: answer,
   };
+}
+
+/**
+ * Get category words as string array (pure function)
+ */
+export function getCategoryWords(
+  words: WordEntry[],
+  category: WordCategory
+): string[] {
+  return words
+    .filter((word) => word.category === category)
+    .map((word) => word.id);
 }
