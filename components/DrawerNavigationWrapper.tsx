@@ -92,7 +92,7 @@ export const DrawerNavigationWrapper = () => {
             </View>
           </DrawerContentScrollView>
         )}
-        screenOptions={{
+        screenOptions={({ navigation }) => ({
           headerStyle: {
             backgroundColor: colors.neutral.background,
             // TODO: Border still shows on desktop web
@@ -109,6 +109,14 @@ export const DrawerNavigationWrapper = () => {
             alignItems: "center",
             lineHeight: lineHeight.title.large,
           },
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.toggleDrawer()}
+              style={{ padding: spacing.xs, marginLeft: spacing.md }}
+            >
+              <SvgIcon name="menu" size={24} color={colors.neutral.white} />
+            </TouchableOpacity>
+          ),
           headerRight: () => (
             <View
               style={{
@@ -143,7 +151,7 @@ export const DrawerNavigationWrapper = () => {
           ...(isWeb && {
             swipeEnabled: false, // Disable swipe gestures on web
           }),
-        }}
+        })}
       >
         <Drawer.Screen
           name="index"
