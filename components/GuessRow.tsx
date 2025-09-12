@@ -3,6 +3,7 @@ import { range } from "../utils/range";
 import LetterBox from "./LetterBox";
 import { spacing } from "@/constants/styles";
 import { WordId } from "@/types/word";
+import { isLetterCorrect, isLetterPresent } from "@/utils/letter-validation";
 
 export type GuessRowProps = {
   currentGuess: string;
@@ -37,10 +38,8 @@ const GuessRow = ({
       {range(0, WORD_LENGTH).map((letterIndex) => {
         const letter = safeCurrentGuess[letterIndex] || "";
 
-        const isCorrect = letter === safeAnswer[letterIndex];
-
-        const isPresent =
-          !isCorrect && letter !== "" && safeAnswer.includes(letter);
+        const isCorrect = isLetterCorrect(safeCurrentGuess, safeAnswer, letterIndex);
+        const isPresent = isLetterPresent(safeCurrentGuess, safeAnswer, letterIndex);
 
         const shouldShowHint = !!hint && hint.col === letterIndex;
 
