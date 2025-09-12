@@ -1,4 +1,7 @@
-import { MOBILE_BANNER_GUESS_GRID_MIN_WIDTH, DESKTOP_BANNER_GUESS_GRID_MIN_WIDTH } from "@/constants/dimensions";
+import {
+  MOBILE_BANNER_GUESS_GRID_MIN_WIDTH,
+  DESKTOP_BANNER_GUESS_GRID_MIN_WIDTH,
+} from "@/constants/dimensions";
 import {
   colors,
   fontFamily,
@@ -13,16 +16,16 @@ import { Text, View, StyleSheet } from "react-native";
 import { useDevice } from "@/hooks/useDevice";
 
 export const CategoryBanner = () => {
-  const { answerEntry, originalCategory, category } = useContext(GameContext);
+  const { answerEntry, category } = useContext(GameContext);
   const { isDesktop } = useDevice();
 
-  const hint = getHintForWord(answerEntry, originalCategory);
+  const hint = answerEntry ? getHintForWord(answerEntry) : "Loading hint...";
 
   const contentStyle = [
     styles.content,
     {
-      minWidth: isDesktop 
-        ? DESKTOP_BANNER_GUESS_GRID_MIN_WIDTH 
+      minWidth: isDesktop
+        ? DESKTOP_BANNER_GUESS_GRID_MIN_WIDTH
         : MOBILE_BANNER_GUESS_GRID_MIN_WIDTH,
     },
   ];

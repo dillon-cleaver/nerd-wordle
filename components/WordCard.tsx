@@ -40,8 +40,8 @@ export const WordCard = ({ collectedWordId }: WordCardProps) => {
   const { wordEntry, category, completedDate, editionNumber } = collectedWord;
   const answer = wordEntry.id;
 
-  const hint = getHintForWord(wordEntry, category);
-  const summary = getSummaryForWord(wordEntry, category);
+  const hint = getHintForWord(wordEntry);
+  const summary = getSummaryForWord(wordEntry);
   const tileBackgroundColor = getCategoryColor(category);
   const textColor = getCategoryTextColor(category);
 
