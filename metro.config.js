@@ -2,8 +2,11 @@ const { getDefaultConfig } = require("expo/metro-config");
 
 const config = getDefaultConfig(__dirname);
 
-// Production optimizations
-if (process.env.NODE_ENV === "production") {
+// Check if dev mode is disabled (production-like optimizations)
+const isDevMode = process.env.EXPO_PUBLIC_DEV_MODE === "true";
+
+// Production optimizations (when dev mode is OFF)
+if (!isDevMode) {
   // Disable source maps in production builds
   config.serializer = {
     ...config.serializer,
