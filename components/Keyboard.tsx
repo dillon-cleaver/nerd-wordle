@@ -8,6 +8,7 @@ import {
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { useContext } from "react";
 import { GameContext } from "@/context/GameContext";
+import { getKeyboardLetterState } from "@/utils/letter-validation";
 
 // TODO: Clean up this code: make it more modular, etc.
 
@@ -27,7 +28,7 @@ export const Keyboard = () => {
   const { guesses, answer, handleKeyPress } = useContext(GameContext);
 
   const getKeyStatus = (key: string) => {
-    const guessStrings = guesses.map(guess => guess.id);
+    const guessStrings = guesses.map((guess) => guess.id);
     return getKeyboardLetterState(key, guessStrings, answer);
   };
 
