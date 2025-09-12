@@ -1,10 +1,10 @@
 {
   "version": "v3",
-  "buildDate": "2025-09-12T20:33:29.304Z",
-  "wordCount": 3812,
+  "buildDate": "2025-09-12T21:41:49.809Z",
+  "wordCount": 3813,
   "source": "data/words.json",
   "validation": {
-    "totalWords": 3812,
+    "totalWords": 3813,
     "categories": [
       "common",
       "animeAndManga",
