@@ -11,7 +11,7 @@ A Wordle-style word guessing game focused on nerdy topics including movies, sc##
 ## ⚡ Performance Optimizations
 
 - **CDN-First Loading**: 243KB bundle reduction, words loaded from Firebase Hosting CDN
-- **Auto-Versioning**: Instant word updates without app redeployment  
+- **Auto-Versioning**: Instant word updates without app redeployment
 - **Browser Cache**: Aggressive caching with URL-based cache busting
 - **Bundle Exclusion**: Word dictionary excluded from app bundle
 - **Minimal localStorage**: 99.96% reduction (metadata only)
@@ -20,12 +20,13 @@ See [docs/cdn-optimization.md](./docs/cdn-optimization.md) for technical details
 
 ## 📁 Project Structure
 
-```
+````
 nerd-wordle/
 ├── app/                    # Expo Router pages
 ├── components/             # Reusable UI components
+├── data/                   # Raw data (words.json source of truth)
 ├── functions/              # Firebase Cloud Functions
-├── constants/              # Game data and styling (build-time only)
+├── constants/              # Frontend constants and styling (no word data)
 ├── public/dict/            # CDN word dictionary (versioned)
 ├── scripts/                # Word management & auto-versioning
 ├── storage/                # CDN-first loading logic
@@ -69,7 +70,7 @@ npm run words:add
 # Deploy to CDN with auto-versioning
 npm run words:deploy
 # Users get new words on next app session (no app store update needed!)
-```
+````
 
 ### Mobile Development
 

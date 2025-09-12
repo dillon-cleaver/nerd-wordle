@@ -44,8 +44,7 @@
             "./assets/fonts/Bitter-Medium.ttf"
           ]
         }
-      ],
-      "expo-web-browser"
+      ]
     ],
     "experiments": {
       "typedRoutes": true
