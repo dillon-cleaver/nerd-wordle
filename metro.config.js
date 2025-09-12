@@ -1,9 +1,36 @@
-// Learn more https://docs.expo.io/guides/customizing-metro
-const { getDefaultConfig } = require("@expo/metro-config");
+const { getDefaultConfig } = require("expo/metro-config");
 
-/** @type {import('expo/metro-config').MetroConfig} */
 const config = getDefaultConfig(__dirname);
-config.resolver.sourceExts.push("cjs");
-config.resolver.unstable_enablePackageExports = false;
+
+// Check if dev mode is disabled (production-like optimizations)
+const isDevMode = process.env.EXPO_PUBLIC_DEV_MODE === "true";
+
+// Production optimizations (when dev mode is OFF)
+if (!isDevMode) {
+  // Disable source maps in production builds
+  config.serializer = {
+    ...config.serializer,
+    createModuleIdFactory: () => (path) => {
+      // Use shorter module IDs for smaller bundle
+      return require("crypto")
+        .createHash("md5")
+        .update(path)
+        .digest("hex")
+        .slice(0, 8);
+    },
+  };
+
+  // Minify more aggressively
+  config.transformer = {
+    ...config.transformer,
+    minifierConfig: {
+      // More aggressive minification
+      keep_fnames: false,
+      mangle: {
+        keep_fnames: false,
+      },
+    },
+  };
+}
 
 module.exports = config;

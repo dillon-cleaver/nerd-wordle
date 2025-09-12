@@ -11,7 +11,7 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import { FontAwesome } from "@expo/vector-icons";
+import { SvgIcon } from "./base/SvgIcon";
 import { StatusBar } from "expo-status-bar";
 import {
   borderRadius,
@@ -92,7 +92,7 @@ export const DrawerNavigationWrapper = () => {
             </View>
           </DrawerContentScrollView>
         )}
-        screenOptions={{
+        screenOptions={({ navigation }) => ({
           headerStyle: {
             backgroundColor: colors.neutral.background,
             // TODO: Border still shows on desktop web
@@ -109,6 +109,14 @@ export const DrawerNavigationWrapper = () => {
             alignItems: "center",
             lineHeight: lineHeight.title.large,
           },
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.toggleDrawer()}
+              style={{ padding: spacing.xs, marginLeft: spacing.md }}
+            >
+              <SvgIcon name="menu" size={24} color={colors.neutral.white} />
+            </TouchableOpacity>
+          ),
           headerRight: () => (
             <View
               style={{
@@ -123,7 +131,7 @@ export const DrawerNavigationWrapper = () => {
                 onPress={() => setIsInfoModalVisible(true)}
                 style={{ padding: spacing.xs }}
               >
-                <FontAwesome
+                <SvgIcon
                   name="info-circle"
                   size={24}
                   color={colors.neutral.white}
@@ -143,7 +151,7 @@ export const DrawerNavigationWrapper = () => {
           ...(isWeb && {
             swipeEnabled: false, // Disable swipe gestures on web
           }),
-        }}
+        })}
       >
         <Drawer.Screen
           name="index"
@@ -157,7 +165,7 @@ export const DrawerNavigationWrapper = () => {
             },
             drawerItemStyle: { borderRadius: borderRadius.md },
             drawerIcon: ({ color }: { color: string }) => (
-              <FontAwesome name="home" size={24} color={color} />
+              <SvgIcon name="home" size={24} color={color} />
             ),
           }}
         />
@@ -173,7 +181,7 @@ export const DrawerNavigationWrapper = () => {
             },
             drawerItemStyle: { borderRadius: borderRadius.md },
             drawerIcon: ({ color }: { color: string }) => (
-              <FontAwesome name="trophy" size={24} color={color} />
+              <SvgIcon name="trophy" size={24} color={color} />
             ),
           }}
         />

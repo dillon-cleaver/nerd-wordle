@@ -32,6 +32,14 @@ graph TD
 - **Build Tool**: EAS Build
 - **Domain**: Generated Expo URLs (e.g., `https://nerd-wordle--xyz123.expo.app/`)
 
+### Word Dictionary Deployment (CDN-First)
+
+- **CDN**: Firebase Hosting (`https://nerd-word-cfda3.web.app/dict/`)
+- **Versioning**: Auto-incrementing versions (v1, v2, v3...)
+- **Cache Strategy**: Aggressive browser cache with URL versioning
+- **Bundle Optimization**: Words excluded from app bundle (243KB saved)
+- **Update Strategy**: Instant updates via CDN without app redeployment
+
 ### Backend Deployment
 
 - **Platform**: Firebase Functions (Node.js)

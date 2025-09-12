@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { SvgIcon } from "./base/SvgIcon";
 import { isDevModeEnabled, getDevEnvironmentInfo } from "@/utils/dev-flags";
 import { LetterTrackingDisplay } from "./LetterTrackingDisplay";
 import {
@@ -25,11 +25,7 @@ export const DrawerDevInfo: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <FontAwesome
-          name="info-circle"
-          size={16}
-          color={colors.semantic.warning}
-        />
+        <SvgIcon name="info-circle" size={16} color={colors.semantic.warning} />
         <Text style={styles.headerText}>Build Environment</Text>
       </View>
 

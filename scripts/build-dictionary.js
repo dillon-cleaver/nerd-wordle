@@ -18,7 +18,7 @@ const fs = require("fs");
 const path = require("path");
 
 // Use process.cwd() to get the project root directory
-const SOURCE_FILE = path.join(process.cwd(), "constants", "words.json");
+const SOURCE_FILE = path.join(process.cwd(), "data", "words.json");
 const TARGET_DIR = path.join(process.cwd(), "public", "dict");
 
 // Parse command line arguments
@@ -118,7 +118,7 @@ async function buildDictionary() {
       version,
       buildDate: new Date().toISOString(),
       wordCount: words.length,
-      source: "constants/words.json",
+      source: "data/words.json",
       validation: validationResults,
     };
 

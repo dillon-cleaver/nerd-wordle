@@ -81,10 +81,7 @@ export type DailyPuzzleSeed = {
 };
 
 // API Response types
-export type WordsResponse = {
-  words: WordEntry[];
-  count: number;
-};
+// REMOVED: WordsResponse - no longer needed with bundle-first approach
 
 export type WordResponse = {
   word: WordEntry;

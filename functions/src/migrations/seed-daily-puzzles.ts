@@ -1,5 +1,5 @@
 import * as admin from "firebase-admin";
-import { WORD_DATA } from "../../../constants/words";
+import { WORD_DATA } from "../data/words";
 import { wordEntryToFirestore } from "../utils";
 
 // Initialize Firebase Admin SDK for emulator

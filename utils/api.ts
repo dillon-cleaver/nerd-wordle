@@ -1,10 +1,7 @@
 import { User } from "firebase/auth";
-import { WordEntry } from "@/types/word";
 import { DailyPuzzleSeed } from "@/utils/daily-puzzle";
 import {
   PuzzleHistoryResponse,
-  WordsResponse,
-  WordResponse,
   DailyPuzzleResponse,
 } from "@/types/backend-types";
 import { PuzzleResult } from "@/types/puzzle-result";
@@ -189,27 +186,8 @@ export const puzzleHistoryApi = {
   },
 };
 
-export const wordsApi = {
-  /**
-   * Get all words from the backend
-   */
-  async getAllWords(): Promise<WordEntry[]> {
-    const response = await makePublicRequest<WordsResponse>("/words", {
-      method: "GET",
-    });
-    return response.words;
-  },
-
-  /**
-   * Get a specific word by ID
-   */
-  async getWord(wordId: string): Promise<WordEntry> {
-    const response = await makePublicRequest<WordResponse>(`/words/${wordId}`, {
-      method: "GET",
-    });
-    return response.word;
-  },
-};
+// REMOVED: wordsApi - no longer needed with bundle-first word loading
+// Words are now loaded directly from app bundle via WordDataContext
 
 export const dailyPuzzleApi = {
   /**

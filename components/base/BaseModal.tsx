@@ -8,7 +8,7 @@ import {
   ViewStyle,
   Platform,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { SvgIcon } from "./SvgIcon";
 import { borderRadius, colors, spacing } from "@/constants/styles";
 
 type BaseModalProps = {
@@ -73,11 +73,7 @@ export const BaseModal = ({
               accessibilityRole="button"
               accessibilityLabel="Close modal"
             >
-              <FontAwesome
-                name="close"
-                size={20}
-                color={colors.neutral.white}
-              />
+              <SvgIcon name="close" size={20} color={colors.neutral.white} />
             </Pressable>
           )}
           {children}

@@ -25,15 +25,39 @@ pnpm dev
 
 ## ⚡ Most Common Commands
 
-### Adding New Words (Primary Workflow)
+### Adding New Words (CDN-First Workflow)
 
 ```bash
-# 1. Edit constants/words.json
-# 2. Deploy to CDN
-pnpm words:deploy
+# Interactive word addition
+npm run words:add
 
-# 3. Optional: Update admin database
-pnpm words:admin
+# Direct word addition
+npm run words:add ROBOT videoGames
+
+# Deploy new words to CDN (auto-versioning)
+npm run words:deploy
+# This will:
+# - Validate words.json
+# - Auto-increment version (v6 → v7)
+# - Update client to fetch new version
+# - Deploy to Firebase Hosting CDN
+# - Users get new words on next app session (no app redeploy!)
+
+# Optional: Update Firebase database
+npm run words:admin
+```
+
+### Word Management Scripts
+
+```bash
+# Validate words without deploying
+npm run words:validate
+
+# Manual dictionary build (for testing)
+npm run build:dictionary
+
+# Auto-version dictionary (detects changes)
+node scripts/auto-version-dictionary.js
 ```
 
 ### Daily Development
@@ -65,6 +89,7 @@ pnpm deploy:all
 nerd-wordle/
 ├── app/                    # Expo Router pages
 ├── components/             # React components
+├── data/                   # Raw data (words.json source of truth)
 ├── functions/              # Firebase Functions (backend API)
 ├── utils/                  # Utility functions
 ├── types/                  # TypeScript type definitions
@@ -203,7 +228,38 @@ pnpm run deploy:functions
 firebase functions:log
 ```
 
-## 🗄️ Word Management
+## � Data Architecture & File Organization
+
+### Word Data Flow
+
+The word dictionary follows a clear, CDN-first architecture:
+
+```
+data/words.json
+    ↓ (build scripts read)
+public/dict/v6/words.json
+    ↓ (CDN serves)
+User's browser cache
+    ↓ (React context loads)
+App runtime
+```
+
+### File Organization
+
+- **`data/words.json`** - Single source of truth for all word data
+- **`scripts/`** - Build and management scripts (read from `data/words.json`)
+- **`functions/src/data/words.ts`** - Server-side wrapper (imports from `data/words.json`)
+- **`public/dict/`** - CDN-deployed versions with auto-versioning
+- **`constants/`** - Frontend constants only (no word data)
+
+### Why This Structure?
+
+1. **Clear ownership** - `data/` is neutral, shared between systems
+2. **No bundle bloat** - Words never bundled with client app (243KB saved)
+3. **Instant updates** - CDN + versioning enables immediate word updates
+4. **Developer clarity** - No confusion about what gets bundled vs. served
+
+## �🗄️ Word Management
 
 ### Adding New Words - Simplified Workflow ⭐
 
@@ -211,7 +267,7 @@ The streamlined process for adding words to the game:
 
 ```bash
 # 1. Add words to the source file
-# Edit constants/words.json
+# Edit data/words.json
 
 # 2. Validate and deploy to CDN (one command!)
 pnpm words:deploy
@@ -229,12 +285,36 @@ pnpm words:admin
 
 ### Individual Word Management Commands
 
-| Command               | Description                                 |
-| --------------------- | ------------------------------------------- |
-| `pnpm words:add`      | Show instructions for adding words          |
-| `pnpm words:validate` | Validate words.json for issues              |
-| `pnpm words:deploy`   | **Main workflow:** validate + deploy to CDN |
-| `pnpm words:admin`    | Update Firestore for admin functions        |
+| Command                    | Description                                        |
+| -------------------------- | -------------------------------------------------- |
+| `pnpm words:add`           | Show instructions for adding words                 |
+| `pnpm words:validate`      | Validate words.json for issues                     |
+| `pnpm words:deploy`        | **Main workflow:** validate + deploy to CDN        |
+| `pnpm words:admin`         | Update Firestore for admin functions               |
+| `pnpm words:check-bundle`  | Quick check: verify words aren't bundled           |
+| `pnpm words:verify-bundle` | **Full verification:** build + analyze bundle size |
+
+### Bundle Optimization Verification
+
+To verify that words.json is NOT bundled with your app (saving 243KB):
+
+```bash
+# Quick check (uses existing build)
+pnpm words:check-bundle
+
+# Full verification (rebuilds + analyzes)
+pnpm words:verify-bundle
+```
+
+**Expected output:**
+
+**Expected output:**
+
+- Bundle size: ~2.6MB (optimized from original ~3.2MB)
+- No word dictionary found in bundle ✅
+- CDN references present ✅
+- Only fallback puzzle data (ZELDA) in bundle ✅
+- **Total savings: ~600KB (words + icons optimization)**
 
 ### Legacy Workflow (if CDN is unavailable)
 
@@ -757,11 +837,13 @@ pnpm run emulator:start    # Start clean
 
 ### Available Endpoints
 
-| Endpoint              | Method | Description                   |
-| --------------------- | ------ | ----------------------------- |
-| `/words`              | GET    | Get all words with categories |
-| `/daily-puzzle`       | GET    | Get today's puzzle            |
-| `/daily-puzzle/:date` | GET    | Get puzzle for specific date  |
+| Endpoint              | Method | Description                     |
+| --------------------- | ------ | ------------------------------- |
+| `/words/:id`          | GET    | Get specific word (admin/debug) |
+| `/daily-puzzle`       | GET    | Get today's puzzle              |
+| `/daily-puzzle/:date` | GET    | Get puzzle for specific date    |
+
+**Note**: The bulk `/words` endpoint was removed as words are now loaded from the app bundle.
 
 ### Frontend Integration
 
@@ -777,13 +859,13 @@ const { dailyPuzzle, isLoading, error } = useDailyPuzzle();
 For direct API access:
 
 ```typescript
-import { wordsApi, dailyPuzzleApi } from "@/utils/api";
+import { dailyPuzzleApi } from "@/utils/api";
 
 // Get today's puzzle
 const puzzle = await dailyPuzzleApi.getTodaysPuzzle();
 
-// Get all words
-const words = await wordsApi.getAllWords();
+// Note: wordsApi was removed - words are now loaded via WordDataContext
+// For word data, use: const { words, getWordEntry } = useWordData();
 ```
 
 ## 🗃️ Database Structure
@@ -901,7 +983,7 @@ cd functions && pnpm run deploy:functions
 
 **New Optimized Workflow (Post-CDN Migration):**
 
-1. **Update the source data**: Edit `constants/words.json`
+1. **Update the source data**: Edit `data/words.json`
 2. **Build static dictionary**: `npm run build:dictionary`
 3. **Deploy static files**: `firebase deploy --only hosting`
 4. **Update Firestore (for admin functions)**:
@@ -913,7 +995,7 @@ cd functions && pnpm run deploy:functions
 
 **Legacy Workflow (if not using CDN optimization):**
 
-1. Update data in `constants/words.json` or equivalent
+1. Update data in `data/words.json` or equivalent
 2. Run migrations: `pnpm run migrate` (production)
 3. Deploy backend: `cd functions && pnpm run deploy:functions`
 4. Test the changes

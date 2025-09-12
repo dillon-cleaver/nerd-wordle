@@ -27,10 +27,12 @@ export const HintModal = ({
   onRequestClose,
   hintIndex = 0,
 }: HintModalProps) => {
-  const { answerEntry, originalCategory, category } = useContext(GameContext);
+  const { answerEntry, category } = useContext(GameContext);
   const { isDesktop } = useDevice();
 
-  const hint = getHintForWord(answerEntry, originalCategory, hintIndex);
+  const hint = answerEntry
+    ? getHintForWord(answerEntry, hintIndex)
+    : "Loading hint...";
 
   const modalContentStyle = {
     maxWidth: isDesktop ? DESKTOP_MODAL_MAX_WIDTH : MOBILE_MODAL_MAX_WIDTH,
