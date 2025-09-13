@@ -2,6 +2,67 @@
 
 **ALWAYS follow these instructions first and only fallback to additional search and context gathering if the information here is incomplete or found to be in error.**
 
+## Architecture Overview
+
+NerdWord is a React Native/Expo word game with dual data systems:
+
+- **CDN-First Word Loading**: Words loaded from Firebase Hosting CDN (browser cache) with metadata-only localStorage
+- **Firebase Backend**: User auth, puzzle history, admin functions via Cloud Functions
+- **Context-Heavy State**: React Context providers manage game state, user data, word data, and puzzle history
+- **Expo Router**: File-based routing in `app/` directory with drawer navigation wrapper
+
+Key architectural decisions:
+
+- Word dictionary (3812 words, 243KB) externalized from bundle to CDN for instant updates
+- Browser HTTP cache handles word caching, not localStorage (99.96% storage reduction)
+- Letter tracking system for detailed game analytics stored in Firestore
+- Environment-aware builds with dev/testing/production modes
+
+## Critical Code Patterns
+
+### Context Provider Hierarchy (Required Order)
+
+```tsx
+// app/_layout.tsx - MUST maintain this exact nesting order
+<UserProvider>
+  {" "}
+  // Firebase auth state
+  <PuzzleHistoryProvider>
+    {" "}
+    // User's game history
+    <WordDataProvider>
+      {" "}
+      // CDN word loading
+      <GameProvider>
+        {" "}
+        // Current game state
+        <DrawerNavigationWrapper />
+      </GameProvider>
+    </WordDataProvider>
+  </PuzzleHistoryProvider>
+</UserProvider>
+```
+
+### Word Data Loading Pattern
+
+- **Never** store full word data in localStorage - use `storage/words.local.ts` pattern
+- Browser cache handles heavy lifting via HTTP headers
+- Only metadata (version, count, timestamp) stored locally
+- Always fetch from versioned CDN: `public/dict/v*/words.json`
+
+### Environment Configuration
+
+- Use `scripts/env-helper.js` presets, never manually edit `.env.local`
+- Three modes: `development` (local), `testing` (bypass limits), `production` (live)
+- Dev flags in `utils/dev-flags.ts` control logging and cache behavior
+
+### Firebase Functions Structure
+
+- All API routes in `functions/src/index.ts` with Express + CORS
+- Auth middleware `verifyToken` required for user-specific routes
+- Firestore collections: `users/{uid}/puzzleHistory`, `words`, `dailyPuzzles`
+- Letter tracking data included in all puzzle result requests
+
 ## Working Effectively
 
 Bootstrap, build, and validate the repository:
