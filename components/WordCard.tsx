@@ -18,25 +18,14 @@ import {
   getSummaryForWord,
   convertCategory,
 } from "@/utils/game";
-import { useCollectedWords } from "@/hooks/useCollectedWords";
+import { CollectedWord } from "@/hooks/useCollectedWords";
 import { getShortDateString } from "@/utils/time";
 
 type WordCardProps = {
-  collectedWordId: string;
+  collectedWord: CollectedWord;
 };
 
-export const WordCard = ({ collectedWordId }: WordCardProps) => {
-  const { collectedWords } = useCollectedWords();
-
-  // Find the specific collected word by ID
-  const collectedWord = collectedWords.find(
-    (word) => word.id === collectedWordId
-  );
-
-  if (!collectedWord) {
-    return null;
-  }
-
+export const WordCard = ({ collectedWord }: WordCardProps) => {
   const { wordEntry, category, completedDate, editionNumber } = collectedWord;
   const answer = wordEntry.id;
 

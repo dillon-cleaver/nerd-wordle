@@ -79,7 +79,7 @@ export default function Words() {
         contentContainerStyle={styles.listContainer}
         renderItem={({ item }) => (
           <ListItem item={item} viewableItems={viewableItems}>
-            <WordCard collectedWordId={item.id} />
+            <WordCard collectedWord={item} />
           </ListItem>
         )}
       />
