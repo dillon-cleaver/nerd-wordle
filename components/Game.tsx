@@ -16,6 +16,8 @@ export const Game = () => {
   const [hintModalVisible, setHintModalVisible] = useState(false);
 
   const { isDesktop } = useDevice();
+
+  // Create platform-specific styles for full viewport height on web
   const containerStyle = [
     styles.container,
     isDesktop && { gap: spacing.xl, paddingVertical: spacing.md },
@@ -68,6 +70,9 @@ export const Game = () => {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: spacing.xs,
+    backgroundColor: "pink",
+    flex: 1,
+    justifyContent: "space-evenly",
     gap: spacing.md,
     width: "100%",
   },

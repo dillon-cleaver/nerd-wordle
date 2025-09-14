@@ -42,8 +42,8 @@ export const GameBanner = ({
   };
 
   const content = (
-    <Card addStyles={[styles.outer, { borderColor: backgroundColor }]}>
-      <Card addStyles={[styles.inner, { backgroundColor }]}>
+    <Card containerStyle={[styles.outer, { borderColor: backgroundColor }]}>
+      <Card containerStyle={[styles.inner, { backgroundColor }]}>
         <Text style={styles.bannerText}>
           {gameStatus === "won"
             ? `CONGRATULATIONS! You got it in ${numGuesses} ${

@@ -11,20 +11,26 @@ const BASE_MAX_WIDTH = 600;
 type PageTemplateProps = SafeAreaViewProps & {
   children: ReactNode;
   edges?: Edge[];
-  addStyles?: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
+  contentContainerStyle?: StyleProp<ViewStyle>;
 };
 
 export const BaseSafeAreaView = ({
   children,
   edges,
-  addStyles,
+  containerStyle,
+  contentContainerStyle,
   ...rest
 }: PageTemplateProps) => {
   return (
-    <SafeAreaView {...rest} edges={edges} style={[styles.container, addStyles]}>
+    <SafeAreaView
+      {...rest}
+      edges={edges}
+      style={[styles.container, containerStyle]}
+    >
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[styles.scrollContent, contentContainerStyle]}
       >
         {children}
       </ScrollView>

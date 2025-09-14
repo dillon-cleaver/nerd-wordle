@@ -5,7 +5,10 @@ import { BaseSafeAreaView } from "@/components/base/BaseSafeAreaView";
 
 export default function Index() {
   return (
-    <BaseSafeAreaView addStyles={styles.container}>
+    <BaseSafeAreaView
+      containerStyle={styles.container}
+      contentContainerStyle={styles.scrollContent}
+    >
       <Game />
     </BaseSafeAreaView>
   );
@@ -14,5 +17,8 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.neutral.background,
+  },
+  scrollContent: {
+    flexGrow: 1,
   },
 });

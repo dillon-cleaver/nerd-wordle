@@ -47,9 +47,14 @@ export const WordCard = ({ collectedWord }: WordCardProps) => {
   const formattedDate = getShortDateString(completedDate);
 
   return (
-    <Card addStyles={[styles.container, { borderColor: tileBackgroundColor }]}>
+    <Card
+      containerStyle={[styles.container, { borderColor: tileBackgroundColor }]}
+    >
       <Card
-        addStyles={[styles.content, { backgroundColor: tileBackgroundColor }]}
+        containerStyle={[
+          styles.content,
+          { backgroundColor: tileBackgroundColor },
+        ]}
       >
         <View style={styles.answerEditionRow}>
           <Text style={[styles.answerText, { color: textColor }]}>
