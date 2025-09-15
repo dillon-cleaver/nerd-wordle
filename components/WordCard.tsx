@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Pressable, Linking } from "react-native";
 import { Card } from "./base/Card";
+import { SvgIcon } from "./base/SvgIcon";
 import {
   borderRadius,
   fontFamily,
@@ -7,6 +8,7 @@ import {
   lineHeight,
   spacing,
 } from "@/constants/styles";
+import { iconSizes } from "@/constants/icons";
 import {
   WORD_CARD_MAX_WIDTH,
   WORD_CARD_MIN_WIDTH,
@@ -14,7 +16,6 @@ import {
 import {
   getCategoryColor,
   getCategoryTextColor,
-  getHintForWord,
   getSummaryForWord,
   convertCategory,
 } from "@/utils/game";
@@ -29,7 +30,6 @@ export const WordCard = ({ collectedWord }: WordCardProps) => {
   const { wordEntry, category, completedDate, editionNumber } = collectedWord;
   const answer = wordEntry.id;
 
-  const hint = getHintForWord(wordEntry);
   const summary = getSummaryForWord(wordEntry);
   const tileBackgroundColor = getCategoryColor(category);
   const textColor = getCategoryTextColor(category);
@@ -69,14 +69,20 @@ export const WordCard = ({ collectedWord }: WordCardProps) => {
             </Text>
           </View>
         </View>
-        <Text style={[styles.hintText, { color: textColor }]}>{hint}</Text>
         <Text style={[styles.summaryText, { color: textColor }]}>
           {summary}
         </Text>
         <Pressable onPress={handleWikipediaPress}>
-          <Text style={[styles.linkText, { color: textColor }]}>
-            Learn more on Wikipedia
-          </Text>
+          <View style={styles.linkContainer}>
+            <Text style={[styles.linkText, { color: textColor }]}>
+              Wikipedia
+            </Text>
+            <SvgIcon
+              name="chevron-right"
+              size={iconSizes.small}
+              color={textColor}
+            />
+          </View>
         </Pressable>
         <Text style={[styles.categoryText, { color: textColor }]}>
           {formattedCategory}
@@ -132,7 +138,11 @@ const styles = StyleSheet.create({
     fontSize: fontSize.body.base,
     lineHeight: lineHeight.body.base,
     fontFamily: fontFamily.bitter.regular,
-    textDecorationLine: "underline",
+  },
+  linkContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
   },
   categoryText: {
     fontSize: fontSize.title.base,

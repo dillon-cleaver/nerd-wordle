@@ -10,6 +10,7 @@ import {
   spacing,
   borderRadius,
 } from "@/constants/styles";
+import { iconSizes } from "@/constants/icons";
 
 /**
  * Simple Development Info Display for Drawer
@@ -25,7 +26,11 @@ export const DrawerDevInfo: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <SvgIcon name="info-circle" size={16} color={colors.semantic.warning} />
+        <SvgIcon
+          name="info-circle"
+          size={iconSizes.small}
+          color={colors.semantic.warning}
+        />
         <Text style={styles.headerText}>Build Environment</Text>
       </View>
 

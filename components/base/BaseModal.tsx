@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { SvgIcon } from "./SvgIcon";
 import { borderRadius, colors, spacing } from "@/constants/styles";
+import { iconSizes } from "@/constants/icons";
 
 type BaseModalProps = {
   visible: boolean;
@@ -73,7 +74,11 @@ export const BaseModal = ({
               accessibilityRole="button"
               accessibilityLabel="Close modal"
             >
-              <SvgIcon name="close" size={20} color={colors.neutral.white} />
+              <SvgIcon
+                name="close"
+                size={iconSizes.standard}
+                color={colors.neutral.white}
+              />
             </Pressable>
           )}
           {children}

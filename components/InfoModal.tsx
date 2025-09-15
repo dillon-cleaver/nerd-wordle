@@ -8,7 +8,6 @@ import {
   DESKTOP_MODAL_MAX_WIDTH,
   MOBILE_MODAL_MAX_WIDTH,
   MOBILE_MODAL_MAX_HEIGHT,
-  DESKTOP_MODAL_TOP_OFFSET,
 } from "@/constants/dimensions";
 import { spacing } from "@/constants/styles";
 import { getCategoryColor, getCategoryTextColor } from "@/utils/game";
@@ -29,9 +28,6 @@ export const InfoModal = ({ visible, onRequestClose }: InfoModalProps) => {
   const modalContentStyle = {
     maxWidth: isDesktop ? DESKTOP_MODAL_MAX_WIDTH : MOBILE_MODAL_MAX_WIDTH,
     maxHeight: isDesktop ? undefined : MOBILE_MODAL_MAX_HEIGHT,
-    ...(isDesktop && {
-      marginTop: DESKTOP_MODAL_TOP_OFFSET, // Move the modal higher up on desktop
-    }),
   };
 
   return (

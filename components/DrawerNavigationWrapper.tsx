@@ -22,6 +22,7 @@ import {
   spacing,
   animation,
 } from "@/constants/styles";
+import { iconSizes } from "@/constants/icons";
 import { DrawerSignOutButton } from "./DrawerSignOutButton";
 import { DrawerDevInfo } from "./DrawerDevInfo";
 import { DevModeBadge } from "./DevModeBadge";
@@ -114,7 +115,11 @@ export const DrawerNavigationWrapper = () => {
               onPress={() => navigation.toggleDrawer()}
               style={{ padding: spacing.xs, marginLeft: spacing.md }}
             >
-              <SvgIcon name="menu" size={24} color={colors.neutral.white} />
+              <SvgIcon
+                name="menu"
+                size={iconSizes.standard}
+                color={colors.neutral.white}
+              />
             </TouchableOpacity>
           ),
           headerRight: () => (
@@ -133,7 +138,7 @@ export const DrawerNavigationWrapper = () => {
               >
                 <SvgIcon
                   name="info-circle"
-                  size={24}
+                  size={iconSizes.standard}
                   color={colors.neutral.white}
                 />
               </TouchableOpacity>
@@ -165,7 +170,7 @@ export const DrawerNavigationWrapper = () => {
             },
             drawerItemStyle: { borderRadius: borderRadius.md },
             drawerIcon: ({ color }: { color: string }) => (
-              <SvgIcon name="home" size={24} color={color} />
+              <SvgIcon name="home" size={iconSizes.standard} color={color} />
             ),
           }}
         />
@@ -181,7 +186,7 @@ export const DrawerNavigationWrapper = () => {
             },
             drawerItemStyle: { borderRadius: borderRadius.md },
             drawerIcon: ({ color }: { color: string }) => (
-              <SvgIcon name="trophy" size={24} color={color} />
+              <SvgIcon name="trophy" size={iconSizes.standard} color={color} />
             ),
           }}
         />
