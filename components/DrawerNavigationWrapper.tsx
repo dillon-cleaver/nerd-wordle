@@ -1,9 +1,4 @@
-import {
-  View,
-  TouchableOpacity,
-  ActivityIndicator,
-  StyleSheet,
-} from "react-native";
+import { View, ActivityIndicator, StyleSheet } from "react-native";
 import { useState, useEffect, useContext } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
@@ -12,6 +7,9 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 import { SvgIcon } from "./base/SvgIcon";
+import { HeaderTitle } from "./base/HeaderTitle";
+import { HeaderLeft } from "./base/HeaderLeft";
+import { HeaderRight } from "./base/HeaderRight";
 import { StatusBar } from "expo-status-bar";
 import {
   borderRadius,
@@ -25,7 +23,6 @@ import {
 import { iconSizes } from "@/constants/icons";
 import { DrawerSignOutButton } from "./DrawerSignOutButton";
 import { DrawerDevInfo } from "./DrawerDevInfo";
-import { DevModeBadge } from "./DevModeBadge";
 import { InfoModal } from "./InfoModal";
 import { usePlatform } from "@/hooks/usePlatform";
 import { useUser } from "@/hooks/useUser";
@@ -93,7 +90,7 @@ export const DrawerNavigationWrapper = () => {
             </View>
           </DrawerContentScrollView>
         )}
-        screenOptions={({ navigation }) => ({
+        screenOptions={() => ({
           headerStyle: {
             backgroundColor: colors.neutral.background,
             // TODO: Border still shows on desktop web
@@ -103,46 +100,10 @@ export const DrawerNavigationWrapper = () => {
           },
           headerTitleAlign: "center",
           headerTintColor: colors.neutral.white,
-          headerTitle: "NerdWord",
-          headerTitleStyle: {
-            fontFamily: fontFamily.bitter.bold,
-            fontSize: fontSize.title.large,
-            alignItems: "center",
-            lineHeight: lineHeight.title.large,
-          },
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.toggleDrawer()}
-              style={{ padding: spacing.xs, marginLeft: spacing.md }}
-            >
-              <SvgIcon
-                name="menu"
-                size={iconSizes.standard}
-                color={colors.neutral.white}
-              />
-            </TouchableOpacity>
-          ),
+          headerTitle: () => <HeaderTitle />,
+          headerLeft: () => <HeaderLeft />,
           headerRight: () => (
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: spacing.sm,
-                marginRight: spacing.md,
-              }}
-            >
-              <DevModeBadge />
-              <TouchableOpacity
-                onPress={() => setIsInfoModalVisible(true)}
-                style={{ padding: spacing.xs }}
-              >
-                <SvgIcon
-                  name="info-circle"
-                  size={iconSizes.standard}
-                  color={colors.neutral.white}
-                />
-              </TouchableOpacity>
-            </View>
+            <HeaderRight onInfoPress={() => setIsInfoModalVisible(true)} />
           ),
           drawerStyle: {
             backgroundColor: colors.neutral.background,
