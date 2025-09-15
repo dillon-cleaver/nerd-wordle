@@ -20,11 +20,11 @@ export const BannerCard = () => {
       ? answerEntry.edition
       : undefined;
 
-  const { isDesktop } = useDevice();
+  const { isDesktop, isTablet } = useDevice();
 
   const containerStyle = [
     styles.container,
-    !isDesktop
+    !isDesktop && !isTablet
       ? {
           minWidth: MOBILE_BANNER_GUESS_GRID_MIN_WIDTH,
           maxWidth: MOBILE_BANNER_GUESS_GRID_MAX_WIDTH,

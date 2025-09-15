@@ -10,9 +10,6 @@ import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 import { useDevice } from "@/hooks/useDevice";
 import { HintModal } from "./HintModal";
 
-// Constants
-const DESKTOP_KEYBOARD_HORIZONTAL_PADDING = 0;
-
 export const Game = () => {
   const { category, answer, isLoading } = useContext(GameContext);
 
@@ -23,11 +20,6 @@ export const Game = () => {
   const containerStyle = [
     styles.container,
     isDesktop && { gap: spacing.xl, paddingVertical: spacing.md },
-  ];
-
-  const keyboardContainerStyle = [
-    styles.keyboardContainer,
-    isDesktop && { paddingHorizontal: DESKTOP_KEYBOARD_HORIZONTAL_PADDING },
   ];
 
   const handlePressHint = () => {
@@ -61,7 +53,7 @@ export const Game = () => {
         <GuessGrid onPressHint={handlePressHint} />
       </Animated.View>
       <Animated.View
-        style={keyboardContainerStyle}
+        style={styles.keyboardContainer}
         entering={FadeInUp.duration(animation.duration.medium).springify()}
       >
         <Keyboard />
