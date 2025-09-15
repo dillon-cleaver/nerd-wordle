@@ -142,7 +142,6 @@ const styles = StyleSheet.create({
   linkContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: spacing.xs,
   },
   categoryText: {
     fontSize: fontSize.title.base,

@@ -21,7 +21,7 @@ import {
   animation,
 } from "@/constants/styles";
 import { iconSizes } from "@/constants/icons";
-import { DrawerSignOutButton } from "./DrawerSignOutButton";
+import { DrawerLoginButton } from "./DrawerLoginButton";
 import { DrawerDevInfo } from "./DrawerDevInfo";
 import { InfoModal } from "./InfoModal";
 import { usePlatform } from "@/hooks/usePlatform";
@@ -86,7 +86,7 @@ export const DrawerNavigationWrapper = () => {
             </View>
             <View style={{ paddingVertical: spacing.sm }}>
               <DrawerDevInfo />
-              <DrawerSignOutButton />
+              <DrawerLoginButton />
             </View>
           </DrawerContentScrollView>
         )}
