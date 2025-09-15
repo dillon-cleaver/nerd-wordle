@@ -13,10 +13,12 @@ import { useDevice } from "@/hooks/useDevice";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 
 const KEY_HEIGHT = 50;
+
 const KEY_MIN_WIDTH = 28;
-const KEY_MAX_WIDTH = 32;
+const KEY_MAX_WIDTH = 34;
+
 const WIDE_KEY_MIN_WIDTH = 56;
-const WIDE_KEY_MAX_WIDTH = 64;
+const WIDE_KEY_MAX_WIDTH = 68;
 
 const KEYBOARD_ROWS = [
   ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
@@ -36,6 +38,9 @@ export const Keyboard = () => {
   const wideKeyMinWidth = WIDE_KEY_MIN_WIDTH * scaleFactor;
   const wideKeyMaxWidth = WIDE_KEY_MAX_WIDTH * scaleFactor;
   const keyHeight = KEY_HEIGHT * scaleFactor;
+  const keyTextSize = fontSize.body.base * scaleFactor;
+  const keyboardRowGap = isLargerDevice ? spacing.sm : spacing.xs;
+  const keyboardContainerGap = isLargerDevice ? spacing.sm : spacing.xs;
 
   const getKeyStatus = (key: string) => {
     const guessStrings = guesses.map((guess) => guess.id);
@@ -51,9 +56,12 @@ export const Keyboard = () => {
   };
 
   return (
-    <View style={styles.container} onLayout={handleLayout}>
+    <View style={{ gap: keyboardContainerGap }} onLayout={handleLayout}>
       {KEYBOARD_ROWS.map((row, rowIndex) => (
-        <View key={rowIndex} style={styles.keyboardRow}>
+        <View
+          key={rowIndex}
+          style={[styles.keyboardRow, { gap: keyboardRowGap }]}
+        >
           {row.map((key, keyIndex) => {
             const status = getKeyStatus(key);
             const isWideKey = key === "ENTER" || key === "BACKSPACE";
@@ -76,7 +84,7 @@ export const Keyboard = () => {
                 ]}
                 onPress={() => handleKeyPress(key)}
               >
-                <Text style={styles.keyText}>
+                <Text style={[styles.keyText, { fontSize: keyTextSize }]}>
                   {key === "BACKSPACE" ? "DEL" : key}
                 </Text>
               </TouchableOpacity>
@@ -89,13 +97,8 @@ export const Keyboard = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    gap: spacing.sm,
-  },
   keyboardRow: {
     flexDirection: "row",
-    gap: spacing.xs,
     justifyContent: "center",
   },
   key: {
