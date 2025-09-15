@@ -10,6 +10,9 @@ import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 import { useDevice } from "@/hooks/useDevice";
 import { HintModal } from "./HintModal";
 
+// Constants
+const DESKTOP_KEYBOARD_HORIZONTAL_PADDING = 0;
+
 export const Game = () => {
   const { category, answer, isLoading } = useContext(GameContext);
 
@@ -17,10 +20,14 @@ export const Game = () => {
 
   const { isDesktop } = useDevice();
 
-  // Create platform-specific styles for full viewport height on web
   const containerStyle = [
     styles.container,
     isDesktop && { gap: spacing.xl, paddingVertical: spacing.md },
+  ];
+
+  const keyboardContainerStyle = [
+    styles.keyboardContainer,
+    isDesktop && { paddingHorizontal: DESKTOP_KEYBOARD_HORIZONTAL_PADDING },
   ];
 
   const handlePressHint = () => {
@@ -54,7 +61,7 @@ export const Game = () => {
         <GuessGrid onPressHint={handlePressHint} />
       </Animated.View>
       <Animated.View
-        style={styles.keyboardContainer}
+        style={keyboardContainerStyle}
         entering={FadeInUp.duration(animation.duration.medium).springify()}
       >
         <Keyboard />
@@ -70,7 +77,6 @@ export const Game = () => {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: spacing.xs,
-    backgroundColor: "pink",
     flex: 1,
     justifyContent: "space-evenly",
     gap: spacing.md,

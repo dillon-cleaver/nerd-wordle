@@ -9,6 +9,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { useContext } from "react";
 import { GameContext } from "@/context/GameContext";
 import { getKeyboardLetterState } from "@/utils/letter-validation";
+import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 
 // TODO: Clean up this code: make it more modular, etc.
 
@@ -32,8 +33,16 @@ export const Keyboard = () => {
     return getKeyboardLetterState(key, guessStrings, answer);
   };
 
+  // Handle layout measurement to log actual rendered width
+  const handleLayout = (event: any) => {
+    const { width } = event.nativeEvent.layout;
+    if (isDebugLoggingEnabled()) {
+      console.log(`⌨️ Keyboard: Actual rendered width: ${width}px`);
+    }
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={handleLayout}>
       {KEYBOARD_ROWS.map((row, rowIndex) => (
         <View key={rowIndex} style={styles.keyboardRow}>
           {row.map((key, keyIndex) => {
