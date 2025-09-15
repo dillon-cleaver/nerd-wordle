@@ -24,13 +24,13 @@ export const InfoModalCategorySection = ({
     <View style={styles.categorySection}>
       <Text style={styles.categoryLabel}>Today&apos;s Category & Color</Text>
       <Card
-        addStyles={[
+        containerStyle={[
           styles.categoryCardContainer,
           { borderColor: categoryColor },
         ]}
       >
         <Card
-          addStyles={{
+          containerStyle={{
             backgroundColor: categoryColor,
             padding: spacing.md,
             borderRadius: borderRadius.sm,

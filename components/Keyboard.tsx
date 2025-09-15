@@ -9,14 +9,16 @@ import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { useContext } from "react";
 import { GameContext } from "@/context/GameContext";
 import { getKeyboardLetterState } from "@/utils/letter-validation";
-
-// TODO: Clean up this code: make it more modular, etc.
+import { useDevice } from "@/hooks/useDevice";
+import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 
 const KEY_HEIGHT = 50;
+
 const KEY_MIN_WIDTH = 28;
-const KEY_MAX_WIDTH = 32;
+const KEY_MAX_WIDTH = 34;
+
 const WIDE_KEY_MIN_WIDTH = 56;
-const WIDE_KEY_MAX_WIDTH = 64;
+const WIDE_KEY_MAX_WIDTH = 68;
 
 const KEYBOARD_ROWS = [
   ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
@@ -26,16 +28,40 @@ const KEYBOARD_ROWS = [
 
 export const Keyboard = () => {
   const { guesses, answer, handleKeyPress } = useContext(GameContext);
+  const { isDesktop, isTablet } = useDevice();
+
+  // Increase key sizes by 50% for desktop/tablet
+  const isLargerDevice = isDesktop || isTablet;
+  const scaleFactor = isLargerDevice ? 1.33 : 1;
+  const keyMinWidth = KEY_MIN_WIDTH * scaleFactor;
+  const keyMaxWidth = KEY_MAX_WIDTH * scaleFactor;
+  const wideKeyMinWidth = WIDE_KEY_MIN_WIDTH * scaleFactor;
+  const wideKeyMaxWidth = WIDE_KEY_MAX_WIDTH * scaleFactor;
+  const keyHeight = KEY_HEIGHT * scaleFactor;
+  const keyTextSize = fontSize.body.base * scaleFactor;
+  const keyboardRowGap = isLargerDevice ? spacing.sm : spacing.xs;
+  const keyboardContainerGap = isLargerDevice ? spacing.sm : spacing.xs;
 
   const getKeyStatus = (key: string) => {
     const guessStrings = guesses.map((guess) => guess.id);
     return getKeyboardLetterState(key, guessStrings, answer);
   };
 
+  // Handle layout measurement to log actual rendered width
+  const handleLayout = (event: any) => {
+    const { width } = event.nativeEvent.layout;
+    if (isDebugLoggingEnabled()) {
+      console.log(`⌨️ Keyboard: Actual rendered width: ${width}px`);
+    }
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={{ gap: keyboardContainerGap }} onLayout={handleLayout}>
       {KEYBOARD_ROWS.map((row, rowIndex) => (
-        <View key={rowIndex} style={styles.keyboardRow}>
+        <View
+          key={rowIndex}
+          style={[styles.keyboardRow, { gap: keyboardRowGap }]}
+        >
           {row.map((key, keyIndex) => {
             const status = getKeyStatus(key);
             const isWideKey = key === "ENTER" || key === "BACKSPACE";
@@ -45,7 +71,11 @@ export const Keyboard = () => {
                 key={keyIndex}
                 style={[
                   styles.key,
-                  isWideKey && styles.wideKey,
+                  {
+                    minWidth: isWideKey ? wideKeyMinWidth : keyMinWidth,
+                    maxWidth: isWideKey ? wideKeyMaxWidth : keyMaxWidth,
+                    height: keyHeight,
+                  },
                   status === "correct" && {
                     backgroundColor: colors.semantic.success,
                   },
@@ -54,7 +84,7 @@ export const Keyboard = () => {
                 ]}
                 onPress={() => handleKeyPress(key)}
               >
-                <Text style={styles.keyText}>
+                <Text style={[styles.keyText, { fontSize: keyTextSize }]}>
                   {key === "BACKSPACE" ? "DEL" : key}
                 </Text>
               </TouchableOpacity>
@@ -67,30 +97,16 @@ export const Keyboard = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    gap: spacing.sm,
-  },
   keyboardRow: {
     flexDirection: "row",
-    gap: spacing.xs,
     justifyContent: "center",
   },
   key: {
-    // TODO: Make a base key component --->
     backgroundColor: colors.neutral.lightGray,
     borderRadius: borderRadius.sm,
     flex: 1,
-    height: KEY_HEIGHT,
     justifyContent: "center",
     alignItems: "center",
-    // ^^ include these props in that base
-    minWidth: KEY_MIN_WIDTH,
-    maxWidth: KEY_MAX_WIDTH,
-  },
-  wideKey: {
-    minWidth: WIDE_KEY_MIN_WIDTH,
-    maxWidth: WIDE_KEY_MAX_WIDTH,
   },
   keyText: {
     fontSize: fontSize.body.base,

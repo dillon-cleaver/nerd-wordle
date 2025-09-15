@@ -16,6 +16,7 @@ export const Game = () => {
   const [hintModalVisible, setHintModalVisible] = useState(false);
 
   const { isDesktop } = useDevice();
+
   const containerStyle = [
     styles.container,
     isDesktop && { gap: spacing.xl, paddingVertical: spacing.md },
@@ -68,6 +69,8 @@ export const Game = () => {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: spacing.xs,
+    flex: 1,
+    justifyContent: "space-evenly",
     gap: spacing.md,
     width: "100%",
   },

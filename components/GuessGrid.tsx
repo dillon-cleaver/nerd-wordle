@@ -17,7 +17,7 @@ export const GuessGrid = ({ onPressHint }: { onPressHint?: () => void }) => {
   const { guesses, answer, tentativeGuess, invalidWord, hint, isLoading } =
     useContext(GameContext);
 
-  const { isDesktop } = useDevice();
+  const { isDesktop, isTablet } = useDevice();
 
   // Debug hint state
   if (hint && isDebugLoggingEnabled()) {
@@ -32,7 +32,7 @@ export const GuessGrid = ({ onPressHint }: { onPressHint?: () => void }) => {
 
   const containerStyle = [
     styles.container,
-    !isDesktop
+    !isDesktop && !isTablet
       ? {
           minWidth: MOBILE_BANNER_GUESS_GRID_MIN_WIDTH,
           maxWidth: MOBILE_BANNER_GUESS_GRID_MAX_WIDTH,
@@ -43,8 +43,20 @@ export const GuessGrid = ({ onPressHint }: { onPressHint?: () => void }) => {
         },
   ];
 
+  // Handle layout measurement to log actual rendered width
+  const handleLayout = (event: any) => {
+    const { width } = event.nativeEvent.layout;
+    if (isDebugLoggingEnabled()) {
+      console.log(
+        `📏 GuessGrid: Actual rendered width: ${width}px (${
+          isDesktop ? "desktop" : "mobile"
+        } mode)`
+      );
+    }
+  };
+
   return (
-    <View style={containerStyle}>
+    <View style={containerStyle} onLayout={handleLayout}>
       {range(0, NUMBER_OF_GUESSES).map((rowIndex) => {
         const currentGuess =
           rowIndex === guesses.length

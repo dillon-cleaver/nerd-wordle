@@ -10,12 +10,12 @@ import {
 
 type CardProps = ViewProps & {
   children: ReactNode;
-  addStyles?: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
-export const Card = ({ children, addStyles, ...rest }: CardProps) => {
+export const Card = ({ children, containerStyle, ...rest }: CardProps) => {
   return (
-    <View style={[styles.container, addStyles]} {...rest}>
+    <View style={[styles.container, containerStyle]} {...rest}>
       {children}
     </View>
   );

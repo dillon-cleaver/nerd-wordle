@@ -18,25 +18,14 @@ import {
   getSummaryForWord,
   convertCategory,
 } from "@/utils/game";
-import { useCollectedWords } from "@/hooks/useCollectedWords";
+import { CollectedWord } from "@/hooks/useCollectedWords";
 import { getShortDateString } from "@/utils/time";
 
 type WordCardProps = {
-  collectedWordId: string;
+  collectedWord: CollectedWord;
 };
 
-export const WordCard = ({ collectedWordId }: WordCardProps) => {
-  const { collectedWords } = useCollectedWords();
-
-  // Find the specific collected word by ID
-  const collectedWord = collectedWords.find(
-    (word) => word.id === collectedWordId
-  );
-
-  if (!collectedWord) {
-    return null;
-  }
-
+export const WordCard = ({ collectedWord }: WordCardProps) => {
   const { wordEntry, category, completedDate, editionNumber } = collectedWord;
   const answer = wordEntry.id;
 
@@ -58,9 +47,14 @@ export const WordCard = ({ collectedWordId }: WordCardProps) => {
   const formattedDate = getShortDateString(completedDate);
 
   return (
-    <Card addStyles={[styles.container, { borderColor: tileBackgroundColor }]}>
+    <Card
+      containerStyle={[styles.container, { borderColor: tileBackgroundColor }]}
+    >
       <Card
-        addStyles={[styles.content, { backgroundColor: tileBackgroundColor }]}
+        containerStyle={[
+          styles.content,
+          { backgroundColor: tileBackgroundColor },
+        ]}
       >
         <View style={styles.answerEditionRow}>
           <Text style={[styles.answerText, { color: textColor }]}>
