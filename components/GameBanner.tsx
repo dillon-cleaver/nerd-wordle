@@ -6,6 +6,7 @@ import {
   fontSize,
   spacing,
 } from "@/constants/styles";
+import { opacity } from "@/constants/opacity";
 // Note: Width should match the container (Game content). We use width: "100%".
 import { Link } from "expo-router";
 import { Card } from "./base/Card";
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize.body.base,
     fontFamily: fontFamily.openSans.medium,
     marginTop: 2,
-    opacity: 0.8,
+    opacity: opacity.subtle,
   },
   linkText: {
     color: colors.neutral.black,
@@ -111,6 +112,6 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.openSans.medium,
     textDecorationLine: "underline",
     marginTop: 2,
-    opacity: 0.8,
+    opacity: opacity.subtle,
   },
 });

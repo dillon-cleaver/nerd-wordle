@@ -6,6 +6,7 @@ import {
   lineHeight,
   spacing,
 } from "@/constants/styles";
+import { opacity } from "@/constants/opacity";
 
 type InfoModalCategorySectionProps = {
   category: string;
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize.body.small,
     lineHeight: lineHeight.body.small,
     color: colors.neutral.white,
-    opacity: 0.8,
+    opacity: opacity.subtle,
     textAlign: "left",
   },
   categoryName: {
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     lineHeight: lineHeight.body.small,
     color: colors.neutral.white,
     textAlign: "left",
-    opacity: 0.8,
+    opacity: opacity.subtle,
     paddingTop: spacing.xs,
   },
 });
