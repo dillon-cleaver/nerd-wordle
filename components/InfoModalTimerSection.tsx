@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   madeInText: {
     fontSize: fontSize.body.small,
     lineHeight: lineHeight.body.small,
-    opacity: opacity.subtle,
+    opacity: opacity.moderate,
     color: colors.neutral.white,
     fontFamily: fontFamily.bitter.regular,
   },
