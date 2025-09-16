@@ -8,10 +8,10 @@ import { isDebugLoggingEnabled } from "@/utils/dev-flags";
  * Only active on desktop devices
  */
 export const useAccessibilityKeyboard = (callbacks: {
-  openInfoModal?: () => void;
-  closeInfoModal?: () => void;
-  closeHintModal?: () => void;
-  focusGameInput?: () => void;
+  onEscape?: () => void;
+  onHelp?: () => void;
+  onFocus?: () => void;
+  [key: string]: (() => void) | undefined;
 }) => {
   const { isDesktop } = useDevice();
   const { gameStatus } = useContext(GameContext);
@@ -31,11 +31,8 @@ export const useAccessibilityKeyboard = (callbacks: {
       switch (event.key) {
         case "Escape":
           event.preventDefault();
-          // Priority: Close modals first, then other actions
-          if (callbacks.closeHintModal) {
-            callbacks.closeHintModal();
-          } else if (callbacks.closeInfoModal) {
-            callbacks.closeInfoModal();
+          if (callbacks.onEscape) {
+            callbacks.onEscape();
           }
 
           if (isDebugLoggingEnabled()) {
@@ -50,8 +47,8 @@ export const useAccessibilityKeyboard = (callbacks: {
           // Ctrl/Cmd + H = Toggle help/info modal
           if (event.ctrlKey || event.metaKey) {
             event.preventDefault();
-            if (callbacks.openInfoModal) {
-              callbacks.openInfoModal();
+            if (callbacks.onHelp) {
+              callbacks.onHelp();
             }
 
             if (isDebugLoggingEnabled()) {
@@ -67,8 +64,8 @@ export const useAccessibilityKeyboard = (callbacks: {
           // Ctrl/Cmd + G = Focus game input (for screen readers)
           if (event.ctrlKey || event.metaKey) {
             event.preventDefault();
-            if (callbacks.focusGameInput) {
-              callbacks.focusGameInput();
+            if (callbacks.onFocus) {
+              callbacks.onFocus();
             }
 
             if (isDebugLoggingEnabled()) {
@@ -81,8 +78,8 @@ export const useAccessibilityKeyboard = (callbacks: {
           // Shift + ? = Show help (alternative to Ctrl+H)
           if (event.shiftKey && !isTyping) {
             event.preventDefault();
-            if (callbacks.openInfoModal) {
-              callbacks.openInfoModal();
+            if (callbacks.onHelp) {
+              callbacks.onHelp();
             }
 
             if (isDebugLoggingEnabled()) {
