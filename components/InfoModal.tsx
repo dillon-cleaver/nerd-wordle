@@ -62,5 +62,3 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.md,
   },
 });
-
-export default InfoModal;

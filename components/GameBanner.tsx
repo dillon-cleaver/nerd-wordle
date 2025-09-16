@@ -1,16 +1,13 @@
-import { StyleSheet, Text, Pressable, Linking } from "react-native";
-import {
-  borderRadius,
-  colors,
-  fontFamily,
-  fontSize,
-  spacing,
-} from "@/constants/styles";
-import { opacity } from "@/constants/opacity";
+import { StyleSheet } from "react-native";
+import { borderRadius, colors, spacing } from "@/constants/styles";
 // Note: Width should match the container (Game content). We use width: "100%".
-import { Link } from "expo-router";
 import { Card } from "./base/Card";
 import { WordEntry } from "@/types/word";
+import { BannerMessage } from "./BannerMessage";
+import { CollectedWordText } from "./CollectedWordText";
+import { SeeWordsLink } from "./SeeWordsLink";
+import { AnswerRevealText } from "./AnswerRevealText";
+import { WikipediaLink } from "./WikipediaLink";
 
 type GameBannerProps = {
   gameStatus: "won" | "running" | "lost";
@@ -32,56 +29,27 @@ export const GameBanner = ({
   const backgroundColor =
     gameStatus === "won" ? colors.semantic.success : colors.semantic.warning;
 
-  const handleWikipediaPress = () => {
-    if (
-      answerEntry &&
-      "wikipediaUrl" in answerEntry &&
-      answerEntry.wikipediaUrl
-    ) {
-      Linking.openURL(answerEntry.wikipediaUrl);
-    }
-  };
-
-  const content = (
+  return (
     <Card containerStyle={[styles.outer, { borderColor: backgroundColor }]}>
       <Card containerStyle={[styles.inner, { backgroundColor }]}>
-        <Text style={styles.bannerText}>
-          {gameStatus === "won"
-            ? `CONGRATULATIONS! You got it in ${numGuesses} ${
-                numGuesses === 1 ? "guess" : "guesses"
-              }!`
-            : `GAME OVER! Better luck tomorrow!`}
-        </Text>
-        {gameStatus === "won" && !!answer && (
-          <Text style={styles.subText}>
-            Collected: {answer}
-            {typeof edition === "number" ? ` (#${edition})` : ""}
-          </Text>
+        <BannerMessage gameStatus={gameStatus} numGuesses={numGuesses} />
+
+        {gameStatus === "won" && answer && (
+          <CollectedWordText answer={answer} edition={edition} />
         )}
-        {gameStatus === "won" && (
-          <Link href="/words" asChild>
-            <Pressable>
-              <Text style={styles.linkText}>See your NerdWord</Text>
-            </Pressable>
-          </Link>
+
+        {gameStatus === "won" && <SeeWordsLink />}
+
+        {gameStatus === "lost" && answer && (
+          <AnswerRevealText answer={answer} />
         )}
-        {gameStatus === "lost" && !!answer && (
-          <Text style={styles.subText}>The answer was: {answer}</Text>
+
+        {gameStatus === "lost" && answerEntry && (
+          <WikipediaLink answerEntry={answerEntry} />
         )}
-        {gameStatus === "lost" &&
-          answerEntry &&
-          "wikipediaUrl" in answerEntry &&
-          answerEntry.wikipediaUrl && (
-            <Pressable onPress={handleWikipediaPress}>
-              <Text style={styles.linkText}>Learn more on Wikipedia</Text>
-            </Pressable>
-          )}
       </Card>
     </Card>
   );
-
-  // Return content directly - no special wrapper for wins
-  return content;
 };
 
 const styles = StyleSheet.create({
@@ -92,26 +60,6 @@ const styles = StyleSheet.create({
   inner: {
     padding: spacing.sm,
     borderRadius: borderRadius.sm,
-    gap: spacing.xs,
-  },
-  bannerText: {
-    color: colors.neutral.black,
-    fontSize: fontSize.title.base,
-    fontFamily: fontFamily.bitter.bold,
-  },
-  subText: {
-    color: colors.neutral.black,
-    fontSize: fontSize.body.base,
-    fontFamily: fontFamily.openSans.medium,
-    marginTop: 2,
-    opacity: opacity.subtle,
-  },
-  linkText: {
-    color: colors.neutral.black,
-    fontSize: fontSize.body.base,
-    fontFamily: fontFamily.openSans.medium,
-    textDecorationLine: "underline",
-    marginTop: 2,
-    opacity: opacity.subtle,
+    gap: spacing.sm,
   },
 });
