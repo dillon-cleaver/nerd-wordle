@@ -1,6 +1,6 @@
 /**
  * UI Opacity Constants
- * 
+ *
  * Standardized opacity values for consistent visual hierarchy
  */
 
