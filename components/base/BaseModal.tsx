@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { SvgIcon } from "./SvgIcon";
 import { borderRadius, colors, spacing } from "@/constants/styles";
+import { iconSizes } from "@/constants/icons";
 
 type BaseModalProps = {
   visible: boolean;
@@ -65,15 +66,24 @@ export const BaseModal = ({
           />
         ) : null}
 
-        <View style={[styles.content, contentStyle]} accessibilityViewIsModal>
+        <View
+          style={[styles.content, contentStyle]}
+          accessibilityViewIsModal={true}
+          accessibilityLabel="Modal dialog"
+        >
           {showCloseButton && (
             <Pressable
               onPress={onRequestClose}
               style={styles.closeButton}
               accessibilityRole="button"
               accessibilityLabel="Close modal"
+              accessibilityHint="Press to close this dialog"
             >
-              <SvgIcon name="close" size={20} color={colors.neutral.white} />
+              <SvgIcon
+                name="close"
+                size={iconSizes.standard}
+                color={colors.neutral.white}
+              />
             </Pressable>
           )}
           {children}

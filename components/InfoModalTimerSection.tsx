@@ -1,5 +1,12 @@
 import { Text, View, StyleSheet } from "react-native";
-import { colors, fontFamily, fontSize, lineHeight } from "@/constants/styles";
+import {
+  colors,
+  fontFamily,
+  fontSize,
+  lineHeight,
+  spacing,
+} from "@/constants/styles";
+import { opacity } from "@/constants/opacity";
 
 type InfoModalTimerSectionProps = {
   timeUntilNewPuzzle: string;
@@ -11,7 +18,9 @@ export const InfoModalTimerSection = ({
   return (
     <View style={styles.timerSection}>
       <Text style={styles.timerText}>{timeUntilNewPuzzle}</Text>
-      <Text style={styles.madeInText}>Made with ❤️ in Minneapolis, MN</Text>
+      <Text style={styles.madeInText}>
+        Made with ❤️ in Minneapolis, MN (CST)
+      </Text>
     </View>
   );
 };
@@ -19,19 +28,20 @@ export const InfoModalTimerSection = ({
 const styles = StyleSheet.create({
   timerSection: {
     alignItems: "center",
+    gap: spacing.xs,
   },
   timerText: {
     fontSize: fontSize.body.base,
     lineHeight: lineHeight.body.base,
-    opacity: 0.7,
+    opacity: opacity.subtle,
     color: colors.neutral.white,
     fontFamily: fontFamily.openSans.regular,
   },
   madeInText: {
     fontSize: fontSize.body.small,
     lineHeight: lineHeight.body.small,
-    opacity: 0.7,
+    opacity: opacity.moderate,
     color: colors.neutral.white,
-    fontFamily: fontFamily.openSans.regular,
+    fontFamily: fontFamily.bitter.regular,
   },
 });

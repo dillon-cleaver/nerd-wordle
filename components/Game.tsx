@@ -9,6 +9,8 @@ import { BannerCard } from "./BannerCard";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 import { useDevice } from "@/hooks/useDevice";
 import { HintModal } from "./HintModal";
+import { useKeyboardListener } from "@/hooks/useKeyboardListener";
+import { useAccessibilityKeyboard } from "@/hooks/useAccessibilityKeyboard";
 
 export const Game = () => {
   const { category, answer, isLoading } = useContext(GameContext);
@@ -16,6 +18,14 @@ export const Game = () => {
   const [hintModalVisible, setHintModalVisible] = useState(false);
 
   const { isDesktop } = useDevice();
+
+  // Enable keyboard input for desktop users
+  useKeyboardListener();
+
+  // Enable accessibility shortcuts for hint modal
+  useAccessibilityKeyboard({
+    onEscape: () => setHintModalVisible(false),
+  });
 
   const containerStyle = [
     styles.container,
@@ -81,5 +91,6 @@ const styles = StyleSheet.create({
   },
   keyboardContainer: {
     paddingHorizontal: spacing.sm,
+    paddingBottom: spacing.sm,
   },
 });

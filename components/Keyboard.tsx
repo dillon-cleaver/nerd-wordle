@@ -3,6 +3,7 @@ import {
   colors,
   fontFamily,
   fontSize,
+  lineHeight,
   spacing,
 } from "@/constants/styles";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
@@ -11,6 +12,8 @@ import { GameContext } from "@/context/GameContext";
 import { getKeyboardLetterState } from "@/utils/letter-validation";
 import { useDevice } from "@/hooks/useDevice";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
+
+const DESKTOP_KEYBOARD_GAP = 6;
 
 const KEY_HEIGHT = 50;
 
@@ -32,15 +35,17 @@ export const Keyboard = () => {
 
   // Increase key sizes by 50% for desktop/tablet
   const isLargerDevice = isDesktop || isTablet;
-  const scaleFactor = isLargerDevice ? 1.33 : 1;
+  const scaleFactor = isLargerDevice ? 1.25 : 1;
   const keyMinWidth = KEY_MIN_WIDTH * scaleFactor;
   const keyMaxWidth = KEY_MAX_WIDTH * scaleFactor;
   const wideKeyMinWidth = WIDE_KEY_MIN_WIDTH * scaleFactor;
   const wideKeyMaxWidth = WIDE_KEY_MAX_WIDTH * scaleFactor;
   const keyHeight = KEY_HEIGHT * scaleFactor;
   const keyTextSize = fontSize.body.base * scaleFactor;
-  const keyboardRowGap = isLargerDevice ? spacing.sm : spacing.xs;
-  const keyboardContainerGap = isLargerDevice ? spacing.sm : spacing.xs;
+  const keyboardRowGap = isLargerDevice ? DESKTOP_KEYBOARD_GAP : spacing.xs;
+  const keyboardContainerGap = isLargerDevice
+    ? DESKTOP_KEYBOARD_GAP
+    : spacing.xs;
 
   const getKeyStatus = (key: string) => {
     const guessStrings = guesses.map((guess) => guess.id);
@@ -110,6 +115,7 @@ const styles = StyleSheet.create({
   },
   keyText: {
     fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
     fontFamily: fontFamily.openSans.bold,
     color: colors.neutral.black,
   },

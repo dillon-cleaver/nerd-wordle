@@ -1,73 +1,61 @@
 import { Text, View, StyleSheet } from "react-native";
-import { Card } from "./base/Card";
 import {
   colors,
   fontFamily,
   fontSize,
   lineHeight,
   spacing,
-  borderRadius,
 } from "@/constants/styles";
+import { opacity } from "@/constants/opacity";
 
 type InfoModalCategorySectionProps = {
   category: string;
-  categoryColor: string;
-  categoryTextColor: string;
 };
 
 export const InfoModalCategorySection = ({
   category,
-  categoryColor,
-  categoryTextColor,
 }: InfoModalCategorySectionProps) => {
   return (
     <View style={styles.categorySection}>
-      <Text style={styles.categoryLabel}>Today&apos;s Category & Color</Text>
-      <Card
-        containerStyle={[
-          styles.categoryCardContainer,
-          { borderColor: categoryColor },
-        ]}
-      >
-        <Card
-          containerStyle={{
-            backgroundColor: categoryColor,
-            padding: spacing.md,
-            borderRadius: borderRadius.sm,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text style={[styles.category, { color: categoryTextColor }]}>
-            {category}
-          </Text>
-        </Card>
-      </Card>
+      <Text style={styles.categoryLabel}>Today&apos;s category:</Text>
+      <Text style={styles.categoryName}>{category}</Text>
+      <Text style={styles.categoryExplanation}>
+        Each day features a different nerdy category: Science, Movies,
+        Literature, Fantasy and Sci-Fi, Video Games, Anime and Manga, Tabletop
+        and Board Games, Tech and Internet Culture, and Superheroes.
+      </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   categorySection: {
-    alignItems: "stretch",
+    alignItems: "flex-start",
     alignSelf: "stretch",
-    gap: spacing.sm,
-  },
-  categoryCardContainer: {
-    alignSelf: "stretch",
-    borderWidth: 2,
+    gap: spacing.xs,
   },
   categoryLabel: {
-    fontFamily: fontFamily.openSans.bold,
-    fontSize: fontSize.body.base,
-    lineHeight: lineHeight.body.medium,
-    color: colors.neutral.lightGray,
+    fontFamily: fontFamily.openSans.regular,
+    fontSize: fontSize.body.small,
+    lineHeight: lineHeight.body.small,
+    color: colors.neutral.white,
+    opacity: opacity.subtle,
     textAlign: "left",
   },
-  category: {
+  categoryName: {
     fontFamily: fontFamily.bitter.bold,
-    fontSize: fontSize.title.medium,
-    lineHeight: lineHeight.title.medium,
-    textAlign: "center",
+    fontSize: fontSize.title.large,
+    lineHeight: lineHeight.title.large,
+    color: colors.neutral.white,
+    textAlign: "left",
+  },
+  categoryExplanation: {
+    fontFamily: fontFamily.openSans.regular,
+    fontSize: fontSize.body.small,
+    lineHeight: lineHeight.body.small,
+    color: colors.neutral.white,
+    textAlign: "left",
+    opacity: opacity.subtle,
+    paddingTop: spacing.xs,
   },
 });

@@ -1,7 +1,13 @@
 import React from "react";
 import Svg, { Path, Circle } from "react-native-svg";
 
-type IconName = "close" | "info-circle" | "home" | "trophy" | "menu";
+type IconName =
+  | "close"
+  | "info-circle"
+  | "home"
+  | "trophy"
+  | "menu"
+  | "chevron-right";
 
 interface IconProps {
   name: IconName;
@@ -83,6 +89,20 @@ export const SvgIcon: React.FC<IconProps> = ({ name, size, color }) => {
           <Svg width={size} height={size} viewBox="0 0 24 24">
             <Path
               d="M4 12H20M4 6H20M4 18H20"
+              stroke={color}
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+            />
+          </Svg>
+        );
+
+      case "chevron-right":
+        return (
+          <Svg width={size} height={size} viewBox="0 0 24 24">
+            <Path
+              d="M9 18L15 12L9 6"
               stroke={color}
               strokeWidth="2"
               strokeLinecap="round"

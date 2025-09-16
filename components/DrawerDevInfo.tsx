@@ -7,9 +7,11 @@ import {
   colors,
   fontFamily,
   fontSize,
+  lineHeight,
   spacing,
   borderRadius,
 } from "@/constants/styles";
+import { iconSizes } from "@/constants/icons";
 
 /**
  * Simple Development Info Display for Drawer
@@ -25,7 +27,11 @@ export const DrawerDevInfo: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <SvgIcon name="info-circle" size={16} color={colors.semantic.warning} />
+        <SvgIcon
+          name="info-circle"
+          size={iconSizes.small}
+          color={colors.semantic.warning}
+        />
         <Text style={styles.headerText}>Build Environment</Text>
       </View>
 
@@ -68,6 +74,7 @@ const styles = StyleSheet.create({
     color: colors.semantic.warning,
     fontFamily: fontFamily.bitter.bold,
     fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
     marginLeft: spacing.xs,
   },
   info: {
@@ -76,7 +83,8 @@ const styles = StyleSheet.create({
   infoText: {
     color: colors.neutral.lightGray,
     fontFamily: fontFamily.bitter.regular,
-    fontSize: 12,
+    fontSize: fontSize.body.small,
+    lineHeight: lineHeight.body.small,
     textAlign: "center",
   },
 });

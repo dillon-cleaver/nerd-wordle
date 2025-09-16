@@ -6,7 +6,7 @@ import {
   ViewStyle,
   Pressable,
 } from "react-native";
-import { borderRadius, colors, fontSize } from "@/constants/styles";
+import { borderRadius, colors, fontSize, lineHeight } from "@/constants/styles";
 import { HintOutline } from "./HintOutline";
 
 export type LetterBoxProps = {
@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
   letter: {
     fontFamily: "Bitter-Bold",
     fontSize: fontSize.title.large,
+    lineHeight: lineHeight.title.large,
     color: colors.neutral.white,
   },
   present: {
@@ -114,6 +115,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "Bitter-Bold",
     fontSize: fontSize.title.large,
+    lineHeight: lineHeight.title.large,
     color: colors.neutral.white,
     opacity: 0.4,
     zIndex: 1,

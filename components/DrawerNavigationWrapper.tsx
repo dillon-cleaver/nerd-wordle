@@ -1,9 +1,4 @@
-import {
-  View,
-  TouchableOpacity,
-  ActivityIndicator,
-  StyleSheet,
-} from "react-native";
+import { View, ActivityIndicator, StyleSheet } from "react-native";
 import { useState, useEffect, useContext } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
@@ -12,6 +7,9 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 import { SvgIcon } from "./base/SvgIcon";
+import { HeaderTitle } from "./base/HeaderTitle";
+import { HeaderLeft } from "./base/HeaderLeft";
+import { HeaderRight } from "./base/HeaderRight";
 import { StatusBar } from "expo-status-bar";
 import {
   borderRadius,
@@ -22,9 +20,9 @@ import {
   spacing,
   animation,
 } from "@/constants/styles";
-import { DrawerSignOutButton } from "./DrawerSignOutButton";
+import { iconSizes } from "@/constants/icons";
+import { DrawerLoginButton } from "./DrawerLoginButton";
 import { DrawerDevInfo } from "./DrawerDevInfo";
-import { DevModeBadge } from "./DevModeBadge";
 import { InfoModal } from "./InfoModal";
 import { usePlatform } from "@/hooks/usePlatform";
 import { useUser } from "@/hooks/useUser";
@@ -33,12 +31,20 @@ import {
   hasInfoModalBeenShown,
   saveInfoModalShown,
 } from "@/storage/app-state.local";
+import { useAccessibilityKeyboard } from "@/hooks/useAccessibilityKeyboard";
 
 export const DrawerNavigationWrapper = () => {
   const { loading } = useUser();
   const { isLoading: gameLoading } = useContext(GameContext);
   const { isWeb } = usePlatform();
   const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
+
+  // Setup accessibility keyboard shortcuts
+  useAccessibilityKeyboard({
+    onHelp: () => setIsInfoModalVisible(true),
+    onEscape: () => setIsInfoModalVisible(false),
+    // Note: onFocus could be implemented later with refs
+  });
 
   // Check if InfoModal should be shown on first load
   // Wait for both user and game to finish loading, then show after delay
@@ -88,11 +94,11 @@ export const DrawerNavigationWrapper = () => {
             </View>
             <View style={{ paddingVertical: spacing.sm }}>
               <DrawerDevInfo />
-              <DrawerSignOutButton />
+              <DrawerLoginButton />
             </View>
           </DrawerContentScrollView>
         )}
-        screenOptions={({ navigation }) => ({
+        screenOptions={() => ({
           headerStyle: {
             backgroundColor: colors.neutral.background,
             // TODO: Border still shows on desktop web
@@ -102,42 +108,10 @@ export const DrawerNavigationWrapper = () => {
           },
           headerTitleAlign: "center",
           headerTintColor: colors.neutral.white,
-          headerTitle: "NerdWord",
-          headerTitleStyle: {
-            fontFamily: fontFamily.bitter.bold,
-            fontSize: fontSize.title.large,
-            alignItems: "center",
-            lineHeight: lineHeight.title.large,
-          },
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.toggleDrawer()}
-              style={{ padding: spacing.xs, marginLeft: spacing.md }}
-            >
-              <SvgIcon name="menu" size={24} color={colors.neutral.white} />
-            </TouchableOpacity>
-          ),
+          headerTitle: () => <HeaderTitle />,
+          headerLeft: () => <HeaderLeft />,
           headerRight: () => (
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: spacing.sm,
-                marginRight: spacing.md,
-              }}
-            >
-              <DevModeBadge />
-              <TouchableOpacity
-                onPress={() => setIsInfoModalVisible(true)}
-                style={{ padding: spacing.xs }}
-              >
-                <SvgIcon
-                  name="info-circle"
-                  size={24}
-                  color={colors.neutral.white}
-                />
-              </TouchableOpacity>
-            </View>
+            <HeaderRight onInfoPress={() => setIsInfoModalVisible(true)} />
           ),
           drawerStyle: {
             backgroundColor: colors.neutral.background,
@@ -165,7 +139,7 @@ export const DrawerNavigationWrapper = () => {
             },
             drawerItemStyle: { borderRadius: borderRadius.md },
             drawerIcon: ({ color }: { color: string }) => (
-              <SvgIcon name="home" size={24} color={color} />
+              <SvgIcon name="home" size={iconSizes.standard} color={color} />
             ),
           }}
         />
@@ -181,7 +155,7 @@ export const DrawerNavigationWrapper = () => {
             },
             drawerItemStyle: { borderRadius: borderRadius.md },
             drawerIcon: ({ color }: { color: string }) => (
-              <SvgIcon name="trophy" size={24} color={color} />
+              <SvgIcon name="trophy" size={iconSizes.standard} color={color} />
             ),
           }}
         />

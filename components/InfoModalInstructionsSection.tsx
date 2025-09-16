@@ -8,65 +8,176 @@ import {
   borderRadius,
 } from "@/constants/styles";
 
+// Constants for example tile dimensions
+const EXAMPLE_TILE_SIZE = 32;
+
+// Small example tile component for the modal
+const ExampleTile = ({
+  letter,
+  isCorrect,
+  isPresent,
+}: {
+  letter: string;
+  isCorrect: boolean;
+  isPresent: boolean;
+}) => {
+  let backgroundColor: string = colors.tiles.default;
+  let textColor: string = colors.neutral.white;
+
+  if (isCorrect) {
+    backgroundColor = colors.semantic.success;
+  } else if (isPresent) {
+    backgroundColor = colors.tiles.wrongPlace;
+    textColor = colors.neutral.black;
+  } else if (letter) {
+    backgroundColor = colors.neutral.black;
+  }
+
+  return (
+    <View style={[styles.exampleTile, { backgroundColor }]}>
+      <Text style={[styles.exampleTileText, { color: textColor }]}>
+        {letter}
+      </Text>
+    </View>
+  );
+};
+
 export const InfoModalInstructionsSection = () => {
   return (
     <View style={styles.instructionsSection}>
-      <Text style={styles.instructions}>
-        GUESS THE HIDDEN WORD in six tries or less to collect today&apos;s
-        NerdWord! 🤓
+      <Text style={styles.subtitle}>
+        Guess the <Text style={styles.loginHighlight}>NerdWord</Text> 🤓 in 6
+        tries.
       </Text>
-      <Text style={styles.instructions}>
-        Fill out all five tiles in row, then press enter to submit a guess. The
-        color of the tiles will change to show how close your guess was to the
-        word.
-      </Text>
-      <Text style={styles.instructions}>
-        Tiles will turn <Text style={[styles.greenHighlight]}>green</Text> if
-        the letter is in the word and in the correct position.{" "}
-        <Text style={styles.mustardHighlight}>Yellow</Text> means the letter is
-        in the word but in the wrong position.{" "}
-        <Text style={styles.blackHighlight}>Black</Text> means the letter is not
-        in the word at all.
-      </Text>
+
+      <View style={styles.rulesList}>
+        <Text style={styles.rule}>
+          • Each guess must be a valid 5-letter word. Guess any five-letter word
+          to help narrow down the possibilities.
+        </Text>
+        <Text style={styles.rule}>
+          • The color of the tiles will change to show how close your guess was
+          to the word.
+        </Text>
+      </View>
+
+      <Text style={styles.examplesTitle}>Examples</Text>
+
+      <View style={styles.exampleContainer}>
+        <View style={styles.exampleRow}>
+          <ExampleTile letter="Q" isCorrect={true} isPresent={false} />
+          <ExampleTile letter="U" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="A" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="R" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="K" isCorrect={false} isPresent={false} />
+        </View>
+        <Text style={styles.explanation}>
+          <Text style={styles.bold}>Q</Text> is in the word and in the correct
+          spot.
+        </Text>
+      </View>
+
+      <View style={styles.exampleContainer}>
+        <View style={styles.exampleRow}>
+          <ExampleTile letter="F" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="R" isCorrect={false} isPresent={true} />
+          <ExampleTile letter="O" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="D" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="O" isCorrect={false} isPresent={false} />
+        </View>
+        <Text style={styles.explanation}>
+          <Text style={styles.bold}>R</Text> is in the word but in the wrong
+          spot.
+        </Text>
+      </View>
+
+      <View style={styles.exampleContainer}>
+        <View style={styles.exampleRow}>
+          <ExampleTile letter="C" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="A" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="T" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="A" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="N" isCorrect={false} isPresent={false} />
+        </View>
+        <Text style={styles.explanation}>
+          <Text style={styles.bold}>A</Text> is not in the word in any spot.
+        </Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   instructionsSection: {
-    gap: spacing.md,
+    gap: spacing.sm,
+    alignSelf: "stretch",
   },
-  instructions: {
+  subtitle: {
+    fontFamily: fontFamily.openSans.regular,
+    fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
+    color: colors.neutral.white,
+    textAlign: "left",
+    paddingBottom: spacing.xs,
+  },
+  rulesList: {
+    gap: spacing.xs,
+  },
+  rule: {
     fontFamily: fontFamily.openSans.regular,
     fontSize: fontSize.body.base,
     lineHeight: lineHeight.body.base,
     color: colors.neutral.white,
     textAlign: "left",
   },
-  categoryHighlight: {
-    paddingHorizontal: spacing.xs,
-    paddingVertical: 2,
-    borderRadius: borderRadius.sm,
-  },
-  greenHighlight: {
-    backgroundColor: colors.semantic.success,
+  examplesTitle: {
+    fontFamily: fontFamily.openSans.bold,
+    fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
     color: colors.neutral.white,
-    paddingHorizontal: spacing.xs,
-    paddingVertical: 2,
-    borderRadius: borderRadius.sm,
+    textAlign: "left",
+    paddingTop: spacing.xs,
+    paddingBottom: spacing.xs,
   },
-  mustardHighlight: {
-    backgroundColor: colors.semantic.warning,
-    color: colors.neutral.black,
-    paddingHorizontal: spacing.xs,
-    paddingVertical: 2,
-    borderRadius: borderRadius.sm,
+  exampleContainer: {
+    gap: spacing.xs,
+    paddingBottom: spacing.sm,
   },
-  blackHighlight: {
-    backgroundColor: colors.neutral.black,
+  exampleRow: {
+    flexDirection: "row",
+    gap: spacing.xs,
+  },
+  exampleTile: {
+    width: EXAMPLE_TILE_SIZE,
+    height: EXAMPLE_TILE_SIZE,
+    borderWidth: 1,
+    borderColor: colors.neutral.lightGray,
+    borderRadius: borderRadius.sm,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.tiles.default,
+  },
+  exampleTileText: {
+    fontFamily: fontFamily.bitter.bold,
+    fontSize: fontSize.body.small,
+    lineHeight: lineHeight.body.small,
     color: colors.neutral.white,
-    paddingHorizontal: spacing.xs,
-    paddingVertical: 2,
-    borderRadius: borderRadius.sm,
+    textAlign: "center",
+  },
+  explanation: {
+    fontFamily: fontFamily.openSans.regular,
+    fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
+    color: colors.neutral.white,
+    textAlign: "left",
+  },
+  bold: {
+    fontFamily: fontFamily.openSans.bold,
+  },
+  loginHighlight: {
+    fontFamily: fontFamily.bitter.bold,
+    fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
+    color: colors.neutral.white,
   },
 });

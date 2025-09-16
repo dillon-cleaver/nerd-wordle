@@ -3,11 +3,6 @@ import { Text, View, StyleSheet } from "react-native";
 import { BaseModal } from "./base/BaseModal";
 import { GameContext } from "@/context/GameContext";
 import { getHintForWord } from "@/utils/game";
-import { useDevice } from "@/hooks/useDevice";
-import {
-  DESKTOP_MODAL_MAX_WIDTH,
-  MOBILE_MODAL_MAX_WIDTH,
-} from "@/constants/dimensions";
 import {
   colors,
   fontFamily,
@@ -28,22 +23,16 @@ export const HintModal = ({
   hintIndex = 0,
 }: HintModalProps) => {
   const { answerEntry, category } = useContext(GameContext);
-  const { isDesktop } = useDevice();
 
   const hint = answerEntry
     ? getHintForWord(answerEntry, hintIndex)
     : "Loading hint...";
-
-  const modalContentStyle = {
-    maxWidth: isDesktop ? DESKTOP_MODAL_MAX_WIDTH : MOBILE_MODAL_MAX_WIDTH,
-  };
 
   return (
     <BaseModal
       visible={visible}
       onRequestClose={onRequestClose}
       animationType="fade"
-      contentStyle={modalContentStyle}
       showCloseButton={true}
     >
       <View style={styles.container}>
