@@ -4,13 +4,8 @@ import { BaseModal } from "./base/BaseModal";
 import { InfoModalContent } from "./InfoModalContent";
 import { GameContext } from "@/context/GameContext";
 import { useDevice } from "@/hooks/useDevice";
-import {
-  DESKTOP_MODAL_MAX_WIDTH,
-  MOBILE_MODAL_MAX_WIDTH,
-  MOBILE_MODAL_MAX_HEIGHT,
-} from "@/constants/dimensions";
+import { MOBILE_MODAL_MAX_HEIGHT } from "@/constants/dimensions";
 import { spacing } from "@/constants/styles";
-import { getCategoryColor, getCategoryTextColor } from "@/utils/game";
 import { useCountdownToNewPuzzle } from "@/utils/countdown";
 
 type InfoModalProps = {
@@ -19,14 +14,11 @@ type InfoModalProps = {
 };
 
 export const InfoModal = ({ visible, onRequestClose }: InfoModalProps) => {
-  const { category, originalCategory } = useContext(GameContext);
+  const { category } = useContext(GameContext);
   const { isDesktop } = useDevice();
   const timeUntilNewPuzzle = useCountdownToNewPuzzle();
-  const categoryColor = getCategoryColor(originalCategory);
-  const categoryTextColor = getCategoryTextColor(originalCategory);
 
   const modalContentStyle = {
-    maxWidth: isDesktop ? DESKTOP_MODAL_MAX_WIDTH : MOBILE_MODAL_MAX_WIDTH,
     maxHeight: isDesktop ? undefined : MOBILE_MODAL_MAX_HEIGHT,
   };
 
@@ -41,8 +33,6 @@ export const InfoModal = ({ visible, onRequestClose }: InfoModalProps) => {
       {isDesktop ? (
         <InfoModalContent
           category={category}
-          categoryColor={categoryColor}
-          categoryTextColor={categoryTextColor}
           timeUntilNewPuzzle={timeUntilNewPuzzle}
         />
       ) : (
@@ -53,8 +43,6 @@ export const InfoModal = ({ visible, onRequestClose }: InfoModalProps) => {
         >
           <InfoModalContent
             category={category}
-            categoryColor={categoryColor}
-            categoryTextColor={categoryTextColor}
             timeUntilNewPuzzle={timeUntilNewPuzzle}
           />
         </ScrollView>

@@ -12,26 +12,18 @@ import {
 
 type InfoModalContentProps = {
   category: string;
-  categoryColor: string;
-  categoryTextColor: string;
   timeUntilNewPuzzle: string;
 };
 
 export const InfoModalContent = ({
   category,
-  categoryColor,
-  categoryTextColor,
   timeUntilNewPuzzle,
 }: InfoModalContentProps) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>How to Play</Text>
 
-      <InfoModalCategorySection
-        category={category}
-        categoryColor={categoryColor}
-        categoryTextColor={categoryTextColor}
-      />
+      <InfoModalCategorySection category={category} />
 
       <InfoModalInstructionsSection />
 
