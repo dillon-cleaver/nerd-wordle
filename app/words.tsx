@@ -11,10 +11,6 @@ import { useSharedValue } from "react-native-reanimated";
 import { ListItem } from "@/components/ListItem";
 import { WordCard } from "@/components/WordCard";
 import {
-  WORD_CARD_MAX_WIDTH,
-  WORD_CARD_MIN_WIDTH,
-} from "@/constants/dimensions";
-import {
   colors,
   fontFamily,
   fontSize,
@@ -54,9 +50,6 @@ export default function Words() {
   if (collectedWords.length === 0) {
     return (
       <View style={styles.container}>
-        <View style={styles.titleTextContainer}>
-          <Text style={styles.titleText}>Words</Text>
-        </View>
         <View style={styles.centered}>
           <Text style={styles.emptyText}>
             Complete puzzles to see your collected words here!
@@ -68,9 +61,6 @@ export default function Words() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.titleTextContainer}>
-        <Text style={styles.titleText}>Words ({collectedWords.length})</Text>
-      </View>
       <FlatList
         data={collectedWords}
         showsVerticalScrollIndicator={false}
@@ -96,17 +86,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.neutral.background,
     gap: spacing.md,
   },
-  titleTextContainer: {
-    width: "100%",
-    minWidth: WORD_CARD_MIN_WIDTH,
-    maxWidth: WORD_CARD_MAX_WIDTH,
-  },
-  titleText: {
-    fontSize: fontSize.title.large,
-    fontFamily: fontFamily.bitter.bold,
-    lineHeight: lineHeight.title.large,
-    color: colors.neutral.white,
-  },
   listContainer: {
     paddingBottom: spacing.lg,
     width: "100%",
@@ -119,18 +98,21 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
     fontFamily: fontFamily.bitter.regular,
     color: colors.neutral.white,
     marginTop: spacing.sm,
   },
   errorText: {
     fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
     fontFamily: fontFamily.bitter.regular,
     color: colors.neutral.white,
     textAlign: "center",
   },
   emptyText: {
     fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
     fontFamily: fontFamily.bitter.regular,
     color: colors.neutral.white,
     textAlign: "center",
