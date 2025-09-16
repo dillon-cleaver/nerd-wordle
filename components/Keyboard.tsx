@@ -3,6 +3,7 @@ import {
   colors,
   fontFamily,
   fontSize,
+  lineHeight,
   spacing,
 } from "@/constants/styles";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
@@ -114,6 +115,7 @@ const styles = StyleSheet.create({
   },
   keyText: {
     fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
     fontFamily: fontFamily.openSans.bold,
     color: colors.neutral.black,
   },

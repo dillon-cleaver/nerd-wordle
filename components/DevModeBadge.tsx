@@ -7,6 +7,7 @@ import {
   spacing,
   borderRadius,
   fontSize,
+  lineHeight,
 } from "@/constants/styles";
 
 /**
@@ -40,11 +41,13 @@ const styles = StyleSheet.create({
   text: {
     color: colors.neutral.white,
     fontSize: fontSize.title.base,
+    lineHeight: lineHeight.title.base,
     fontFamily: fontFamily.bitter.bold,
   },
   subText: {
     color: colors.neutral.white,
     fontSize: fontSize.title.base,
+    lineHeight: lineHeight.title.base,
     marginLeft: spacing.xs,
     fontFamily: fontFamily.bitter.bold,
   },

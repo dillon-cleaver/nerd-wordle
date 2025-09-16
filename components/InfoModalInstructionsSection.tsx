@@ -173,6 +173,7 @@ const styles = StyleSheet.create({
   exampleTileText: {
     fontFamily: fontFamily.bitter.bold,
     fontSize: fontSize.body.small,
+    lineHeight: lineHeight.body.small,
     color: colors.neutral.white,
     textAlign: "center",
   },

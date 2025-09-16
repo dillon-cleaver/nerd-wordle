@@ -1,7 +1,13 @@
 import { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { GameContext } from "@/context/GameContext";
-import { colors, fontSize, fontFamily, spacing } from "@/constants/styles";
+import {
+  colors,
+  fontSize,
+  fontFamily,
+  spacing,
+  lineHeight,
+} from "@/constants/styles";
 
 export const LetterTrackingDisplay = () => {
   const { letterGuesses, answerEntry } = useContext(GameContext);
@@ -61,18 +67,21 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: fontSize.body.medium,
+    lineHeight: lineHeight.body.medium,
     fontFamily: fontFamily.bitter.bold,
     color: colors.neutral.white,
     marginBottom: spacing.xs,
   },
   subtitle: {
     fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
     fontFamily: fontFamily.openSans.regular,
     color: colors.neutral.lightGray,
     marginBottom: spacing.sm,
   },
   emptyText: {
     fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
     fontFamily: fontFamily.openSans.regular,
     color: colors.neutral.lightGray,
     fontStyle: "italic",
@@ -84,6 +93,7 @@ const styles = StyleSheet.create({
   },
   rowLabel: {
     fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
     fontFamily: fontFamily.openSans.medium,
     color: colors.neutral.white,
     minWidth: 60,
@@ -94,6 +104,7 @@ const styles = StyleSheet.create({
   },
   letter: {
     fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
     fontFamily: fontFamily.bitter.bold,
     color: colors.neutral.white,
     backgroundColor: colors.neutral.darkGray,

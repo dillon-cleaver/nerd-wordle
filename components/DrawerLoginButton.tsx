@@ -2,6 +2,7 @@ import {
   colors,
   fontFamily,
   fontSize,
+  lineHeight,
   spacing,
   borderRadius,
 } from "@/constants/styles";
@@ -50,6 +51,6 @@ const styles = StyleSheet.create({
     color: colors.neutral.white,
     fontFamily: fontFamily.bitter.bold,
     fontSize: fontSize.body.base,
-    lineHeight: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
   },
 });

@@ -7,6 +7,7 @@ import {
   colors,
   fontFamily,
   fontSize,
+  lineHeight,
   spacing,
   borderRadius,
 } from "@/constants/styles";
@@ -73,6 +74,7 @@ const styles = StyleSheet.create({
     color: colors.semantic.warning,
     fontFamily: fontFamily.bitter.bold,
     fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
     marginLeft: spacing.xs,
   },
   info: {
@@ -81,7 +83,8 @@ const styles = StyleSheet.create({
   infoText: {
     color: colors.neutral.lightGray,
     fontFamily: fontFamily.bitter.regular,
-    fontSize: 12,
+    fontSize: fontSize.body.small,
+    lineHeight: lineHeight.body.small,
     textAlign: "center",
   },
 });
