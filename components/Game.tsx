@@ -81,5 +81,6 @@ const styles = StyleSheet.create({
   },
   keyboardContainer: {
     paddingHorizontal: spacing.sm,
+    paddingBottom: spacing.sm,
   },
 });
