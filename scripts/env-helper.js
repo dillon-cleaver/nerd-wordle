@@ -37,7 +37,7 @@ const presets = {
     EXPO_PUBLIC_DEV_MODE: "false",
     EXPO_PUBLIC_ENABLE_DEBUG_LOGS: "false",
     EXPO_PUBLIC_BYPASS_DAILY_LIMIT: "false",
-    EXPO_PUBLIC_SHOW_DEV_BADGE: "false",
+    EXPO_PUBLIC_SHOW_DEV_BADGE: "true",
   },
 };
 
@@ -99,7 +99,7 @@ switch (command) {
     console.log(`Commands:`);
     console.log(`  development  - Standard dev mode`);
     console.log(`  testing      - Testing with bypass enabled`);
-    console.log(`  production   - Production settings (no dev features)`);
+    console.log(`  production   - Production settings (shows alpha badge for now)`);
     console.log(`  show         - Show current configuration`);
     break;
 }
