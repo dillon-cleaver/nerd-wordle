@@ -2,6 +2,7 @@ import { Text, View, StyleSheet } from "react-native";
 import { InfoModalCategorySection } from "./InfoModalCategorySection";
 import { InfoModalInstructionsSection } from "./InfoModalInstructionsSection";
 import { InfoModalTimerSection } from "./InfoModalTimerSection";
+import { SectionBreak } from "./base/SectionBreak";
 import {
   colors,
   fontFamily,
@@ -25,6 +26,8 @@ export const InfoModalContent = ({
 
       <InfoModalCategorySection category={category} />
 
+      <SectionBreak />
+
       <InfoModalInstructionsSection />
 
       <InfoModalTimerSection timeUntilNewPuzzle={timeUntilNewPuzzle} />
@@ -35,7 +38,7 @@ export const InfoModalContent = ({
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    gap: spacing.md,
+    gap: spacing.sm,
   },
   title: {
     fontFamily: fontFamily.bitter.bold,
@@ -43,6 +46,6 @@ const styles = StyleSheet.create({
     lineHeight: lineHeight.title.large,
     color: colors.neutral.white,
     textAlign: "center",
-    marginBottom: spacing.sm,
+    paddingBottom: spacing.xs,
   },
 });
