@@ -12,6 +12,9 @@ export const HeaderLeft = () => {
     <TouchableOpacity
       onPress={() => navigation.toggleDrawer()}
       style={{ padding: spacing.xs, marginLeft: spacing.md }}
+      accessibilityRole="button"
+      accessibilityLabel="Open navigation menu"
+      accessibilityHint="Opens the navigation drawer"
     >
       <SvgIcon
         name="menu"

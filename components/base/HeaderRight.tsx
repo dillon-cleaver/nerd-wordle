@@ -19,7 +19,13 @@ export const HeaderRight = ({ onInfoPress }: HeaderRightProps) => {
       }}
     >
       <DevModeBadge />
-      <TouchableOpacity onPress={onInfoPress} style={{ padding: spacing.xs }}>
+      <TouchableOpacity
+        onPress={onInfoPress}
+        style={{ padding: spacing.xs }}
+        accessibilityRole="button"
+        accessibilityLabel="How to play"
+        accessibilityHint="Opens the game instructions and help. You can also press Ctrl+H or ? on keyboard."
+      >
         <SvgIcon
           name="info-circle"
           size={iconSizes.standard}
