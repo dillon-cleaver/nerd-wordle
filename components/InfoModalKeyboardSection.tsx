@@ -1,5 +1,4 @@
 import { Text, View, StyleSheet } from "react-native";
-import { useDevice } from "@/hooks/useDevice";
 import {
   colors,
   fontFamily,
@@ -10,13 +9,6 @@ import {
 import { opacity } from "@/constants/opacity";
 
 export const InfoModalKeyboardSection = () => {
-  const { isDesktop } = useDevice();
-
-  // Only show keyboard shortcuts on desktop
-  if (!isDesktop) {
-    return null;
-  }
-
   return (
     <View style={styles.keyboardSection}>
       <Text style={styles.subtitle}>Keyboard Shortcuts</Text>
@@ -31,7 +23,7 @@ export const InfoModalKeyboardSection = () => {
 
         <View style={styles.shortcutGroup}>
           <Text style={styles.shortcutGroupTitle}>Navigation</Text>
-          <Text style={styles.shortcut}>• Ctrl+H or ?: Open help</Text>
+          <Text style={styles.shortcut}>• Ctrl+H: Open help</Text>
           <Text style={styles.shortcut}>• Escape: Close modals</Text>
         </View>
       </View>
@@ -58,7 +50,7 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
   shortcutGroup: {
-    gap: spacing.xs / 2,
+    gap: spacing.xs,
   },
   shortcutGroupTitle: {
     fontFamily: fontFamily.openSans.bold,

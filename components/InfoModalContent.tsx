@@ -1,9 +1,11 @@
 import { Text, View, StyleSheet } from "react-native";
 import { InfoModalCategorySection } from "./InfoModalCategorySection";
 import { InfoModalInstructionsSection } from "./InfoModalInstructionsSection";
+import { InfoModalLoginSection } from "./InfoModalLoginSection";
 import { InfoModalTimerSection } from "./InfoModalTimerSection";
 import { InfoModalKeyboardSection } from "./InfoModalKeyboardSection";
 import { SectionBreak } from "./base/SectionBreak";
+import { useDevice } from "@/hooks/useDevice";
 import {
   colors,
   fontFamily,
@@ -21,6 +23,8 @@ export const InfoModalContent = ({
   category,
   timeUntilNewPuzzle,
 }: InfoModalContentProps) => {
+  const { isDesktop } = useDevice();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>How to Play</Text>
@@ -33,7 +37,17 @@ export const InfoModalContent = ({
 
       <SectionBreak />
 
-      <InfoModalKeyboardSection />
+      <InfoModalLoginSection />
+
+      {/* Only show keyboard section and its section break on desktop */}
+      {isDesktop && (
+        <>
+          <SectionBreak />
+          <InfoModalKeyboardSection />
+        </>
+      )}
+
+      <SectionBreak />
 
       <InfoModalTimerSection timeUntilNewPuzzle={timeUntilNewPuzzle} />
     </View>

@@ -7,7 +7,6 @@ import {
   spacing,
   borderRadius,
 } from "@/constants/styles";
-import { SectionBreak } from "./base/SectionBreak";
 
 // Constants for example tile dimensions
 const EXAMPLE_TILE_SIZE = 32;
@@ -66,56 +65,44 @@ export const InfoModalInstructionsSection = () => {
 
       <View style={styles.exampleContainer}>
         <View style={styles.exampleRow}>
-          <ExampleTile letter="P" isCorrect={true} isPresent={false} />
-          <ExampleTile letter="I" isCorrect={false} isPresent={false} />
-          <ExampleTile letter="X" isCorrect={false} isPresent={false} />
-          <ExampleTile letter="E" isCorrect={false} isPresent={false} />
-          <ExampleTile letter="L" isCorrect={false} isPresent={false} />
-        </View>
-        <Text style={styles.explanation}>
-          <Text style={styles.bold}>P</Text> is in the word and in the correct
-          spot.
-        </Text>
-      </View>
-
-      <View style={styles.exampleContainer}>
-        <View style={styles.exampleRow}>
-          <ExampleTile letter="L" isCorrect={false} isPresent={false} />
-          <ExampleTile letter="I" isCorrect={false} isPresent={true} />
-          <ExampleTile letter="G" isCorrect={false} isPresent={false} />
-          <ExampleTile letter="H" isCorrect={false} isPresent={false} />
-          <ExampleTile letter="T" isCorrect={false} isPresent={false} />
-        </View>
-        <Text style={styles.explanation}>
-          <Text style={styles.bold}>I</Text> is in the word but in the wrong
-          spot.
-        </Text>
-      </View>
-
-      <View style={styles.exampleContainer}>
-        <View style={styles.exampleRow}>
-          <ExampleTile letter="R" isCorrect={false} isPresent={false} />
-          <ExampleTile letter="O" isCorrect={false} isPresent={false} />
-          <ExampleTile letter="G" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="Q" isCorrect={true} isPresent={false} />
           <ExampleTile letter="U" isCorrect={false} isPresent={false} />
-          <ExampleTile letter="E" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="A" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="R" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="K" isCorrect={false} isPresent={false} />
         </View>
         <Text style={styles.explanation}>
-          <Text style={styles.bold}>U</Text> is not in the word in any spot.
+          <Text style={styles.bold}>Q</Text> is in the word and in the correct
+          spot.
         </Text>
       </View>
 
-      <SectionBreak />
-
-      <View style={styles.loginSection}>
-        <Text style={styles.loginText}>
-          Tap <Text style={styles.loginHighlight}>Sign in with Google</Text> in
-          the sidebar to sync your progress across devices and keep track of
-          your NerdWord collection!
+      <View style={styles.exampleContainer}>
+        <View style={styles.exampleRow}>
+          <ExampleTile letter="F" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="R" isCorrect={false} isPresent={true} />
+          <ExampleTile letter="O" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="D" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="O" isCorrect={false} isPresent={false} />
+        </View>
+        <Text style={styles.explanation}>
+          <Text style={styles.bold}>R</Text> is in the word but in the wrong
+          spot.
         </Text>
       </View>
 
-      <SectionBreak />
+      <View style={styles.exampleContainer}>
+        <View style={styles.exampleRow}>
+          <ExampleTile letter="C" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="A" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="T" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="A" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="N" isCorrect={false} isPresent={false} />
+        </View>
+        <Text style={styles.explanation}>
+          <Text style={styles.bold}>B</Text> is not in the word in any spot.
+        </Text>
+      </View>
     </View>
   );
 };
@@ -186,16 +173,6 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontFamily: fontFamily.openSans.bold,
-  },
-  loginSection: {
-    alignSelf: "stretch",
-  },
-  loginText: {
-    fontFamily: fontFamily.openSans.regular,
-    fontSize: fontSize.body.base,
-    lineHeight: lineHeight.body.base,
-    color: colors.neutral.white,
-    textAlign: "left",
   },
   loginHighlight: {
     fontFamily: fontFamily.bitter.bold,

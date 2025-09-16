@@ -13,12 +13,11 @@ NerdWord provides comprehensive keyboard support and accessibility features for 
 ### **Modal & Menu Controls**
 
 - **Escape**: Close any open modal (hint modal, info modal)
-- **Ctrl+H** (or **?**): Open/close the "How to Play" info modal
+- **Ctrl+H**: Open/close the "How to Play" info modal
 - **Ctrl+G**: Focus the game input area (for screen readers)
 
 ### **Alternative Shortcuts**
 
-- **Shift + ?**: Alternative way to open help modal
 - **Ctrl+H**: Works on both Windows/Linux and Mac (Cmd+H)
 
 ## ♿ **Accessibility Features**
@@ -50,7 +49,7 @@ NerdWord provides comprehensive keyboard support and accessibility features for 
 
 1. **Open game**: Use arrow keys or Tab to navigate
 2. **Play game**: Type letters directly, use Enter to submit
-3. **Need help?**: Press **Ctrl+H** or **?** to open instructions
+3. **Need help?**: Press **Ctrl+H** to open instructions
 4. **Check collection**: Navigate to "Words" using tab navigation
 5. **Close everything**: Press **Escape** to return to game
 
