@@ -7,6 +7,10 @@ import {
   spacing,
   borderRadius,
 } from "@/constants/styles";
+import { SectionBreak } from "./base/SectionBreak";
+
+// Constants for example tile dimensions
+const EXAMPLE_TILE_SIZE = 32;
 
 // Small example tile component for the modal
 const ExampleTile = ({
@@ -42,11 +46,15 @@ const ExampleTile = ({
 export const InfoModalInstructionsSection = () => {
   return (
     <View style={styles.instructionsSection}>
-      <Text style={styles.subtitle}>Guess the NerdWord 🤓 in 6 tries.</Text>
+      <Text style={styles.subtitle}>
+        Guess the <Text style={styles.loginHighlight}>NerdWord</Text> 🤓 in 6
+        tries.
+      </Text>
 
       <View style={styles.rulesList}>
         <Text style={styles.rule}>
-          • Each guess must be a valid 5-letter word.
+          • Each guess must be a valid 5-letter word. Guess any five-letter word
+          to help narrow down the possibilities.
         </Text>
         <Text style={styles.rule}>
           • The color of the tiles will change to show how close your guess was
@@ -58,14 +66,14 @@ export const InfoModalInstructionsSection = () => {
 
       <View style={styles.exampleContainer}>
         <View style={styles.exampleRow}>
-          <ExampleTile letter="W" isCorrect={true} isPresent={false} />
-          <ExampleTile letter="O" isCorrect={false} isPresent={false} />
-          <ExampleTile letter="R" isCorrect={false} isPresent={false} />
-          <ExampleTile letter="D" isCorrect={false} isPresent={false} />
-          <ExampleTile letter="Y" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="P" isCorrect={true} isPresent={false} />
+          <ExampleTile letter="I" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="X" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="E" isCorrect={false} isPresent={false} />
+          <ExampleTile letter="L" isCorrect={false} isPresent={false} />
         </View>
         <Text style={styles.explanation}>
-          <Text style={styles.bold}>W</Text> is in the word and in the correct
+          <Text style={styles.bold}>P</Text> is in the word and in the correct
           spot.
         </Text>
       </View>
@@ -96,13 +104,25 @@ export const InfoModalInstructionsSection = () => {
           <Text style={styles.bold}>U</Text> is not in the word in any spot.
         </Text>
       </View>
+
+      <SectionBreak />
+
+      <View style={styles.loginSection}>
+        <Text style={styles.loginText}>
+          Tap <Text style={styles.loginHighlight}>Sign in with Google</Text> in
+          the sidebar to sync your progress across devices and keep track of
+          your NerdWord collection!
+        </Text>
+      </View>
+
+      <SectionBreak />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   instructionsSection: {
-    gap: spacing.md,
+    gap: spacing.sm,
     alignSelf: "stretch",
   },
   subtitle: {
@@ -111,10 +131,10 @@ const styles = StyleSheet.create({
     lineHeight: lineHeight.body.base,
     color: colors.neutral.white,
     textAlign: "left",
-    marginBottom: spacing.sm,
+    paddingBottom: spacing.xs,
   },
   rulesList: {
-    gap: spacing.sm,
+    gap: spacing.xs,
   },
   rule: {
     fontFamily: fontFamily.openSans.regular,
@@ -129,20 +149,20 @@ const styles = StyleSheet.create({
     lineHeight: lineHeight.body.base,
     color: colors.neutral.white,
     textAlign: "left",
-    marginTop: spacing.sm,
-    marginBottom: spacing.sm,
+    paddingTop: spacing.xs,
+    paddingBottom: spacing.xs,
   },
   exampleContainer: {
     gap: spacing.xs,
-    marginBottom: spacing.md,
+    paddingBottom: spacing.sm,
   },
   exampleRow: {
     flexDirection: "row",
     gap: spacing.xs,
   },
   exampleTile: {
-    width: 32,
-    height: 32,
+    width: EXAMPLE_TILE_SIZE,
+    height: EXAMPLE_TILE_SIZE,
     borderWidth: 1,
     borderColor: colors.neutral.lightGray,
     borderRadius: borderRadius.sm,
@@ -152,7 +172,7 @@ const styles = StyleSheet.create({
   },
   exampleTileText: {
     fontFamily: fontFamily.bitter.bold,
-    fontSize: 14,
+    fontSize: fontSize.body.small,
     color: colors.neutral.white,
     textAlign: "center",
   },
@@ -165,5 +185,21 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontFamily: fontFamily.openSans.bold,
+  },
+  loginSection: {
+    alignSelf: "stretch",
+  },
+  loginText: {
+    fontFamily: fontFamily.openSans.regular,
+    fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
+    color: colors.neutral.white,
+    textAlign: "left",
+  },
+  loginHighlight: {
+    fontFamily: fontFamily.bitter.bold,
+    fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
+    color: colors.neutral.white,
   },
 });
