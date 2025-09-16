@@ -31,12 +31,20 @@ import {
   hasInfoModalBeenShown,
   saveInfoModalShown,
 } from "@/storage/app-state.local";
+import { useAccessibilityKeyboard } from "@/hooks/useAccessibilityKeyboard";
 
 export const DrawerNavigationWrapper = () => {
   const { loading } = useUser();
   const { isLoading: gameLoading } = useContext(GameContext);
   const { isWeb } = usePlatform();
   const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
+
+  // Setup accessibility keyboard shortcuts
+  useAccessibilityKeyboard({
+    onHelp: () => setIsInfoModalVisible(true),
+    onEscape: () => setIsInfoModalVisible(false),
+    // Note: onFocus could be implemented later with refs
+  });
 
   // Check if InfoModal should be shown on first load
   // Wait for both user and game to finish loading, then show after delay
