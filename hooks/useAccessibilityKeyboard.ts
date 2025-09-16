@@ -27,6 +27,11 @@ export const useAccessibilityKeyboard = (callbacks: {
         !event.metaKey &&
         !event.altKey;
 
+      if (isTyping) {
+        // Prevent all accessibility shortcuts while typing
+        return;
+      }
+
       // Handle different key combinations
       switch (event.key) {
         case "Escape":
