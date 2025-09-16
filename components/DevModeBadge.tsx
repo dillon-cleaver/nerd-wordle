@@ -1,10 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import {
-  shouldShowDevBadge,
-  getDevEnvironmentInfo,
-  isDevModeEnabled,
-} from "@/utils/dev-flags";
+import { getDevEnvironmentInfo } from "@/utils/dev-flags";
 import {
   colors,
   fontFamily,
@@ -20,12 +16,14 @@ import {
  * Shows "alpha" when in production mode and EXPO_PUBLIC_SHOW_DEV_BADGE is true
  */
 export const DevModeBadge: React.FC = () => {
-  if (!shouldShowDevBadge()) {
+  // Direct environment variable checks (dev-flags functions don't work in production builds)
+  const shouldShow = process.env.EXPO_PUBLIC_SHOW_DEV_BADGE === "true";
+  const isDevMode = process.env.EXPO_PUBLIC_DEV_MODE === "true";
+  const envInfo = getDevEnvironmentInfo();
+
+  if (!shouldShow) {
     return null;
   }
-
-  const envInfo = getDevEnvironmentInfo();
-  const isDevMode = isDevModeEnabled();
 
   // In development: show "DEV" with warning background
   // In production: show "alpha" with success background and italic text
