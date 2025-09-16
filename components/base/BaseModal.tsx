@@ -66,13 +66,18 @@ export const BaseModal = ({
           />
         ) : null}
 
-        <View style={[styles.content, contentStyle]} accessibilityViewIsModal>
+        <View
+          style={[styles.content, contentStyle]}
+          accessibilityViewIsModal={true}
+          accessibilityLabel="Modal dialog"
+        >
           {showCloseButton && (
             <Pressable
               onPress={onRequestClose}
               style={styles.closeButton}
               accessibilityRole="button"
               accessibilityLabel="Close modal"
+              accessibilityHint="Press to close this dialog"
             >
               <SvgIcon
                 name="close"

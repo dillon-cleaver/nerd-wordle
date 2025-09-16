@@ -2,6 +2,7 @@ import { Text, View, StyleSheet } from "react-native";
 import { InfoModalCategorySection } from "./InfoModalCategorySection";
 import { InfoModalInstructionsSection } from "./InfoModalInstructionsSection";
 import { InfoModalTimerSection } from "./InfoModalTimerSection";
+import { InfoModalKeyboardSection } from "./InfoModalKeyboardSection";
 import { SectionBreak } from "./base/SectionBreak";
 import {
   colors,
@@ -29,6 +30,10 @@ export const InfoModalContent = ({
       <SectionBreak />
 
       <InfoModalInstructionsSection />
+
+      <SectionBreak />
+
+      <InfoModalKeyboardSection />
 
       <InfoModalTimerSection timeUntilNewPuzzle={timeUntilNewPuzzle} />
     </View>
