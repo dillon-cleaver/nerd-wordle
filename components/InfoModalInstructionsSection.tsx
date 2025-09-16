@@ -100,7 +100,7 @@ export const InfoModalInstructionsSection = () => {
           <ExampleTile letter="N" isCorrect={false} isPresent={false} />
         </View>
         <Text style={styles.explanation}>
-          <Text style={styles.bold}>B</Text> is not in the word in any spot.
+          <Text style={styles.bold}>A</Text> is not in the word in any spot.
         </Text>
       </View>
     </View>
