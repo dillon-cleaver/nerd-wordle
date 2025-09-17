@@ -80,9 +80,9 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   }, [authUser, autoLoadResults]);
 
   // Load any previously saved letter tracking for today's puzzle to restore the grid on refresh
-  const puzzleId: PuzzleId = dailyPuzzle?.date
+  const puzzleId: PuzzleId | undefined = dailyPuzzle?.date
     ? createPuzzleId(dailyPuzzle.date)
-    : ("" as PuzzleId);
+    : undefined;
   const { letterGuesses: savedLetterGuesses, loading: letterTrackingLoading } =
     useLetterTrackingFromPuzzleResults(puzzleId, authUser);
 

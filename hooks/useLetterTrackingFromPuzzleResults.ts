@@ -14,7 +14,7 @@ import { extractDateFromPuzzleId } from "@/utils/puzzle-id";
  * This replaces the separate letter tracking storage with data nested in puzzle results.
  */
 export const useLetterTrackingFromPuzzleResults = (
-  puzzleId: PuzzleId,
+  puzzleId: PuzzleId | undefined,
   authUser: User | null
 ) => {
   const [letterGuesses, setLetterGuesses] = useState<LetterGuess[]>([]);
