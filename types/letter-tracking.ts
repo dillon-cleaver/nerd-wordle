@@ -1,3 +1,5 @@
+import { PuzzleId } from "./puzzle-result";
+
 export type LetterGuess = {
   letter: string;
   row: number;
@@ -6,7 +8,7 @@ export type LetterGuess = {
 };
 
 export type LetterTrackingData = {
-  puzzleId: string;
+  puzzleId: PuzzleId;
   date: string;
   guesses: LetterGuess[];
   lastUpdated: Date;

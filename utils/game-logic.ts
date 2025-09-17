@@ -1,10 +1,11 @@
 import { GameStatus, GameStateUpdaters } from "@/types/game";
 import { WordEntry, WordId } from "@/types/word";
 import { LetterGuess } from "@/types/letter-tracking";
-import { PuzzleResult } from "@/types/puzzle-result";
+import { PuzzleResult, PuzzleId } from "@/types/puzzle-result";
 import { User } from "firebase/auth";
 import { getCorrectPositions, generateHint } from "./hint-logic";
 import { handleInvalidWord, handleGameCompletion } from "./game-completion";
+import { saveActivePuzzleState } from "@/storage/active-puzzle.local";
 
 export const handleSubmitGuessWithLetterTracking = (
   tentativeGuess: string,
@@ -16,7 +17,8 @@ export const handleSubmitGuessWithLetterTracking = (
   isValidWord: (word: string) => boolean,
   letterTracking: LetterGuess[],
   updateLetterTracking?: (newLetters: LetterGuess[]) => void,
-  savePuzzleResult?: (user: User, result: PuzzleResult) => Promise<void>
+  savePuzzleResult?: (user: User, result: PuzzleResult) => Promise<void>,
+  puzzleId?: PuzzleId // Add puzzleId parameter for active puzzle tracking
 ) => {
   if (tentativeGuess.length !== 5) return;
   const answerId = answerEntry.id as WordId;
@@ -40,6 +42,12 @@ export const handleSubmitGuessWithLetterTracking = (
 
     const allLetterGuesses = [...letterTracking, ...newLetterGuesses];
     updateLetterTracking(allLetterGuesses);
+
+    // Save active puzzle state immediately after each valid guess
+    if (puzzleId) {
+      const puzzleDate = puzzleId.replace("daily-", "");
+      saveActivePuzzleState(puzzleId, puzzleDate, allLetterGuesses);
+    }
 
     // Use the updated letter tracking for game completion
     letterTracking = allLetterGuesses;

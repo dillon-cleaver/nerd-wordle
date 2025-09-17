@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { User } from "firebase/auth";
 import { LetterGuess } from "@/types/letter-tracking";
-import { PuzzleResult } from "@/types/puzzle-result"; // Use frontend type with letterTracking
+import { PuzzleResult, PuzzleId } from "@/types/puzzle-result"; // Use frontend type with letterTracking
 import { loadPuzzleResultsLocal } from "@/storage/puzzle-results.local";
+import { getActivePuzzleLetterGuesses } from "@/storage/active-puzzle.local";
 import { usePuzzleHistory } from "@/context/PuzzleHistoryContext";
 import { isPuzzleHistoryDebugEnabled } from "@/utils/dev-flags";
 import { getDateString } from "@/utils/time";
@@ -12,7 +13,7 @@ import { getDateString } from "@/utils/time";
  * This replaces the separate letter tracking storage with data nested in puzzle results.
  */
 export const useLetterTrackingFromPuzzleResults = (
-  puzzleId: string,
+  puzzleId: PuzzleId,
   authUser: User | null
 ) => {
   const [letterGuesses, setLetterGuesses] = useState<LetterGuess[]>([]);
@@ -47,6 +48,21 @@ export const useLetterTrackingFromPuzzleResults = (
           });
         }
 
+        // First, check for active (in-progress) puzzle state
+        const activePuzzleLetters = getActivePuzzleLetterGuesses(puzzleId);
+        if (activePuzzleLetters.length > 0) {
+          if (isPuzzleHistoryDebugEnabled()) {
+            console.log("✅ Found active puzzle state:", {
+              puzzleId,
+              letterCount: activePuzzleLetters.length,
+              rows: Math.ceil(activePuzzleLetters.length / 5),
+            });
+          }
+          setLetterGuesses(activePuzzleLetters);
+          return;
+        }
+
+        // If no active puzzle state, check completed puzzle results
         let allResults: PuzzleResult[] = [];
 
         // Load local results (these have letterTracking field)
@@ -74,7 +90,7 @@ export const useLetterTrackingFromPuzzleResults = (
           const resultDate = getDateString(new Date(result.date));
 
           const matches = resultDate === puzzleDate;
-          
+
           if (isPuzzleHistoryDebugEnabled()) {
             console.log("🔍 SYNC DEBUG - Date comparison:", {
               resultDate,

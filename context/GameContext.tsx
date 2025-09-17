@@ -13,6 +13,7 @@ import {
 import { GameStatus, Hint } from "@/types/game";
 import { WordEntry, WordId, WordCategory } from "@/types/word";
 import { LetterGuess } from "@/types/letter-tracking";
+import { PuzzleId } from "@/types/puzzle-result";
 import { useDailyPuzzle } from "@/hooks/useDailyPuzzle";
 import { useWordData } from "@/context/WordDataContext";
 import { useLetterTrackingFromPuzzleResults } from "@/hooks/useLetterTrackingFromPuzzleResults";
@@ -33,8 +34,6 @@ type GameContextType = {
   answerEntry: WordEntry | null; // The full word entry from Firebase
   handleKeyPress: (key: string) => void;
   handleSubmitGuess: () => void;
-  // TODO: Remove before production - development only
-  resetGame: () => void;
   // Loading state for async puzzle fetch
   isLoading: boolean;
   // Letter tracking
@@ -57,7 +56,6 @@ export const GameContext = createContext<GameContextType>({
   answerEntry: null, // Placeholder while puzzle loads
   handleKeyPress: () => {},
   handleSubmitGuess: () => {},
-  resetGame: () => {},
   isLoading: true,
   // Letter tracking defaults
   letterGuesses: [],
@@ -81,7 +79,9 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   }, [authUser, autoLoadResults]);
 
   // Load any previously saved letter tracking for today's puzzle to restore the grid on refresh
-  const puzzleId = dailyPuzzle?.date ? `daily-${dailyPuzzle.date}` : "";
+  const puzzleId: PuzzleId = dailyPuzzle?.date
+    ? `daily-${dailyPuzzle.date}`
+    : "";
   const { letterGuesses: savedLetterGuesses, loading: letterTrackingLoading } =
     useLetterTrackingFromPuzzleResults(puzzleId, authUser);
 
@@ -138,6 +138,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     existingLetterGuessesLength: letterGuesses.length,
     dailyPuzzleWordId: dailyPuzzle?.word?.id,
     answer,
+    puzzleId,
     getWordEntry,
     setGuesses,
     setLetterGuesses,
@@ -171,7 +172,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       letterGuesses, // Pass current letter tracking state
       // Add callback to update letter tracking when valid guess is made
       (newLetters: LetterGuess[]) => setLetterGuesses(newLetters),
-      savePuzzleResult // Pass the context save method for immediate state updates
+      savePuzzleResult, // Pass the context save method for immediate state updates
+      puzzleId // Pass puzzle ID for active puzzle tracking
     );
   }, [
     tentativeGuess,
@@ -182,6 +184,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     isValidWord,
     letterGuesses,
     savePuzzleResult,
+    puzzleId,
   ]);
 
   const handleKeyPressCallback = useCallback(
@@ -193,18 +196,6 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     },
     [gameStatus, tentativeGuess, handleSubmitGuessCallback]
   );
-
-  // TODO: Remove before production - development only
-  const resetGame = useCallback(() => {
-    // Reset all game state except the puzzle itself
-    setGameStatus("running");
-    setGuesses([]);
-    setTentativeGuess("");
-    setInvalidWord(false);
-    setHint(undefined);
-    setLetterGuesses([]); // Reset letter tracking
-    // Note: Game state (answer, category) comes from the puzzle and doesn't need reset
-  }, []);
 
   // Comprehensive loading state that includes puzzle loading, letter tracking, and state restoration
   const isGameLoading =
@@ -224,7 +215,6 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         answerEntry: dailyPuzzle?.word || null,
         handleKeyPress: handleKeyPressCallback,
         handleSubmitGuess: handleSubmitGuessCallback,
-        resetGame,
         isLoading: isGameLoading,
         letterGuesses,
         getGuessesForRow,

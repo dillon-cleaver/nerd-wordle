@@ -3,6 +3,8 @@ import { NUMBER_OF_GUESSES } from "@/constants/numbers";
 import { GameStatus } from "@/types/game";
 import { LetterGuess } from "@/types/letter-tracking";
 import { WordEntry, WordId } from "@/types/word";
+import { PuzzleId } from "@/types/puzzle-result";
+import { incrementRefreshAttempts } from "@/storage/active-puzzle.local";
 import { isStateRestorationDebugEnabled } from "@/utils/dev-flags";
 
 type Params = {
@@ -11,6 +13,7 @@ type Params = {
   existingLetterGuessesLength: number;
   dailyPuzzleWordId?: WordId | string;
   answer?: WordId | string;
+  puzzleId?: PuzzleId; // Add puzzleId for tracking refresh attempts
   getWordEntry: (id: WordId) => WordEntry | undefined;
   setGuesses: (entries: WordEntry[]) => void;
   setLetterGuesses: (letters: LetterGuess[]) => void;
@@ -32,6 +35,7 @@ export const useRehydrateFromLetterTracking = ({
   existingLetterGuessesLength,
   dailyPuzzleWordId,
   answer,
+  puzzleId,
   getWordEntry,
   setGuesses,
   setLetterGuesses,
@@ -103,6 +107,16 @@ export const useRehydrateFromLetterTracking = ({
           });
         }
 
+        // Track refresh attempts for analytics if this is an active puzzle
+        if (puzzleId && savedLetterGuesses.length > 0) {
+          const attempts = incrementRefreshAttempts(puzzleId);
+          if (isStateRestorationDebugEnabled()) {
+            console.log(
+              `📊 Refresh attempt #${attempts} for puzzle ${puzzleId}`
+            );
+          }
+        }
+
         setGuesses(reconstructedEntries);
         setLetterGuesses(savedLetterGuesses);
 
@@ -136,6 +150,7 @@ export const useRehydrateFromLetterTracking = ({
     existingLetterGuessesLength,
     dailyPuzzleWordId,
     answer,
+    puzzleId,
     getWordEntry,
     setGuesses,
     setLetterGuesses,

@@ -1,6 +1,8 @@
 import { WordId } from "./word";
 import { LetterGuess } from "./letter-tracking";
 
+type PuzzleId = string; // Format: "daily-YYYY-MM-DD" (e.g., "daily-2025-09-17")
+
 type PuzzleStatus = "win" | "fail";
 
 // A complete record of a single game session
@@ -16,4 +18,4 @@ type PuzzleResult = {
   letterTracking: LetterGuess[];
 };
 
-export { PuzzleResult, PuzzleStatus };
+export { PuzzleId, PuzzleResult, PuzzleStatus };

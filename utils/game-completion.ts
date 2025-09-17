@@ -6,6 +6,7 @@ import { savePuzzleResultLocal } from "@/storage/puzzle-results.local";
 import { addToCollection } from "@/storage/word-collections";
 import { WordEntry, WordId, NerdWordEntry } from "@/types/word";
 import { LetterGuess } from "@/types/letter-tracking";
+import { clearActivePuzzleState } from "@/storage/active-puzzle.local";
 import { isDebugLoggingEnabled } from "./dev-flags";
 import * as Crypto from "expo-crypto";
 import { User, getAuth } from "firebase/auth";
@@ -42,6 +43,9 @@ export const handleGameCompletion = (
     // Player won
     updaters.setGameStatus("won");
     updaters.setHint(undefined);
+
+    // Clear active puzzle state since game is completed
+    clearActivePuzzleState();
 
     const puzzleResultId = generatePuzzleResultId();
     const edition =
@@ -130,6 +134,9 @@ export const handleGameCompletion = (
     // Player lost
     updaters.setGameStatus("lost");
     updaters.setHint(undefined);
+
+    // Clear active puzzle state since game is completed
+    clearActivePuzzleState();
 
     const edition =
       answerEntry.category === "common"
