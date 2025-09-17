@@ -20,16 +20,17 @@
     "env:production": "node scripts/env-helper.js production",
     "words:add": "node scripts/add-word.js",
     "words:validate": "node scripts/build-dictionary.js --validate",
-    "words:deploy": "node scripts/deploy-words.js",
-    "words:firestore": "pnpm run env:production && cd functions && pnpm run seed:words:production && cd .. && pnpm run env:development",
-    "words:deploy:all": "node scripts/deploy-words-all.js",
+    "words:deploy:cdn": "node scripts/deploy-words.js",
+    "words:deploy:firestore": "pnpm run env:production && cd functions && pnpm run seed:words:production && cd .. && pnpm run env:development",
+    "words:deploy:all": "pnpm run words:deploy:cdn && pnpm run words:deploy:firestore",
     "words:verify": "node scripts/verify-word.js",
-    "words:verify-bundle": "node scripts/verify-bundle-size.js",
+    "words:status": "pnpm run words:validate && echo '' && echo '📊 Recent deployments:' && git log --oneline -5 --grep='dictionary'",
     "words:check-bundle": "node scripts/check-bundle-size.js",
     "analyze:bundle": "node scripts/analyze-bundle.js",
     "analyze:deps": "node scripts/check-unused-deps.js",
     "build:dictionary": "node scripts/build-dictionary.js",
-    "words:admin": "cd functions && pnpm run seed:words:production"
+    "_comment": "=== WORD MANAGEMENT HELP ===",
+    "words:help": "echo '📚 Word Management Commands:' && echo '' && echo '🎯 Essential Commands:' && echo '  pnpm run words:add              # Add new word (local only)' && echo '  pnpm run words:deploy:all       # Deploy to CDN + Firestore' && echo '  pnpm run words:verify [WORD]    # Verify deployment' && echo '' && echo '🔍 Status & Analysis:' && echo '  pnpm run words:status           # Show current status' && echo '  pnpm run words:check-bundle     # Verify CDN optimization' && echo '  pnpm run analyze:bundle         # Full bundle analysis' && echo '' && echo '🔧 Individual Deployment:' && echo '  pnpm run words:deploy:cdn       # CDN only (users)' && echo '  pnpm run words:deploy:firestore # Firestore only (server)' && echo '' && echo 'ℹ️  See docs/word-management-quick-reference.md for details'"
   },
   "jest": {
     "preset": "jest-expo"
