@@ -18,7 +18,7 @@ const { execSync } = require("child_process");
 const COMMANDS = {
   CDN_DEPLOY: "pnpm run words:deploy:cdn",
   FIRESTORE_DEPLOY: "pnpm run words:deploy:firestore",
-  VALIDATE: "node scripts/build-dictionary.js --validate"
+  VALIDATE: "node scripts/build-dictionary.js --validate",
 };
 
 // Parse command line arguments
@@ -56,12 +56,7 @@ async function deployWords() {
   console.log();
 
   // Step 1: Always validate first
-  if (
-    !runCommand(
-      COMMANDS.VALIDATE,
-      "Validating word data"
-    )
-  ) {
+  if (!runCommand(COMMANDS.VALIDATE, "Validating word data")) {
     console.error("\n💥 Deployment aborted: Word validation failed");
     process.exit(1);
   }
@@ -74,10 +69,7 @@ async function deployWords() {
     console.log("==================");
 
     if (
-      !runCommand(
-        COMMANDS.CDN_DEPLOY,
-        "Deploying to CDN (Firebase hosting)"
-      )
+      !runCommand(COMMANDS.CDN_DEPLOY, "Deploying to CDN (Firebase hosting)")
     ) {
       console.error("\n💥 CDN deployment failed");
       deploymentResults.push("❌ CDN: Deployment failed");
@@ -92,10 +84,7 @@ async function deployWords() {
     console.log("========================");
 
     if (
-      !runCommand(
-        COMMANDS.FIRESTORE_DEPLOY,
-        "Deploying to Firestore database"
-      )
+      !runCommand(COMMANDS.FIRESTORE_DEPLOY, "Deploying to Firestore database")
     ) {
       console.error("\n💥 Firestore deployment failed");
       deploymentResults.push("❌ Firestore: Deployment failed");
