@@ -37,7 +37,7 @@ export function saveActivePuzzleState(
 
     // If this is a different puzzle, reset attempts counter
     const refreshAttempts =
-      existing && existing.puzzleId === puzzleId ? existing.refreshAttempts : 1;
+      existing && existing.puzzleId === puzzleId ? existing.refreshAttempts : 0;
 
     const state: ActivePuzzleState = {
       puzzleId,
