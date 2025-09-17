@@ -1,13 +1,15 @@
 /**
- * Active puzzle state storage for preventing refresh-based reset exploits.
+ * Active puzzle state storage for mitigating casual refresh-based reset exploits.
  *
  * Stores incremental game progress (letter tracking) immediately after each valid guess
- * to ensure users cannot refresh the browser to reset their attempts on the same puzzle.
+ * to help prevent users from accidentally refreshing the browser to reset their attempts
+ * on the same puzzle.
  *
- * This is separate from completed puzzle results and focuses on in-progress games.
+ * Note: This mechanism relies on client-side localStorage, which can be manually cleared
+ * or manipulated by users.
  *
- * Security Note: The correct answer is intentionally NOT stored to prevent users from
- * discovering it by inspecting localStorage.
+ * It does not provide strong anti-cheat protection against intentional tampering. For
+ * robust security, use server-side validation.
  */
 
 import { LetterGuess } from "@/types/letter-tracking";
