@@ -11,9 +11,6 @@ import {
   shouldClearLocalStorageOnStart,
 } from "@/utils/dev-flags";
 
-// Import words statically for development mode
-import localWordsData from "../data/words.json";
-
 // Minimal metadata storage in localStorage
 type WordMetadata = {
   version: string;
@@ -183,8 +180,9 @@ export async function loadWords(): Promise<WordEntry[]> {
           "🔄 Attempting to load words from local data/words.json (dev mode)"
         );
 
-        // Use static import for development mode
-        const localWords = localWordsData as WordEntry[];
+        // Use dynamic import for development mode to avoid bundling
+        const localWordsModule = await import("../data/words.json");
+        const localWords = localWordsModule.default as WordEntry[];
 
         console.log(
           `✅ Successfully loaded ${localWords.length} words from local file`
