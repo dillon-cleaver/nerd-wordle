@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { NUMBER_OF_GUESSES } from "@/constants/numbers";
-import { GameStatus } from "@/types/game";
+import { GameStatus, Hint } from "@/types/game";
 import { LetterGuess } from "@/types/letter-tracking";
 import { WordEntry, WordId } from "@/types/word";
 import { PuzzleId } from "@/types/puzzle-result";
 import { incrementRefreshAttempts } from "@/storage/active-puzzle.local";
 import { isStateRestorationDebugEnabled } from "@/utils/dev-flags";
+import { getCorrectPositions, generateHint } from "@/utils/hint-logic";
 
 type Params = {
   savedLetterGuesses: LetterGuess[];
@@ -14,10 +15,12 @@ type Params = {
   dailyPuzzleWordId?: WordId | string;
   answer?: WordId | string;
   puzzleId?: PuzzleId; // Add puzzleId for tracking refresh attempts
+  hintIndex?: number; // Add hintIndex for hint restoration
   getWordEntry: (id: WordId) => WordEntry | undefined;
   setGuesses: (entries: WordEntry[]) => void;
   setLetterGuesses: (letters: LetterGuess[]) => void;
   setGameStatus: (status: GameStatus) => void;
+  setHint: (hint: Hint | undefined) => void; // Add setHint for hint restoration
   setIsRehydrationComplete: (complete: boolean) => void;
 };
 
@@ -36,10 +39,12 @@ export const useRehydrateFromLetterTracking = ({
   dailyPuzzleWordId,
   answer,
   puzzleId,
+  hintIndex = 0,
   getWordEntry,
   setGuesses,
   setLetterGuesses,
   setGameStatus,
+  setHint,
   setIsRehydrationComplete,
 }: Params) => {
   useEffect(() => {
@@ -120,6 +125,34 @@ export const useRehydrateFromLetterTracking = ({
         setGuesses(reconstructedEntries);
         setLetterGuesses(savedLetterGuesses);
 
+        // Restore hint if game is still in progress and has enough guesses
+        const gameInProgress =
+          !reconstructedWords.some((w) => w === answer) &&
+          reconstructedEntries.length < NUMBER_OF_GUESSES;
+
+        if (gameInProgress && reconstructedEntries.length >= 3) {
+          // Recalculate hint based on current game state
+          const lastGuess = reconstructedWords[reconstructedWords.length - 1];
+          const correctPositions = getCorrectPositions(
+            reconstructedWords as WordId[],
+            answer as WordId
+          );
+          const restoredHint = generateHint(
+            lastGuess,
+            reconstructedWords.slice(0, -1) as WordId[], // All guesses except the last one
+            answer as WordId,
+            correctPositions
+          );
+          setHint(restoredHint);
+
+          if (isStateRestorationDebugEnabled()) {
+            console.log("💡 Restored hint:", restoredHint);
+          }
+        } else {
+          // Clear hint if game is complete or not enough guesses
+          setHint(undefined);
+        }
+
         // Determine game status from reconstructed guesses
         const won = reconstructedWords.some((w) => w === answer);
         if (won) {
@@ -151,10 +184,12 @@ export const useRehydrateFromLetterTracking = ({
     dailyPuzzleWordId,
     answer,
     puzzleId,
+    hintIndex,
     getWordEntry,
     setGuesses,
     setLetterGuesses,
     setGameStatus,
+    setHint,
     setIsRehydrationComplete,
   ]);
 };

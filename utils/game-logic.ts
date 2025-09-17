@@ -6,6 +6,7 @@ import { User } from "firebase/auth";
 import { getCorrectPositions, generateHint } from "./hint-logic";
 import { handleInvalidWord, handleGameCompletion } from "./game-completion";
 import { saveActivePuzzleState } from "@/storage/active-puzzle.local";
+import { extractDateFromPuzzleId } from "./puzzle-id";
 
 export const handleSubmitGuessWithLetterTracking = (
   tentativeGuess: string,
@@ -45,8 +46,13 @@ export const handleSubmitGuessWithLetterTracking = (
 
     // Save active puzzle state immediately after each valid guess
     if (puzzleId) {
-      const puzzleDate = puzzleId.replace("daily-", "");
-      saveActivePuzzleState(puzzleId, puzzleDate, allLetterGuesses);
+      const puzzleDate = extractDateFromPuzzleId(puzzleId);
+      if (puzzleDate) {
+        saveActivePuzzleState(puzzleId, puzzleDate, allLetterGuesses);
+      } else {
+        // Optionally log a warning or handle invalid format
+        // console.warn(`Invalid puzzleId format: ${puzzleId}`);
+      }
     }
 
     // Use the updated letter tracking for game completion

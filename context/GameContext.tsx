@@ -20,6 +20,7 @@ import { useLetterTrackingFromPuzzleResults } from "@/hooks/useLetterTrackingFro
 import { UserContext } from "@/context/UserContext";
 import { useRehydrateFromLetterTracking } from "@/hooks/useRehydrateFromLetterTracking";
 import { usePuzzleHistory } from "@/context/PuzzleHistoryContext";
+import { createPuzzleId } from "@/utils/puzzle-id";
 
 type GameContextType = {
   gameStatus: GameStatus;
@@ -80,8 +81,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
   // Load any previously saved letter tracking for today's puzzle to restore the grid on refresh
   const puzzleId: PuzzleId = dailyPuzzle?.date
-    ? `daily-${dailyPuzzle.date}`
-    : "";
+    ? createPuzzleId(dailyPuzzle.date)
+    : ("" as PuzzleId);
   const { letterGuesses: savedLetterGuesses, loading: letterTrackingLoading } =
     useLetterTrackingFromPuzzleResults(puzzleId, authUser);
 
@@ -139,10 +140,12 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     dailyPuzzleWordId: dailyPuzzle?.word?.id,
     answer,
     puzzleId,
+    hintIndex,
     getWordEntry,
     setGuesses,
     setLetterGuesses,
     setGameStatus,
+    setHint,
     setIsRehydrationComplete: setIsRehydrationCompleteCallback,
   });
 

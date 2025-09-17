@@ -7,6 +7,7 @@ import { getActivePuzzleLetterGuesses } from "@/storage/active-puzzle.local";
 import { usePuzzleHistory } from "@/context/PuzzleHistoryContext";
 import { isPuzzleHistoryDebugEnabled } from "@/utils/dev-flags";
 import { getDateString } from "@/utils/time";
+import { extractDateFromPuzzleId } from "@/utils/puzzle-id";
 
 /**
  * Hook to read letter tracking data from puzzle results instead of separate storage.
@@ -36,7 +37,13 @@ export const useLetterTrackingFromPuzzleResults = (
         }
 
         // Extract date from puzzle ID (e.g., "daily-2025-08-26" -> "2025-08-26")
-        const puzzleDate = puzzleId.replace("daily-", "");
+        const puzzleDate = extractDateFromPuzzleId(puzzleId);
+
+        if (!puzzleDate) {
+          // Invalid puzzle ID format, no letter tracking to load
+          setLetterGuesses([]);
+          return;
+        }
 
         if (isPuzzleHistoryDebugEnabled()) {
           console.log("🔍 Loading letter tracking for puzzle:", {
