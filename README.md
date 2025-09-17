@@ -2,7 +2,7 @@
 
 A Wordle-style word guessing game focused on nerdy topics including movies, science, anime, literature, and more! Built with React Native and Expo.
 
-[![Web App](https://img.shields.io/badge/Play%20Online-nerd--wordle.expo.app-blue)](https://nerd-wordle.expo.app)
+[![Web App](https://img.shields.io/badge/Play%20Online-nerd--word.expo.app-blue)](https://nerd-word.expo.app)
 [![Firebase](https://img.shields.io/badge/Backend-Firebase-orange)](https://firebase.google.com/)
 [![Expo](https://img.shields.io/badge/Built%20with-Expo-000020.svg?style=flat&logo=expo)](https://expo.dev/)
 
@@ -26,7 +26,7 @@ Each puzzle includes hints and Wikipedia links to help you learn more about the 
 
 ### Play Online
 
-Visit [nerd-wordle.expo.app](https://nerd-wordle.expo.app) to play in your browser!
+Visit [nerd-word.expo.app](https://nerd-word.expo.app) to play in your browser!
 
 ### Adding New Words (Instant Updates)
 
@@ -127,7 +127,7 @@ nerd-wordle/
 └── package.json            # Dependencies & scripts
 ``` anime, literature, and more! Built with React Native and Expo.
 
-[![Web App](https://img.shields.io/badge/Play%20Online-nerd--wordle.expo.app-blue)](https://nerd-wordle.expo.app)
+[![Web App](https://img.shields.io/badge/Play%20Online-nerd--word.expo.app-blue)](https://nerd-word.expo.app)
 [![Firebase](https://img.shields.io/badge/Backend-Firebase-orange)](https://firebase.google.com/)
 [![Expo](https://img.shields.io/badge/Built%20with-Expo-000020.svg?style=flat&logo=expo)](https://expo.dev/)
 
@@ -151,7 +151,7 @@ Each puzzle includes hints and Wikipedia links to help you learn more about the 
 
 ### Play Online
 
-Visit [nerd-wordle.expo.app](https://nerd-wordle.expo.app) to play in your browser!
+Visit [nerd-word.expo.app](https://nerd-word.expo.app) to play in your browser!
 
 ### Adding New Words (Instant Updates)
 
@@ -240,7 +240,7 @@ nerd-wordle/
 
 The app is deployed to multiple platforms:
 
-- **Web**: [nerd-wordle.expo.app](https://nerd-wordle.expo.app) (EAS Hosting)
+- **Web**: [nerd-word.expo.app](https://nerd-word.expo.app) (EAS Hosting)
 - **Mobile**: EAS Update for over-the-air updates
 - **Backend**: Firebase Functions on Google Cloud
 
