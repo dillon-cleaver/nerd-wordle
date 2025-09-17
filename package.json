@@ -30,7 +30,7 @@
     "analyze:deps": "node scripts/check-unused-deps.js",
     "build:dictionary": "node scripts/build-dictionary.js",
     "_comment": "=== WORD MANAGEMENT HELP ===",
-    "words:help": "echo '📚 Word Management Commands:' && echo '' && echo '🎯 Essential Commands:' && echo '  pnpm run words:add              # Add new word (local only)' && echo '  pnpm run words:deploy:all       # Deploy to CDN + Firestore' && echo '  pnpm run words:verify [WORD]    # Verify deployment' && echo '' && echo '🔍 Status & Analysis:' && echo '  pnpm run words:status           # Show current status' && echo '  pnpm run words:check-bundle     # Verify CDN optimization' && echo '  pnpm run analyze:bundle         # Full bundle analysis' && echo '' && echo '🔧 Individual Deployment:' && echo '  pnpm run words:deploy:cdn       # CDN only (users)' && echo '  pnpm run words:deploy:firestore # Firestore only (server)' && echo '' && echo 'ℹ️  See docs/word-management-quick-reference.md for details'"
+    "words:help": "node scripts/words-help.js"
   },
   "jest": {
     "preset": "jest-expo"

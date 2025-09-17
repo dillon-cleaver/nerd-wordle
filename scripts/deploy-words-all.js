@@ -14,6 +14,13 @@
 
 const { execSync } = require("child_process");
 
+// Command constants for maintainability
+const COMMANDS = {
+  CDN_DEPLOY: "pnpm run words:deploy:cdn",
+  FIRESTORE_DEPLOY: "pnpm run words:deploy:firestore",
+  VALIDATE: "node scripts/build-dictionary.js --validate"
+};
+
 // Parse command line arguments
 const args = process.argv.slice(2);
 const cdnOnly = args.includes("--cdn");
@@ -51,7 +58,7 @@ async function deployWords() {
   // Step 1: Always validate first
   if (
     !runCommand(
-      "node scripts/build-dictionary.js --validate",
+      COMMANDS.VALIDATE,
       "Validating word data"
     )
   ) {
@@ -68,7 +75,7 @@ async function deployWords() {
 
     if (
       !runCommand(
-        "pnpm run words:deploy:cdn",
+        COMMANDS.CDN_DEPLOY,
         "Deploying to CDN (Firebase hosting)"
       )
     ) {
@@ -86,7 +93,7 @@ async function deployWords() {
 
     if (
       !runCommand(
-        "pnpm run words:deploy:firestore",
+        COMMANDS.FIRESTORE_DEPLOY,
         "Deploying to Firestore database"
       )
     ) {
@@ -107,8 +114,8 @@ async function deployWords() {
   if (hasFailures) {
     console.log("\n⚠️  Some deployments failed. Check the logs above.");
     console.log("💡 You can retry specific deployments:");
-    console.log("   CDN only: pnpm run words:deploy:cdn");
-    console.log("   Firestore only: pnpm run words:deploy:firestore");
+    console.log(`   CDN only: ${COMMANDS.CDN_DEPLOY}`);
+    console.log(`   Firestore only: ${COMMANDS.FIRESTORE_DEPLOY}`);
 
     // Show what succeeded for partial recovery
     const successes = deploymentResults.filter((r) => r.includes("✅"));
