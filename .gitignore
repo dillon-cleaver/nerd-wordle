@@ -39,6 +39,7 @@ yarn-error.*
 functions/emulator-data/
 functions/firebase-debug.log
 functions/firestore-debug.log
+firebase-debug.log
 firestore-debug.log
 
 # Firebase Functions Build Output

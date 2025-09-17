@@ -20,16 +20,17 @@
     "env:production": "node scripts/env-helper.js production",
     "words:add": "node scripts/add-word.js",
     "words:validate": "node scripts/build-dictionary.js --validate",
-    "words:deploy": "node scripts/deploy-words.js",
-    "words:firestore": "pnpm run env:production && cd functions && pnpm run seed:words:production && cd .. && pnpm run env:development",
+    "words:deploy:cdn": "node scripts/deploy-words.js",
+    "words:deploy:firestore": "pnpm run env:production && cd functions && pnpm run seed:words:production && cd .. && pnpm run env:development",
     "words:deploy:all": "node scripts/deploy-words-all.js",
     "words:verify": "node scripts/verify-word.js",
-    "words:verify-bundle": "node scripts/verify-bundle-size.js",
+    "words:status": "pnpm run words:validate && echo '' && echo '📊 Recent deployments:' && git log --oneline -5 --grep='dictionary'",
     "words:check-bundle": "node scripts/check-bundle-size.js",
     "analyze:bundle": "node scripts/analyze-bundle.js",
     "analyze:deps": "node scripts/check-unused-deps.js",
     "build:dictionary": "node scripts/build-dictionary.js",
-    "words:admin": "cd functions && pnpm run seed:words:production"
+    "_comment": "=== WORD MANAGEMENT HELP ===",
+    "words:help": "node scripts/words-help.js"
   },
   "jest": {
     "preset": "jest-expo"

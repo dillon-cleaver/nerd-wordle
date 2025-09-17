@@ -14,6 +14,13 @@
 
 const { execSync } = require("child_process");
 
+// Command constants for maintainability
+const COMMANDS = {
+  CDN_DEPLOY: "pnpm run words:deploy:cdn",
+  FIRESTORE_DEPLOY: "pnpm run words:deploy:firestore",
+  VALIDATE: "node scripts/build-dictionary.js --validate",
+};
+
 // Parse command line arguments
 const args = process.argv.slice(2);
 const cdnOnly = args.includes("--cdn");
@@ -49,12 +56,7 @@ async function deployWords() {
   console.log();
 
   // Step 1: Always validate first
-  if (
-    !runCommand(
-      "node scripts/build-dictionary.js --validate",
-      "Validating word data"
-    )
-  ) {
+  if (!runCommand(COMMANDS.VALIDATE, "Validating word data")) {
     console.error("\n💥 Deployment aborted: Word validation failed");
     process.exit(1);
   }
@@ -66,68 +68,28 @@ async function deployWords() {
     console.log("\n📡 CDN Deployment");
     console.log("==================");
 
-    // Auto-version dictionary
     if (
-      !runCommand(
-        "node scripts/auto-version-dictionary.js",
-        "Auto-versioning dictionary"
-      )
+      !runCommand(COMMANDS.CDN_DEPLOY, "Deploying to CDN (Firebase hosting)")
     ) {
-      console.error("\n💥 CDN deployment failed: Auto-versioning failed");
-      deploymentResults.push("❌ CDN: Auto-versioning failed");
+      console.error("\n💥 CDN deployment failed");
+      deploymentResults.push("❌ CDN: Deployment failed");
     } else {
-      // Deploy to Firebase hosting
-      if (
-        !runCommand(
-          "firebase deploy --only hosting",
-          "Deploying to Firebase hosting (CDN)"
-        )
-      ) {
-        console.error("\n💥 CDN deployment failed: Firebase hosting failed");
-        deploymentResults.push("❌ CDN: Hosting deployment failed");
-      } else {
-        deploymentResults.push("✅ CDN: Deployed successfully");
-      }
+      deploymentResults.push("✅ CDN: Deployed successfully");
     }
   }
 
-  // Step 3: Deploy to Firestore
+  // Step 3: Deploy to Firestore (always attempt even if CDN failed)
   if (deployFirestore) {
     console.log("\n🗄️  Firestore Deployment");
     console.log("========================");
 
-    // Ensure production environment
     if (
-      !runCommand(
-        "node scripts/env-helper.js production",
-        "Setting production environment"
-      )
+      !runCommand(COMMANDS.FIRESTORE_DEPLOY, "Deploying to Firestore database")
     ) {
-      console.error(
-        "\n💥 Firestore deployment failed: Environment setup failed"
-      );
-      deploymentResults.push("❌ Firestore: Environment setup failed");
+      console.error("\n💥 Firestore deployment failed");
+      deploymentResults.push("❌ Firestore: Deployment failed");
     } else {
-      // Deploy to Firestore
-      if (
-        !runCommand(
-          "cd functions && pnpm run seed:words:production",
-          "Deploying to Firestore database"
-        )
-      ) {
-        console.error(
-          "\n💥 Firestore deployment failed: Database seeding failed"
-        );
-        deploymentResults.push("❌ Firestore: Database seeding failed");
-      } else {
-        deploymentResults.push("✅ Firestore: Deployed successfully");
-      }
-
-      // Reset to development environment
-      runCommand(
-        "node scripts/env-helper.js development",
-        "Resetting to development environment"
-      );
+      deploymentResults.push("✅ Firestore: Deployed successfully");
     }
   }
 
@@ -141,8 +103,16 @@ async function deployWords() {
   if (hasFailures) {
     console.log("\n⚠️  Some deployments failed. Check the logs above.");
     console.log("💡 You can retry specific deployments:");
-    console.log("   CDN only: pnpm run words:deploy");
-    console.log("   Firestore only: pnpm run words:firestore");
+    console.log(`   CDN only: ${COMMANDS.CDN_DEPLOY}`);
+    console.log(`   Firestore only: ${COMMANDS.FIRESTORE_DEPLOY}`);
+
+    // Show what succeeded for partial recovery
+    const successes = deploymentResults.filter((r) => r.includes("✅"));
+    if (successes.length > 0) {
+      console.log("\n✅ Successful deployments:");
+      successes.forEach((s) => console.log(`   ${s}`));
+    }
+
     process.exit(1);
   } else {
     console.log("\n🎉 All deployments completed successfully!");
