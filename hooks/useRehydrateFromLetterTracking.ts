@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { NUMBER_OF_GUESSES } from "@/constants/numbers";
+import { NUMBER_OF_GUESSES, MIN_GUESSES_FOR_HINT } from "@/constants/numbers";
 import { GameStatus, Hint } from "@/types/game";
 import { LetterGuess } from "@/types/letter-tracking";
 import { WordEntry, WordId } from "@/types/word";
@@ -130,7 +130,7 @@ export const useRehydrateFromLetterTracking = ({
           !reconstructedWords.some((w) => w === answer) &&
           reconstructedEntries.length < NUMBER_OF_GUESSES;
 
-        if (gameInProgress && reconstructedEntries.length >= 3) {
+        if (gameInProgress && reconstructedEntries.length >= MIN_GUESSES_FOR_HINT) {
           // Recalculate hint based on current game state
           const lastGuess = reconstructedWords[reconstructedWords.length - 1];
           const correctPositions = getCorrectPositions(

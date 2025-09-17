@@ -1,5 +1,6 @@
 import { Hint } from "@/types/game";
 import { WordId } from "@/types/word";
+import { MIN_GUESSES_FOR_HINT } from "@/constants/numbers";
 
 /**
  * Tracks which positions already have the correct letter placed
@@ -79,7 +80,7 @@ export const generateHint = (
   answerId: WordId,
   correctPositions: Set<number>
 ): Hint | undefined => {
-  if (tentativeGuess !== answerId && guesses.length >= 3) {
+  if (tentativeGuess !== answerId && guesses.length >= MIN_GUESSES_FOR_HINT) {
     const lastGuess = guesses[guesses.length - 1];
     const nextRow = guesses.length + 1;
 

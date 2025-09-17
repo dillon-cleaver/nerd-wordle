@@ -7,6 +7,7 @@ import { getCorrectPositions, generateHint } from "./hint-logic";
 import { handleInvalidWord, handleGameCompletion } from "./game-completion";
 import { saveActivePuzzleState } from "@/storage/active-puzzle.local";
 import { extractDateFromPuzzleId } from "./puzzle-id";
+import { isDebugLoggingEnabled } from "./dev-flags";
 
 export const handleSubmitGuessWithLetterTracking = (
   tentativeGuess: string,
@@ -50,8 +51,10 @@ export const handleSubmitGuessWithLetterTracking = (
       if (puzzleDate) {
         saveActivePuzzleState(puzzleId, puzzleDate, allLetterGuesses);
       } else {
-        // Optionally log a warning or handle invalid format
-        // console.warn(`Invalid puzzleId format: ${puzzleId}`);
+        // Log warning for invalid puzzle ID format in debug mode
+        if (isDebugLoggingEnabled()) {
+          console.warn(`Invalid puzzleId format: ${puzzleId}`);
+        }
       }
     }
 
