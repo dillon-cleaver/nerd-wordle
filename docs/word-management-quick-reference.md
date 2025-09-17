@@ -24,9 +24,10 @@ git add . && git commit -m "Add [WORD] to dictionary"
 
 # 3. Deploy to BOTH systems (this is the key step!)
 pnpm run words:deploy:all
-   # → First deploys to CDN (Firebase Hosting)
-   # → Then deploys to Firestore database
+   # → Deploys to CDN (Firebase Hosting)
+   # → Deploys to Firestore database (runs even if CDN fails)
    # → Both systems needed for full functionality
+   # → Reports status of each deployment with recovery instructions
 
 # 4. Verify everything worked
 pnpm run words:verify [WORD]

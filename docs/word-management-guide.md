@@ -68,14 +68,15 @@ git commit -m "Add GRAZE to dictionary"
 **Option A: Complete Deployment (Strongly Recommended)**
 
 ```bash
-# Deploy to BOTH CDN and Firestore in sequence
+# Deploy to BOTH CDN and Firestore with error handling
 pnpm run words:deploy:all
 ```
 
-This runs:
+This runs both deployments independently with proper error handling:
 
 1. `words:deploy:cdn` - CDN deployment first
-2. `words:deploy:firestore` - Firestore deployment second
+2. `words:deploy:firestore` - Firestore deployment (runs even if CDN fails)
+3. Reports status of both deployments with recovery instructions
 
 **Option B: Manual Step-by-Step (If You Need Control)**
 
@@ -173,10 +174,15 @@ pnpm run words:verify [YOUR_WORD]
 # Complete the missing deployment
 pnpm run words:deploy:firestore
 
+# Or use the complete deployment (will report what succeeded/failed)
+pnpm run words:deploy:all
+
 # Verify both systems now work
 pnpm run words:verify [YOUR_WORD]
 # Should show ✅ for both CDN and Firestore
 ```
+
+**Note:** The `words:deploy:all` script now has robust error handling and will attempt both deployments even if one fails, providing clear recovery instructions.
 
 ### "Version mismatch errors"
 

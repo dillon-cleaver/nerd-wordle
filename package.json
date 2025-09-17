@@ -22,7 +22,7 @@
     "words:validate": "node scripts/build-dictionary.js --validate",
     "words:deploy:cdn": "node scripts/deploy-words.js",
     "words:deploy:firestore": "pnpm run env:production && cd functions && pnpm run seed:words:production && cd .. && pnpm run env:development",
-    "words:deploy:all": "pnpm run words:deploy:cdn && pnpm run words:deploy:firestore",
+    "words:deploy:all": "node scripts/deploy-words-all.js",
     "words:verify": "node scripts/verify-word.js",
     "words:status": "pnpm run words:validate && echo '' && echo '📊 Recent deployments:' && git log --oneline -5 --grep='dictionary'",
     "words:check-bundle": "node scripts/check-bundle-size.js",
