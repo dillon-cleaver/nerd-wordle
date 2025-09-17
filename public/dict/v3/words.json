@@ -13917,6 +13917,10 @@
     "alpha": true
   },
   {
+    "id": "SCORN",
+    "category": "common"
+  },
+  {
     "id": "SCOUT",
     "category": "common"
   },
