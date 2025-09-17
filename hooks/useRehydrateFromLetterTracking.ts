@@ -130,7 +130,10 @@ export const useRehydrateFromLetterTracking = ({
           !reconstructedWords.some((w) => w === answer) &&
           reconstructedEntries.length < NUMBER_OF_GUESSES;
 
-        if (gameInProgress && reconstructedEntries.length >= MIN_GUESSES_FOR_HINT) {
+        if (
+          gameInProgress &&
+          reconstructedEntries.length >= MIN_GUESSES_FOR_HINT
+        ) {
           // Recalculate hint based on current game state
           const lastGuess = reconstructedWords[reconstructedWords.length - 1];
           const correctPositions = getCorrectPositions(
