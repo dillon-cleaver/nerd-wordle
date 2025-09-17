@@ -14286,6 +14286,10 @@
     "category": "common"
   },
   {
+    "id": "SMITH",
+    "category": "common"
+  },
+  {
     "id": "SMOKE",
     "category": "common"
   },
@@ -16148,6 +16152,10 @@
   },
   {
     "id": "ZONAL",
+    "category": "common"
+  },
+  {
+    "id": "ZONER",
     "category": "common"
   },
   {
