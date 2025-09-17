@@ -52,7 +52,7 @@
       "extends": "base",
       "env": {
         "EXPO_PUBLIC_DEV_MODE": "false",
-        "EXPO_PUBLIC_ENABLE_DEBUG_LOGS": "false",
+        "EXPO_PUBLIC_ENABLE_DEBUG_LOGS": "true",
         "EXPO_PUBLIC_BYPASS_DAILY_LIMIT": "false",
         "EXPO_PUBLIC_SHOW_DEV_BADGE": "true"
       }

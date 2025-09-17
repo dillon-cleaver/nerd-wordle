@@ -9,6 +9,10 @@ import { User } from "firebase/auth";
 import { puzzleHistoryApi } from "../utils/api";
 import { PuzzleResult } from "@/types/puzzle-result";
 import { isPuzzleHistoryDebugEnabled } from "@/utils/dev-flags";
+import {
+  savePuzzleResultLocal,
+  loadPuzzleResultsLocal,
+} from "@/storage/puzzle-results.local";
 
 interface PuzzleHistoryContextType {
   puzzleResults: PuzzleResult[];
@@ -48,8 +52,84 @@ export function PuzzleHistoryProvider({
       const resultsData = await puzzleHistoryApi.getPuzzleHistory(user);
       setPuzzleResults(resultsData);
 
+      // Sync backend results to localStorage for game state restoration
+      const existingLocalResults = loadPuzzleResultsLocal();
+      const existingLocalDates = new Set(
+        existingLocalResults.map((result) => {
+          const date =
+            result.date instanceof Date
+              ? result.date.toISOString().split("T")[0]
+              : new Date(result.date).toISOString().split("T")[0];
+          return date;
+        })
+      );
+
+      // Save any backend results that aren't already in localStorage
+      let syncedToLocal = 0;
+      for (const backendResult of resultsData) {
+        const backendDate =
+          backendResult.date instanceof Date
+            ? backendResult.date.toISOString().split("T")[0]
+            : new Date(backendResult.date).toISOString().split("T")[0];
+
+        if (!existingLocalDates.has(backendDate)) {
+          savePuzzleResultLocal(backendResult);
+          syncedToLocal++;
+        }
+      }
+
+      // Sync localStorage results to backend (upload missing local results)
+      const existingBackendDates = new Set(
+        resultsData.map((result) => {
+          const date =
+            result.date instanceof Date
+              ? result.date.toISOString().split("T")[0]
+              : new Date(result.date).toISOString().split("T")[0];
+          return date;
+        })
+      );
+
+      let syncedToBackend = 0;
+      for (const localResult of existingLocalResults) {
+        const localDate =
+          localResult.date instanceof Date
+            ? localResult.date.toISOString().split("T")[0]
+            : new Date(localResult.date).toISOString().split("T")[0];
+
+        if (!existingBackendDates.has(localDate)) {
+          try {
+            await puzzleHistoryApi.savePuzzleResult(user, localResult);
+            setPuzzleResults((prev) => [localResult, ...prev]);
+            syncedToBackend++;
+          } catch (uploadError) {
+            if (isPuzzleHistoryDebugEnabled()) {
+              console.warn(
+                "⚠️ Failed to sync local result to backend:",
+                localResult.id,
+                uploadError
+              );
+            }
+            // Continue with other results even if one fails
+          }
+        }
+      }
+
       if (isPuzzleHistoryDebugEnabled()) {
         console.log("✅ Loaded puzzle results:", resultsData.length, "records");
+        if (syncedToLocal > 0) {
+          console.log(
+            "🔄 Synced",
+            syncedToLocal,
+            "backend results to localStorage"
+          );
+        }
+        if (syncedToBackend > 0) {
+          console.log(
+            "🔄 Synced",
+            syncedToBackend,
+            "localStorage results to backend"
+          );
+        }
       }
     } catch (err) {
       const errorMessage =
@@ -90,6 +170,23 @@ export function PuzzleHistoryProvider({
         setLoading(true);
         setError(null);
 
+        if (isPuzzleHistoryDebugEnabled()) {
+          console.log(
+            "🔄 Context: Starting to save puzzle result:",
+            puzzleResult
+          );
+        }
+
+        // Save to localStorage immediately for "already played" check
+        savePuzzleResultLocal(puzzleResult);
+        if (isPuzzleHistoryDebugEnabled()) {
+          console.log("✅ Context: Saved to localStorage successfully");
+        }
+
+        // Save to backend
+        if (isPuzzleHistoryDebugEnabled()) {
+          console.log("📤 Context: Saving to backend...");
+        }
         await puzzleHistoryApi.savePuzzleResult(user, puzzleResult);
         setPuzzleResults((prev) => [puzzleResult, ...prev]);
 

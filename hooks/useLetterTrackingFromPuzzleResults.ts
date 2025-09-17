@@ -5,6 +5,7 @@ import { PuzzleResult } from "@/types/puzzle-result"; // Use frontend type with 
 import { loadPuzzleResultsLocal } from "@/storage/puzzle-results.local";
 import { usePuzzleHistory } from "@/context/PuzzleHistoryContext";
 import { isPuzzleHistoryDebugEnabled } from "@/utils/dev-flags";
+import { getDateString } from "@/utils/time";
 
 /**
  * Hook to read letter tracking data from puzzle results instead of separate storage.
@@ -69,13 +70,25 @@ export const useLetterTrackingFromPuzzleResults = (
         const matchingResult = allResults.find((result) => {
           if (!result.date) return false;
 
-          // Handle both Date objects and string dates
-          const resultDate =
-            result.date instanceof Date
-              ? result.date.toISOString().split("T")[0]
-              : new Date(result.date).toISOString().split("T")[0];
+          // Convert result date to Central Time for proper comparison with puzzleDate
+          const resultDate = getDateString(new Date(result.date));
 
           const matches = resultDate === puzzleDate;
+          
+          if (isPuzzleHistoryDebugEnabled()) {
+            console.log("🔍 SYNC DEBUG - Date comparison:", {
+              resultDate,
+              puzzleDate,
+              rawDate: result.date,
+              dateType: typeof result.date,
+              isDateObject: result.date instanceof Date,
+              matches,
+              status: result.status,
+              word: result.word,
+              hasLetterTracking: !!result.letterTracking?.length,
+            });
+          }
+
           if (matches && isPuzzleHistoryDebugEnabled()) {
             console.log("✅ Found matching puzzle result:", {
               resultDate,

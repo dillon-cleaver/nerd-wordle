@@ -64,8 +64,21 @@ export const handleGameCompletion = (
     // Save result to both localStorage and backend (if authenticated)
     // This ensures the result is immediately available for the "already played" check
     const currentUser = getAuth().currentUser;
+
+    if (isDebugLoggingEnabled()) {
+      console.log("🔍 Game completion debug (WIN):", {
+        hasSavePuzzleResult: !!savePuzzleResult,
+        hasCurrentUser: !!currentUser,
+        currentUserEmail: currentUser?.email,
+        willUseContextMethod: !!(savePuzzleResult && currentUser),
+      });
+    }
+
     if (savePuzzleResult && currentUser) {
-      // Use the context method to update React state immediately
+      // Use the context method which saves to both localStorage and backend
+      if (isDebugLoggingEnabled()) {
+        console.log("📤 Using context method to save puzzle result");
+      }
       savePuzzleResult(currentUser, result).catch((error) => {
         if (isDebugLoggingEnabled()) {
           console.error(
@@ -88,15 +101,6 @@ export const handleGameCompletion = (
           }
         });
       });
-
-      // Also save to localStorage immediately for the "already played" check
-      try {
-        savePuzzleResultLocal(result);
-      } catch (localError) {
-        if (isDebugLoggingEnabled()) {
-          console.error("❌ Immediate localStorage save failed:", localError);
-        }
-      }
     } else {
       // Use dual save method for both localStorage and backend
       savePuzzleResultDual(null, result).catch(() => {
@@ -147,7 +151,7 @@ export const handleGameCompletion = (
     // This ensures the result is immediately available for the "already played" check
     const currentUser = getAuth().currentUser;
     if (savePuzzleResult && currentUser) {
-      // Use the context method to update React state immediately
+      // Use the context method which saves to both localStorage and backend
       savePuzzleResult(currentUser, result).catch((error) => {
         if (isDebugLoggingEnabled()) {
           console.error(
@@ -170,15 +174,6 @@ export const handleGameCompletion = (
           }
         });
       });
-
-      // Also save to localStorage immediately for the "already played" check
-      try {
-        savePuzzleResultLocal(result);
-      } catch (localError) {
-        if (isDebugLoggingEnabled()) {
-          console.error("❌ Immediate localStorage save failed:", localError);
-        }
-      }
     } else {
       // Use dual save method for both localStorage and backend
       savePuzzleResultDual(null, result).catch(() => {
