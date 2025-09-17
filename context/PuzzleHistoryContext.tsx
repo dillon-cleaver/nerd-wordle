@@ -183,12 +183,17 @@ export function PuzzleHistoryProvider({
           console.log("✅ Context: Saved to localStorage successfully");
         }
 
-        // Save to backend
+        // Update context state immediately for UI responsiveness
+        setPuzzleResults((prev) => [puzzleResult, ...prev]);
+        if (isPuzzleHistoryDebugEnabled()) {
+          console.log("✅ Context: Updated context state immediately");
+        }
+
+        // Save to backend (this can fail without affecting UI)
         if (isPuzzleHistoryDebugEnabled()) {
           console.log("📤 Context: Saving to backend...");
         }
         await puzzleHistoryApi.savePuzzleResult(user, puzzleResult);
-        setPuzzleResults((prev) => [puzzleResult, ...prev]);
 
         // TODO: Replace console.log with proper logging service (e.g., Firebase Analytics, Sentry)
         if (isPuzzleHistoryDebugEnabled()) {
@@ -200,6 +205,15 @@ export function PuzzleHistoryProvider({
         setError(errorMessage);
         // TODO: Replace console.error with proper error tracking service (e.g., Sentry, Crashlytics)
         console.error("❌ Failed to save puzzle result:", err);
+
+        // If backend save failed, don't revert the context state since localStorage save succeeded
+        // This ensures the UI remains responsive even if backend is temporarily unavailable
+        if (isPuzzleHistoryDebugEnabled()) {
+          console.log(
+            "⚠️ Backend save failed, but keeping context state updated"
+          );
+        }
+
         throw err; // Re-throw so caller can handle if needed
       } finally {
         setLoading(false);
