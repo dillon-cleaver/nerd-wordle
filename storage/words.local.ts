@@ -164,29 +164,37 @@ export async function fetchWordsFromCDN(
  * 2. Production: Try CDN with timeout, then fallback strategies
  */
 export async function loadWords(): Promise<WordEntry[]> {
-  console.log("🔄 loadWords() called - starting word loading process");
+  if (isDebugLoggingEnabled()) {
+    console.log("🔄 loadWords() called - starting word loading process");
+  }
 
   try {
     // Auto-clear cache if dev flag is enabled
     clearWordsCacheIfNeeded();
 
     const isDevelopment = process.env.EXPO_PUBLIC_DEV_MODE === "true";
-    console.log(`🔧 Development mode: ${isDevelopment}`);
+    if (isDebugLoggingEnabled()) {
+      console.log(`🔧 Development mode: ${isDevelopment}`);
+    }
 
     if (isDevelopment) {
       // In development: try local file first
       try {
-        console.log(
-          "🔄 Attempting to load words from local data/words.json (dev mode)"
-        );
+        if (isDebugLoggingEnabled()) {
+          console.log(
+            "🔄 Attempting to load words from local data/words.json (dev mode)"
+          );
+        }
 
         // Use dynamic import for development mode to avoid bundling
         const localWordsModule = await import("../data/words.json");
         const localWords = localWordsModule.default as WordEntry[];
 
-        console.log(
-          `✅ Successfully loaded ${localWords.length} words from local file`
-        );
+        if (isDebugLoggingEnabled()) {
+          console.log(
+            `✅ Successfully loaded ${localWords.length} words from local file`
+          );
+        }
 
         return localWords;
       } catch (localError) {
@@ -199,7 +207,9 @@ export async function loadWords(): Promise<WordEntry[]> {
     }
 
     // Try CDN loading with timeout
-    console.log("🔄 Attempting to load words from CDN...");
+    if (isDebugLoggingEnabled()) {
+      console.log("🔄 Attempting to load words from CDN...");
+    }
 
     const words = await Promise.race([
       fetchWordsFromCDN(),
@@ -208,7 +218,9 @@ export async function loadWords(): Promise<WordEntry[]> {
       ),
     ]);
 
-    console.log(`✅ Successfully loaded ${words.length} words from CDN`);
+    if (isDebugLoggingEnabled()) {
+      console.log(`✅ Successfully loaded ${words.length} words from CDN`);
+    }
 
     return words;
   } catch (error) {
