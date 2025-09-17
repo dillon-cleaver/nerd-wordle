@@ -11,6 +11,9 @@ import {
   shouldClearLocalStorageOnStart,
 } from "@/utils/dev-flags";
 
+// Import words statically for development mode
+import localWordsData from "../data/words.json";
+
 // Minimal metadata storage in localStorage
 type WordMetadata = {
   version: string;
@@ -72,25 +75,32 @@ export function shouldRefreshWords(): boolean {
 }
 
 /**
- * Get the current dictionary version from CDN
+ * Get the current dictionary version from CDN with timeout and fallback
  */
 export async function getCurrentVersion(): Promise<string> {
   try {
-    const response = await fetch(
-      `https://nerd-word-cfda3.web.app/dict/current-version.json`,
-      {
+    const response = await Promise.race([
+      fetch(`https://nerd-word-cfda3.web.app/dict/current-version.json`, {
         cache: "no-cache", // Always get the latest version info
         mode: "cors",
-      }
-    );
+      }),
+      new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error("Version fetch timeout")), 5000)
+      ),
+    ]);
 
     if (!response.ok) {
       throw new Error(
-        `Failed to fetch current version: ${response.statusText}`
+        `Version fetch failed: ${response.status} ${response.statusText}`
       );
     }
 
     const versionInfo = await response.json();
+
+    if (!versionInfo.version) {
+      throw new Error("Invalid version info received");
+    }
+
     return versionInfo.version;
   } catch (error) {
     console.warn("Failed to get current version, falling back to v7:", error);
@@ -99,60 +109,132 @@ export async function getCurrentVersion(): Promise<string> {
 }
 
 /**
- * Fetch words from CDN with proper cache headers
+ * Fetch words from CDN with proper cache headers and error handling
  * Browser cache handles the heavy lifting with HTTP caching
  */
 export async function fetchWordsFromCDN(
   version?: string
 ): Promise<WordEntry[]> {
-  // Get current version if not specified
-  const actualVersion = version || (await getCurrentVersion());
-  const url = `https://nerd-word-cfda3.web.app/dict/${actualVersion}/words.json`;
+  try {
+    // Get current version if not specified
+    const actualVersion = version || (await getCurrentVersion());
+    const url = `https://nerd-word-cfda3.web.app/dict/${actualVersion}/words.json`;
 
-  if (isDebugLoggingEnabled()) {
-    console.log(`🔄 Fetching words from CDN: ${url}`);
+    if (isDebugLoggingEnabled()) {
+      console.log(`🔄 Fetching words from CDN: ${url}`);
+    }
+
+    const response = await fetch(url, {
+      cache: "force-cache", // Use browser cache aggressively
+      mode: "cors",
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `CDN fetch failed: ${response.status} ${response.statusText}`
+      );
+    }
+
+    const words = await response.json();
+
+    if (!Array.isArray(words) || words.length === 0) {
+      throw new Error("Invalid words data received from CDN");
+    }
+
+    // Save metadata only (not the full word data)
+    saveWordsMetadata({
+      version: actualVersion,
+      lastUpdated: new Date().toISOString(),
+      totalWords: words.length,
+    });
+
+    if (isDebugLoggingEnabled()) {
+      console.log(`✅ Loaded ${words.length} words from CDN (browser cache)`);
+    }
+
+    return words;
+  } catch (error) {
+    if (isDebugLoggingEnabled()) {
+      console.error("❌ CDN fetch error:", error);
+    }
+    throw error;
   }
-
-  const response = await fetch(url, {
-    cache: "force-cache", // Use browser cache aggressively
-    mode: "cors",
-  });
-
-  if (!response.ok) {
-    throw new Error(`Failed to fetch words: ${response.statusText}`);
-  }
-
-  const words = await response.json();
-
-  // Save metadata only (not the full word data)
-  saveWordsMetadata({
-    version: actualVersion,
-    lastUpdated: new Date().toISOString(),
-    totalWords: words.length,
-  });
-
-  if (isDebugLoggingEnabled()) {
-    console.log(`✅ Loaded ${words.length} words from CDN (browser cache)`);
-  }
-
-  return words;
 }
 
 /**
- * Main word loading function - browser cache first, then CDN
- * This replaces the old localStorage caching approach
+ * Main word loading function with robust fallback strategy
+ * 1. Development: Try local file first, then CDN
+ * 2. Production: Try CDN with timeout, then fallback strategies
  */
 export async function loadWords(): Promise<WordEntry[]> {
+  console.log("🔄 loadWords() called - starting word loading process");
+
   try {
     // Auto-clear cache if dev flag is enabled
     clearWordsCacheIfNeeded();
 
-    // Always try browser cache first (fastest)
-    const words = await fetchWordsFromCDN();
+    const isDevelopment = process.env.EXPO_PUBLIC_DEV_MODE === "true";
+    console.log(`🔧 Development mode: ${isDevelopment}`);
+
+    if (isDevelopment) {
+      // In development: try local file first
+      try {
+        console.log(
+          "🔄 Attempting to load words from local data/words.json (dev mode)"
+        );
+
+        // Use static import for development mode
+        const localWords = localWordsData as WordEntry[];
+
+        console.log(
+          `✅ Successfully loaded ${localWords.length} words from local file`
+        );
+
+        return localWords;
+      } catch (localError) {
+        console.warn(
+          "⚠️ Failed to load local words, falling back to CDN:",
+          localError
+        );
+        // Fall through to CDN loading
+      }
+    }
+
+    // Try CDN loading with timeout
+    console.log("🔄 Attempting to load words from CDN...");
+
+    const words = await Promise.race([
+      fetchWordsFromCDN(),
+      new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error("CDN request timeout")), 10000)
+      ),
+    ]);
+
+    console.log(`✅ Successfully loaded ${words.length} words from CDN`);
+
     return words;
   } catch (error) {
-    console.error("Failed to load words:", error);
-    throw error;
+    console.error("❌ Failed to load words from all sources:", error);
+
+    // Final fallback: try to load previous version from cache or return minimal dataset
+    const metadata = loadWordsMetadata();
+    if (metadata) {
+      console.warn(`⚠️ Attempting to load cached version ${metadata.version}`);
+      try {
+        const fallbackWords = await fetchWordsFromCDN(metadata.version);
+        console.log(
+          `✅ Loaded ${fallbackWords.length} words from cached version`
+        );
+        return fallbackWords;
+      } catch (fallbackError) {
+        console.error("❌ Failed to load fallback version:", fallbackError);
+      }
+    }
+
+    // If all else fails, throw the error
+    throw new Error(
+      "Unable to load words from any source. Please check your internet connection and try again."
+    );
   }
 }
 

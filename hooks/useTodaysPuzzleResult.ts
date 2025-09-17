@@ -16,12 +16,11 @@ export const useTodaysPuzzleResult = () => {
   const { authUser, loading: userLoading } = useContext(UserContext);
   const {
     puzzleResults: backendResults,
-    loadPuzzleResults,
+    autoLoadResults,
     loading: historyLoading,
   } = usePuzzleHistory();
   const { dailyPuzzle, isLoading: puzzleLoading } = useDailyPuzzle();
   const [localResults, setLocalResults] = useState<PuzzleResult[]>([]);
-  const [hasTriedLoadingBackend, setHasTriedLoadingBackend] = useState(false);
 
   // Load localStorage results immediately and when puzzle results change
   useEffect(() => {
@@ -41,45 +40,12 @@ export const useTodaysPuzzleResult = () => {
     return () => clearTimeout(timer);
   }, [backendResults]);
 
-  // Load backend results when user is authenticated and we haven't tried yet
+  // Ensure backend results are loaded for authenticated users
   useEffect(() => {
-    if (
-      authUser &&
-      !userLoading &&
-      !historyLoading &&
-      !hasTriedLoadingBackend
-    ) {
-      if (isDebugLoggingEnabled()) {
-        console.log(
-          "🔄 Loading puzzle history from backend for authenticated user"
-        );
-      }
-      loadPuzzleResults(authUser)
-        .then(() => {
-          if (isDebugLoggingEnabled()) {
-            console.log("✅ Backend puzzle history loaded successfully");
-          }
-          setHasTriedLoadingBackend(true);
-        })
-        .catch((error) => {
-          if (isDebugLoggingEnabled()) {
-            console.error("❌ Failed to load backend puzzle history:", error);
-          }
-          setHasTriedLoadingBackend(true); // Still mark as tried to avoid infinite retries
-        });
-    }
-  }, [
-    authUser,
-    userLoading,
-    historyLoading,
-    hasTriedLoadingBackend,
-    loadPuzzleResults,
-  ]);
+    autoLoadResults(authUser, userLoading);
+  }, [authUser, userLoading, autoLoadResults]);
 
-  // Reset the loading flag when user changes (logout/login)
-  useEffect(() => {
-    setHasTriedLoadingBackend(false);
-  }, [authUser?.uid]);
+  // Reset handled by autoLoadResults internally
 
   const todayResult = useMemo(() => {
     if (!dailyPuzzle || puzzleLoading) {
@@ -96,7 +62,6 @@ export const useTodaysPuzzleResult = () => {
         hasLocalResults: localResults.length > 0,
         hasBackendResults: backendResults.length > 0,
         isAuthenticated: !!authUser,
-        hasTriedLoadingBackend,
         canBypassDaily: canBypassDailyLock(),
       });
     }
@@ -156,21 +121,12 @@ export const useTodaysPuzzleResult = () => {
       console.log("❌ No result found for today's puzzle");
     }
     return null;
-  }, [
-    dailyPuzzle,
-    puzzleLoading,
-    localResults,
-    backendResults,
-    authUser,
-    hasTriedLoadingBackend,
-  ]);
+  }, [dailyPuzzle, puzzleLoading, localResults, backendResults, authUser]);
 
   // Apply dev bypass logic - if bypass is enabled, never report as having played today
   const hasPlayedToday = canBypassDailyLock() ? false : !!todayResult;
   const isLoading =
-    puzzleLoading ||
-    userLoading ||
-    (authUser && !hasTriedLoadingBackend && historyLoading);
+    puzzleLoading || userLoading || (authUser && historyLoading);
 
   if (isDebugLoggingEnabled()) {
     console.log("🎮 useTodaysPuzzleResult state:", {

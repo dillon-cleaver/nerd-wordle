@@ -33,6 +33,7 @@ export const WordDataProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const loadWordsData = async () => {
       try {
+        console.log("🔄 WordDataContext: Starting word loading...");
         setIsLoading(true);
         setError(null);
 
@@ -42,19 +43,26 @@ export const WordDataProvider = ({ children }: { children: ReactNode }) => {
 
         // Browser cache handles the heavy lifting
         const wordsData = await loadWords();
+        console.log(
+          `✅ WordDataContext: Successfully loaded ${wordsData.length} words`
+        );
         setWords(wordsData);
 
         if (isDebugLoggingEnabled()) {
           console.log(`✅ Loaded ${wordsData.length} words successfully`);
         }
       } catch (err) {
-        console.error("Failed to load words:", err);
+        console.error("❌ WordDataContext: Failed to load words:", err);
         setError(err as Error);
       } finally {
+        console.log("🔄 WordDataContext: Setting loading to false");
         setIsLoading(false);
       }
     };
 
+    console.log(
+      "🔄 WordDataContext: useEffect triggered, calling loadWordsData"
+    );
     loadWordsData();
   }, []);
 
