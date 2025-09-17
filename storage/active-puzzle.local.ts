@@ -75,10 +75,10 @@ export function loadActivePuzzleState(): ActivePuzzleState | null {
     // Convert date strings back to Date objects (both for lastUpdated and letter guess timestamps)
     return {
       ...state,
-      lastUpdated: new Date(state.lastUpdated),
+      lastUpdated: state.lastUpdated ? new Date(state.lastUpdated) : new Date(),
       letterGuesses: state.letterGuesses.map((guess) => ({
         ...guess,
-        timestamp: new Date(guess.timestamp),
+        timestamp: guess.timestamp ? new Date(guess.timestamp) : new Date(),
       })),
     };
   } catch (error) {
