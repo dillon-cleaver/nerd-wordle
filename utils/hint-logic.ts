@@ -1,10 +1,14 @@
 import { Hint } from "@/types/game";
 import { WordId } from "@/types/word";
+import { MIN_GUESSES_FOR_HINT } from "@/constants/numbers";
 
 /**
  * Tracks which positions already have the correct letter placed
  */
-export const getCorrectPositions = (guesses: WordId[], answerId: WordId): Set<number> => {
+export const getCorrectPositions = (
+  guesses: WordId[],
+  answerId: WordId
+): Set<number> => {
   const correctPositions = new Set<number>();
   guesses.forEach((guess) => {
     guess.split("").forEach((char, i) => {
@@ -79,12 +83,17 @@ export const generateHint = (
   answerId: WordId,
   correctPositions: Set<number>
 ): Hint | undefined => {
-  if (tentativeGuess !== answerId && guesses.length >= 3) {
+  if (tentativeGuess !== answerId && guesses.length >= MIN_GUESSES_FOR_HINT) {
     const lastGuess = guesses[guesses.length - 1];
     const nextRow = guesses.length + 1;
 
     // First, try to find a misplaced letter
-    let hint = findMisplacedLetterHint(lastGuess, answerId, correctPositions, nextRow);
+    let hint = findMisplacedLetterHint(
+      lastGuess,
+      answerId,
+      correctPositions,
+      nextRow
+    );
 
     // If no misplaced letter found, show hint for any missing letter
     if (!hint) {
@@ -93,6 +102,6 @@ export const generateHint = (
 
     return hint;
   }
-  
+
   return undefined;
 };
