@@ -1,62 +1,69 @@
+import Constants from "expo-constants";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 
-// Environment detection - use explicit dev mode flag
-const isDevelopment = process.env.EXPO_PUBLIC_DEV_MODE === "true";
+type FirebaseConfig = {
+  apiKey: string;
+  authDomain: string;
+  projectId: string;
+  storageBucket: string;
+  messagingSenderId: string;
+  appId: string;
+  measurementId?: string; // ← optional on web if no analytics
+};
 
-// Debug logging - only when debug logs are enabled
-if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
-  console.log(`🔧 Firebase Configuration:`, {
-    isDevelopment,
-    NODE_ENV: process.env.NODE_ENV,
-    EXPO_PUBLIC_DEV_MODE: process.env.EXPO_PUBLIC_DEV_MODE,
-  });
+const extra = (Constants.expoConfig?.extra ?? {}) as Record<string, any>;
+const extraFirebase = (extra.firebase ?? {}) as Partial<FirebaseConfig>;
+
+// Flags: prefer Expo extra; fall back to env / __DEV__
+const ENABLE_DEBUG =
+  String(extra.EXPO_PUBLIC_ENABLE_DEBUG_LOGS) === "true" ||
+  (typeof process !== "undefined" &&
+    process.env?.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true");
+
+const isDevelopment =
+  String(extra.EXPO_PUBLIC_DEV_MODE) === "true" ||
+  (typeof __DEV__ !== "undefined" && __DEV__ === true) ||
+  (typeof process !== "undefined" && process.env?.NODE_ENV === "development");
+
+if (ENABLE_DEBUG) {
+  console.log("🔧 Firebase flags", { isDevelopment });
 }
 
-// Initialize Firebase - PRODUCTION CONFIG
-// Firestore behavior:
-// - When FIRESTORE_EMULATOR_HOST is set (emulator running): Uses local emulator
-// - When FIRESTORE_EMULATOR_HOST is not set: Uses production Firestore
-// - Firebase SDK automatically detects the environment variable
-export const firebaseConfig = {
-  apiKey: "AIzaSyCFKMe4vTWkUKr83E-T_i7wmrhG7cx29zY",
-  authDomain: "nerd-word-cfda3.firebaseapp.com",
-  projectId: "nerd-word-cfda3",
-  storageBucket: "nerd-word-cfda3.firebasestorage.app",
-  messagingSenderId: "1095647998196",
-  appId: "1:1095647998196:web:7bbee77f52a04d286c2ea1",
-  measurementId: "G-2VYYRXBD02",
+export const firebaseConfig: FirebaseConfig = {
+  apiKey: extraFirebase.apiKey as string,
+  authDomain: extraFirebase.authDomain as string,
+  projectId: extraFirebase.projectId as string,
+  storageBucket: extraFirebase.storageBucket as string,
+  messagingSenderId: extraFirebase.messagingSenderId as string,
+  appId: extraFirebase.appId as string,
+  measurementId: extraFirebase.measurementId,
 };
+
+// Guard so misconfigured envs fail fast
+if (
+  !firebaseConfig.apiKey ||
+  !firebaseConfig.projectId ||
+  !firebaseConfig.appId
+) {
+  throw new Error(
+    "Missing Firebase config from Expo extra. Ensure .env is filled and app.config.ts maps EXPO_PUBLIC_* → extra.firebase."
+  );
+}
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-// Connect to emulators in development
+// Emulators (optional)
 if (isDevelopment) {
-  // Only connect if not already connected
   try {
     connectFirestoreEmulator(db, "localhost", 8080);
-    if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
+    if (ENABLE_DEBUG) {
       console.log("🔧 Connected to Firestore emulator on localhost:8080");
-      console.log("🔧 Testing Firestore emulator connection...");
     }
-  } catch (error) {
-    // Emulator might already be connected
-    if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
-      console.log(
-        "🔧 Firestore emulator connection (may already be connected):",
-        error
-      );
-    }
-  }
-
-  // Note: Auth emulator not configured - using production auth
-  if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
-    console.log("🔧 Using production Firebase Auth (emulator not configured)");
-    console.log(
-      "🔧 Emulator setup complete - Firestore should use localhost:8080"
-    );
+  } catch (e) {
+    if (ENABLE_DEBUG) console.log("🔧 Firestore emulator connect:", e);
   }
 }
