@@ -4,6 +4,76 @@
 
 This document explains the CDN-first word loading architecture implemented to optimize bundle size, improve performance, and enable instant word updates without app redeployment.
 
+**Key Innovation**: Instead of storing 243KB of word data in localStorage, we leverage the browser's built-in HTTP cache and serve words from Firebase Hosting CDN at `https://nerd-word-cfda3.web.app/dict/`.
+
+## 🌐 Understanding Browser HTTP Cache vs localStorage
+
+### What is HTTP Cache?
+
+The **HTTP cache** (browser cache) is a built-in browser feature that automatically stores responses from web requests (images, CSS, JavaScript, JSON files). It's completely separate from localStorage and much more powerful.
+
+**Think of it like:**
+- **localStorage**: A small 5-10MB storage box you manually manage with JavaScript
+- **HTTP cache**: A massive 50-100MB+ automatic warehouse the browser manages for you
+
+### How It Works in This App
+
+```
+┌─────────────────────────────────────────────────┐
+│ App Starts → fetch(...dict/v7/words.json)      │
+└─────────────────────────────────────────────────┘
+                      ↓
+┌─────────────────────────────────────────────────┐
+│ Browser checks HTTP cache:                      │
+│ "Do I already have dict/v7/words.json?"         │
+└─────────────────────────────────────────────────┘
+        ↓ YES                           ↓ NO
+┌──────────────────┐          ┌─────────────────────┐
+│ Return from      │          │ Download from CDN   │
+│ HTTP cache       │          │ (243KB)             │
+│ (INSTANT!)       │          └─────────────────────┘
+└──────────────────┘                    ↓
+                              ┌─────────────────────┐
+                              │ Store in HTTP cache │
+                              │ (automatic)         │
+                              └─────────────────────┘
+                                        ↓
+                              ┌─────────────────────┐
+                              │ Save metadata only  │
+                              │ to localStorage     │
+                              │ (~100 bytes)        │
+                              └─────────────────────┘
+```
+
+### localStorage vs HTTP Cache
+
+| Feature | localStorage | HTTP Cache |
+|---------|-------------|------------|
+| **Size Limit** | ~5-10MB total | ~50-100MB+ per domain |
+| **Management** | Manual (you write code) | Automatic (browser handles it) |
+| **Speed** | Fast, but requires JSON.parse() | Instant (pre-parsed by browser) |
+| **Network-aware** | No (offline only) | Yes (respects cache headers) |
+| **Storage Location** | Same as app data | Separate cache storage |
+
+### The Two-Storage System
+
+1. **HTTP Cache** (Heavy lifting): Stores the full 243KB word dictionary
+2. **localStorage** (Metadata only): Stores ~100 bytes of tracking info
+
+```typescript
+// HTTP Cache (automatic by browser)
+fetch('https://nerd-word-cfda3.web.app/dict/v7/words.json', {
+  cache: 'force-cache'  // Browser caches automatically
+});
+
+// localStorage (manual, just metadata)
+localStorage.setItem('words_metadata_v3', JSON.stringify({
+  version: 'v7',
+  totalWords: 3813,
+  lastUpdated: '2025-10-10...'
+})); // Only ~100 bytes!
+```
+
 ## 📊 Performance Gains
 
 ### Before (localStorage Heavy)
@@ -117,11 +187,46 @@ npm run words:deploy
 
 **What happens:**
 
-1. **Content Detection**: SHA-256 hash detects changes
+1. **Content Detection**: SHA-256 hash detects changes in `data/words.json`
 2. **Version Increment**: `v6` → `v7` automatically
-3. **Client Update**: `storage/words.local.ts` updated to fetch `v7`
-4. **CDN Deploy**: New version deployed to Firebase Hosting
-5. **Cache Busting**: New URL ensures immediate updates
+3. **Build Dictionary**: Creates `public/dict/v7/words.json`
+4. **Update Version File**: Updates `public/dict/current-version.json` to `v7`
+5. **CDN Deploy**: Deploys to Firebase Hosting CDN
+6. **Cache Busting**: New URL (`/dict/v7/`) ensures users get fresh data
+
+### Complete Data Flow
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ Developer adds word → data/words.json                       │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ npm run words:deploy                                        │
+│ → Auto-version detects change (SHA-256 hash)                │
+│ → Increments version: v7 → v8                               │
+│ → Builds public/dict/v8/words.json                          │
+│ → Updates public/dict/current-version.json                  │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ Firebase Hosting CDN                                        │
+│ https://nerd-word-cfda3.web.app/dict/v8/words.json         │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ User opens app → loadWords()                                │
+│ 1. Fetch current-version.json → "v8"                        │
+│ 2. Fetch dict/v8/words.json (browser caches it)             │
+│ 3. Save metadata to localStorage (~100 bytes)               │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ User closes and reopens app                                 │
+│ → Browser returns cached v8 instantly (from HTTP cache)     │
+│ → No re-download needed!                                    │
+└─────────────────────────────────────────────────────────────┘
+```
 
 ### User Experience
 
@@ -133,40 +238,33 @@ npm run words:deploy
 
 ## 🔧 File Structure
 
+**Key files for CDN word loading:**
+
 ```
 data/
-└── words.json                   # Single source of truth
+└── words.json                   # Single source of truth (3,813 words)
 
-public/dict/
-├── current-version.json          # Version tracking
-├── v3/
-│   ├── words.json               # Legacy version
-│   └── metadata.json
-├── v6/
-│   ├── words.json               # Current production
-│   └── metadata.json
+public/dict/                     # Deployed to Firebase Hosting CDN
+├── current-version.json          # Version tracking: {"version": "v7"}
 └── v7/
-    ├── words.json               # New version
-    └── metadata.json
-
-scripts/
-├── auto-version-dictionary.js   # Auto-versioning logic
-├── add-word.js                  # Interactive word addition
-└── build-dictionary.js         # Manual dictionary build
-
-functions/src/data/
-└── words.ts                     # Server-side wrapper
+    └── words.json               # Current production (243KB)
 
 storage/
 └── words.local.ts               # CDN-first loading logic
 
-context/
-└── WordDataContext.tsx          # React context for word data
+scripts/
+├── auto-version-dictionary.js   # Auto-versioning logic
+├── add-word.js                  # Interactive word addition
+└── deploy-words.js              # Deploy to Firebase Hosting
 ```
+
+**CDN URL**: `https://nerd-word-cfda3.web.app/dict/v7/words.json`
 
 ## 🎯 Cache Strategy
 
 ### HTTP Headers (Firebase Hosting)
+
+Firebase Hosting serves the word dictionary with aggressive caching headers:
 
 ```json
 {
@@ -180,11 +278,16 @@ context/
 }
 ```
 
-**Aggressive caching works because:**
+**What these headers mean:**
+- `public`: Can be cached by anyone (browser, CDN, proxies)
+- `max-age=31536000`: Keep cached for 1 year (31,536,000 seconds)
+- `immutable`: Content will NEVER change at this URL
 
+**Why aggressive caching is safe:**
 - URL changes when content changes (`v6` → `v7`)
-- Old versions remain cached (no unnecessary downloads)
-- New versions download fresh (immediate updates)
+- Old versions remain cached (no unnecessary re-downloads)
+- New versions have new URLs (immediate fresh download)
+- Cache busting is automatic via URL versioning
 
 ### localStorage Usage
 
@@ -228,41 +331,32 @@ localStorage.setItem(
 
 ## 🔍 Monitoring & Debugging
 
-### Version Tracking
+### Quick Checks
 
 ```bash
 # Check current version
 cat public/dict/current-version.json
 
-# Check client version
-grep "version: string =" storage/words.local.ts
-```
-
-### Testing Auto-Versioning
-
-```bash
-# Add test word
-npm run words:add TESTS videoGames
-
-# Check if version increments
+# Test auto-versioning (dry run)
 node scripts/auto-version-dictionary.js
-# Should show: v6 → v7
-
-# Restore and check no-change behavior
-git checkout data/words.json
-node scripts/auto-version-dictionary.js
-# Should show: No changes detected
 ```
 
-### Debug Logging
+### Debug in Browser
 
-```typescript
-// Enable debug logging in dev mode
-const isDebugLoggingEnabled = () => process.env.NODE_ENV === "development";
+**Chrome DevTools** → Network tab → Reload page:
+- Look for `words.json` request
+- Status will show `(from disk cache)` or `(from memory cache)` if cached
+- `200` status means fresh download
 
-// Logs show:
-// 🔄 Fetching words from CDN: https://nerd-word-cfda3.web.app/dict/v7/words.json
-// ✅ Loaded 3813 words from CDN (browser cache)
+### Enable Debug Logging
+
+Set `EXPO_PUBLIC_ENABLE_DEBUG_LOGS=true` in `.env.local` to see:
+
 ```
+🔄 Fetching words from CDN: https://nerd-word-cfda3.web.app/dict/v7/words.json
+✅ Loaded 3813 words from CDN (browser cache)
+```
+
+---
 
 This architecture provides the optimal balance of performance, reliability, and development velocity for managing the word dictionary.
