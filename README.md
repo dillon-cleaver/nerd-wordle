@@ -43,7 +43,7 @@ cd functions && pnpm run dev:emulator
 pnpm run dev
 ```
 
-**📖 See [docs/development-guide.md](docs/development-guide.md) for complete setup instructions**
+**📖 See [docs/DEVELOPMENT-GUIDE.md](docs/DEVELOPMENT-GUIDE.md) for complete setup instructions**
 
 ## 📊 Performance Highlights
 
@@ -52,7 +52,7 @@ pnpm run dev
 - **Cache Strategy**: Browser HTTP cache with URL-based versioning
 - **localStorage**: 99.96% reduction (metadata only)
 
-See [docs/cdn-optimization.md](docs/cdn-optimization.md) for architecture details.
+See [docs/CDN-OPTIMIZATION.md](docs/CDN-OPTIMIZATION.md) for architecture details.
 
 ## 📁 Project Structure
 
@@ -71,11 +71,11 @@ nerd-wordle/
 
 ## 🔗 Documentation
 
-- **[Development Guide](docs/development-guide.md)** - Complete setup and workflow
-- **[Word Management](docs/word-management-guide.md)** - Adding and deploying words
-- **[CDN Optimization](docs/cdn-optimization.md)** - Architecture and performance
-- **[Deployment Pipeline](docs/deployment-pipeline.md)** - CI/CD and releases
-- **[API Testing](docs/api-testing-guide.md)** - Backend testing with emulators
+- **[Development Guide](docs/DEVELOPMENT-GUIDE.md)** - Complete setup and workflow
+- **[Word Management](docs/WORD-MANAGEMENT-GUIDE.md)** - Adding and deploying words
+- **[CDN Optimization](docs/CDN-OPTIMIZATION.md)** - Architecture and performance
+- **[Deployment Pipeline](docs/DEPLOYMENT-PIPELINE.md)** - CI/CD and releases
+- **[API Testing](docs/API-TESTING-GUIDE.md)** - Backend testing with emulators
 
 ## 🚀 Deployment
 
@@ -90,7 +90,7 @@ pnpm run deploy:app      # Web app to EAS Hosting
 pnpm run deploy:backend  # Functions to Firebase
 ```
 
-See [docs/deployment-pipeline.md](docs/deployment-pipeline.md) for details.
+See [docs/DEPLOYMENT-PIPELINE.md](docs/DEPLOYMENT-PIPELINE.md) for details.
 
 ## 💡 Notable Implementation Details
 
