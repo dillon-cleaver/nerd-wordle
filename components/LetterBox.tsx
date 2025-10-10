@@ -26,7 +26,7 @@ export type LetterBoxProps = {
   onPressHint?: () => void;
 };
 
-const LetterBox = ({
+export const LetterBox = ({
   letter,
   isCorrect,
   isPresent,
@@ -82,8 +82,6 @@ const LetterBox = ({
 
   return letterBox;
 };
-
-export default LetterBox;
 
 const styles = StyleSheet.create({
   pressableContainer: {

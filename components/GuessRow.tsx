@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import { range } from "../utils/range";
-import LetterBox from "./LetterBox";
+import { LetterBox } from "./LetterBox";
 import { spacing } from "@/constants/styles";
 import { WordId } from "@/types/word";
 import { isLetterCorrect, isLetterPresent } from "@/utils/letter-validation";
@@ -17,7 +17,7 @@ export type GuessRowProps = {
   onPressHint?: () => void;
 };
 
-const GuessRow = ({
+export const GuessRow = ({
   currentGuess,
   answer,
   isCurrentGuess,
@@ -38,8 +38,16 @@ const GuessRow = ({
       {range(0, WORD_LENGTH).map((letterIndex) => {
         const letter = safeCurrentGuess[letterIndex] || "";
 
-        const isCorrect = isLetterCorrect(safeCurrentGuess, safeAnswer, letterIndex);
-        const isPresent = isLetterPresent(safeCurrentGuess, safeAnswer, letterIndex);
+        const isCorrect = isLetterCorrect(
+          safeCurrentGuess,
+          safeAnswer,
+          letterIndex
+        );
+        const isPresent = isLetterPresent(
+          safeCurrentGuess,
+          safeAnswer,
+          letterIndex
+        );
 
         const shouldShowHint = !!hint && hint.col === letterIndex;
 
@@ -61,8 +69,6 @@ const GuessRow = ({
     </View>
   );
 };
-
-export default GuessRow;
 
 const styles = StyleSheet.create({
   guessRow: {

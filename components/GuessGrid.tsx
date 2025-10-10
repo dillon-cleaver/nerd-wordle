@@ -1,5 +1,5 @@
 import { range } from "../utils/range";
-import GuessRow from "./GuessRow";
+import { GuessRow } from "./GuessRow";
 import { useContext } from "react";
 import { GameContext } from "@/context/GameContext";
 import { NUMBER_OF_GUESSES } from "@/constants/numbers";
