@@ -6,7 +6,13 @@ import {
   ViewStyle,
   Pressable,
 } from "react-native";
-import { borderRadius, colors, fontSize, lineHeight } from "@/constants/styles";
+import {
+  borderRadius,
+  colors,
+  fontFamily,
+  fontSize,
+  lineHeight,
+} from "@/constants/styles";
 import { HintOutline } from "./HintOutline";
 
 export type LetterBoxProps = {
@@ -95,7 +101,7 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   letter: {
-    fontFamily: "Bitter-Bold",
+    fontFamily: fontFamily.bitter.bold,
     fontSize: fontSize.title.large,
     lineHeight: lineHeight.title.large,
     color: colors.neutral.white,
@@ -106,14 +112,13 @@ const styles = StyleSheet.create({
   absent: {
     backgroundColor: colors.neutral.black,
   },
-  // TODO: Make the "invalid word state less scary/red" --->
   invalid: {
-    borderColor: colors.semantic.error,
-    backgroundColor: colors.semantic.error,
+    borderColor: colors.neutral.white,
+    backgroundColor: colors.neutral.darkGray,
   },
   previewLetter: {
     textAlign: "center",
-    fontFamily: "Bitter-Bold",
+    fontFamily: fontFamily.bitter.bold,
     fontSize: fontSize.title.large,
     lineHeight: lineHeight.title.large,
     color: colors.neutral.white,
