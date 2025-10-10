@@ -21,7 +21,7 @@ export const handleInvalidWord = (updaters: GameStateUpdaters): void => {
   updaters.setInvalidWord(true);
   setTimeout(() => {
     updaters.setInvalidWord(false);
-    updaters.setTentativeGuess("");
+    // Keep tentativeGuess intact so user can edit their invalid word
   }, 1500);
 };
 
