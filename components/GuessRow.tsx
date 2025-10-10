@@ -4,6 +4,8 @@ import { LetterBox } from "./LetterBox";
 import { spacing } from "@/constants/styles";
 import { WordId } from "@/types/word";
 import { isLetterCorrect, isLetterPresent } from "@/utils/letter-validation";
+import Animated from "react-native-reanimated";
+import { useShakeAnimation } from "@/hooks/useShakeAnimation";
 
 export type GuessRowProps = {
   currentGuess: string;
@@ -33,8 +35,11 @@ export const GuessRow = ({
   const safeAnswer =
     answer && answer !== "LOADING" ? answer : " ".repeat(WORD_LENGTH);
 
+  // Apply shake animation when invalid word is detected
+  const animatedStyle = useShakeAnimation(invalidWord);
+
   return (
-    <View style={styles.guessRow}>
+    <Animated.View style={[styles.guessRow, animatedStyle]}>
       {range(0, WORD_LENGTH).map((letterIndex) => {
         const letter = safeCurrentGuess[letterIndex] || "";
 
@@ -66,7 +71,7 @@ export const GuessRow = ({
           </View>
         );
       })}
-    </View>
+    </Animated.View>
   );
 };
 
