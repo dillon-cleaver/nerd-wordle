@@ -13,6 +13,7 @@ This document explains the CDN-first word loading architecture implemented to op
 The **HTTP cache** (browser cache) is a built-in browser feature that automatically stores responses from web requests (images, CSS, JavaScript, JSON files). It's completely separate from localStorage and much more powerful.
 
 **Think of it like:**
+
 - **localStorage**: A small 5-10MB storage box you manually manage with JavaScript
 - **HTTP cache**: A massive 50-100MB+ automatic warehouse the browser manages for you
 
@@ -47,13 +48,13 @@ The **HTTP cache** (browser cache) is a built-in browser feature that automatica
 
 ### localStorage vs HTTP Cache
 
-| Feature | localStorage | HTTP Cache |
-|---------|-------------|------------|
-| **Size Limit** | ~5-10MB total | ~50-100MB+ per domain |
-| **Management** | Manual (you write code) | Automatic (browser handles it) |
-| **Speed** | Fast, but requires JSON.parse() | Instant (pre-parsed by browser) |
-| **Network-aware** | No (offline only) | Yes (respects cache headers) |
-| **Storage Location** | Same as app data | Separate cache storage |
+| Feature              | localStorage                    | HTTP Cache                      |
+| -------------------- | ------------------------------- | ------------------------------- |
+| **Size Limit**       | ~5-10MB total                   | ~50-100MB+ per domain           |
+| **Management**       | Manual (you write code)         | Automatic (browser handles it)  |
+| **Speed**            | Fast, but requires JSON.parse() | Instant (pre-parsed by browser) |
+| **Network-aware**    | No (offline only)               | Yes (respects cache headers)    |
+| **Storage Location** | Same as app data                | Separate cache storage          |
 
 ### The Two-Storage System
 
@@ -62,16 +63,19 @@ The **HTTP cache** (browser cache) is a built-in browser feature that automatica
 
 ```typescript
 // HTTP Cache (automatic by browser)
-fetch('https://nerd-word-cfda3.web.app/dict/v7/words.json', {
-  cache: 'force-cache'  // Browser caches automatically
+fetch("https://nerd-word-cfda3.web.app/dict/v7/words.json", {
+  cache: "force-cache", // Browser caches automatically
 });
 
 // localStorage (manual, just metadata)
-localStorage.setItem('words_metadata_v3', JSON.stringify({
-  version: 'v7',
-  totalWords: 3813,
-  lastUpdated: '2025-10-10...'
-})); // Only ~100 bytes!
+localStorage.setItem(
+  "words_metadata_v3",
+  JSON.stringify({
+    version: "v7",
+    totalWords: 3813,
+    lastUpdated: "2025-10-10...",
+  })
+); // Only ~100 bytes!
 ```
 
 ## 📊 Performance Gains
@@ -279,11 +283,13 @@ Firebase Hosting serves the word dictionary with aggressive caching headers:
 ```
 
 **What these headers mean:**
+
 - `public`: Can be cached by anyone (browser, CDN, proxies)
 - `max-age=31536000`: Keep cached for 1 year (31,536,000 seconds)
 - `immutable`: Content will NEVER change at this URL
 
 **Why aggressive caching is safe:**
+
 - URL changes when content changes (`v6` → `v7`)
 - Old versions remain cached (no unnecessary re-downloads)
 - New versions have new URLs (immediate fresh download)
@@ -344,6 +350,7 @@ node scripts/auto-version-dictionary.js
 ### Debug in Browser
 
 **Chrome DevTools** → Network tab → Reload page:
+
 - Look for `words.json` request
 - Status will show `(from disk cache)` or `(from memory cache)` if cached
 - `200` status means fresh download
