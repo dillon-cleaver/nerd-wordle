@@ -6863,6 +6863,10 @@
     "category": "common"
   },
   {
+    "id": "CLARK",
+    "category": "common"
+  },
+  {
     "id": "CLASH",
     "category": "common"
   },
@@ -7172,6 +7176,10 @@
   },
   {
     "id": "CRYPT",
+    "category": "common"
+  },
+  {
+    "id": "CUPID",
     "category": "common"
   },
   {
@@ -8899,6 +8907,10 @@
   },
   {
     "id": "FRUIT",
+    "category": "common"
+  },
+  {
+    "id": "FUGUE",
     "category": "common"
   },
   {
@@ -12678,6 +12690,10 @@
     "category": "common"
   },
   {
+    "id": "PATTY",
+    "category": "common"
+  },
+  {
     "id": "PAUSE",
     "category": "common"
   },
@@ -13998,6 +14014,10 @@
   },
   {
     "id": "SHAME",
+    "category": "common"
+  },
+  {
+    "id": "SHANE",
     "category": "common"
   },
   {
