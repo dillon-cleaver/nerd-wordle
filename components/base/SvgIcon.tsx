@@ -15,6 +15,8 @@ interface IconProps {
   color: string;
 }
 
+// TODO: Update this per https://blog.swmansion.com/you-might-not-need-react-native-svg-b5c65646d01f
+
 /**
  * Custom SVG icon component
  * Replaces @expo/vector-icons to reduce bundle size
