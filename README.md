@@ -1,4 +1,4 @@
-# NerdWord 🤓
+# NerdWord
 
 A cross-platform word-guessing game featuring 3,800+ words from nerdy topics (movies, science, anime, literature, and more). Built with React Native, Expo, and Firebase.
 
@@ -7,7 +7,7 @@ A cross-platform word-guessing game featuring 3,800+ words from nerdy topics (mo
 [![Firebase](https://img.shields.io/badge/Backend-Firebase-orange)](https://firebase.google.com/)
 [![Expo](https://img.shields.io/badge/Built%20with-Expo-000020.svg?style=flat&logo=expo)](https://expo.dev/)
 
-## ✨ Key Features
+## Key Features
 
 - **Daily Themed Puzzles** - New word from 9+ nerdy categories each day
 - **CDN-First Architecture** - Instant word updates without app redeployment (243KB bundle reduction)
@@ -16,7 +16,7 @@ A cross-platform word-guessing game featuring 3,800+ words from nerdy topics (mo
 - **User Progress Tracking** - Firebase-backed puzzle history and statistics
 - **Offline Support** - Play without internet connection
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 - **Frontend**: React Native, Expo (Router, Updates), TypeScript
 - **Backend**: Firebase (Functions, Firestore, Auth, Hosting)
@@ -24,9 +24,9 @@ A cross-platform word-guessing game featuring 3,800+ words from nerdy topics (mo
 - **Performance**: CDN-first loading, browser caching, bundle optimization
 - **Testing**: Jest, Firebase Emulators
 
-## 🚀 Quick Start
+## Quick Start
 
-**🌐 Try the alpha web version at [nerd-word.expo.app](https://nerd-word.expo.app)**  
+** Try the alpha web version at [nerd-word.expo.app](https://nerd-word.expo.app)**  
 _(Currently in alpha testing • iOS and Android native apps coming soon)_
 
 ```bash
@@ -45,7 +45,7 @@ pnpm run dev
 
 **📖 See [docs/DEVELOPMENT-GUIDE.md](docs/DEVELOPMENT-GUIDE.md) for complete setup instructions**
 
-## 📊 Performance Highlights
+## Performance Highlights
 
 - **Bundle Size**: 2.69MB (optimized from 3.2MB)
 - **Word Dictionary**: 243KB externalized to CDN
@@ -54,7 +54,7 @@ pnpm run dev
 
 See [docs/CDN-OPTIMIZATION.md](docs/CDN-OPTIMIZATION.md) for architecture details.
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 nerd-wordle/
@@ -69,7 +69,7 @@ nerd-wordle/
 └── storage/                # CDN-first loading logic
 ```
 
-## 🔗 Documentation
+## Documentation
 
 - **[Development Guide](docs/DEVELOPMENT-GUIDE.md)** - Complete setup and workflow
 - **[Word Management](docs/WORD-MANAGEMENT-GUIDE.md)** - Adding and deploying words
@@ -77,7 +77,7 @@ nerd-wordle/
 - **[Deployment Pipeline](docs/DEPLOYMENT-PIPELINE.md)** - CI/CD and releases
 - **[API Testing](docs/API-TESTING-GUIDE.md)** - Backend testing with emulators
 
-## 🚀 Deployment
+## Deployment
 
 **Live App**: [nerd-word.expo.app](https://nerd-word.expo.app)
 
@@ -92,7 +92,7 @@ pnpm run deploy:backend  # Functions to Firebase
 
 See [docs/DEPLOYMENT-PIPELINE.md](docs/DEPLOYMENT-PIPELINE.md) for details.
 
-## 💡 Notable Implementation Details
+## Notable Implementation Details
 
 - **Auto-Versioning System**: CDN word updates with URL-based cache busting
 - **Dual Data Systems**: CDN for client loading, Firestore for server operations
@@ -100,10 +100,10 @@ See [docs/DEPLOYMENT-PIPELINE.md](docs/DEPLOYMENT-PIPELINE.md) for details.
 - **Environment-Aware Builds**: Development, testing, and production modes
 - **Firebase Emulators**: Complete local development environment
 
-## 📄 License
+## License
 
 MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-**Built with ❤️ using Expo and Firebase** | [Play Now](https://nerd-word.expo.app) 🎮
+**Built with ❤️ in Minneapolis using Expo and Firebase** | [Play Now](https://nerd-word.expo.app) 🎮
