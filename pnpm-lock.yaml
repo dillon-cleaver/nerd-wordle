@@ -23,6 +23,18 @@ importers:
       '@react-navigation/native':
         specifier: ^7.0.14
         version: 7.1.9(react-native@0.79.5(@babel/core@7.27.3)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@tanstack/react-query':
+        specifier: ^5.90.8
+        version: 5.90.8(react@19.0.0)
+      '@trpc/client':
+        specifier: ^11.7.1
+        version: 11.7.1(@trpc/server@11.7.1(typescript@5.8.3))(typescript@5.8.3)
+      '@trpc/server':
+        specifier: ^11.7.1
+        version: 11.7.1(typescript@5.8.3)
+      '@trpc/tanstack-react-query':
+        specifier: ^11.7.1
+        version: 11.7.1(@tanstack/react-query@5.90.8(react@19.0.0))(@trpc/client@11.7.1(@trpc/server@11.7.1(typescript@5.8.3))(typescript@5.8.3))(@trpc/server@11.7.1(typescript@5.8.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.3)
       expo:
         specifier: ~53.0.20
         version: 53.0.20(@babel/core@7.27.3)(@expo/metro-runtime@5.0.4(react-native@0.79.5(@babel/core@7.27.3)(@types/react@19.0.14)(react@19.0.0)))(react-native-webview@13.13.5(react-native@0.79.5(@babel/core@7.27.3)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))(react-native@0.79.5(@babel/core@7.27.3)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
@@ -1329,9 +1341,38 @@ packages:
   '@sinonjs/fake-timers@10.3.0':
     resolution: {integrity: sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==}
 
+  '@tanstack/query-core@5.90.8':
+    resolution: {integrity: sha512-4E0RP/0GJCxSNiRF2kAqE/LQkTJVlL/QNU7gIJSptaseV9HP6kOuA+N11y4bZKZxa3QopK3ZuewwutHx6DqDXQ==}
+
+  '@tanstack/react-query@5.90.8':
+    resolution: {integrity: sha512-/3b9QGzkf4rE5/miL6tyhldQRlLXzMHcySOm/2Tm2OLEFE9P1ImkH0+OviDBSvyAvtAOJocar5xhd7vxdLi3aQ==}
+    peerDependencies:
+      react: ^18 || ^19
+
   '@tootallnate/once@2.0.0':
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
     engines: {node: '>= 10'}
+
+  '@trpc/client@11.7.1':
+    resolution: {integrity: sha512-uOnAjElKI892/U6aQMcBHYs3x7mme3Cvv1F87ytBL56rBvs7+DyK7r43zgaXKf13+GtPEI6ex5xjVUfyDW8XcQ==}
+    peerDependencies:
+      '@trpc/server': 11.7.1
+      typescript: '>=5.7.2'
+
+  '@trpc/server@11.7.1':
+    resolution: {integrity: sha512-N3U8LNLIP4g9C7LJ/sLkjuPHwqlvE3bnspzC4DEFVdvx2+usbn70P80E3wj5cjOTLhmhRiwJCSXhlB+MHfGeCw==}
+    peerDependencies:
+      typescript: '>=5.7.2'
+
+  '@trpc/tanstack-react-query@11.7.1':
+    resolution: {integrity: sha512-qc7kz4NY7CCvCxLy5HGptfKd3e3yJnWmTd6/Gkr4IY8B73PNFmcHKvLWE4kzU7r+R72MfT57TXrCEJ7ErLSMtw==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.80.3
+      '@trpc/client': 11.7.1
+      '@trpc/server': 11.7.1
+      react: '>=18.2.0'
+      react-dom: '>=18.2.0'
+      typescript: '>=5.7.2'
 
   '@tybys/wasm-util@0.10.0':
     resolution: {integrity: sha512-VyyPYFlOMNylG45GoAe0xDoLwWuowvf92F9kySqzYh8vmYm7D2u4iUJKa1tOUpS70Ku13ASrOkS4ScXFsTaCNQ==}
@@ -6812,7 +6853,32 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
 
+  '@tanstack/query-core@5.90.8': {}
+
+  '@tanstack/react-query@5.90.8(react@19.0.0)':
+    dependencies:
+      '@tanstack/query-core': 5.90.8
+      react: 19.0.0
+
   '@tootallnate/once@2.0.0': {}
+
+  '@trpc/client@11.7.1(@trpc/server@11.7.1(typescript@5.8.3))(typescript@5.8.3)':
+    dependencies:
+      '@trpc/server': 11.7.1(typescript@5.8.3)
+      typescript: 5.8.3
+
+  '@trpc/server@11.7.1(typescript@5.8.3)':
+    dependencies:
+      typescript: 5.8.3
+
+  '@trpc/tanstack-react-query@11.7.1(@tanstack/react-query@5.90.8(react@19.0.0))(@trpc/client@11.7.1(@trpc/server@11.7.1(typescript@5.8.3))(typescript@5.8.3))(@trpc/server@11.7.1(typescript@5.8.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.3)':
+    dependencies:
+      '@tanstack/react-query': 5.90.8(react@19.0.0)
+      '@trpc/client': 11.7.1(@trpc/server@11.7.1(typescript@5.8.3))(typescript@5.8.3)
+      '@trpc/server': 11.7.1(typescript@5.8.3)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+      typescript: 5.8.3
 
   '@tybys/wasm-util@0.10.0':
     dependencies:
