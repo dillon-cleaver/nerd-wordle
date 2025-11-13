@@ -9,7 +9,8 @@ import { LetterGuess } from "@/types/letter-tracking";
 import { clearActivePuzzleState } from "@/storage/active-puzzle.local";
 import { isDebugLoggingEnabled } from "./dev-flags";
 import * as Crypto from "expo-crypto";
-import { User, getAuth } from "firebase/auth";
+import { User } from "firebase/auth";
+import { getAuthInstance } from "@/firebase/firebaseConfig";
 
 // Cross-platform UUID generation using expo-crypto
 const generatePuzzleResultId = () => Crypto.randomUUID();
@@ -67,7 +68,7 @@ export const handleGameCompletion = (
 
     // Save result to both localStorage and backend (if authenticated)
     // This ensures the result is immediately available for the "already played" check
-    const currentUser = getAuth().currentUser;
+    const currentUser = getAuthInstance().currentUser;
 
     if (isDebugLoggingEnabled()) {
       console.log("🔍 Game completion debug (WIN):", {
@@ -156,7 +157,7 @@ export const handleGameCompletion = (
 
     // Save result to both localStorage and backend (if authenticated)
     // This ensures the result is immediately available for the "already played" check
-    const currentUser = getAuth().currentUser;
+    const currentUser = getAuthInstance().currentUser;
     if (savePuzzleResult && currentUser) {
       // Use the context method which saves to both localStorage and backend
       savePuzzleResult(currentUser, result).catch((error) => {
