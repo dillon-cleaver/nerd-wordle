@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState, ReactNode } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "@/firebase/firebaseConfig";
+import { getAuthInstance, db } from "@/firebase/firebaseConfig";
 import { createUserIfNotExists } from "@/firebase/CreateUserIfNotExists";
 import type { UserProfile } from "@/types/user-profile";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
@@ -26,7 +26,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   });
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(getAuthInstance(), async (user) => {
       if (user) {
         // TODO: Remove before beta testing
         // Console log user information for debugging

@@ -4,7 +4,7 @@ import {
   savePuzzleResultLocal,
   loadPuzzleResultsLocal,
 } from "./puzzle-results.local";
-import { getAuth } from "firebase/auth";
+import { getAuthInstance } from "@/firebase/firebaseConfig";
 import { puzzleHistoryApi } from "@/utils/api";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 
@@ -32,7 +32,7 @@ export const savePuzzleResult = async (
   }
 
   // Save to backend if user is authenticated (both wins and losses)
-  const user = getAuth().currentUser;
+  const user = getAuthInstance().currentUser;
   if (isDebugLoggingEnabled()) {
     console.log(
       "👤 Current user:",

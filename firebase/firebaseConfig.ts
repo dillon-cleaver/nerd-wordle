@@ -1,6 +1,6 @@
 import Constants from "expo-constants";
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, Auth } from "firebase/auth";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 
 type FirebaseConfig = {
@@ -53,7 +53,21 @@ if (
 }
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+
+// Lazy initialization for Firebase Auth to fix Expo Go iOS + Hermes compatibility
+// This prevents "Component auth has not been registered yet" error
+let authInstance: Auth | null = null;
+
+export function getAuthInstance(): Auth {
+  if (!authInstance) {
+    authInstance = getAuth(app);
+    if (ENABLE_DEBUG) {
+      console.log("🔧 Firebase Auth initialized (lazy)");
+    }
+  }
+  return authInstance;
+}
+
 export const db = getFirestore(app);
 
 // Emulators (optional)

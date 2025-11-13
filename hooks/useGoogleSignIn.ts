@@ -1,14 +1,14 @@
 import {
-  getAuth,
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-
-const auth = getAuth();
-const provider = new GoogleAuthProvider();
+import { getAuthInstance } from "@/firebase/firebaseConfig";
 
 export function signInWithGoogle() {
+  const auth = getAuthInstance();
+  const provider = new GoogleAuthProvider();
+  
   signInWithPopup(auth, provider)
     .then((result) => {
       // result.user contains your signed-in user
@@ -34,6 +34,7 @@ export function signInWithGoogle() {
 }
 
 export function signOutGoogle() {
+  const auth = getAuthInstance();
   signOut(auth)
     .then(() => {
       if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {
