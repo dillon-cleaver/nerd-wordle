@@ -35,29 +35,17 @@ export function getAuthInstance(): Auth {
   }
   return authInstance;
 }
-
-// Backward compatible proxy for existing code
-export const auth = new Proxy({} as Auth, {
-  get(_target, prop) {
-    const instance = getAuthInstance();
-    const value = instance[prop as keyof Auth];
-    return typeof value === "function" ? value.bind(instance) : value;
-  },
-});
 ```
 
 ### How It Works
 
 1. **Lazy Loading**: `getAuthInstance()` only initializes Firebase Auth on first call
 2. **Singleton Pattern**: Once initialized, the same instance is reused
-3. **Backward Compatibility**: The `auth` export uses a Proxy to maintain compatibility with existing code
-4. **Debug Logging**: Logs when auth is initialized (when debug mode is enabled)
+3. **Debug Logging**: Logs when auth is initialized (when debug mode is enabled)
 
-## Migration Guide
+## Usage
 
-### For New Code (Recommended)
-
-Use `getAuthInstance()` directly:
+Use `getAuthInstance()` directly in all code:
 
 ```typescript
 import { getAuthInstance } from "@/firebase/firebaseConfig";
@@ -72,19 +60,6 @@ onAuthStateChanged(getAuthInstance(), (user) => {
 });
 ```
 
-### For Existing Code (Backward Compatible)
-
-The existing `auth` export continues to work via the Proxy pattern:
-
-```typescript
-import { auth } from "@/firebase/firebaseConfig";
-
-// This still works - auth is initialized on first access
-const user = auth.currentUser;
-```
-
-**Note**: While the Proxy approach maintains backward compatibility, it's recommended to migrate to `getAuthInstance()` for better clarity and performance.
-
 ## Benefits
 
 ### 1. Fixes Expo Go iOS Issue
@@ -96,9 +71,10 @@ const user = auth.currentUser;
 - Auth only initializes if authentication features are used
 - Reduces startup overhead for users who don't immediately need auth
 
-### 3. Backward Compatible
-- Existing code continues to work without changes
-- Gradual migration path available
+### 3. Clean and Simple
+- Single, clear API: `getAuthInstance()`
+- No magic Proxy patterns
+- Explicit initialization semantics
 
 ### 4. Future-Proof
 - Follows Firebase v11+ best practices for React Native
@@ -161,21 +137,7 @@ const user = auth.currentUser;
 
 1. **Clear Expo Cache**: `expo start --clear`
 2. **Check Firebase Config**: Ensure `.env.local` has correct Firebase credentials
-3. **Verify Imports**: Ensure using `getAuthInstance()` or `auth` from `@/firebase/firebaseConfig`
-
-### Proxy Issues
-
-If you encounter issues with the Proxy pattern:
-
-```typescript
-// Replace this:
-import { auth } from "@/firebase/firebaseConfig";
-const user = auth.currentUser;
-
-// With this:
-import { getAuthInstance } from "@/firebase/firebaseConfig";
-const user = getAuthInstance().currentUser;
-```
+3. **Verify Imports**: Ensure using `getAuthInstance()` from `@/firebase/firebaseConfig`
 
 ### Debug Mode
 

@@ -68,16 +68,6 @@ export function getAuthInstance(): Auth {
   return authInstance;
 }
 
-// Deprecated: Use getAuthInstance() instead
-// Kept for backward compatibility during migration
-export const auth = new Proxy({} as Auth, {
-  get(_target, prop) {
-    const instance = getAuthInstance();
-    const value = instance[prop as keyof Auth];
-    return typeof value === "function" ? value.bind(instance) : value;
-  },
-});
-
 export const db = getFirestore(app);
 
 // Emulators (optional)
