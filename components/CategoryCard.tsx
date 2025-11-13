@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Card } from "./base/Card";
 import {
   borderRadius,
   fontFamily,
@@ -8,10 +7,6 @@ import {
   lineHeight,
   spacing,
 } from "@/constants/styles";
-import {
-  WORD_CARD_MAX_WIDTH,
-  WORD_CARD_MIN_WIDTH,
-} from "@/constants/dimensions";
 import { CategoryInfo, getRainbowGradientColors } from "@/utils/category";
 import { opacity } from "@/constants/opacity";
 
@@ -45,27 +40,20 @@ export const CategoryCard = ({ category, onPress }: CategoryCardProps) => {
         { opacity: pressed ? opacity.pressed : 1 },
       ]}
     >
-      <Card
-        containerStyle={[
-          styles.container,
-          { borderColor: isRainbow ? "#000000" : backgroundColor },
-        ]}
-      >
-        {isRainbow ? (
-          <LinearGradient
-            colors={getRainbowGradientColors()}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={[styles.gradientContent]}
-          >
-            {content}
-          </LinearGradient>
-        ) : (
-          <View style={[styles.solidContent, { backgroundColor }]}>
-            {content}
-          </View>
-        )}
-      </Card>
+      {isRainbow ? (
+        <LinearGradient
+          colors={getRainbowGradientColors()}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={[styles.gradientContent]}
+        >
+          {content}
+        </LinearGradient>
+      ) : (
+        <View style={[styles.solidContent, { backgroundColor }]}>
+          {content}
+        </View>
+      )}
     </Pressable>
   );
 };
@@ -74,19 +62,11 @@ const styles = StyleSheet.create({
   pressable: {
     width: "100%",
   },
-  container: {
-    minWidth: WORD_CARD_MIN_WIDTH,
-    maxWidth: WORD_CARD_MAX_WIDTH,
-    width: "100%",
-    borderWidth: 2,
-  },
   gradientContent: {
-    flex: 1,
     borderRadius: borderRadius.sm,
     padding: spacing.sm,
   },
   solidContent: {
-    flex: 1,
     borderRadius: borderRadius.sm,
     padding: spacing.sm,
   },
@@ -97,15 +77,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    gap: spacing.sm,
   },
   nameText: {
-    fontSize: fontSize.title.xLarge,
-    lineHeight: lineHeight.title.xLarge,
+    flex: 1,
+    fontSize: fontSize.title.large,
+    lineHeight: lineHeight.title.large,
     fontFamily: fontFamily.bitter.bold,
   },
   countText: {
     fontSize: fontSize.body.base,
     lineHeight: lineHeight.body.base,
     fontFamily: fontFamily.bitter.regular,
+    flexShrink: 0,
   },
 });

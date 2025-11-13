@@ -20,10 +20,12 @@ import {
 } from "@/constants/styles";
 import { useCollectedWords } from "@/hooks/useCollectedWords";
 import { getCategoriesWithCounts } from "@/utils/category";
+import { useDevice } from "@/hooks/useDevice";
 
 export default function Words() {
   const { collectedWords, loading, error } = useCollectedWords();
   const viewableItems = useSharedValue<ViewToken[]>([]);
+  const { isDesktop } = useDevice();
 
   // Get categories with their word counts
   const categories = useMemo(
@@ -78,7 +80,10 @@ export default function Words() {
         showsVerticalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.listContainer}
+        contentContainerStyle={[
+          styles.listContainer,
+          isDesktop && styles.listContainerDesktop,
+        ]}
         renderItem={({ item }) => (
           <ListItem item={item} viewableItems={viewableItems}>
             <CategoryCard
@@ -95,16 +100,17 @@ export default function Words() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    paddingHorizontal: spacing.md,
-    paddingTop: spacing.md,
     backgroundColor: colors.neutral.background,
-    gap: spacing.md,
   },
   listContainer: {
-    paddingBottom: spacing.lg,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.md,
     width: "100%",
-    alignItems: "center",
+  },
+  listContainerDesktop: {
+    maxWidth: 600,
+    alignSelf: "center",
+    paddingTop: 200,
   },
   centered: {
     flex: 1,

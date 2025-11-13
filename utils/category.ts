@@ -1,6 +1,10 @@
 import { WordCategory } from "@/types/word";
 import { CollectedWord } from "@/hooks/useCollectedWords";
-import { convertCategory, getCategoryColor, getCategoryTextColor } from "./game";
+import {
+  convertCategory,
+  getCategoryColor,
+  getCategoryTextColor,
+} from "./game";
 
 export type CategoryInfo = {
   id: WordCategory | "all";
@@ -31,8 +35,11 @@ export const getCategoriesWithCounts = (
   ];
 
   // Count words per category
-  const categoryMap = new Map<Exclude<WordCategory, "common">, CollectedWord[]>();
-  
+  const categoryMap = new Map<
+    Exclude<WordCategory, "common">,
+    CollectedWord[]
+  >();
+
   collectedWords.forEach((word) => {
     const existing = categoryMap.get(word.category) || [];
     categoryMap.set(word.category, [...existing, word]);
@@ -56,7 +63,7 @@ export const getCategoriesWithCounts = (
     id: "all",
     displayName: "All",
     backgroundColor: "rainbow", // Special marker for rainbow gradient
-    textColor: "#000000",
+    textColor: "#ffffff",
     wordCount: collectedWords.length,
     words: collectedWords,
   };
