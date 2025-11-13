@@ -8,8 +8,10 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
+import { useLocalSearchParams } from "expo-router";
 import { ListItem } from "@/components/ListItem";
 import { WordCard } from "@/components/WordCard";
+import { PlaceholderCard } from "@/components/PlaceholderCard";
 import {
   colors,
   fontFamily,
@@ -18,8 +20,10 @@ import {
   spacing,
 } from "@/constants/styles";
 import { useCollectedWords } from "@/hooks/useCollectedWords";
+import { getCategoryById } from "@/utils/category";
 
-export default function Words() {
+export default function CategoryWords() {
+  const { category: categoryId } = useLocalSearchParams<{ category: string }>();
   const { collectedWords, loading, error } = useCollectedWords();
   const viewableItems = useSharedValue<ViewToken[]>([]);
 
@@ -47,13 +51,29 @@ export default function Words() {
     );
   }
 
-  if (collectedWords.length === 0) {
+  // Get the category data
+  const categoryData = getCategoryById(categoryId || "", collectedWords);
+
+  if (!categoryData) {
+    return (
+      <View style={[styles.container, styles.centered]}>
+        <Text style={styles.errorText}>Category not found</Text>
+      </View>
+    );
+  }
+
+  const { words, displayName, backgroundColor } = categoryData;
+
+  if (words.length === 0) {
     return (
       <View style={styles.container}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.categoryTitle}>{displayName}</Text>
+        </View>
         <View style={styles.centered}>
-          <Text style={styles.emptyText}>
-            Complete puzzles to see your collected words here!
-          </Text>
+          <PlaceholderCard
+            categoryColor={backgroundColor === "rainbow" ? colors.neutral.white : backgroundColor}
+          />
         </View>
       </View>
     );
@@ -61,8 +81,14 @@ export default function Words() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Text style={styles.categoryTitle}>{displayName}</Text>
+        <Text style={styles.wordCountText}>
+          {words.length} {words.length === 1 ? "word" : "words"}
+        </Text>
+      </View>
       <FlatList
-        data={collectedWords}
+        data={words}
         showsVerticalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged}
         keyExtractor={(item) => item.id}
@@ -86,6 +112,24 @@ const styles = StyleSheet.create({
     backgroundColor: colors.neutral.background,
     gap: spacing.md,
   },
+  headerContainer: {
+    width: "100%",
+    maxWidth: 600,
+    alignItems: "center",
+    gap: spacing.xs,
+  },
+  categoryTitle: {
+    fontSize: fontSize.title.xLarge,
+    lineHeight: lineHeight.title.xLarge,
+    fontFamily: fontFamily.bitter.bold,
+    color: colors.neutral.white,
+  },
+  wordCountText: {
+    fontSize: fontSize.body.base,
+    lineHeight: lineHeight.body.base,
+    fontFamily: fontFamily.bitter.regular,
+    color: colors.neutral.white,
+  },
   listContainer: {
     paddingBottom: spacing.lg,
     width: "100%",
@@ -95,6 +139,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    width: "100%",
   },
   loadingText: {
     fontSize: fontSize.body.base,
@@ -109,13 +154,5 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.bitter.regular,
     color: colors.neutral.white,
     textAlign: "center",
-  },
-  emptyText: {
-    fontSize: fontSize.body.base,
-    lineHeight: lineHeight.body.base,
-    fontFamily: fontFamily.bitter.regular,
-    color: colors.neutral.white,
-    textAlign: "center",
-    paddingHorizontal: spacing.lg,
   },
 });
