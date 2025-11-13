@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import {
   StyleSheet,
   View,
@@ -8,8 +8,9 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
+import { router } from "expo-router";
 import { ListItem } from "@/components/ListItem";
-import { WordCard } from "@/components/WordCard";
+import { CategoryCard } from "@/components/CategoryCard";
 import {
   colors,
   fontFamily,
@@ -18,10 +19,19 @@ import {
   spacing,
 } from "@/constants/styles";
 import { useCollectedWords } from "@/hooks/useCollectedWords";
+import { getCategoriesWithCounts } from "@/utils/category";
+import { useDevice } from "@/hooks/useDevice";
 
 export default function Words() {
   const { collectedWords, loading, error } = useCollectedWords();
   const viewableItems = useSharedValue<ViewToken[]>([]);
+  const { isDesktop } = useDevice();
+
+  // Get categories with their word counts
+  const categories = useMemo(
+    () => getCategoriesWithCounts(collectedWords),
+    [collectedWords]
+  );
 
   const onViewableItemsChanged = useCallback(
     ({ viewableItems: vItems }: { viewableItems: ViewToken[] }) => {
@@ -29,6 +39,10 @@ export default function Words() {
     },
     [viewableItems]
   );
+
+  const handleCategoryPress = (categoryId: string) => {
+    router.push(`/words/${categoryId}`);
+  };
 
   if (loading) {
     return (
@@ -62,14 +76,20 @@ export default function Words() {
   return (
     <View style={styles.container}>
       <FlatList
-        data={collectedWords}
+        data={categories}
         showsVerticalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.listContainer}
+        contentContainerStyle={[
+          styles.listContainer,
+          isDesktop && styles.listContainerDesktop,
+        ]}
         renderItem={({ item }) => (
           <ListItem item={item} viewableItems={viewableItems}>
-            <WordCard collectedWord={item} />
+            <CategoryCard
+              category={item}
+              onPress={() => handleCategoryPress(item.id)}
+            />
           </ListItem>
         )}
       />
@@ -80,16 +100,17 @@ export default function Words() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    paddingHorizontal: spacing.md,
-    paddingTop: spacing.md,
     backgroundColor: colors.neutral.background,
-    gap: spacing.md,
   },
   listContainer: {
-    paddingBottom: spacing.lg,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.md,
     width: "100%",
-    alignItems: "center",
+  },
+  listContainerDesktop: {
+    maxWidth: 600,
+    alignSelf: "center",
+    paddingTop: 200,
   },
   centered: {
     flex: 1,
