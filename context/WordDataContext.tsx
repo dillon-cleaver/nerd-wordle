@@ -1,97 +1,48 @@
-import {
-  createContext,
-  ReactNode,
-  useState,
-  useEffect,
-  useContext,
-} from "react";
+import { createContext, ReactNode, use, useContext, useMemo } from "react";
 import { WordEntry, WordId } from "@/types/word";
 import { loadWords } from "@/storage/words.local";
-import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 
 type WordDataContextType = {
   words: WordEntry[];
-  isLoading: boolean;
-  error: Error | null;
   getWordEntry: (id: WordId) => WordEntry | undefined;
   isValidWord: (word: string) => boolean;
 };
 
-const WordDataContext = createContext<WordDataContextType>({
-  words: [],
-  isLoading: true,
-  error: null,
-  getWordEntry: () => undefined,
-  isValidWord: () => false,
-});
+const WordDataContext = createContext<WordDataContextType | null>(null);
+
+// Create promise once at module level to prevent recreation
+let wordsPromise: Promise<WordEntry[]> | null = null;
+
+function getWordsPromise() {
+  if (!wordsPromise) {
+    wordsPromise = loadWords();
+  }
+  return wordsPromise;
+}
 
 export const WordDataProvider = ({ children }: { children: ReactNode }) => {
-  const [words, setWords] = useState<WordEntry[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  // Suspend until words are loaded
+  const words = use(getWordsPromise());
 
-  useEffect(() => {
-    const loadWordsData = async () => {
-      try {
-        if (isDebugLoggingEnabled()) {
-          console.log("🔄 WordDataContext: Starting word loading...");
-        }
-        setIsLoading(true);
-        setError(null);
-
-        if (isDebugLoggingEnabled()) {
-          console.log("🔄 Loading words from CDN (browser cache first)...");
-        }
-
-        // Browser cache handles the heavy lifting
-        const wordsData = await loadWords();
-        if (isDebugLoggingEnabled()) {
-          console.log(
-            `✅ WordDataContext: Successfully loaded ${wordsData.length} words`
-          );
-        }
-        setWords(wordsData);
-
-        if (isDebugLoggingEnabled()) {
-          console.log(`✅ Loaded ${wordsData.length} words successfully`);
-        }
-      } catch (err) {
-        console.error("❌ WordDataContext: Failed to load words:", err);
-        setError(err as Error);
-      } finally {
-        if (isDebugLoggingEnabled()) {
-          console.log("🔄 WordDataContext: Setting loading to false");
-        }
-        setIsLoading(false);
-      }
+  // Memoize context value to prevent unnecessary re-renders
+  const contextValue = useMemo(() => {
+    const getWordEntry = (id: WordId): WordEntry | undefined => {
+      return words.find((word) => word.id === id);
     };
 
-    if (isDebugLoggingEnabled()) {
-      console.log(
-        "🔄 WordDataContext: useEffect triggered, calling loadWordsData"
-      );
-    }
-    loadWordsData();
-  }, []);
+    const isValidWord = (word: string): boolean => {
+      return words.some((w) => w.id === word.toUpperCase());
+    };
 
-  const getWordEntry = (id: WordId): WordEntry | undefined => {
-    return words.find((word) => word.id === id);
-  };
-
-  const isValidWord = (word: string): boolean => {
-    return words.some((w) => w.id === word.toUpperCase());
-  };
+    return {
+      words,
+      getWordEntry,
+      isValidWord,
+    };
+  }, [words]);
 
   return (
-    <WordDataContext.Provider
-      value={{
-        words,
-        isLoading,
-        error,
-        getWordEntry,
-        isValidWord,
-      }}
-    >
+    <WordDataContext.Provider value={contextValue}>
       {children}
     </WordDataContext.Provider>
   );

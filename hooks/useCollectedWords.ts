@@ -24,7 +24,7 @@ export const useCollectedWords = () => {
     loading: historyLoading,
     autoLoadResults,
   } = usePuzzleHistory();
-  const { getWordEntry, isLoading: wordsLoading } = useWordData();
+  const { getWordEntry } = useWordData();
   const [localResults, setLocalResults] = useState<PuzzleResult[]>([]);
 
   // Load localStorage results and refresh when backendResults change
@@ -39,8 +39,7 @@ export const useCollectedWords = () => {
   }, [authUser, userLoading, autoLoadResults]);
 
   const collectedWords = useMemo(() => {
-    if (wordsLoading) return [];
-
+    // WordDataProvider is wrapped in Suspense, so words are always loaded here
     // Prefer backend when authenticated, but merge with local to include
     // any unsynced or offline results. De-duplicate by id.
     const allResultsMap = new Map<string, PuzzleResult>();
@@ -74,9 +73,9 @@ export const useCollectedWords = () => {
       })
       .filter((word): word is CollectedWord => word !== null)
       .sort((a, b) => b.completedDate.getTime() - a.completedDate.getTime());
-  }, [localResults, backendResults, authUser, getWordEntry, wordsLoading]);
+  }, [localResults, backendResults, authUser, getWordEntry]);
 
-  const loading = wordsLoading || userLoading || (authUser && historyLoading);
+  const loading = userLoading || (authUser && historyLoading);
 
   return {
     collectedWords,

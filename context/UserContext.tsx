@@ -2,6 +2,7 @@ import { createContext, useEffect, useState, ReactNode } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "@/firebase/firebaseConfig";
+import { createUserIfNotExists } from "@/firebase/CreateUserIfNotExists";
 import type { UserProfile } from "@/types/user-profile";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 
@@ -28,7 +29,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         // TODO: Remove before beta testing
-        // 🧪 Console log user information for debugging
+        // Console log user information for debugging
         if (isDebugLoggingEnabled()) {
           console.log("=== User Authentication Info ===");
           console.log("Email:", user.email);
@@ -39,18 +40,18 @@ export function UserProvider({ children }: { children: ReactNode }) {
         }
 
         try {
+          await createUserIfNotExists(user);
+
           const docRef = doc(db, "users", user.uid);
           const docSnap = await getDoc(docRef);
-          // Simple, safe type assertion with error handling
-          const profile = docSnap.exists() 
-            ? (docSnap.data() as UserProfile) 
+          const profile = docSnap.exists()
+            ? (docSnap.data() as UserProfile)
             : null;
 
           if (!docSnap.exists()) {
             console.warn("No Firestore profile found for user:", user.uid);
           }
 
-          // Single atomic state update
           setUserState({
             authUser: user,
             userProfile: profile,
@@ -58,7 +59,6 @@ export function UserProvider({ children }: { children: ReactNode }) {
           });
         } catch (error) {
           console.error("Error fetching user profile:", error);
-          // Still set user as authenticated even if profile fetch fails
           setUserState({
             authUser: user,
             userProfile: null,
@@ -66,7 +66,6 @@ export function UserProvider({ children }: { children: ReactNode }) {
           });
         }
       } else {
-        // User is signed out - single atomic update
         setUserState({
           authUser: null,
           userProfile: null,
