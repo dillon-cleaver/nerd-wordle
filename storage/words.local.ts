@@ -160,6 +160,7 @@ export async function fetchWordsFromCDN(
 
 /**
  * Main word loading function with robust fallback strategy
+ * Returns a single promise that resolves once to prevent Suspense stutter
  * 1. Development: Try local file first, then CDN
  * 2. Production: Try CDN with timeout, then fallback strategies
  */
@@ -168,45 +169,44 @@ export async function loadWords(): Promise<WordEntry[]> {
     console.log("🔄 loadWords() called - starting word loading process");
   }
 
-  try {
-    // Auto-clear cache if dev flag is enabled
-    clearWordsCacheIfNeeded();
+  // Auto-clear cache if dev flag is enabled
+  clearWordsCacheIfNeeded();
 
-    const isDevelopment = process.env.EXPO_PUBLIC_DEV_MODE === "true";
-    if (isDebugLoggingEnabled()) {
-      console.log(`🔧 Development mode: ${isDevelopment}`);
-    }
+  const isDevelopment = process.env.EXPO_PUBLIC_DEV_MODE === "true";
+  if (isDebugLoggingEnabled()) {
+    console.log(`🔧 Development mode: ${isDevelopment}`);
+  }
 
-    if (isDevelopment) {
-      // In development: try local file first
-      try {
-        if (isDebugLoggingEnabled()) {
-          console.log(
-            "🔄 Attempting to load words from local data/words.json (dev mode)"
-          );
-        }
-
-        // Use dynamic import for development mode to avoid bundling
-        const localWordsModule = await import("../data/words.json");
-        const localWords = localWordsModule.default as WordEntry[];
-
-        if (isDebugLoggingEnabled()) {
-          console.log(
-            `✅ Successfully loaded ${localWords.length} words from local file`
-          );
-        }
-
-        return localWords;
-      } catch (localError) {
-        console.warn(
-          "⚠️ Failed to load local words, falling back to CDN:",
-          localError
-        );
-        // Fall through to CDN loading
+  // In development: load from local file (bundled during dev)
+  // This is faster and avoids CDN calls during development
+  if (isDevelopment) {
+    try {
+      if (isDebugLoggingEnabled()) {
+        console.log("🔄 Loading words from local data/words.json (dev mode)");
       }
-    }
 
-    // Try CDN loading with timeout
+      // Use dynamic import for development mode
+      const localWordsModule = await import("../data/words.json");
+      const localWords = localWordsModule.default as WordEntry[];
+
+      if (isDebugLoggingEnabled()) {
+        console.log(
+          `✅ Successfully loaded ${localWords.length} words from local file`
+        );
+      }
+
+      return localWords;
+    } catch (localError) {
+      console.warn(
+        "⚠️ Failed to load local words in dev mode, falling back to CDN:",
+        localError
+      );
+      // Fall through to CDN loading
+    }
+  }
+
+  // Production or dev fallback: Try CDN loading with timeout
+  try {
     if (isDebugLoggingEnabled()) {
       console.log("🔄 Attempting to load words from CDN...");
     }
@@ -226,7 +226,7 @@ export async function loadWords(): Promise<WordEntry[]> {
   } catch (error) {
     console.error("❌ Failed to load words from all sources:", error);
 
-    // Final fallback: try to load previous version from cache or return minimal dataset
+    // Final fallback: try to load previous version from cache
     const metadata = loadWordsMetadata();
     if (metadata) {
       console.warn(`⚠️ Attempting to load cached version ${metadata.version}`);

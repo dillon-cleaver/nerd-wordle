@@ -1,20 +1,19 @@
 import "@/firebase/firebaseConfig";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
+import { ActivityIndicator, View, StyleSheet } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import Head from "expo-router/head";
-import { useAuthListener } from "@/hooks/useAuthListener";
 import { UserProvider } from "@/context/UserContext";
 import { GameProvider } from "@/context/GameContext";
 import { PuzzleHistoryProvider } from "@/context/PuzzleHistoryContext";
 import { WordDataProvider } from "@/context/WordDataContext";
 import { DrawerNavigationWrapper } from "@/components/DrawerNavigationWrapper";
+import { colors } from "@/constants/styles";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  useAuthListener();
-
   const [loaded, error] = useFonts({
     "Bitter-Regular": require("../assets/fonts/Bitter-Regular.ttf"),
     "Bitter-Bold": require("../assets/fonts/Bitter-Bold.ttf"),
@@ -55,13 +54,29 @@ function RootLayoutContent() {
       </Head>
       <UserProvider>
         <PuzzleHistoryProvider>
-          <WordDataProvider>
-            <GameProvider>
-              <DrawerNavigationWrapper />
-            </GameProvider>
-          </WordDataProvider>
+          <Suspense
+            fallback={
+              <View style={styles.container}>
+                <ActivityIndicator size="large" color={colors.neutral.white} />
+              </View>
+            }
+          >
+            <WordDataProvider>
+              <GameProvider>
+                <DrawerNavigationWrapper />
+              </GameProvider>
+            </WordDataProvider>
+          </Suspense>
         </PuzzleHistoryProvider>
       </UserProvider>
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: colors.neutral.background,
+  },
+});

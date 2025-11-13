@@ -1,5 +1,5 @@
-import { View, ActivityIndicator, StyleSheet } from "react-native";
-import { useState, useEffect, useContext } from "react";
+import { View } from "react-native";
+import { useState, useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
 import {
@@ -25,8 +25,6 @@ import { DrawerLoginButton } from "./DrawerLoginButton";
 import { DrawerDevInfo } from "./DrawerDevInfo";
 import { InfoModal } from "./InfoModal";
 import { usePlatform } from "@/hooks/usePlatform";
-import { useUser } from "@/hooks/useUser";
-import { GameContext } from "@/context/GameContext";
 import {
   hasInfoModalBeenShown,
   saveInfoModalShown,
@@ -34,8 +32,6 @@ import {
 import { useAccessibilityKeyboard } from "@/hooks/useAccessibilityKeyboard";
 
 export const DrawerNavigationWrapper = () => {
-  const { loading } = useUser();
-  const { isLoading: gameLoading } = useContext(GameContext);
   const { isWeb } = usePlatform();
   const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
 
@@ -47,9 +43,9 @@ export const DrawerNavigationWrapper = () => {
   });
 
   // Check if InfoModal should be shown on first load
-  // Wait for both user and game to finish loading, then show after delay
+  // Suspense boundary handles all loading states, so we can show modal immediately on web
   useEffect(() => {
-    if (!loading && !gameLoading && isWeb) {
+    if (isWeb) {
       const hasBeenShown = hasInfoModalBeenShown();
       if (!hasBeenShown) {
         // Wait for the long animation duration before showing modal
@@ -60,23 +56,13 @@ export const DrawerNavigationWrapper = () => {
         return () => clearTimeout(timer);
       }
     }
-  }, [loading, gameLoading, isWeb]);
+  }, [isWeb]);
 
   const handleCloseInfoModal = () => {
     setIsInfoModalVisible(false);
     // Save that the modal has been shown
     saveInfoModalShown();
   };
-
-  // On web, show loading indicator while user state or game resolves to prevent drawer flicker
-  // Mobile platforms handle loading through splash screens and don't experience the same flicker issue
-  if (isWeb && (loading || gameLoading)) {
-    return (
-      <View style={loadingStyles.container}>
-        <ActivityIndicator size="large" color={colors.neutral.white} />
-      </View>
-    );
-  }
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -168,12 +154,3 @@ export const DrawerNavigationWrapper = () => {
     </GestureHandlerRootView>
   );
 };
-
-const loadingStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: colors.neutral.background,
-  },
-});

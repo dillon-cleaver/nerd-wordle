@@ -13,7 +13,7 @@ import { useKeyboardListener } from "@/hooks/useKeyboardListener";
 import { useAccessibilityKeyboard } from "@/hooks/useAccessibilityKeyboard";
 
 export const Game = () => {
-  const { category, answer, isLoading } = useContext(GameContext);
+  const { category, answer } = useContext(GameContext);
 
   const [hintModalVisible, setHintModalVisible] = useState(false);
 
@@ -46,13 +46,6 @@ export const Game = () => {
     }
   }, [answer, category]);
 
-  // The DrawerNavigationWrapper handles loading state display
-  // If loading, don't render the game content to avoid layout shifts
-  if (isLoading) {
-    return null;
-  }
-
-  // Always show the active game view with banner + grid + keyboard
   return (
     <View style={containerStyle}>
       <Animated.View
