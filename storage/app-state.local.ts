@@ -7,7 +7,7 @@ export const saveInfoModalShown = async (): Promise<void> => {
   try {
     await AsyncStorage.setItem(INFO_MODAL_SHOWN_KEY, "true");
     if (isDebugLoggingEnabled()) {
-      console.log("✅ Saved InfoModal shown state to AsyncStorage");
+      console.log("Saved InfoModal shown state to AsyncStorage");
     }
   } catch (error) {
     console.error(
@@ -34,7 +34,7 @@ export const clearInfoModalShownState = async (): Promise<void> => {
   try {
     await AsyncStorage.removeItem(INFO_MODAL_SHOWN_KEY);
     if (isDebugLoggingEnabled()) {
-      console.log("✅ InfoModal shown state cleared");
+      console.log("InfoModal shown state cleared");
     }
   } catch (error) {
     console.error("Failed to clear InfoModal shown state:", error);

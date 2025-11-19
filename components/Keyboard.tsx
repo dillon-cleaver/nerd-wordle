@@ -56,7 +56,7 @@ export const Keyboard = () => {
   const handleLayout = (event: any) => {
     const { width } = event.nativeEvent.layout;
     if (isDebugLoggingEnabled()) {
-      console.log(`⌨️ Keyboard: Actual rendered width: ${width}px`);
+      console.log(`Keyboard: Actual rendered width: ${width}px`);
     }
   };
 

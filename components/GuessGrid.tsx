@@ -21,7 +21,7 @@ export const GuessGrid = ({ onPressHint }: { onPressHint?: () => void }) => {
 
   // Debug hint state
   if (hint && isDebugLoggingEnabled()) {
-    console.log(`🎯 GuessGrid: Received hint:`, hint);
+    console.log(`GuessGrid: Received hint:`, hint);
   }
 
   // Prevent rendering during initial load to avoid layout shifts and empty tile flashing

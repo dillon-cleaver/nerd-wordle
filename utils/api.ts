@@ -25,7 +25,7 @@ const API_BASE_URL =
 
 // Debug logging - only when debug logs are enabled
 if (isDebugLoggingEnabled()) {
-  console.log(`🔧 API Configuration:`, {
+  console.log(`API Configuration:`, {
     isDevelopment,
     NODE_ENV: process.env.NODE_ENV,
     EXPO_PUBLIC_DEV_MODE: process.env.EXPO_PUBLIC_DEV_MODE,

@@ -52,7 +52,7 @@ export const handleSubmitGuessWithLetterTracking = (
         saveActivePuzzleState(puzzleId, puzzleDate, allLetterGuesses).catch(
           (error) => {
             if (isDebugLoggingEnabled()) {
-              console.error("❌ Failed to save active puzzle state:", error);
+              console.error("Failed to save active puzzle state:", error);
             }
           }
         );

@@ -29,7 +29,7 @@ const isDevelopment =
   (typeof process !== "undefined" && process.env?.NODE_ENV === "development");
 
 if (ENABLE_DEBUG) {
-  console.log("🔧 Firebase flags", { isDevelopment });
+  console.log("Firebase flags", { isDevelopment });
 }
 
 export const firebaseConfig: FirebaseConfig = {
@@ -87,7 +87,7 @@ export function getAuthInstance(): Auth {
     }
 
     if (ENABLE_DEBUG) {
-      console.log(`🔧 Firebase Auth initialized (${Platform.OS})`);
+      console.log(`Firebase Auth initialized (${Platform.OS})`);
     }
   }
   return authInstance;
@@ -102,15 +102,15 @@ export function getFirestoreInstance() {
       try {
         connectFirestoreEmulator(firestoreInstance, "localhost", 8080);
         if (ENABLE_DEBUG) {
-          console.log("🔧 Connected to Firestore emulator on localhost:8080");
+          console.log("Connected to Firestore emulator on localhost:8080");
         }
       } catch (e) {
-        if (ENABLE_DEBUG) console.log("🔧 Firestore emulator connect:", e);
+        if (ENABLE_DEBUG) console.log("Firestore emulator connect:", e);
       }
     }
 
     if (ENABLE_DEBUG) {
-      console.log("🔧 Firestore initialized");
+      console.log("Firestore initialized");
     }
   }
   return firestoreInstance;

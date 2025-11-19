@@ -115,17 +115,17 @@ export function PuzzleHistoryProvider({
       }
 
       if (isPuzzleHistoryDebugEnabled()) {
-        console.log("✅ Loaded puzzle results:", resultsData.length, "records");
+        console.log("Loaded puzzle results:", resultsData.length, "records");
         if (syncedToLocal > 0) {
           console.log(
-            "🔄 Synced",
+            "Synced",
             syncedToLocal,
             "backend results to localStorage"
           );
         }
         if (syncedToBackend > 0) {
           console.log(
-            "🔄 Synced",
+            "Synced",
             syncedToBackend,
             "localStorage results to backend"
           );
@@ -135,7 +135,7 @@ export function PuzzleHistoryProvider({
       const errorMessage =
         err instanceof Error ? err.message : "Failed to load puzzle results";
       setError(errorMessage);
-      console.error("❌ Failed to load puzzle results:", err);
+      console.error("Failed to load puzzle results:", err);
     } finally {
       setLoading(false);
     }
@@ -146,7 +146,7 @@ export function PuzzleHistoryProvider({
     (user: User | null, userLoading: boolean) => {
       if (user && !userLoading && !hasLoadedInitialData) {
         if (isPuzzleHistoryDebugEnabled()) {
-          console.log("🔄 Auto-loading puzzle history for authenticated user");
+          console.log("Auto-loading puzzle history for authenticated user");
         }
         loadPuzzleResults(user)
           .then(() => {
@@ -172,7 +172,7 @@ export function PuzzleHistoryProvider({
 
         if (isPuzzleHistoryDebugEnabled()) {
           console.log(
-            "🔄 Context: Starting to save puzzle result:",
+            "Context: Starting to save puzzle result:",
             puzzleResult
           );
         }
@@ -180,31 +180,31 @@ export function PuzzleHistoryProvider({
         // Save to localStorage immediately for "already played" check
         savePuzzleResultLocal(puzzleResult);
         if (isPuzzleHistoryDebugEnabled()) {
-          console.log("✅ Context: Saved to localStorage successfully");
+          console.log("Context: Saved to localStorage successfully");
         }
 
         // Update context state immediately for UI responsiveness
         setPuzzleResults((prev) => [puzzleResult, ...prev]);
         if (isPuzzleHistoryDebugEnabled()) {
-          console.log("✅ Context: Updated context state immediately");
+          console.log("Context: Updated context state immediately");
         }
 
         // Save to backend (this can fail without affecting UI)
         if (isPuzzleHistoryDebugEnabled()) {
-          console.log("📤 Context: Saving to backend...");
+          console.log("Context: Saving to backend...");
         }
         await puzzleHistoryApi.savePuzzleResult(user, puzzleResult);
 
         // TODO: Replace console.log with proper logging service (e.g., Firebase Analytics, Sentry)
         if (isPuzzleHistoryDebugEnabled()) {
-          console.log("✅ Puzzle result saved successfully:", puzzleResult);
+          console.log("Puzzle result saved successfully:", puzzleResult);
         }
       } catch (err) {
         const errorMessage =
           err instanceof Error ? err.message : "Failed to save puzzle result";
         setError(errorMessage);
         // TODO: Replace console.error with proper error tracking service (e.g., Sentry, Crashlytics)
-        console.error("❌ Failed to save puzzle result:", err);
+        console.error("Failed to save puzzle result:", err);
 
         // If backend save failed, don't revert the context state since localStorage save succeeded
         // This ensures the UI remains responsive even if backend is temporarily unavailable

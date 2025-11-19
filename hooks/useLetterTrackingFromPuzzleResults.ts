@@ -46,7 +46,7 @@ export const useLetterTrackingFromPuzzleResults = (
         }
 
         if (isPuzzleHistoryDebugEnabled()) {
-          console.log("🔍 Loading letter tracking for puzzle:", {
+          console.log("Loading letter tracking for puzzle:", {
             puzzleId,
             puzzleDate,
             authUser: !!authUser,
@@ -61,7 +61,7 @@ export const useLetterTrackingFromPuzzleResults = (
         );
         if (activePuzzleLetters.length > 0) {
           if (isPuzzleHistoryDebugEnabled()) {
-            console.log("✅ Found active puzzle state:", {
+            console.log("Found active puzzle state:", {
               puzzleId,
               letterCount: activePuzzleLetters.length,
               rows: Math.ceil(activePuzzleLetters.length / 5),
@@ -84,7 +84,7 @@ export const useLetterTrackingFromPuzzleResults = (
         }
 
         if (isPuzzleHistoryDebugEnabled()) {
-          console.log("📊 All puzzle results loaded:", {
+          console.log("All puzzle results loaded:", {
             localCount: localResults.length,
             backendCount: backendResults.length,
             totalCount: allResults.length,
@@ -101,7 +101,7 @@ export const useLetterTrackingFromPuzzleResults = (
           const matches = resultDate === puzzleDate;
 
           if (isPuzzleHistoryDebugEnabled()) {
-            console.log("🔍 SYNC DEBUG - Date comparison:", {
+            console.log("SYNC DEBUG - Date comparison:", {
               resultDate,
               puzzleDate,
               rawDate: result.date,
@@ -115,7 +115,7 @@ export const useLetterTrackingFromPuzzleResults = (
           }
 
           if (matches && isPuzzleHistoryDebugEnabled()) {
-            console.log("✅ Found matching puzzle result:", {
+            console.log("Found matching puzzle result:", {
               resultDate,
               puzzleDate,
               letterTrackingCount: result.letterTracking?.length || 0,
@@ -128,7 +128,7 @@ export const useLetterTrackingFromPuzzleResults = (
         // Extract letter tracking data from puzzle result
         const letters = matchingResult?.letterTracking || [];
         if (isPuzzleHistoryDebugEnabled()) {
-          console.log("📝 Setting letter guesses:", letters.length, "letters");
+          console.log("Setting letter guesses:", letters.length, "letters");
         }
         setLetterGuesses(letters);
       } catch (error) {

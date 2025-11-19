@@ -45,10 +45,10 @@ export const handleGameCompletion = (
     updaters.setGameStatus("won");
     updaters.setHint(undefined);
 
-    // Clear active puzzle state since game is completed
+    // Clear active puzzle state since game is failed
     clearActivePuzzleState().catch((error) => {
       if (isDebugLoggingEnabled()) {
-        console.error("❌ Failed to clear active puzzle state:", error);
+        console.error("Failed to clear active puzzle state:", error);
       }
     });
 
@@ -75,7 +75,7 @@ export const handleGameCompletion = (
     const currentUser = getAuthInstance().currentUser;
 
     if (isDebugLoggingEnabled()) {
-      console.log("🔍 Game completion debug (WIN):", {
+      console.log("Game completion debug (WIN):", {
         hasSavePuzzleResult: !!savePuzzleResult,
         hasCurrentUser: !!currentUser,
         currentUserEmail: currentUser?.email,
@@ -86,12 +86,12 @@ export const handleGameCompletion = (
     if (savePuzzleResult && currentUser) {
       // Use the context method which saves to both localStorage and backend
       if (isDebugLoggingEnabled()) {
-        console.log("📤 Using context method to save puzzle result");
+        console.log("Using context method to save puzzle result");
       }
       savePuzzleResult(currentUser, result).catch((error) => {
         if (isDebugLoggingEnabled()) {
           console.error(
-            "❌ Failed to save via context, falling back to dual save:",
+            "Failed to save via context, falling back to dual save:",
             error
           );
         }
@@ -103,7 +103,7 @@ export const handleGameCompletion = (
           } catch (localError) {
             if (isDebugLoggingEnabled()) {
               console.error(
-                "❌ Final fallback localStorage save failed:",
+                "Final fallback localStorage save failed:",
                 localError
               );
             }
@@ -118,7 +118,7 @@ export const handleGameCompletion = (
           savePuzzleResultLocal(result);
         } catch (localError) {
           if (isDebugLoggingEnabled()) {
-            console.error("❌ Fallback localStorage save failed:", localError);
+            console.error("Fallback localStorage save failed:", localError);
           }
         }
       });
@@ -128,7 +128,7 @@ export const handleGameCompletion = (
     if (answerEntry.category !== "common") {
       addToCollection(answerId, edition, new Date()).catch((error) => {
         if (isDebugLoggingEnabled()) {
-          console.error("❌ Failed to add word to collection:", error);
+          console.error("Failed to add word to collection:", error);
         }
       });
 
@@ -147,7 +147,7 @@ export const handleGameCompletion = (
     // Clear active puzzle state since game is completed
     clearActivePuzzleState().catch((error) => {
       if (isDebugLoggingEnabled()) {
-        console.error("❌ Failed to clear active puzzle state:", error);
+        console.error("Failed to clear active puzzle state:", error);
       }
     });
 
@@ -175,7 +175,7 @@ export const handleGameCompletion = (
       savePuzzleResult(currentUser, result).catch((error) => {
         if (isDebugLoggingEnabled()) {
           console.error(
-            "❌ Failed to save via context, falling back to dual save:",
+            "Failed to save via context, falling back to dual save:",
             error
           );
         }
@@ -187,7 +187,7 @@ export const handleGameCompletion = (
           } catch (localError) {
             if (isDebugLoggingEnabled()) {
               console.error(
-                "❌ Final fallback localStorage save failed:",
+                "Final fallback localStorage save failed:",
                 localError
               );
             }
@@ -202,7 +202,7 @@ export const handleGameCompletion = (
           savePuzzleResultLocal(result);
         } catch (localError) {
           if (isDebugLoggingEnabled()) {
-            console.error("❌ Fallback localStorage save failed:", localError);
+            console.error("Fallback localStorage save failed:", localError);
           }
         }
       });

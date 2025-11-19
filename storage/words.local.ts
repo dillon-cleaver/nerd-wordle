@@ -36,7 +36,7 @@ export function saveWordsMetadata(metadata: WordMetadata): void {
     localStorage.setItem(WORDS_METADATA_KEY, JSON.stringify(metadata));
     if (isDebugLoggingEnabled()) {
       console.log(
-        `✅ Saved words metadata (${metadata.version}, ${metadata.totalWords} words)`
+        `Saved words metadata (${metadata.version}, ${metadata.totalWords} words)`
       );
     }
   } catch (error) {
@@ -118,7 +118,7 @@ export async function fetchWordsFromCDN(
     const url = `https://nerd-word-cfda3.web.app/dict/${actualVersion}/words.json`;
 
     if (isDebugLoggingEnabled()) {
-      console.log(`🔄 Fetching words from CDN: ${url}`);
+      console.log(`Fetching words from CDN: ${url}`);
     }
 
     const response = await fetch(url, {
@@ -146,13 +146,13 @@ export async function fetchWordsFromCDN(
     });
 
     if (isDebugLoggingEnabled()) {
-      console.log(`✅ Loaded ${words.length} words from CDN (browser cache)`);
+      console.log(`Loaded ${words.length} words from CDN (browser cache)`);
     }
 
     return words;
   } catch (error) {
     if (isDebugLoggingEnabled()) {
-      console.error("❌ CDN fetch error:", error);
+      console.error("CDN fetch error:", error);
     }
     throw error;
   }
@@ -166,7 +166,7 @@ export async function fetchWordsFromCDN(
  */
 export async function loadWords(): Promise<WordEntry[]> {
   if (isDebugLoggingEnabled()) {
-    console.log("🔄 loadWords() called - starting word loading process");
+    console.log("loadWords() called - starting word loading process");
   }
 
   // Auto-clear cache if dev flag is enabled
@@ -174,7 +174,7 @@ export async function loadWords(): Promise<WordEntry[]> {
 
   const isDevelopment = process.env.EXPO_PUBLIC_DEV_MODE === "true";
   if (isDebugLoggingEnabled()) {
-    console.log(`🔧 Development mode: ${isDevelopment}`);
+    console.log(`Development mode: ${isDevelopment}`);
   }
 
   // In development: load from local file (bundled during dev)
@@ -182,7 +182,7 @@ export async function loadWords(): Promise<WordEntry[]> {
   if (isDevelopment) {
     try {
       if (isDebugLoggingEnabled()) {
-        console.log("🔄 Loading words from local data/words.json (dev mode)");
+        console.log("Loading words from local data/words.json (dev mode)");
       }
 
       // Use dynamic import for development mode
@@ -191,14 +191,14 @@ export async function loadWords(): Promise<WordEntry[]> {
 
       if (isDebugLoggingEnabled()) {
         console.log(
-          `✅ Successfully loaded ${localWords.length} words from local file`
+          `Successfully loaded ${localWords.length} words from local file`
         );
       }
 
       return localWords;
     } catch (localError) {
       console.warn(
-        "⚠️ Failed to load local words in dev mode, falling back to CDN:",
+        "Failed to load local words in dev mode, falling back to CDN:",
         localError
       );
       // Fall through to CDN loading
@@ -208,7 +208,7 @@ export async function loadWords(): Promise<WordEntry[]> {
   // Production or dev fallback: Try CDN loading with timeout
   try {
     if (isDebugLoggingEnabled()) {
-      console.log("🔄 Attempting to load words from CDN...");
+      console.log("Attempting to load words from CDN...");
     }
 
     const words = await Promise.race([
@@ -219,25 +219,25 @@ export async function loadWords(): Promise<WordEntry[]> {
     ]);
 
     if (isDebugLoggingEnabled()) {
-      console.log(`✅ Successfully loaded ${words.length} words from CDN`);
+      console.log(`Successfully loaded ${words.length} words from CDN`);
     }
 
     return words;
   } catch (error) {
-    console.error("❌ Failed to load words from all sources:", error);
+    console.error("Failed to load words from all sources:", error);
 
     // Final fallback: try to load previous version from cache
     const metadata = loadWordsMetadata();
     if (metadata) {
-      console.warn(`⚠️ Attempting to load cached version ${metadata.version}`);
+      console.warn(`Attempting to load cached version ${metadata.version}`);
       try {
         const fallbackWords = await fetchWordsFromCDN(metadata.version);
         console.log(
-          `✅ Loaded ${fallbackWords.length} words from cached version`
+          `Loaded ${fallbackWords.length} words from cached version`
         );
         return fallbackWords;
       } catch (fallbackError) {
-        console.error("❌ Failed to load fallback version:", fallbackError);
+        console.error("Failed to load fallback version:", fallbackError);
       }
     }
 
@@ -280,7 +280,7 @@ export const clearWordsCache = (): void => {
     localStorage.removeItem("nerd-wordle-words_v1");
     localStorage.removeItem("words_v3");
     if (isDebugLoggingEnabled()) {
-      console.log("✅ Words cache cleared");
+      console.log("Words cache cleared");
     }
   } catch (error) {
     console.error("Failed to clear words cache:", error);
@@ -295,7 +295,7 @@ export const clearWordsCacheIfNeeded = (): void => {
   if (shouldClearLocalStorageOnStart()) {
     clearWordsCache();
     if (isDebugLoggingEnabled()) {
-      console.log("🧹 Auto-cleared words cache (dev mode)");
+      console.log("Auto-cleared words cache (dev mode)");
     }
   }
 };

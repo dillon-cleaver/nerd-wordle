@@ -53,7 +53,7 @@ export async function saveActivePuzzleState(
     await AsyncStorage.setItem(ACTIVE_PUZZLE_KEY, JSON.stringify(state));
 
     if (isDebugLoggingEnabled()) {
-      console.log("✅ Saved active puzzle state:", {
+      console.log("Saved active puzzle state:", {
         puzzleId,
         guessCount: letterGuesses.length,
         rows: Math.ceil(letterGuesses.length / 5),
@@ -118,7 +118,7 @@ export async function clearActivePuzzleState(): Promise<void> {
   try {
     await AsyncStorage.removeItem(ACTIVE_PUZZLE_KEY);
     if (isDebugLoggingEnabled()) {
-      console.log("✅ Cleared active puzzle state");
+      console.log("Cleared active puzzle state");
     }
   } catch (error) {
     console.warn("Failed to clear active puzzle state:", error);
@@ -148,7 +148,7 @@ export async function incrementRefreshAttempts(
   await AsyncStorage.setItem(ACTIVE_PUZZLE_KEY, JSON.stringify(updatedState));
 
   if (isDebugLoggingEnabled()) {
-    console.log(`📊 Refresh attempt #${newAttempts} for puzzle ${puzzleId}`);
+    console.log(`Refresh attempt #${newAttempts} for puzzle ${puzzleId}`);
   }
 
   return newAttempts;
