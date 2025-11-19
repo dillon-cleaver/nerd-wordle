@@ -7,6 +7,7 @@ import { useDevice } from "@/hooks/useDevice";
 import { MOBILE_MODAL_MAX_HEIGHT } from "@/constants/dimensions";
 import { spacing } from "@/constants/styles";
 import { useCountdownToNewPuzzle } from "@/utils/countdown";
+// import { usePlatform } from "@/hooks/usePlatform";
 
 type InfoModalProps = {
   visible: boolean;
@@ -16,6 +17,7 @@ type InfoModalProps = {
 export const InfoModal = ({ visible, onRequestClose }: InfoModalProps) => {
   const { category } = useContext(GameContext);
   const { isDesktop } = useDevice();
+  // const { isIOS, isAndroid } = usePlatform();
   const timeUntilNewPuzzle = useCountdownToNewPuzzle();
 
   const modalContentStyle = {
@@ -56,7 +58,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    flexGrow: 1,
     alignItems: "center",
     gap: spacing.md,
     paddingBottom: spacing.md,

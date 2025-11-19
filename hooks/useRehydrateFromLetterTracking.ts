@@ -15,7 +15,6 @@ type Params = {
   dailyPuzzleWordId?: WordId | string;
   answer?: WordId | string;
   puzzleId?: PuzzleId; // Add puzzleId for tracking refresh attempts
-  hintIndex?: number; // Add hintIndex for hint restoration
   getWordEntry: (id: WordId) => WordEntry | undefined;
   setGuesses: (entries: WordEntry[]) => void;
   setLetterGuesses: (letters: LetterGuess[]) => void;
@@ -39,7 +38,6 @@ export const useRehydrateFromLetterTracking = ({
   dailyPuzzleWordId,
   answer,
   puzzleId,
-  hintIndex = 0,
   getWordEntry,
   setGuesses,
   setLetterGuesses,
@@ -48,77 +46,79 @@ export const useRehydrateFromLetterTracking = ({
   setIsRehydrationComplete,
 }: Params) => {
   useEffect(() => {
-    // Mark rehydration as complete early if conditions suggest no restoration is needed
-    if (
-      !savedLetterGuesses ||
-      savedLetterGuesses.length === 0 ||
-      !dailyPuzzleWordId ||
-      !answer ||
-      answer === ("LOADING" as unknown as WordId) ||
-      guessesLength > 0 ||
-      existingLetterGuessesLength > 0
-    ) {
-      setIsRehydrationComplete(true);
-      return;
-    }
-
-    // Only run rehydration when:
-    // 1. We have saved letter guesses to restore
-    // 2. Current guesses are empty (haven't restored yet)
-    // 3. Current letter guesses are empty (haven't restored yet)
-    // 4. We have the daily puzzle word and answer loaded
-    // 5. Answer is not the loading placeholder
-    if (
-      savedLetterGuesses &&
-      savedLetterGuesses.length > 0 &&
-      guessesLength === 0 &&
-      existingLetterGuessesLength === 0 &&
-      dailyPuzzleWordId &&
-      answer &&
-      answer !== ("LOADING" as unknown as WordId)
-    ) {
-      if (isStateRestorationDebugEnabled()) {
-        console.log("🔄 Rehydrating game state from saved letter tracking:", {
-          savedLetterCount: savedLetterGuesses.length,
-          currentGuesses: guessesLength,
-          currentLetters: existingLetterGuessesLength,
-          puzzleWord: dailyPuzzleWordId,
-          answer: answer,
-        });
+    const rehydrateState = async () => {
+      // Mark rehydration as complete early if conditions suggest no restoration is needed
+      if (
+        !savedLetterGuesses ||
+        savedLetterGuesses.length === 0 ||
+        !dailyPuzzleWordId ||
+        !answer ||
+        answer === ("LOADING" as unknown as WordId) ||
+        guessesLength > 0 ||
+        existingLetterGuessesLength > 0
+      ) {
+        setIsRehydrationComplete(true);
+        return;
       }
 
-      // Group letters by row and reconstruct each guess word
-      const rows = new Map<number, string[]>();
-      savedLetterGuesses.forEach((lg) => {
-        const arr = rows.get(lg.row) || new Array(5).fill("");
-        arr[lg.position] = lg.letter.toUpperCase();
-        rows.set(lg.row, arr);
-      });
-
-      const reconstructedWords = Array.from(rows.keys())
-        .sort((a, b) => a - b)
-        .map((row) => (rows.get(row) || []).join(""))
-        .filter((w) => w.length === 5);
-
-      const reconstructedEntries = reconstructedWords
-        .map((id) => getWordEntry(id as WordId))
-        .filter((entry): entry is WordEntry => entry !== undefined);
-
-      if (reconstructedEntries.length > 0) {
+      // Only run rehydration when:
+      // 1. We have saved letter guesses to restore
+      // 2. Current guesses are empty (haven't restored yet)
+      // 3. Current letter guesses are empty (haven't restored yet)
+      // 4. We have the daily puzzle word and answer loaded
+      // 5. Answer is not the loading placeholder
+      if (
+        savedLetterGuesses &&
+        savedLetterGuesses.length > 0 &&
+        guessesLength === 0 &&
+        existingLetterGuessesLength === 0 &&
+        dailyPuzzleWordId &&
+        answer &&
+        answer !== ("LOADING" as unknown as WordId)
+      ) {
         if (isStateRestorationDebugEnabled()) {
-          console.log("✅ Restoring game state:", {
-            words: reconstructedWords,
-            entries: reconstructedEntries.length,
+          console.log("🔄 Rehydrating game state from saved letter tracking:", {
+            savedLetterCount: savedLetterGuesses.length,
+            currentGuesses: guessesLength,
+            currentLetters: existingLetterGuessesLength,
+            puzzleWord: dailyPuzzleWordId,
+            answer: answer,
           });
         }
 
-        // Track refresh attempts for analytics if this is an active puzzle
-        if (puzzleId && savedLetterGuesses.length > 0) {
-          const attempts = incrementRefreshAttempts(puzzleId);
+        // Group letters by row and reconstruct each guess word
+        const rows = new Map<number, string[]>();
+        savedLetterGuesses.forEach((lg) => {
+          const arr = rows.get(lg.row) || new Array(5).fill("");
+          arr[lg.position] = lg.letter.toUpperCase();
+          rows.set(lg.row, arr);
+        });
+
+        const reconstructedWords = Array.from(rows.keys())
+          .sort((a, b) => a - b)
+          .map((row) => (rows.get(row) || []).join(""))
+          .filter((w) => w.length === 5);
+
+        const reconstructedEntries = reconstructedWords
+          .map((id) => getWordEntry(id as WordId))
+          .filter((entry): entry is WordEntry => entry !== undefined);
+
+        if (reconstructedEntries.length > 0) {
           if (isStateRestorationDebugEnabled()) {
-            console.log(
-              `📊 Refresh attempt #${attempts} for puzzle ${puzzleId}`
-            );
+            console.log("✅ Restoring game state:", {
+              words: reconstructedWords,
+              entries: reconstructedEntries.length,
+            });
+          }
+
+          // Track refresh attempts for analytics if this is an active puzzle
+          if (puzzleId && savedLetterGuesses.length > 0) {
+            const attempts = await incrementRefreshAttempts(puzzleId);
+            if (isStateRestorationDebugEnabled()) {
+              console.log(
+                `📊 Refresh attempt #${attempts} for puzzle ${puzzleId}`
+              );
+            }
           }
         }
 
@@ -179,7 +179,9 @@ export const useRehydrateFromLetterTracking = ({
 
       // Mark rehydration as complete regardless of whether restoration succeeded
       setIsRehydrationComplete(true);
-    }
+    };
+
+    rehydrateState();
   }, [
     savedLetterGuesses,
     guessesLength,
@@ -187,7 +189,6 @@ export const useRehydrateFromLetterTracking = ({
     dailyPuzzleWordId,
     answer,
     puzzleId,
-    hintIndex,
     getWordEntry,
     setGuesses,
     setLetterGuesses,

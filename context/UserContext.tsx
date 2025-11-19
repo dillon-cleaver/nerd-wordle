@@ -1,7 +1,10 @@
 import { createContext, useEffect, useState, ReactNode } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { getAuthInstance, db } from "@/firebase/firebaseConfig";
+import {
+  getAuthInstance,
+  getFirestoreInstance,
+} from "@/firebase/firebaseConfig";
 import { createUserIfNotExists } from "@/firebase/CreateUserIfNotExists";
 import type { UserProfile } from "@/types/user-profile";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
@@ -26,55 +29,72 @@ export function UserProvider({ children }: { children: ReactNode }) {
   });
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(getAuthInstance(), async (user) => {
-      if (user) {
-        // TODO: Remove before beta testing
-        // Console log user information for debugging
-        if (isDebugLoggingEnabled()) {
-          console.log("=== User Authentication Info ===");
-          console.log("Email:", user.email);
-          console.log("UID:", user.uid);
-          console.log("Display Name:", user.displayName);
-          console.log("Provider:", user.providerData[0]?.providerId);
-          console.log("=====================================");
-        }
+    let unsubscribe: (() => void) | undefined;
 
-        try {
-          await createUserIfNotExists(user);
+    // Small delay to ensure Firebase auth is ready in Hermes engine
+    const initAuth = async () => {
+      // Wait a tick to ensure native modules are ready
+      await new Promise((resolve) => setTimeout(resolve, 0));
 
-          const docRef = doc(db, "users", user.uid);
-          const docSnap = await getDoc(docRef);
-          const profile = docSnap.exists()
-            ? (docSnap.data() as UserProfile)
-            : null;
+      const auth = getAuthInstance();
 
-          if (!docSnap.exists()) {
-            console.warn("No Firestore profile found for user:", user.uid);
+      unsubscribe = onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          // TODO: Remove before beta testing
+          // Console log user information for debugging
+          if (isDebugLoggingEnabled()) {
+            console.log("=== User Authentication Info ===");
+            console.log("Email:", user.email);
+            console.log("UID:", user.uid);
+            console.log("Display Name:", user.displayName);
+            console.log("Provider:", user.providerData[0]?.providerId);
+            console.log("=====================================");
           }
 
+          try {
+            await createUserIfNotExists(user);
+
+            const db = getFirestoreInstance();
+            const docRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(docRef);
+            const profile = docSnap.exists()
+              ? (docSnap.data() as UserProfile)
+              : null;
+
+            if (!docSnap.exists()) {
+              console.warn("No Firestore profile found for user:", user.uid);
+            }
+
+            setUserState({
+              authUser: user,
+              userProfile: profile,
+              loading: false,
+            });
+          } catch (error) {
+            console.error("Error fetching user profile:", error);
+            setUserState({
+              authUser: user,
+              userProfile: null,
+              loading: false,
+            });
+          }
+        } else {
           setUserState({
-            authUser: user,
-            userProfile: profile,
-            loading: false,
-          });
-        } catch (error) {
-          console.error("Error fetching user profile:", error);
-          setUserState({
-            authUser: user,
+            authUser: null,
             userProfile: null,
             loading: false,
           });
         }
-      } else {
-        setUserState({
-          authUser: null,
-          userProfile: null,
-          loading: false,
-        });
-      }
-    });
+      });
+    };
 
-    return () => unsubscribe();
+    initAuth();
+
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
   }, []);
 
   return (

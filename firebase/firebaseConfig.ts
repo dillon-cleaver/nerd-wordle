@@ -1,7 +1,8 @@
 import Constants from "expo-constants";
 import { initializeApp } from "firebase/app";
-import { getAuth, Auth } from "firebase/auth";
+import { initializeAuth, getAuth, Auth } from "firebase/auth";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+import { Platform } from "react-native";
 
 type FirebaseConfig = {
   apiKey: string;
@@ -54,30 +55,64 @@ if (
 
 const app = initializeApp(firebaseConfig);
 
-// Lazy initialization for Firebase Auth to fix Expo Go iOS + Hermes compatibility
-// This prevents "Component auth has not been registered yet" error
-let authInstance: Auth | null = null;
+// Delayed initialization for auth to work with Hermes engine
+// Auth must be initialized on first access, not at module load time
+let authInstance: Auth | undefined;
+let firestoreInstance: ReturnType<typeof getFirestore> | null = null;
 
 export function getAuthInstance(): Auth {
   if (!authInstance) {
-    authInstance = getAuth(app);
+    // For React Native: use initializeAuth to properly register auth component
+    // For web: use getAuth
+    if (Platform.OS === "web") {
+      authInstance = getAuth(app);
+    } else {
+      try {
+        authInstance = initializeAuth(app);
+      } catch (error: any) {
+        // If already initialized (shouldn't happen with our pattern, but just in case)
+        if (error?.code === "auth/already-initialized") {
+          authInstance = getAuth(app);
+        } else {
+          throw error;
+        }
+      }
+    }
+
     if (ENABLE_DEBUG) {
-      console.log("🔧 Firebase Auth initialized (lazy)");
+      console.log(`🔧 Firebase Auth initialized (${Platform.OS})`);
     }
   }
   return authInstance;
 }
 
-export const db = getFirestore(app);
+export function getFirestoreInstance() {
+  if (!firestoreInstance) {
+    firestoreInstance = getFirestore(app);
 
-// Emulators (optional)
-if (isDevelopment) {
-  try {
-    connectFirestoreEmulator(db, "localhost", 8080);
-    if (ENABLE_DEBUG) {
-      console.log("🔧 Connected to Firestore emulator on localhost:8080");
+    // Connect to emulator if in development
+    if (isDevelopment) {
+      try {
+        connectFirestoreEmulator(firestoreInstance, "localhost", 8080);
+        if (ENABLE_DEBUG) {
+          console.log("🔧 Connected to Firestore emulator on localhost:8080");
+        }
+      } catch (e) {
+        if (ENABLE_DEBUG) console.log("🔧 Firestore emulator connect:", e);
+      }
     }
-  } catch (e) {
-    if (ENABLE_DEBUG) console.log("🔧 Firestore emulator connect:", e);
+
+    if (ENABLE_DEBUG) {
+      console.log("🔧 Firestore initialized");
+    }
   }
+  return firestoreInstance;
 }
+
+// Backwards compatibility - lazy getter for db
+export const db = new Proxy({} as ReturnType<typeof getFirestore>, {
+  get(_target, prop) {
+    const instance = getFirestoreInstance();
+    return (instance as any)[prop];
+  },
+});

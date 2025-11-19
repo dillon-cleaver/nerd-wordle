@@ -5,8 +5,11 @@ import { WordId } from "@/types/word";
 /**
  * Get collection info for displaying on WordCard
  */
-export const getWordCardCollectionInfo = (wordId: WordId, edition: number) => {
-  const collection = getWordCollectionLocal(wordId, edition);
+export const getWordCardCollectionInfo = async (
+  wordId: WordId,
+  edition: number
+) => {
+  const collection = await getWordCollectionLocal(wordId, edition);
 
   if (!collection) {
     return {
@@ -20,7 +23,7 @@ export const getWordCardCollectionInfo = (wordId: WordId, edition: number) => {
   }
 
   // Get ALL successful solves for this word+edition from PuzzleResult
-  const allPuzzleResults = loadPuzzleResultsLocal();
+  const allPuzzleResults = await loadPuzzleResultsLocal();
   const successfulSolves = allPuzzleResults.filter(
     (puzzle) =>
       puzzle.word === wordId &&

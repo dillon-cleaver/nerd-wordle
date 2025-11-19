@@ -46,7 +46,11 @@ export const handleGameCompletion = (
     updaters.setHint(undefined);
 
     // Clear active puzzle state since game is completed
-    clearActivePuzzleState();
+    clearActivePuzzleState().catch((error) => {
+      if (isDebugLoggingEnabled()) {
+        console.error("❌ Failed to clear active puzzle state:", error);
+      }
+    });
 
     const puzzleResultId = generatePuzzleResultId();
     const edition =
@@ -122,7 +126,11 @@ export const handleGameCompletion = (
 
     // Add to collection for nerd words
     if (answerEntry.category !== "common") {
-      addToCollection(answerId, edition, new Date());
+      addToCollection(answerId, edition, new Date()).catch((error) => {
+        if (isDebugLoggingEnabled()) {
+          console.error("❌ Failed to add word to collection:", error);
+        }
+      });
 
       // Only log in development mode
       if (isDebugLoggingEnabled()) {
@@ -137,7 +145,11 @@ export const handleGameCompletion = (
     updaters.setHint(undefined);
 
     // Clear active puzzle state since game is completed
-    clearActivePuzzleState();
+    clearActivePuzzleState().catch((error) => {
+      if (isDebugLoggingEnabled()) {
+        console.error("❌ Failed to clear active puzzle state:", error);
+      }
+    });
 
     const edition =
       answerEntry.category === "common"

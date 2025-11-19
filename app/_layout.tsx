@@ -1,4 +1,3 @@
-import "@/firebase/firebaseConfig";
 import { Suspense, useEffect } from "react";
 import { ActivityIndicator, View, StyleSheet } from "react-native";
 import { useFonts } from "expo-font";

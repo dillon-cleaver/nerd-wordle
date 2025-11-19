@@ -56,7 +56,9 @@ export const useLetterTrackingFromPuzzleResults = (
         }
 
         // First, check for active (in-progress) puzzle state
-        const activePuzzleLetters = getActivePuzzleLetterGuesses(puzzleId);
+        const activePuzzleLetters = await getActivePuzzleLetterGuesses(
+          puzzleId
+        );
         if (activePuzzleLetters.length > 0) {
           if (isPuzzleHistoryDebugEnabled()) {
             console.log("✅ Found active puzzle state:", {
@@ -73,7 +75,7 @@ export const useLetterTrackingFromPuzzleResults = (
         let allResults: PuzzleResult[] = [];
 
         // Load local results (these have letterTracking field)
-        const localResults = loadPuzzleResultsLocal();
+        const localResults = await loadPuzzleResultsLocal();
         allResults.push(...localResults);
 
         // Add backend results if available

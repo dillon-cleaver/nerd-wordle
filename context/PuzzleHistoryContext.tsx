@@ -53,7 +53,7 @@ export function PuzzleHistoryProvider({
       setPuzzleResults(resultsData);
 
       // Sync backend results to localStorage for game state restoration
-      const existingLocalResults = loadPuzzleResultsLocal();
+      const existingLocalResults = await loadPuzzleResultsLocal();
       const existingLocalDates = new Set(
         existingLocalResults.map((result) => {
           const date =
@@ -73,7 +73,7 @@ export function PuzzleHistoryProvider({
             : new Date(backendResult.date).toISOString().split("T")[0];
 
         if (!existingLocalDates.has(backendDate)) {
-          savePuzzleResultLocal(backendResult);
+          await savePuzzleResultLocal(backendResult);
           syncedToLocal++;
         }
       }
