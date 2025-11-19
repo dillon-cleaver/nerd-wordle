@@ -31,11 +31,9 @@ export function UserProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let unsubscribe: (() => void) | undefined;
 
-    // Small delay to ensure Firebase auth is ready in Hermes engine
-    const initAuth = async () => {
-      // Wait a tick to ensure native modules are ready
-      await new Promise((resolve) => setTimeout(resolve, 0));
-
+    // Initialize Firebase auth and set up auth state listener
+    // The lazy initialization in getAuthInstance() handles Hermes engine compatibility
+    const initAuth = () => {
       const auth = getAuthInstance();
 
       unsubscribe = onAuthStateChanged(auth, async (user) => {

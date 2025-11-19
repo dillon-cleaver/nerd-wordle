@@ -31,26 +31,39 @@ export const useDailyPuzzle = () => {
   });
 
   useEffect(() => {
+    let mounted = true;
+
     const loadPuzzle = async () => {
       try {
         setIsLoading(true);
         setError(null);
         const puzzle = await getTodaysPuzzle();
-        setDailyPuzzle(puzzle);
 
-        // Initialize game state once puzzle is loaded
-        const newGameState = initializeGame(puzzle.word);
-        setGameState(newGameState);
+        if (mounted) {
+          setDailyPuzzle(puzzle);
+
+          // Initialize game state once puzzle is loaded
+          const newGameState = initializeGame(puzzle.word);
+          setGameState(newGameState);
+        }
       } catch (err) {
         console.error("Failed to load daily puzzle:", err);
-        setError(err as Error);
+        if (mounted) {
+          setError(err as Error);
+        }
         // getTodaysPuzzle already has built-in fallback, so this shouldn't happen
       } finally {
-        setIsLoading(false);
+        if (mounted) {
+          setIsLoading(false);
+        }
       }
     };
 
     loadPuzzle();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   // Calculate hint index

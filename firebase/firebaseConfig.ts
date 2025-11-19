@@ -74,7 +74,14 @@ export function getAuthInstance(): Auth {
         if (error?.code === "auth/already-initialized") {
           authInstance = getAuth(app);
         } else {
-          throw error;
+          console.error("Failed to initialize Firebase Auth:", error);
+          // Fallback to getAuth as a last resort
+          try {
+            authInstance = getAuth(app);
+          } catch (fallbackError) {
+            console.error("Failed to get auth instance:", fallbackError);
+            throw error; // Re-throw original error
+          }
         }
       }
     }
@@ -108,11 +115,3 @@ export function getFirestoreInstance() {
   }
   return firestoreInstance;
 }
-
-// Backwards compatibility - lazy getter for db
-export const db = new Proxy({} as ReturnType<typeof getFirestore>, {
-  get(_target, prop) {
-    const instance = getFirestoreInstance();
-    return (instance as any)[prop];
-  },
-});

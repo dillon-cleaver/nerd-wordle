@@ -45,12 +45,14 @@ export const DrawerNavigationWrapper = () => {
   // Check if InfoModal should be shown on first load
   // Suspense boundary handles all loading states, so we can show modal immediately on web
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout | undefined;
+
     const checkModalStatus = async () => {
       if (isWeb) {
         const hasBeenShown = await hasInfoModalBeenShown();
         if (!hasBeenShown) {
           // Wait for the long animation duration before showing modal
-          setTimeout(() => {
+          timeoutId = setTimeout(() => {
             setIsInfoModalVisible(true);
           }, animation.duration.long);
         }
@@ -58,6 +60,10 @@ export const DrawerNavigationWrapper = () => {
     };
 
     checkModalStatus();
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, [isWeb]);
 
   const handleCloseInfoModal = async () => {

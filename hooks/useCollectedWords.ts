@@ -30,11 +30,25 @@ export const useCollectedWords = () => {
   // Load localStorage results and refresh when backendResults change
   // This ensures localResults includes newly saved results
   useEffect(() => {
+    let mounted = true;
+
     const loadResults = async () => {
-      const results = await loadPuzzleResultsLocal();
-      setLocalResults(results);
+      try {
+        const results = await loadPuzzleResultsLocal();
+        if (mounted) {
+          setLocalResults(results);
+        }
+      } catch (error) {
+        console.error("Failed to load local puzzle results:", error);
+        // Keep existing localResults on error
+      }
     };
+
     loadResults();
+
+    return () => {
+      mounted = false;
+    };
   }, [backendResults]); // Refresh when backend results change
 
   // Ensure backend results are loaded for authenticated users

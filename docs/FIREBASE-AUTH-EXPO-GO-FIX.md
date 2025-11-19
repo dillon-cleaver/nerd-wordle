@@ -5,6 +5,7 @@
 **Issue**: `Component auth has not been registered yet` error on Expo Go iOS with Hermes JavaScript engine
 
 **Environment**:
+
 - Firebase SDK: v11.8.1
 - Expo SDK: v53.0.20
 - Platform: iOS (Expo Go)
@@ -23,19 +24,43 @@ The fix implements a lazy initialization pattern that defers Firebase Auth setup
 ```typescript
 // firebase/firebaseConfig.ts
 
-// Lazy initialization for Firebase Auth
-let authInstance: Auth | null = null;
+// Delayed initialization for auth to work with Hermes engine
+// Auth must be initialized on first access, not at module load time
+let authInstance: Auth | undefined;
 
 export function getAuthInstance(): Auth {
   if (!authInstance) {
-    authInstance = getAuth(app);
+    // For React Native: use initializeAuth to properly register auth component
+    // For web: use getAuth
+    if (Platform.OS === "web") {
+      authInstance = getAuth(app);
+    } else {
+      try {
+        authInstance = initializeAuth(app);
+      } catch (error: any) {
+        // If already initialized (shouldn't happen with our pattern, but just in case)
+        if (error?.code === "auth/already-initialized") {
+          authInstance = getAuth(app);
+        } else {
+          throw error;
+        }
+      }
+    }
+
     if (ENABLE_DEBUG) {
-      console.log("🔧 Firebase Auth initialized (lazy)");
+      console.log(`🔧 Firebase Auth initialized (${Platform.OS})`);
     }
   }
   return authInstance;
 }
 ```
+
+**Note**: This is the actual production implementation. Key differences from simplified examples:
+
+- Uses `Auth | undefined` instead of `Auth | null` for stricter type safety
+- Platform-specific initialization: `initializeAuth` for React Native, `getAuth` for web
+- Error handling for edge case where auth is already initialized
+- Platform-aware debug logging
 
 ### How It Works
 
@@ -63,20 +88,24 @@ onAuthStateChanged(getAuthInstance(), (user) => {
 ## Benefits
 
 ### 1. Fixes Expo Go iOS Issue
+
 - Auth component initializes when needed, not at module load time
 - Prevents "Component auth has not been registered yet" error
 - Compatible with Hermes JavaScript engine
 
 ### 2. Better Performance
+
 - Auth only initializes if authentication features are used
 - Reduces startup overhead for users who don't immediately need auth
 
 ### 3. Clean and Simple
+
 - Single, clear API: `getAuthInstance()`
 - No magic Proxy patterns
 - Explicit initialization semantics
 
 ### 4. Future-Proof
+
 - Follows Firebase v11+ best practices for React Native
 - Aligns with lazy loading patterns used in modern React applications
 
@@ -107,9 +136,11 @@ onAuthStateChanged(getAuthInstance(), (user) => {
 ## Files Modified
 
 ### Core Implementation
+
 - `firebase/firebaseConfig.ts` - Lazy auth initialization with Proxy for backward compatibility
 
 ### Updated Imports
+
 - `context/UserContext.tsx` - Uses `getAuthInstance()`
 - `hooks/useAuthListener.ts` - Uses `getAuthInstance()`
 - `hooks/useGoogleSignIn.ts` - Uses `getAuthInstance()`
@@ -119,16 +150,20 @@ onAuthStateChanged(getAuthInstance(), (user) => {
 ## Alternative Solutions Considered
 
 ### Option 1: Downgrade to Firebase v10
+
 **Pros**: Avoids compatibility issues
 **Cons**: Loses v11 features, security updates, and improvements
 
 ### Option 2: Use `initializeAuth` with React Native Persistence
+
 **Issue**: `getReactNativePersistence` not available in Firebase v11.8.1 for Expo
 
 ### Option 3: Platform Detection
+
 **Issue**: Doesn't solve core registration timing issue
 
 ### ✅ Chosen Solution: Lazy Initialization
+
 **Why**: Best balance of compatibility, performance, and maintainability
 
 ## Troubleshooting
@@ -148,7 +183,7 @@ Enable debug logging to see auth initialization:
 EXPO_PUBLIC_ENABLE_DEBUG_LOGS=true
 ```
 
-Look for: `🔧 Firebase Auth initialized (lazy)` in console
+Look for: `🔧 Firebase Auth initialized (web)` or `🔧 Firebase Auth initialized (ios)` in console
 
 ## References
 
@@ -159,6 +194,7 @@ Look for: `🔧 Firebase Auth initialized (lazy)` in console
 ## Support
 
 If you encounter issues:
+
 1. Check the console for error messages
 2. Enable debug logging
 3. Verify Firebase configuration
@@ -168,5 +204,5 @@ If you encounter issues:
 ---
 
 **Status**: ✅ Implemented and Tested
-**Date**: November 13, 2025
+**Date**: November 2025 (PR #99)
 **Version**: Firebase v11.8.1, Expo SDK v53.0.20

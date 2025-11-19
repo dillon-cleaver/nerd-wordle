@@ -19,8 +19,13 @@ export const savePuzzleResultLocal = async (
   } catch (error) {
     console.error("Failed to save puzzle result to AsyncStorage:", error);
     // Optionally clear corrupted data and try again
-    await AsyncStorage.removeItem(PUZZLE_RESULTS_KEY);
-    await AsyncStorage.setItem(PUZZLE_RESULTS_KEY, JSON.stringify([result]));
+    try {
+      await AsyncStorage.removeItem(PUZZLE_RESULTS_KEY);
+      await AsyncStorage.setItem(PUZZLE_RESULTS_KEY, JSON.stringify([result]));
+    } catch (retryError) {
+      console.error("Failed to recover from save error:", retryError);
+      // Data is lost at this point - backend sync will be the source of truth
+    }
   }
 };
 
