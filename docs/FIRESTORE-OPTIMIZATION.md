@@ -14,8 +14,8 @@ Our Nerd Wordle app was generating **101,000+ Firestore reads** in a short perio
 
 ### Evolution of Solutions
 
-1. **Phase 1**: Direct Firestore reads → localStorage caching
-2. **Phase 2**: localStorage caching → CDN-first loading
+1. **Phase 1**: Direct Firestore reads → AsyncStorage caching
+2. **Phase 2**: AsyncStorage caching → CDN-first loading
 3. **Phase 3**: CDN-first → Auto-versioning + bundle exclusion ✅ **Current**
 
 ## 🚀 Current Solution: CDN-First Architecture
@@ -25,7 +25,7 @@ The Firestore optimization was replaced with a much better CDN-first approach:
 - **No Firestore reads** for word data (eliminated completely)
 - **243KB bundle reduction** (words excluded from app bundle)
 - **Instant updates** via auto-versioning CDN
-- **99.96% localStorage reduction** (metadata only)
+- **99.96% AsyncStorage reduction** (metadata only)
 
 See [cdn-optimization.md](./cdn-optimization.md) for complete details.
 
