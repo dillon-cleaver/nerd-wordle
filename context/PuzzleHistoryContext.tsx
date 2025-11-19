@@ -171,10 +171,7 @@ export function PuzzleHistoryProvider({
         setError(null);
 
         if (isPuzzleHistoryDebugEnabled()) {
-          console.log(
-            "Context: Starting to save puzzle result:",
-            puzzleResult
-          );
+          console.log("Context: Starting to save puzzle result:", puzzleResult);
         }
 
         // Save to localStorage immediately for "already played" check

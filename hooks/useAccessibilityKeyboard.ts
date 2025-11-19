@@ -41,9 +41,7 @@ export const useAccessibilityKeyboard = (callbacks: {
           }
 
           if (isDebugLoggingEnabled()) {
-            console.log(
-              "Accessibility: Escape key pressed - closing modals"
-            );
+            console.log("Accessibility: Escape key pressed - closing modals");
           }
           break;
 
@@ -57,9 +55,7 @@ export const useAccessibilityKeyboard = (callbacks: {
             }
 
             if (isDebugLoggingEnabled()) {
-              console.log(
-                "Accessibility: Ctrl+H pressed - opening info modal"
-              );
+              console.log("Accessibility: Ctrl+H pressed - opening info modal");
             }
           }
           break;
