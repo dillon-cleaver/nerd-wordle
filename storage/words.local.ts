@@ -9,7 +9,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { WordEntry } from "@/types/word";
 import {
   isDebugLoggingEnabled,
-  shouldClearLocalStorageOnStart,
+  shouldClearStorageOnStart,
 } from "@/utils/dev-flags";
 
 // Minimal metadata storage in AsyncStorage
@@ -291,7 +291,7 @@ export const clearWordsCache = async (): Promise<void> => {
  * Useful for development when you want fresh data on each app start
  */
 export const clearWordsCacheIfNeeded = async (): Promise<void> => {
-  if (shouldClearLocalStorageOnStart()) {
+  if (shouldClearStorageOnStart()) {
     await clearWordsCache();
     if (isDebugLoggingEnabled()) {
       console.log("Auto-cleared words cache (dev mode)");
