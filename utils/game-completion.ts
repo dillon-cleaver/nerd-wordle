@@ -70,7 +70,7 @@ export const handleGameCompletion = (
       letterTracking,
     };
 
-    // Save result to both localStorage and backend (if authenticated)
+    // Save result to both local storage and backend (if authenticated)
     // This ensures the result is immediately available for the "already played" check
     const currentUser = getAuthInstance().currentUser;
 
@@ -84,7 +84,7 @@ export const handleGameCompletion = (
     }
 
     if (savePuzzleResult && currentUser) {
-      // Use the context method which saves to both localStorage and backend
+      // Use the context method which saves to both local storage and backend
       if (isDebugLoggingEnabled()) {
         console.log("Using context method to save puzzle result");
       }
@@ -95,15 +95,15 @@ export const handleGameCompletion = (
             error
           );
         }
-        // Fallback to dual save method (localStorage + backend)
+        // Fallback to dual save method (local storage + backend)
         savePuzzleResultDual(null, result).catch(() => {
-          // Final fallback to just localStorage
+          // Final fallback to just local storage
           try {
             savePuzzleResultLocal(result);
           } catch (localError) {
             if (isDebugLoggingEnabled()) {
               console.error(
-                "Final fallback localStorage save failed:",
+                "Final fallback local storage save failed:",
                 localError
               );
             }
@@ -111,14 +111,14 @@ export const handleGameCompletion = (
         });
       });
     } else {
-      // Use dual save method for both localStorage and backend
+      // Use dual save method for both local storage and backend
       savePuzzleResultDual(null, result).catch(() => {
-        // Fallback to just localStorage if dual save fails
+        // Fallback to just local storage if dual save fails
         try {
           savePuzzleResultLocal(result);
         } catch (localError) {
           if (isDebugLoggingEnabled()) {
-            console.error("Fallback localStorage save failed:", localError);
+            console.error("Fallback local storage save failed:", localError);
           }
         }
       });
@@ -167,11 +167,11 @@ export const handleGameCompletion = (
       letterTracking,
     };
 
-    // Save result to both localStorage and backend (if authenticated)
+    // Save result to both local storage and backend (if authenticated)
     // This ensures the result is immediately available for the "already played" check
     const currentUser = getAuthInstance().currentUser;
     if (savePuzzleResult && currentUser) {
-      // Use the context method which saves to both localStorage and backend
+      // Use the context method which saves to both local storage and backend
       savePuzzleResult(currentUser, result).catch((error) => {
         if (isDebugLoggingEnabled()) {
           console.error(
@@ -179,15 +179,15 @@ export const handleGameCompletion = (
             error
           );
         }
-        // Fallback to dual save method (localStorage + backend)
+        // Fallback to dual save method (local storage + backend)
         savePuzzleResultDual(null, result).catch(() => {
-          // Final fallback to just localStorage
+          // Final fallback to just local storage
           try {
             savePuzzleResultLocal(result);
           } catch (localError) {
             if (isDebugLoggingEnabled()) {
               console.error(
-                "Final fallback localStorage save failed:",
+                "Final fallback local storage save failed:",
                 localError
               );
             }
@@ -195,14 +195,14 @@ export const handleGameCompletion = (
         });
       });
     } else {
-      // Use dual save method for both localStorage and backend
+      // Use dual save method for both local storage and backend
       savePuzzleResultDual(null, result).catch(() => {
-        // Fallback to just localStorage if dual save fails
+        // Fallback to just local storage if dual save fails
         try {
           savePuzzleResultLocal(result);
         } catch (localError) {
           if (isDebugLoggingEnabled()) {
-            console.error("Fallback localStorage save failed:", localError);
+            console.error("Fallback local storage save failed:", localError);
           }
         }
       });

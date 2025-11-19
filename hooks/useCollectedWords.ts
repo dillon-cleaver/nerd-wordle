@@ -27,7 +27,7 @@ export const useCollectedWords = () => {
   const { getWordEntry } = useWordData();
   const [localResults, setLocalResults] = useState<PuzzleResult[]>([]);
 
-  // Load localStorage results and refresh when backendResults change
+  // Load local storage results and refresh when backendResults change
   // This ensures localResults includes newly saved results
   useEffect(() => {
     let mounted = true;

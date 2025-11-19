@@ -37,7 +37,7 @@ export const addToCollection = async (
     lastUpdated: new Date(), // Update this timestamp
   };
 
-  // Save to localStorage for offline support
+  // Save to local storage for offline support
   await saveWordCollectionsLocal(updatedCollections);
 
   // TODO: Save to backend if user is authenticated

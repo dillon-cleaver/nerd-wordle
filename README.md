@@ -50,7 +50,7 @@ pnpm run dev
 - **Bundle Size**: 2.69MB (optimized from 3.2MB)
 - **Word Dictionary**: 243KB externalized to CDN
 - **Cache Strategy**: Browser HTTP cache with URL-based versioning
-- **localStorage**: 99.96% reduction (metadata only)
+- **AsyncStorage**: 99.96% reduction (metadata only)
 
 See [docs/CDN-OPTIMIZATION.md](docs/CDN-OPTIMIZATION.md) for architecture details.
 
