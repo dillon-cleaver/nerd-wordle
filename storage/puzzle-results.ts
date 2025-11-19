@@ -26,7 +26,7 @@ export const savePuzzleResult = async (
   }
 
   // Save locally for offline support
-  savePuzzleResultLocal(result);
+  await savePuzzleResultLocal(result);
   if (isDebugLoggingEnabled()) {
     console.log("Saved to local storage");
   }

@@ -45,7 +45,7 @@ export const handleGameCompletion = (
     updaters.setGameStatus("won");
     updaters.setHint(undefined);
 
-    // Clear active puzzle state since game is failed
+    // Clear active puzzle state since game is won
     clearActivePuzzleState().catch((error) => {
       if (isDebugLoggingEnabled()) {
         console.error("Failed to clear active puzzle state:", error);
@@ -96,10 +96,10 @@ export const handleGameCompletion = (
           );
         }
         // Fallback to dual save method (local storage + backend)
-        savePuzzleResultDual(null, result).catch(() => {
+        savePuzzleResultDual(null, result).catch(async () => {
           // Final fallback to just local storage
           try {
-            savePuzzleResultLocal(result);
+            await savePuzzleResultLocal(result);
           } catch (localError) {
             if (isDebugLoggingEnabled()) {
               console.error(
@@ -112,10 +112,10 @@ export const handleGameCompletion = (
       });
     } else {
       // Use dual save method for both local storage and backend
-      savePuzzleResultDual(null, result).catch(() => {
+      savePuzzleResultDual(null, result).catch(async () => {
         // Fallback to just local storage if dual save fails
         try {
-          savePuzzleResultLocal(result);
+          await savePuzzleResultLocal(result);
         } catch (localError) {
           if (isDebugLoggingEnabled()) {
             console.error("Fallback local storage save failed:", localError);
@@ -180,10 +180,10 @@ export const handleGameCompletion = (
           );
         }
         // Fallback to dual save method (local storage + backend)
-        savePuzzleResultDual(null, result).catch(() => {
+        savePuzzleResultDual(null, result).catch(async () => {
           // Final fallback to just local storage
           try {
-            savePuzzleResultLocal(result);
+            await savePuzzleResultLocal(result);
           } catch (localError) {
             if (isDebugLoggingEnabled()) {
               console.error(
@@ -196,10 +196,10 @@ export const handleGameCompletion = (
       });
     } else {
       // Use dual save method for both local storage and backend
-      savePuzzleResultDual(null, result).catch(() => {
+      savePuzzleResultDual(null, result).catch(async () => {
         // Fallback to just local storage if dual save fails
         try {
-          savePuzzleResultLocal(result);
+          await savePuzzleResultLocal(result);
         } catch (localError) {
           if (isDebugLoggingEnabled()) {
             console.error("Fallback local storage save failed:", localError);

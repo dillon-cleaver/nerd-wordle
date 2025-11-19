@@ -175,7 +175,7 @@ export function PuzzleHistoryProvider({
         }
 
         // Save to local storage immediately for "already played" check
-        savePuzzleResultLocal(puzzleResult);
+        await savePuzzleResultLocal(puzzleResult);
         if (isPuzzleHistoryDebugEnabled()) {
           console.log("Context: Saved to local storage successfully");
         }
