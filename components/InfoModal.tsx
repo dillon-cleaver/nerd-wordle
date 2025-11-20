@@ -4,10 +4,12 @@ import { BaseModal } from "./base/BaseModal";
 import { InfoModalContent } from "./InfoModalContent";
 import { GameContext } from "@/context/GameContext";
 import { useDevice } from "@/hooks/useDevice";
-import { MOBILE_MODAL_MAX_HEIGHT } from "@/constants/dimensions";
+import {
+  MOBILE_MODAL_MAX_HEIGHT,
+  DESKTOP_MODAL_MAX_HEIGHT,
+} from "@/constants/dimensions";
 import { spacing } from "@/constants/styles";
 import { useCountdownToNewPuzzle } from "@/utils/countdown";
-// import { usePlatform } from "@/hooks/usePlatform";
 
 type InfoModalProps = {
   visible: boolean;
@@ -17,11 +19,12 @@ type InfoModalProps = {
 export const InfoModal = ({ visible, onRequestClose }: InfoModalProps) => {
   const { category } = useContext(GameContext);
   const { isDesktop } = useDevice();
-  // const { isIOS, isAndroid } = usePlatform();
   const timeUntilNewPuzzle = useCountdownToNewPuzzle();
 
   const modalContentStyle = {
-    maxHeight: isDesktop ? undefined : MOBILE_MODAL_MAX_HEIGHT,
+    maxHeight: isDesktop ? DESKTOP_MODAL_MAX_HEIGHT : MOBILE_MODAL_MAX_HEIGHT,
+    padding: 0,
+    overflow: "hidden" as const,
   };
 
   return (
@@ -32,34 +35,22 @@ export const InfoModal = ({ visible, onRequestClose }: InfoModalProps) => {
       contentStyle={modalContentStyle}
       showCloseButton={true}
     >
-      {isDesktop ? (
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+        nestedScrollEnabled={true}
+      >
         <InfoModalContent
           category={category}
           timeUntilNewPuzzle={timeUntilNewPuzzle}
         />
-      ) : (
-        <ScrollView
-          style={styles.scrollContainer}
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-        >
-          <InfoModalContent
-            category={category}
-            timeUntilNewPuzzle={timeUntilNewPuzzle}
-          />
-        </ScrollView>
-      )}
+      </ScrollView>
     </BaseModal>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flex: 1,
-  },
   scrollContent: {
-    alignItems: "center",
-    gap: spacing.md,
-    paddingBottom: spacing.md,
+    padding: spacing.lg,
   },
 });
