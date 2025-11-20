@@ -1,14 +1,14 @@
-import {
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-} from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { getAuthInstance } from "@/firebase/firebaseConfig";
 
 export function signInWithGoogle() {
   const auth = getAuthInstance();
+  if (!auth) {
+    console.error("Auth not initialized. Cannot sign in with Google.");
+    return;
+  }
   const provider = new GoogleAuthProvider();
-  
+
   signInWithPopup(auth, provider)
     .then((result) => {
       // result.user contains your signed-in user
@@ -35,6 +35,10 @@ export function signInWithGoogle() {
 
 export function signOutGoogle() {
   const auth = getAuthInstance();
+  if (!auth) {
+    console.error("Auth not initialized. Cannot sign out.");
+    return;
+  }
   signOut(auth)
     .then(() => {
       if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {

@@ -1,8 +1,11 @@
 import Constants from "expo-constants";
 import { initializeApp } from "firebase/app";
-import { initializeAuth, getAuth, Auth } from "firebase/auth";
+import { getAuth, Auth, initializeAuth } from "firebase/auth";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { Platform } from "react-native";
+
+// Check if running in Expo Go (as opposed to a dev build or web)
+const isExpoGo = Constants.appOwnership === "expo";
 
 type FirebaseConfig = {
   apiKey: string;
@@ -58,38 +61,79 @@ const app = initializeApp(firebaseConfig);
 // Delayed initialization for auth to work with Hermes engine
 // Auth must be initialized on first access, not at module load time
 let authInstance: Auth | undefined;
+let authInitPromise: Promise<Auth> | undefined;
 let firestoreInstance: ReturnType<typeof getFirestore> | null = null;
 
-export function getAuthInstance(): Auth {
-  if (!authInstance) {
-    // For React Native: use initializeAuth to properly register auth component
-    // For web: use getAuth
-    if (Platform.OS === "web") {
-      authInstance = getAuth(app);
-    } else {
-      try {
-        authInstance = initializeAuth(app);
-      } catch (error: any) {
-        // If already initialized (shouldn't happen with our pattern, but just in case)
-        if (error?.code === "auth/already-initialized") {
-          authInstance = getAuth(app);
-        } else {
-          console.error("Failed to initialize Firebase Auth:", error);
-          // Fallback to getAuth as a last resort
-          try {
-            authInstance = getAuth(app);
-          } catch (fallbackError) {
-            console.error("Failed to get auth instance:", fallbackError);
-            throw error; // Re-throw original error
-          }
-        }
-      }
+// Async version for safe initialization in React Native/Expo Go
+export async function getAuthInstanceAsync(): Promise<Auth> {
+  if (authInstance) {
+    return authInstance;
+  }
+
+  // If already initializing, wait for that to complete
+  if (authInitPromise) {
+    return authInitPromise;
+  }
+
+  authInitPromise = (async () => {
+    // Check if running in Expo Go - Firebase Auth doesn't work there
+    if (isExpoGo && Platform.OS !== "web") {
+      console.warn("Firebase Auth is not supported in Expo Go on iOS/Android.");
+      console.warn("   To use authentication, create a development build:");
+      console.warn(
+        "   https://docs.expo.dev/develop/development-builds/create-a-build/"
+      );
+      console.warn("   The app will continue to work without authentication.");
+
+      authInitPromise = undefined;
+      throw new Error("Firebase Auth not supported in Expo Go");
     }
 
-    if (ENABLE_DEBUG) {
-      console.log(`Firebase Auth initialized (${Platform.OS})`);
+    // For development builds and web: wait for environment to be ready
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    try {
+      // Use proper initialization for each platform
+      if (Platform.OS === "web") {
+        authInstance = getAuth(app);
+      } else {
+        // For React Native (iOS/Android), use initializeAuth
+        // Note: Without native Firebase, we can't use AsyncStorage persistence
+        // Auth will work but won't persist between app restarts
+        authInstance = initializeAuth(app);
+      }
+
+      if (ENABLE_DEBUG) {
+        console.log(`Firebase Auth initialized successfully (${Platform.OS})`);
+      }
+
+      return authInstance!;
+    } catch (error: any) {
+      // If auth was already initialized, just get the instance
+      if (error?.code === "auth/already-initialized") {
+        authInstance = getAuth(app);
+        if (ENABLE_DEBUG) {
+          console.log(`Firebase Auth already initialized (${Platform.OS})`);
+        }
+        return authInstance!;
+      }
+
+      console.error(
+        "Firebase Auth initialization failed:",
+        error.code || error.message
+      );
+
+      authInitPromise = undefined; // Reset so app can retry later if needed
+      throw error;
     }
-  }
+  })();
+
+  return authInitPromise;
+}
+
+// Synchronous version - returns the auth instance if already initialized
+// Returns undefined if not yet initialized. Use getAuthInstanceAsync() for guaranteed initialization.
+export function getAuthInstance(): Auth | undefined {
   return authInstance;
 }
 

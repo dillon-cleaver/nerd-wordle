@@ -6,6 +6,10 @@ import { createUserIfNotExists } from "../firebase/CreateUserIfNotExists";
 export function useAuthListener() {
   useEffect(() => {
     const auth = getAuthInstance();
+    if (!auth) {
+      console.warn("Auth not initialized in useAuthListener");
+      return;
+    }
     const unsubscribe = onAuthStateChanged(auth, async (user: User | null) => {
       if (user) {
         if (process.env.EXPO_PUBLIC_ENABLE_DEBUG_LOGS === "true") {

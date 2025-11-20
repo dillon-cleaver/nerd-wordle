@@ -48,7 +48,7 @@ export const GuessGrid = ({ onPressHint }: { onPressHint?: () => void }) => {
     const { width } = event.nativeEvent.layout;
     if (isDebugLoggingEnabled()) {
       console.log(
-        `📏 GuessGrid: Actual rendered width: ${width}px (${
+        `GuessGrid: Actual rendered width: ${width}px (${
           isDesktop ? "desktop" : "mobile"
         } mode)`
       );
