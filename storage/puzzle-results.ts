@@ -32,10 +32,11 @@ export const savePuzzleResult = async (
   }
 
   // Save to backend if user is authenticated (both wins and losses)
-  const user = getAuthInstance().currentUser;
+  const auth = getAuthInstance();
+  const user = auth?.currentUser;
   if (isDebugLoggingEnabled()) {
     console.log(
-      "👤 Current user:",
+      "Current user:",
       user ? `${user.email} (${user.uid})` : "Not authenticated"
     );
   }

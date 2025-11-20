@@ -72,7 +72,8 @@ export const handleGameCompletion = (
 
     // Save result to both local storage and backend (if authenticated)
     // This ensures the result is immediately available for the "already played" check
-    const currentUser = getAuthInstance().currentUser;
+    const auth = getAuthInstance();
+    const currentUser = auth?.currentUser;
 
     if (isDebugLoggingEnabled()) {
       console.log("Game completion debug (WIN):", {
@@ -169,7 +170,8 @@ export const handleGameCompletion = (
 
     // Save result to both local storage and backend (if authenticated)
     // This ensures the result is immediately available for the "already played" check
-    const currentUser = getAuthInstance().currentUser;
+    const auth = getAuthInstance();
+    const currentUser = auth?.currentUser;
     if (savePuzzleResult && currentUser) {
       // Use the context method which saves to both local storage and backend
       savePuzzleResult(currentUser, result).catch((error) => {
