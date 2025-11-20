@@ -1,6 +1,5 @@
-import "@/firebase/firebaseConfig";
 import { Suspense, useEffect } from "react";
-import { ActivityIndicator, View, StyleSheet } from "react-native";
+import { ActivityIndicator, View, StyleSheet, Platform } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import Head from "expo-router/head";
@@ -43,15 +42,17 @@ export default function RootLayout() {
 function RootLayoutContent() {
   return (
     <>
-      <Head>
-        <title>NerdWord</title>
-        <meta
-          name="description"
-          content="A nerdy twist on the classic word game"
-        />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="theme-color" content="#1e212b" />
-      </Head>
+      {Platform.OS === "web" && (
+        <Head>
+          <title>NerdWord</title>
+          <meta
+            name="description"
+            content="A nerdy twist on the classic word game"
+          />
+          <link rel="icon" href="/favicon.ico" />
+          <meta name="theme-color" content="#1e212b" />
+        </Head>
+      )}
       <UserProvider>
         <PuzzleHistoryProvider>
           <Suspense

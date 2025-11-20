@@ -6,7 +6,7 @@
 
 NerdWord is a React Native/Expo word game with dual data systems:
 
-- **CDN-First Word Loading**: Words loaded from Firebase Hosting CDN (browser cache) with metadata-only localStorage
+- **CDN-First Word Loading**: Words loaded from Firebase Hosting CDN (browser cache) with metadata-only AsyncStorage
 - **Firebase Backend**: User auth, puzzle history, admin functions via Cloud Functions
 - **Context-Heavy State**: React Context providers manage game state, user data, word data, and puzzle history
 - **Expo Router**: File-based routing in `app/` directory with drawer navigation wrapper
@@ -14,7 +14,7 @@ NerdWord is a React Native/Expo word game with dual data systems:
 Key architectural decisions:
 
 - Word dictionary (3812 words, 243KB) externalized from bundle to CDN for instant updates
-- Browser HTTP cache handles word caching, not localStorage (99.96% storage reduction)
+- Browser HTTP cache handles word caching, AsyncStorage stores only metadata (99.96% storage reduction)
 - Letter tracking system for detailed game analytics stored in Firestore
 - Environment-aware builds with dev/testing/production modes
 
@@ -45,9 +45,9 @@ Key architectural decisions:
 
 ### Word Data Loading Pattern
 
-- **Never** store full word data in localStorage - use `storage/words.local.ts` pattern
+- **Never** store full word data in AsyncStorage - use `storage/words.local.ts` pattern
 - Browser cache handles heavy lifting via HTTP headers
-- Only metadata (version, count, timestamp) stored locally
+- Only metadata (version, count, timestamp) stored in AsyncStorage
 - Always fetch from versioned CDN: `public/dict/v*/words.json`
 
 ### Environment Configuration

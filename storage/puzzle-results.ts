@@ -4,7 +4,7 @@ import {
   savePuzzleResultLocal,
   loadPuzzleResultsLocal,
 } from "./puzzle-results.local";
-import { getAuth } from "firebase/auth";
+import { getAuthInstance } from "@/firebase/firebaseConfig";
 import { puzzleHistoryApi } from "@/utils/api";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 
@@ -22,20 +22,21 @@ export const savePuzzleResult = async (
 ) => {
   // TODO: Replace console.log with proper logging service (e.g., Firebase Analytics, Sentry)
   if (isDebugLoggingEnabled()) {
-    console.log("🔄 Starting to save puzzle result:", result);
+    console.log("Starting to save puzzle result:", result);
   }
 
   // Save locally for offline support
-  savePuzzleResultLocal(result);
+  await savePuzzleResultLocal(result);
   if (isDebugLoggingEnabled()) {
-    console.log("✅ Saved to local storage");
+    console.log("Saved to local storage");
   }
 
   // Save to backend if user is authenticated (both wins and losses)
-  const user = getAuth().currentUser;
+  const auth = getAuthInstance();
+  const user = auth?.currentUser;
   if (isDebugLoggingEnabled()) {
     console.log(
-      "👤 Current user:",
+      "Current user:",
       user ? `${user.email} (${user.uid})` : "Not authenticated"
     );
   }
@@ -43,18 +44,18 @@ export const savePuzzleResult = async (
   if (user) {
     try {
       if (isDebugLoggingEnabled()) {
-        console.log("📤 Sending to backend API:", result);
+        console.log("Sending to backend API:", result);
       }
 
       // Note: API will override the client date with server timestamp for security/consistency
       await puzzleHistoryApi.savePuzzleResult(user, result);
       if (isDebugLoggingEnabled()) {
-        console.log("✅ Puzzle result saved to backend");
+        console.log("Puzzle result saved to backend");
       }
     } catch (error) {
       // TODO: Replace console.error with proper error tracking service (e.g., Sentry, Crashlytics)
       if (isDebugLoggingEnabled()) {
-        console.error("❌ Failed to save puzzle result to backend:", error);
+        console.error("Failed to save puzzle result to backend:", error);
         console.error(
           "Error details:",
           error instanceof Error ? error.message : error
@@ -64,7 +65,7 @@ export const savePuzzleResult = async (
     }
   } else {
     if (isDebugLoggingEnabled()) {
-      console.log("⚠️ User not authenticated, skipping backend save");
+      console.log("User not authenticated, skipping backend save");
     }
   }
 };

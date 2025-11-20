@@ -4,17 +4,17 @@
 
 This document explains the CDN-first word loading architecture implemented to optimize bundle size, improve performance, and enable instant word updates without app redeployment.
 
-**Key Innovation**: Instead of storing 243KB of word data in localStorage, we leverage the browser's built-in HTTP cache and serve words from Firebase Hosting CDN at `https://nerd-word-cfda3.web.app/dict/`.
+**Key Innovation**: Instead of storing 243KB of word data in AsyncStorage, we leverage the browser's built-in HTTP cache and serve words from Firebase Hosting CDN at `https://nerd-word-cfda3.web.app/dict/`.
 
-## 🌐 Understanding Browser HTTP Cache vs localStorage
+## 🌐 Understanding Browser HTTP Cache vs AsyncStorage
 
 ### What is HTTP Cache?
 
-The **HTTP cache** (browser cache) is a built-in browser feature that automatically stores responses from web requests (images, CSS, JavaScript, JSON files). It's completely separate from localStorage and much more powerful.
+The **HTTP cache** (browser cache) is a built-in browser feature that automatically stores responses from web requests (images, CSS, JavaScript, JSON files). It's completely separate from AsyncStorage and much more powerful.
 
 **Think of it like:**
 
-- **localStorage**: A small 5-10MB storage box you manually manage with JavaScript
+- **AsyncStorage**: A small 5-10MB storage box you manually manage with JavaScript
 - **HTTP cache**: A massive 50-100MB+ automatic warehouse the browser manages for you
 
 ### How It Works in This App
@@ -41,14 +41,14 @@ The **HTTP cache** (browser cache) is a built-in browser feature that automatica
                                         ↓
                               ┌─────────────────────┐
                               │ Save metadata only  │
-                              │ to localStorage     │
+                              │ to AsyncStorage     │
                               │ (~100 bytes)        │
                               └─────────────────────┘
 ```
 
-### localStorage vs HTTP Cache
+### AsyncStorage vs HTTP Cache
 
-| Feature              | localStorage                    | HTTP Cache                      |
+| Feature              | AsyncStorage                    | HTTP Cache                      |
 | -------------------- | ------------------------------- | ------------------------------- |
 | **Size Limit**       | ~5-10MB total                   | ~50-100MB+ per domain           |
 | **Management**       | Manual (you write code)         | Automatic (browser handles it)  |
@@ -59,7 +59,7 @@ The **HTTP cache** (browser cache) is a built-in browser feature that automatica
 ### The Two-Storage System
 
 1. **HTTP Cache** (Heavy lifting): Stores the full 243KB word dictionary
-2. **localStorage** (Metadata only): Stores ~100 bytes of tracking info
+2. **AsyncStorage** (Metadata only): Stores ~100 bytes of tracking info
 
 ```typescript
 // HTTP Cache (automatic by browser)
@@ -67,8 +67,8 @@ fetch("https://nerd-word-cfda3.web.app/dict/v7/words.json", {
   cache: "force-cache", // Browser caches automatically
 });
 
-// localStorage (manual, just metadata)
-localStorage.setItem(
+// AsyncStorage (manual, just metadata)
+AsyncStorage.setItem(
   "words_metadata_v3",
   JSON.stringify({
     version: "v7",
@@ -80,23 +80,23 @@ localStorage.setItem(
 
 ## 📊 Performance Gains
 
-### Before (localStorage Heavy)
+### Before (AsyncStorage Heavy)
 
 - **Bundle Size**: +243KB (words.json included)
-- **localStorage Usage**: 243KB per user
+- **AsyncStorage Usage**: 243KB per user
 - **App Startup**: Parse 243KB JSON on every load
 - **Word Updates**: Required full app redeployment
-- **Cache Strategy**: Manual localStorage management
+- **Cache Strategy**: Manual AsyncStorage management
 
 ### After (CDN-First)
 
 - **Bundle Size**: -243KB (words.json excluded)
-- **localStorage Usage**: ~100 bytes (metadata only)
+- **AsyncStorage Usage**: ~100 bytes (metadata only)
 - **App Startup**: Instant load from browser cache
 - **Word Updates**: Instant via CDN auto-versioning
 - **Cache Strategy**: Browser cache + HTTP headers
 
-**Result: 99.96% reduction in localStorage usage, faster startup, instant updates**
+**Result: 99.96% reduction in AsyncStorage usage, faster startup, instant updates**
 
 ## 🏗️ Architecture Components
 
@@ -222,7 +222,7 @@ npm run words:deploy
 │ User opens app → loadWords()                                │
 │ 1. Fetch current-version.json → "v8"                        │
 │ 2. Fetch dict/v8/words.json (browser caches it)             │
-│ 3. Save metadata to localStorage (~100 bytes)               │
+│ 3. Save metadata to AsyncStorage (~100 bytes)               │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
@@ -295,14 +295,14 @@ Firebase Hosting serves the word dictionary with aggressive caching headers:
 - New versions have new URLs (immediate fresh download)
 - Cache busting is automatic via URL versioning
 
-### localStorage Usage
+### AsyncStorage Usage
 
 ```javascript
 // Before: 243KB of word data
-localStorage.setItem("words_v3", JSON.stringify(allWords));
+AsyncStorage.setItem("words_v3", JSON.stringify(allWords));
 
 // After: ~100 bytes of metadata
-localStorage.setItem(
+AsyncStorage.setItem(
   "words_metadata_v3",
   JSON.stringify({
     version: "v7",
@@ -316,7 +316,7 @@ localStorage.setItem(
 
 ### Performance
 
-- **99.96% smaller localStorage footprint**
+- **99.96% smaller AsyncStorage footprint**
 - **Faster app startup** (no 243KB JSON parsing)
 - **Better mobile performance** (lower memory usage)
 - **Proper HTTP caching** (browser cache optimization)

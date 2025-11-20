@@ -5,13 +5,14 @@
  * to help prevent users from accidentally refreshing the browser to reset their attempts
  * on the same puzzle.
  *
- * Note: This mechanism relies on client-side localStorage, which can be manually cleared
+ * Note: This mechanism relies on client-side AsyncStorage, which can be manually cleared
  * or manipulated by users.
  *
  * It does not provide strong anti-cheat protection against intentional tampering. For
  * robust security, use server-side validation.
  */
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LetterGuess } from "@/types/letter-tracking";
 import { PuzzleId } from "@/types/puzzle-result";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
@@ -29,13 +30,13 @@ const ACTIVE_PUZZLE_KEY = "activePuzzle_v1";
 /**
  * Save the current active puzzle state after each valid guess
  */
-export function saveActivePuzzleState(
+export async function saveActivePuzzleState(
   puzzleId: PuzzleId,
   puzzleDate: string,
   letterGuesses: LetterGuess[]
-): void {
+): Promise<void> {
   try {
-    const existing = loadActivePuzzleState();
+    const existing = await loadActivePuzzleState();
 
     // If this is a different puzzle, reset attempts counter
     const refreshAttempts =
@@ -49,10 +50,10 @@ export function saveActivePuzzleState(
       refreshAttempts,
     };
 
-    localStorage.setItem(ACTIVE_PUZZLE_KEY, JSON.stringify(state));
+    await AsyncStorage.setItem(ACTIVE_PUZZLE_KEY, JSON.stringify(state));
 
     if (isDebugLoggingEnabled()) {
-      console.log("✅ Saved active puzzle state:", {
+      console.log("Saved active puzzle state:", {
         puzzleId,
         guessCount: letterGuesses.length,
         rows: Math.ceil(letterGuesses.length / 5),
@@ -67,9 +68,9 @@ export function saveActivePuzzleState(
 /**
  * Load the current active puzzle state
  */
-export function loadActivePuzzleState(): ActivePuzzleState | null {
+export async function loadActivePuzzleState(): Promise<ActivePuzzleState | null> {
   try {
-    const stored = localStorage.getItem(ACTIVE_PUZZLE_KEY);
+    const stored = await AsyncStorage.getItem(ACTIVE_PUZZLE_KEY);
     if (!stored) return null;
 
     const state = JSON.parse(stored) as ActivePuzzleState;
@@ -92,18 +93,18 @@ export function loadActivePuzzleState(): ActivePuzzleState | null {
 /**
  * Check if there's an active puzzle for the given puzzle ID
  */
-export function hasActivePuzzle(puzzleId: PuzzleId): boolean {
-  const state = loadActivePuzzleState();
+export async function hasActivePuzzle(puzzleId: PuzzleId): Promise<boolean> {
+  const state = await loadActivePuzzleState();
   return state?.puzzleId === puzzleId;
 }
 
 /**
  * Get letter guesses for a specific puzzle ID
  */
-export function getActivePuzzleLetterGuesses(
+export async function getActivePuzzleLetterGuesses(
   puzzleId: PuzzleId
-): LetterGuess[] {
-  const state = loadActivePuzzleState();
+): Promise<LetterGuess[]> {
+  const state = await loadActivePuzzleState();
   if (!state || state.puzzleId !== puzzleId) {
     return [];
   }
@@ -113,11 +114,11 @@ export function getActivePuzzleLetterGuesses(
 /**
  * Clear the active puzzle state (called when puzzle is completed)
  */
-export function clearActivePuzzleState(): void {
+export async function clearActivePuzzleState(): Promise<void> {
   try {
-    localStorage.removeItem(ACTIVE_PUZZLE_KEY);
+    await AsyncStorage.removeItem(ACTIVE_PUZZLE_KEY);
     if (isDebugLoggingEnabled()) {
-      console.log("✅ Cleared active puzzle state");
+      console.log("Cleared active puzzle state");
     }
   } catch (error) {
     console.warn("Failed to clear active puzzle state:", error);
@@ -127,8 +128,10 @@ export function clearActivePuzzleState(): void {
 /**
  * Track refresh attempts for analytics (increment when user refreshes mid-game)
  */
-export function incrementRefreshAttempts(puzzleId: PuzzleId): number {
-  const state = loadActivePuzzleState();
+export async function incrementRefreshAttempts(
+  puzzleId: PuzzleId
+): Promise<number> {
+  const state = await loadActivePuzzleState();
   if (!state || state.puzzleId !== puzzleId) {
     return 1;
   }
@@ -142,10 +145,10 @@ export function incrementRefreshAttempts(puzzleId: PuzzleId): number {
     lastUpdated: new Date(),
   };
 
-  localStorage.setItem(ACTIVE_PUZZLE_KEY, JSON.stringify(updatedState));
+  await AsyncStorage.setItem(ACTIVE_PUZZLE_KEY, JSON.stringify(updatedState));
 
   if (isDebugLoggingEnabled()) {
-    console.log(`📊 Refresh attempt #${newAttempts} for puzzle ${puzzleId}`);
+    console.log(`Refresh attempt #${newAttempts} for puzzle ${puzzleId}`);
   }
 
   return newAttempts;
@@ -154,15 +157,15 @@ export function incrementRefreshAttempts(puzzleId: PuzzleId): number {
 /**
  * Get debug info about the active puzzle state
  */
-export function getActivePuzzleDebugInfo(): {
+export async function getActivePuzzleDebugInfo(): Promise<{
   exists: boolean;
   puzzleId?: PuzzleId;
   guessCount?: number;
   rows?: number;
   refreshAttempts?: number;
   age?: number;
-} {
-  const state = loadActivePuzzleState();
+}> {
+  const state = await loadActivePuzzleState();
   if (!state) {
     return { exists: false };
   }

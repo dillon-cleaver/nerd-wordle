@@ -44,7 +44,7 @@ const presets = {
 function createEnvFile(preset) {
   const config = presets[preset];
   if (!config) {
-    console.error(`❌ Unknown preset: ${preset}`);
+    console.error(`Unknown preset: ${preset}`);
     console.error(`Available presets: ${Object.keys(presets).join(", ")}`);
     process.exit(1);
   }
@@ -60,23 +60,23 @@ function createEnvFile(preset) {
   content += `# FIRESTORE_EMULATOR_HOST=localhost:8080\n`;
 
   fs.writeFileSync(ENV_FILE, content);
-  console.log(`✅ Updated .env.local with ${preset} preset`);
+  console.log(`Updated .env.local with ${preset} preset`);
 
   if (preset === "testing") {
-    console.log(`🧪 Testing mode: Daily bypass ON, Dev badge ON`);
+    console.log(`Testing mode: Daily bypass ON, Dev badge ON`);
   } else {
-    console.log(`🔧 Development mode: Debug logs ON, No bypass`);
+    console.log(`Development mode: Debug logs ON, No bypass`);
   }
 }
 
 function showCurrentConfig() {
   if (!fs.existsSync(ENV_FILE)) {
-    console.log(`❌ No .env.local file found`);
+    console.log(`No .env.local file found`);
     return;
   }
 
   const content = fs.readFileSync(ENV_FILE, "utf8");
-  console.log(`📋 Current .env.local configuration:\n`);
+  console.log(`Current .env.local configuration:\n`);
   console.log(content);
 }
 
@@ -99,7 +99,9 @@ switch (command) {
     console.log(`Commands:`);
     console.log(`  development  - Standard dev mode`);
     console.log(`  testing      - Testing with bypass enabled`);
-    console.log(`  production   - Production settings (shows alpha badge for now)`);
+    console.log(
+      `  production   - Production settings (shows alpha badge for now)`
+    );
     console.log(`  show         - Show current configuration`);
     break;
 }
