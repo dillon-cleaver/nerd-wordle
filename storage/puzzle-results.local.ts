@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PuzzleResult } from "@/types/puzzle-result";
 
 const PUZZLE_RESULTS_KEY = "puzzleResults_v1";
+const MAX_LOCAL_RESULTS = 500; // Keep last 500 games locally
 
 export const savePuzzleResultLocal = async (
   result: PuzzleResult
@@ -12,10 +13,14 @@ export const savePuzzleResultLocal = async (
       ? JSON.parse(existingJson)
       : [];
     const withoutDup = existing.filter((r) => r.id !== result.id);
-    await AsyncStorage.setItem(
-      PUZZLE_RESULTS_KEY,
-      JSON.stringify([...withoutDup, result])
-    );
+    const allResults = [...withoutDup, result];
+
+    // Sort by date (newest first) and keep only MAX_LOCAL_RESULTS
+    const trimmed = allResults
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, MAX_LOCAL_RESULTS);
+
+    await AsyncStorage.setItem(PUZZLE_RESULTS_KEY, JSON.stringify(trimmed));
   } catch (error) {
     console.error("Failed to save puzzle result to AsyncStorage:", error);
     // Optionally clear corrupted data and try again
