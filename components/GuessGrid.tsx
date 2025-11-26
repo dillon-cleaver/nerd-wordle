@@ -14,7 +14,7 @@ import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 import { useDevice } from "@/hooks/useDevice";
 
 export const GuessGrid = ({ onPressHint }: { onPressHint?: () => void }) => {
-  const { guesses, answer, tentativeGuess, invalidWord, hint, isLoading } =
+  const { guesses, answer, tentativeGuess, invalidWord, hint } =
     useContext(GameContext);
 
   const { isDesktop, isTablet } = useDevice();
@@ -22,12 +22,6 @@ export const GuessGrid = ({ onPressHint }: { onPressHint?: () => void }) => {
   // Debug hint state
   if (hint && isDebugLoggingEnabled()) {
     console.log(`GuessGrid: Received hint:`, hint);
-  }
-
-  // Prevent rendering during initial load to avoid layout shifts and empty tile flashing
-  // Wait for all loading states including rehydration to complete
-  if (isLoading) {
-    return <View style={styles.container} />;
   }
 
   const containerStyle = [
