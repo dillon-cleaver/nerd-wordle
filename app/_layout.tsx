@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from "react";
+import { Suspense } from "react";
 import { ActivityIndicator, View, StyleSheet, Platform } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -26,11 +26,8 @@ export default function RootLayout() {
     "OpenSans-Regular": require("../assets/fonts/OpenSans-Regular.ttf"),
   });
 
-  useEffect(() => {
-    if (loaded || error) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded, error]);
+  // Note: Splash screen hiding is now deferred to WordDataProvider
+  // This ensures we don't show a blank screen during initial word data load
 
   if (!loaded && !error) {
     return null;

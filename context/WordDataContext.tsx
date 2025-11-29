@@ -1,4 +1,12 @@
-import { createContext, ReactNode, use, useContext, useMemo } from "react";
+import {
+  createContext,
+  ReactNode,
+  use,
+  useContext,
+  useMemo,
+  useEffect,
+} from "react";
+import * as SplashScreen from "expo-splash-screen";
 import { WordEntry, WordId } from "@/types/word";
 import { loadWords } from "@/storage/words.local";
 
@@ -23,6 +31,12 @@ function getWordsPromise() {
 export const WordDataProvider = ({ children }: { children: ReactNode }) => {
   // Suspend until words are loaded
   const words = use(getWordsPromise());
+
+  // Hide splash screen once word data is loaded
+  // This ensures we don't show a blank screen between splash and first paint
+  useEffect(() => {
+    SplashScreen.hideAsync();
+  }, []);
 
   // Memoize context value to prevent unnecessary re-renders
   const contextValue = useMemo(() => {
