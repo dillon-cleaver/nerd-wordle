@@ -47,7 +47,12 @@ function RootLayoutContent() {
             content="A nerdy twist on the classic word game"
           />
           <link rel="icon" href="/favicon.ico" />
-          <meta name="theme-color" content="#1e212b" />
+          <meta name="theme-color" content={colors.neutral.background} />
+          <style>{`
+            html, body, #root, #__next {
+              background: ${colors.neutral.background};
+            }
+          `}</style>
         </Head>
       )}
       <UserProvider>
