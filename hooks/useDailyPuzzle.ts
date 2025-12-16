@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
-import { getTodaysPuzzle, DailyPuzzleSeed } from "@/utils/daily-puzzle";
-import { initializeGame } from "@/utils/game";
+import {
+  getTodaysPuzzle,
+  DailyPuzzleSeed,
+  loadCachedPuzzleForDate,
+} from "@/utils/daily-puzzle";
+import { convertCategory } from "@/utils/game";
 import { WordCategory, WordId } from "@/types/word";
+import { getTodayDateString } from "@/utils/time";
 
 type GameState = {
   category: string;
@@ -32,24 +37,44 @@ export const useDailyPuzzle = () => {
 
   useEffect(() => {
     let mounted = true;
+    const today = getTodayDateString();
+
+    const applyPuzzleToState = (puzzle: DailyPuzzleSeed) => {
+      setDailyPuzzle(puzzle);
+      setGameState({
+        category: convertCategory(puzzle.word.category),
+        originalCategory: puzzle.word.category,
+        answer: puzzle.word.id,
+      });
+    };
 
     const loadPuzzle = async () => {
+      let hasPuzzle = false;
       try {
         setIsLoading(true);
         setError(null);
-        const puzzle = await getTodaysPuzzle();
 
+        // Fast-path: show cached puzzle immediately for the current day
+        const cachedPuzzle = await loadCachedPuzzleForDate(today);
+        if (cachedPuzzle && mounted) {
+          hasPuzzle = true;
+          applyPuzzleToState(cachedPuzzle);
+        }
+
+        // Always revalidate with backend to ensure correctness
+        const freshPuzzle = await getTodaysPuzzle();
         if (mounted) {
-          setDailyPuzzle(puzzle);
-
-          // Initialize game state once puzzle is loaded
-          const newGameState = initializeGame(puzzle.word);
-          setGameState(newGameState);
+          hasPuzzle = true;
+          applyPuzzleToState(freshPuzzle);
         }
       } catch (err) {
         console.error("Failed to load daily puzzle:", err);
-        if (mounted) {
+        if (mounted && !hasPuzzle) {
           setError(err as Error);
+        }
+        if (mounted && hasPuzzle) {
+          // Allow cached puzzle to render if network failed
+          setIsLoading(false);
         }
         // getTodaysPuzzle already has built-in fallback, so this shouldn't happen
       } finally {

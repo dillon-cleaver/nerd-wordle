@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { WordEntry } from "@/types/word";
 import { dailyPuzzleApi } from "@/utils/api";
 import { getTodayDateString } from "@/utils/time";
@@ -6,6 +7,50 @@ type DailyPuzzleSeed = {
   date: string; // ISO (YYYY-MM-DD)
   word: WordEntry; // The word includes its own appearance data
 };
+
+type CachedDailyPuzzle = {
+  date: string;
+  puzzle: DailyPuzzleSeed;
+  cachedAt: string;
+};
+
+const DAILY_PUZZLE_CACHE_KEY = "daily_puzzle_cache_v1";
+
+async function loadCachedPuzzleForDate(
+  date: string
+): Promise<DailyPuzzleSeed | null> {
+  try {
+    const rawCache = await AsyncStorage.getItem(DAILY_PUZZLE_CACHE_KEY);
+    if (!rawCache) return null;
+
+    const cached: CachedDailyPuzzle = JSON.parse(rawCache);
+    if (!cached?.puzzle?.word || cached.date !== date) {
+      return null;
+    }
+
+    return cached.puzzle;
+  } catch (error) {
+    console.warn("Failed to load cached daily puzzle", error);
+    return null;
+  }
+}
+
+async function savePuzzleToCache(puzzle: DailyPuzzleSeed): Promise<void> {
+  try {
+    const cachePayload: CachedDailyPuzzle = {
+      date: puzzle.date,
+      puzzle,
+      cachedAt: new Date().toISOString(),
+    };
+
+    await AsyncStorage.setItem(
+      DAILY_PUZZLE_CACHE_KEY,
+      JSON.stringify(cachePayload)
+    );
+  } catch (error) {
+    console.warn("Failed to cache daily puzzle", error);
+  }
+}
 
 /**
  * ---------------------------------------------------------------------------
@@ -26,7 +71,10 @@ type DailyPuzzleSeed = {
  */
 async function getTodaysPuzzle(): Promise<DailyPuzzleSeed> {
   try {
-    return await dailyPuzzleApi.getTodaysPuzzle();
+    const puzzle = await dailyPuzzleApi.getTodaysPuzzle();
+    // Cache for faster subsequent loads today
+    savePuzzleToCache(puzzle);
+    return puzzle;
   } catch (error) {
     console.warn(
       "Failed to fetch today's puzzle from backend, using fallback:",
@@ -36,7 +84,7 @@ async function getTodaysPuzzle(): Promise<DailyPuzzleSeed> {
     // TODO: ALPHA ONLY - Hardcoded fallback for development
     // Production should have proper error handling and retry logic
     const today = getTodayDateString();
-    return {
+    const fallback: DailyPuzzleSeed = {
       date: today,
       word: {
         id: "ZELDA",
@@ -57,6 +105,9 @@ async function getTodaysPuzzle(): Promise<DailyPuzzleSeed> {
         },
       },
     };
+
+    savePuzzleToCache(fallback);
+    return fallback;
   }
 }
 
@@ -72,4 +123,9 @@ async function getPuzzleForDate(date: string): Promise<DailyPuzzleSeed> {
   }
 }
 
-export { DailyPuzzleSeed, getTodaysPuzzle, getPuzzleForDate };
+export {
+  DailyPuzzleSeed,
+  getTodaysPuzzle,
+  getPuzzleForDate,
+  loadCachedPuzzleForDate,
+};
