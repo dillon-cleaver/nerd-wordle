@@ -4,7 +4,7 @@ import Animated, { FadeInUp } from "react-native-reanimated";
 import { GuessGrid } from "./GuessGrid";
 import { Keyboard } from "./Keyboard";
 import { GameContext } from "@/context/GameContext";
-import { spacing, animation } from "@/constants/styles";
+import { spacing, animation, colors } from "@/constants/styles";
 import { BannerCard } from "./BannerCard";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 import { useDevice } from "@/hooks/useDevice";
@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     gap: spacing.md,
     width: "100%",
+    backgroundColor: colors.neutral.background,
   },
   content: {
     alignItems: "center",
