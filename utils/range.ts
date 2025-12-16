@@ -9,3 +9,5 @@ export const range = (start: number, end: number, step = 1) => {
   }
   return output;
 };
+
+// TODO: How does this function work?
