@@ -108,7 +108,7 @@ All the above methods are available through the GameContext as well.
 
 ## Storage Behavior
 
-1. **Local Storage**: Always saves data locally for offline support
+1. **Local Storage**: Always saves data locally for persistence
 
    - Web: Uses browser's `localStorage` API (for web compatibility)
    - Native: Uses `AsyncStorage`

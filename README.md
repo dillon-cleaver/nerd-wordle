@@ -14,7 +14,6 @@ A cross-platform word-guessing game featuring 3,800+ words from nerdy topics (mo
 - **Educational Integration** - Wikipedia links and hints for learning
 - **Cross-Platform** - iOS, Android, and web from single codebase
 - **User Progress Tracking** - Firebase-backed puzzle history and statistics
-- **Offline Support** - Play without internet connection
 
 ## Tech Stack
 

@@ -53,7 +53,7 @@ The **HTTP cache** (browser cache) is a built-in browser feature that automatica
 | **Size Limit**       | ~5-10MB total                   | ~50-100MB+ per domain           |
 | **Management**       | Manual (you write code)         | Automatic (browser handles it)  |
 | **Speed**            | Fast, but requires JSON.parse() | Instant (pre-parsed by browser) |
-| **Network-aware**    | No (offline only)               | Yes (respects cache headers)    |
+| **Network-aware**    | No (local-only)                 | Yes (respects cache headers)    |
 | **Storage Location** | Same as app data                | Separate cache storage          |
 
 ### The Two-Storage System
@@ -141,7 +141,7 @@ export async function fetchWordsFromCDN(version: string = "v6") {
 - Browser cache handles 243KB efficiently
 - HTTP cache headers work as designed
 - No JSON parsing on app startup
-- Reliable offline support
+- Reliable cache reuse when online
 
 ### 3. Bundle Exclusion
 
@@ -332,7 +332,7 @@ AsyncStorage.setItem(
 
 - **Faster loading** (optimized caching)
 - **Immediate updates** (next session gets new words)
-- **Offline support** (browser cache reliability)
+- **Cache reuse** (browser cache reliability)
 - **No app store updates** (for word additions)
 
 ## 🔍 Monitoring & Debugging
