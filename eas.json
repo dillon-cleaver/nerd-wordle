@@ -5,7 +5,9 @@
   "build": {
     "base": {
       "node": "20.18.0",
-      "yarn": "1.22.22",
+      "pnpm": {
+        "version": "9"
+      },
       "env": {
         "EXPO_NO_CLIENT_ENV_VARS": "0"
       }
@@ -23,6 +25,12 @@
         "withoutCredentials": true,
         "buildType": "apk"
       },
+      "ios": {
+        "simulator": true
+      }
+    },
+    "ios-simulator": {
+      "extends": "development",
       "ios": {
         "simulator": true
       }
