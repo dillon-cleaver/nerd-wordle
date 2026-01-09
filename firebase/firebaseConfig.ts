@@ -144,9 +144,14 @@ export function getFirestoreInstance() {
     // Connect to emulator if in development
     if (isDevelopment) {
       try {
-        connectFirestoreEmulator(firestoreInstance, "localhost", 8080);
+        // Android emulator needs 10.0.2.2 to access host machine's localhost
+        const emulatorHost =
+          Platform.OS === "android" ? "10.0.2.2" : "localhost";
+        connectFirestoreEmulator(firestoreInstance, emulatorHost, 8080);
         if (ENABLE_DEBUG) {
-          console.log("Connected to Firestore emulator on localhost:8080");
+          console.log(
+            `Connected to Firestore emulator on ${emulatorHost}:8080`
+          );
         }
       } catch (e) {
         if (ENABLE_DEBUG) console.log("Firestore emulator connect:", e);

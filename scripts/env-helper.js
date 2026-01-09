@@ -18,8 +18,6 @@ const presets = {
     EXPO_PUBLIC_ENABLE_DEBUG_LOGS: "true",
     EXPO_PUBLIC_BYPASS_DAILY_LIMIT: "false",
     EXPO_PUBLIC_SHOW_DEV_BADGE: "true",
-    EXPO_PUBLIC_API_URL:
-      "http://127.0.0.1:5001/nerd-word-cfda3/us-central1/api",
   },
 
   // Testing with dev overrides
@@ -28,8 +26,6 @@ const presets = {
     EXPO_PUBLIC_ENABLE_DEBUG_LOGS: "true",
     EXPO_PUBLIC_BYPASS_DAILY_LIMIT: "true",
     EXPO_PUBLIC_SHOW_DEV_BADGE: "true",
-    EXPO_PUBLIC_API_URL:
-      "http://127.0.0.1:5001/nerd-word-cfda3/us-central1/api",
   },
 
   // Production settings (for local web exports)
