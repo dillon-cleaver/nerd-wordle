@@ -5,9 +5,7 @@
   "build": {
     "base": {
       "node": "20.18.0",
-      "pnpm": {
-        "version": "10"
-      },
+      "pnpm": "10.24.0",
       "env": {
         "EXPO_NO_CLIENT_ENV_VARS": "0"
       }
