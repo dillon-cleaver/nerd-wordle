@@ -8,6 +8,7 @@ import { GameProvider } from "@/context/GameContext";
 import { PuzzleHistoryProvider } from "@/context/PuzzleHistoryContext";
 import { WordDataProvider } from "@/context/WordDataContext";
 import { DrawerNavigationWrapper } from "@/components/DrawerNavigationWrapper";
+import { GameReadyGate } from "@/components/GameReadyGate";
 import { colors } from "@/constants/styles";
 
 SplashScreen.preventAutoHideAsync();
@@ -66,7 +67,9 @@ function RootLayoutContent() {
           >
             <WordDataProvider>
               <GameProvider>
-                <DrawerNavigationWrapper />
+                <GameReadyGate>
+                  <DrawerNavigationWrapper />
+                </GameReadyGate>
               </GameProvider>
             </WordDataProvider>
           </Suspense>

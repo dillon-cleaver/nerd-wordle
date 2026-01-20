@@ -13,7 +13,7 @@ import { useKeyboardListener } from "@/hooks/useKeyboardListener";
 import { useAccessibilityKeyboard } from "@/hooks/useAccessibilityKeyboard";
 
 export const Game = () => {
-  const { category, answer, isLoading } = useContext(GameContext);
+  const { category, answer } = useContext(GameContext);
 
   const [hintModalVisible, setHintModalVisible] = useState(false);
 
@@ -45,12 +45,6 @@ export const Game = () => {
       console.info({ answer, category });
     }
   }, [answer, category]);
-
-  // Prevent rendering during initial load to avoid layout shifts
-  // This ensures both GuessGrid and Keyboard render together
-  if (isLoading) {
-    return <View style={containerStyle} />;
-  }
 
   return (
     <View style={containerStyle}>
