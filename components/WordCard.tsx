@@ -1,26 +1,35 @@
-import { StyleSheet, Text, View, Pressable, Linking } from "react-native";
-import { Card } from "./base/Card";
-import { SvgIcon } from "./base/SvgIcon";
 import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  Linking,
+  Platform,
+} from "react-native";
+import { SubtleGradient } from "./base/SubtleGradient";
+import { Card } from "./base/Card";
+import {
+  colors,
+  borderWidth,
   borderRadius,
   fontFamily,
   fontSize,
   lineHeight,
+  shadow,
   spacing,
 } from "@/constants/styles";
-import { iconSizes } from "@/constants/icons";
 import {
   WORD_CARD_MAX_WIDTH,
   WORD_CARD_MIN_WIDTH,
 } from "@/constants/dimensions";
 import {
   getCategoryColor,
-  getCategoryTextColor,
   getSummaryForWord,
   convertCategory,
 } from "@/utils/game";
 import { CollectedWord } from "@/hooks/useCollectedWords";
 import { getShortDateString } from "@/utils/time";
+import { hexToRgba } from "@/utils/color";
 
 type WordCardProps = {
   collectedWord: CollectedWord;
@@ -31,10 +40,7 @@ export const WordCard = ({ collectedWord }: WordCardProps) => {
   const answer = wordEntry.id;
 
   const summary = getSummaryForWord(wordEntry);
-  const tileBackgroundColor = getCategoryColor(category);
-  const textColor = getCategoryTextColor(category);
-
-  // Format the category display name
+  const accentColor = getCategoryColor(category);
   const formattedCategory = convertCategory(category);
 
   const handleWikipediaPress = () => {
@@ -43,109 +49,144 @@ export const WordCard = ({ collectedWord }: WordCardProps) => {
     }
   };
 
-  // Format date as MM/DD/YY using timezone-aware utility
   const formattedDate = getShortDateString(completedDate);
 
   return (
     <Card
-      containerStyle={[styles.container, { borderColor: tileBackgroundColor }]}
+      containerStyle={[styles.container, getContainerOverlayStyle(accentColor)]}
     >
-      <Card
-        containerStyle={[
-          styles.content,
-          { backgroundColor: tileBackgroundColor },
-        ]}
-      >
+      <SubtleGradient
+        colors={[colors.wordCard.gradientStart, colors.wordCard.gradientEnd]}
+      />
+      <View style={styles.content}>
         <View style={styles.answerEditionRow}>
-          <Text style={[styles.answerText, { color: textColor }]}>
-            {answer}
-          </Text>
-          <View>
-            <Text style={[styles.editionText, { color: textColor }]}>
-              #{editionNumber}
-            </Text>
-            <Text style={[styles.dateText, { color: textColor }]}>
-              {formattedDate}
+          <Text style={styles.answerText}>{answer}</Text>
+          <View style={styles.editionDateBlock}>
+            <Text style={styles.editionText}>#{editionNumber}</Text>
+            <Text style={styles.dateText}>{formattedDate}</Text>
+          </View>
+        </View>
+
+        <Text style={styles.summaryText}>{summary}</Text>
+
+        <View style={styles.wikipediaSection}>
+          <Pressable onPress={handleWikipediaPress}>
+            <Text style={styles.linkText}>Wikipedia →</Text>
+          </Pressable>
+        </View>
+
+        <View style={styles.badgeContainer}>
+          <View
+            style={[
+              styles.categoryBadge,
+              {
+                backgroundColor: hexToRgba(
+                  accentColor,
+                  colors.wordCard.badgeBackgroundOpacity
+                ),
+                borderColor: hexToRgba(
+                  accentColor,
+                  colors.wordCard.badgeBorderOpacity
+                ),
+              },
+            ]}
+          >
+            <Text style={[styles.categoryText, { color: accentColor }]}>
+              {formattedCategory}
             </Text>
           </View>
         </View>
-        <Text style={[styles.summaryText, { color: textColor }]}>
-          {summary}
-        </Text>
-        <Pressable onPress={handleWikipediaPress}>
-          <View style={styles.linkContainer}>
-            <Text style={[styles.linkText, { color: textColor }]}>
-              Wikipedia
-            </Text>
-            <SvgIcon
-              name="chevron-right"
-              size={iconSizes.small}
-              color={textColor}
-            />
-          </View>
-        </Pressable>
-        <Text style={[styles.categoryText, { color: textColor }]}>
-          {formattedCategory}
-        </Text>
-      </Card>
+      </View>
     </Card>
   );
 };
+
+const getContainerOverlayStyle = (accentColor: string) => ({
+  borderColor: accentColor,
+  backgroundColor: "transparent" as const,
+  overflow: "hidden" as const,
+  ...Platform.select({
+    ios: {
+      shadowColor: shadow.wordCard.color,
+      shadowOffset: {
+        width: shadow.wordCard.offsetX,
+        height: shadow.wordCard.offsetY,
+      },
+      shadowOpacity: shadow.wordCard.opacity,
+      shadowRadius: shadow.wordCard.radius,
+    },
+    android: { elevation: shadow.wordCard.elevation },
+  }),
+});
 
 const styles = StyleSheet.create({
   container: {
     minWidth: WORD_CARD_MIN_WIDTH,
     maxWidth: WORD_CARD_MAX_WIDTH,
     width: "100%",
-    borderWidth: 2,
+    borderWidth: borderWidth.wordCard,
+    borderRadius: borderRadius.card,
   },
   content: {
-    flex: 1,
-    gap: spacing.md,
-    borderRadius: borderRadius.sm,
-    padding: spacing.sm,
+    padding: spacing.lg,
+    gap: spacing.sm,
   },
   answerEditionRow: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginBottom: spacing.md,
   },
   answerText: {
     fontSize: fontSize.title.xLarge,
     lineHeight: lineHeight.title.xLarge,
     fontFamily: fontFamily.bitter.bold,
+    color: colors.neutral.white,
+  },
+  editionDateBlock: {
+    alignItems: "flex-end",
   },
   editionText: {
-    fontSize: fontSize.title.xLarge,
-    lineHeight: lineHeight.title.xLarge,
+    fontSize: fontSize.title.large,
+    lineHeight: lineHeight.title.large,
     fontFamily: fontFamily.bitter.bold,
+    color: colors.neutral.white,
   },
   dateText: {
-    fontSize: fontSize.body.base,
-    lineHeight: lineHeight.body.base,
-    fontFamily: fontFamily.bitter.regular,
-  },
-  hintText: {
-    fontSize: fontSize.title.medium,
-    lineHeight: lineHeight.title.medium,
-    fontFamily: fontFamily.bitter.italic,
+    fontSize: fontSize.body.small,
+    lineHeight: lineHeight.body.small,
+    fontFamily: fontFamily.bitter.medium,
+    color: colors.wordCard.textSecondary,
   },
   summaryText: {
     fontSize: fontSize.body.base,
     lineHeight: lineHeight.body.base,
-    fontFamily: fontFamily.bitter.regular,
+    fontFamily: fontFamily.bitter.medium,
+    color: colors.wordCard.textPrimary,
+    marginBottom: spacing.md,
+  },
+  wikipediaSection: {
+    borderTopWidth: borderWidth.divider,
+    borderTopColor: colors.wordCard.divider,
+    paddingTop: spacing.smMd,
   },
   linkText: {
-    fontSize: fontSize.body.base,
-    lineHeight: lineHeight.body.base,
-    fontFamily: fontFamily.bitter.regular,
+    fontSize: fontSize.body.small,
+    fontFamily: fontFamily.bitter.medium,
+    color: colors.wordCard.textMuted,
   },
-  linkContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+  badgeContainer: {
+    marginTop: spacing.smMd,
+  },
+  categoryBadge: {
+    alignSelf: "flex-start",
+    paddingHorizontal: spacing.smMd,
+    paddingVertical: spacing.xs,
+    borderRadius: borderRadius.pill,
+    borderWidth: borderWidth.badge,
   },
   categoryText: {
-    fontSize: fontSize.title.base,
-    lineHeight: lineHeight.title.base,
+    fontSize: fontSize.body.small,
     fontFamily: fontFamily.bitter.bold,
   },
 });

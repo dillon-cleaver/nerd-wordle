@@ -6,6 +6,7 @@ import {
   ViewStyle,
   Pressable,
 } from "react-native";
+import { SubtleGradient } from "./base/SubtleGradient";
 import {
   borderRadius,
   colors,
@@ -38,22 +39,38 @@ export const LetterBox = ({
 }: LetterBoxProps) => {
   const cellStyles: StyleProp<ViewStyle> = [styles.container];
 
-  if (!isCurrentGuess && letter) {
-    if (isCorrect) {
-      cellStyles.push({ backgroundColor: colors.semantic.success });
-    } else if (isPresent) {
-      cellStyles.push(styles.present);
-    } else {
-      cellStyles.push(styles.absent);
-    }
+  if (invalidWord) {
+    cellStyles.push(styles.invalidBorder);
   }
 
-  if (invalidWord) {
-    cellStyles.push(styles.invalid);
-  }
+  const feedbackBackground =
+    invalidWord
+      ? colors.neutral.darkGray
+      : !isCurrentGuess && letter
+        ? isCorrect
+          ? colors.semantic.success
+          : isPresent
+            ? colors.tiles.wrongPlace
+            : colors.neutral.black
+        : null;
 
   const letterBox = (
     <View style={cellStyles}>
+      {feedbackBackground ? (
+        <View
+          style={[
+            StyleSheet.absoluteFill,
+            { backgroundColor: feedbackBackground },
+          ]}
+        />
+      ) : (
+        <SubtleGradient
+          colors={[
+            colors.tiles.defaultGradientStart,
+            colors.tiles.defaultGradientEnd,
+          ]}
+        />
+      )}
       <Text style={styles.letter}>{letter}</Text>
       {showHint && (
         <>
@@ -93,10 +110,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.neutral.lightGray,
     justifyContent: "center",
-    backgroundColor: colors.tiles.default,
     alignItems: "center",
     borderRadius: borderRadius.md,
     position: "relative",
+    overflow: "hidden",
   },
   letter: {
     fontFamily: fontFamily.bitter.bold,
@@ -104,15 +121,8 @@ const styles = StyleSheet.create({
     lineHeight: lineHeight.title.large,
     color: colors.neutral.white,
   },
-  present: {
-    backgroundColor: colors.tiles.wrongPlace,
-  },
-  absent: {
-    backgroundColor: colors.neutral.black,
-  },
-  invalid: {
+  invalidBorder: {
     borderColor: colors.neutral.white,
-    backgroundColor: colors.neutral.darkGray,
   },
   previewLetter: {
     textAlign: "center",

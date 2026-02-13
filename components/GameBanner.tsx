@@ -1,6 +1,12 @@
-import { StyleSheet } from "react-native";
-import { borderRadius, colors, spacing } from "@/constants/styles";
-// Note: Width should match the container (Game content). We use width: "100%".
+import { StyleSheet, View, Platform } from "react-native";
+import {
+  borderWidth,
+  borderRadius,
+  colors,
+  shadow,
+  spacing,
+} from "@/constants/styles";
+import { SubtleGradient } from "./base/SubtleGradient";
 import { Card } from "./base/Card";
 import { WordEntry } from "@/types/word";
 import { BannerMessage } from "./BannerMessage";
@@ -26,12 +32,36 @@ export const GameBanner = ({
 }: GameBannerProps) => {
   if (gameStatus === "running") return null;
 
-  const backgroundColor =
+  const accentColor =
     gameStatus === "won" ? colors.semantic.success : colors.semantic.warning;
 
   return (
-    <Card containerStyle={[styles.outer, { borderColor: backgroundColor }]}>
-      <Card containerStyle={[styles.inner, { backgroundColor }]}>
+    <Card
+      containerStyle={[
+        styles.container,
+        {
+          borderColor: accentColor,
+          backgroundColor: "transparent",
+          overflow: "hidden",
+          ...Platform.select({
+            ios: {
+              shadowColor: shadow.wordCard.color,
+              shadowOffset: {
+                width: shadow.wordCard.offsetX,
+                height: shadow.wordCard.offsetY,
+              },
+              shadowOpacity: shadow.wordCard.opacity,
+              shadowRadius: shadow.wordCard.radius,
+            },
+            android: { elevation: shadow.wordCard.elevation },
+          }),
+        },
+      ]}
+    >
+      <SubtleGradient
+        colors={[colors.wordCard.gradientStart, colors.wordCard.gradientEnd]}
+      />
+      <View style={styles.content}>
         <BannerMessage gameStatus={gameStatus} numGuesses={numGuesses} />
 
         {gameStatus === "won" && answer && (
@@ -47,19 +77,19 @@ export const GameBanner = ({
         {gameStatus === "lost" && answerEntry && (
           <WikipediaLink answerEntry={answerEntry} />
         )}
-      </Card>
+      </View>
     </Card>
   );
 };
 
 const styles = StyleSheet.create({
-  outer: {
-    borderWidth: 2,
+  container: {
+    borderWidth: borderWidth.wordCard,
+    borderRadius: borderRadius.card,
     width: "100%",
   },
-  inner: {
-    padding: spacing.sm,
-    borderRadius: borderRadius.sm,
+  content: {
+    padding: spacing.lg,
     gap: spacing.sm,
   },
 });
