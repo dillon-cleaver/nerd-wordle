@@ -438,6 +438,7 @@ The build and timing values in these instructions have been validated and measur
 For detailed information on specific features, see the `docs/` folder:
 
 - [DEVELOPMENT-GUIDE.md](../docs/DEVELOPMENT-GUIDE.md) - Quick start and common commands
+- [STYLING-GUIDE.md](../docs/STYLING-GUIDE.md) - Design system, constants, SubtleGradient
 - [WORD-MANAGEMENT-GUIDE.md](../docs/WORD-MANAGEMENT-GUIDE.md) - Complete word workflow
 - [WORD-MANAGEMENT-QUICK-REFERENCE.md](../docs/WORD-MANAGEMENT-QUICK-REFERENCE.md) - Quick command reference
 - [DAILY-PUZZLES.md](../docs/DAILY-PUZZLES.md) - Daily puzzle scheduling system
