@@ -55,31 +55,31 @@ export const LetterBox = ({
         : null;
 
   const letterBox = (
-    <View style={cellStyles}>
-      {feedbackBackground ? (
-        <View
-          style={[
-            StyleSheet.absoluteFill,
-            { backgroundColor: feedbackBackground },
-          ]}
-        />
-      ) : (
-        <SubtleGradient
-          colors={[
-            colors.tiles.defaultGradientStart,
-            colors.tiles.defaultGradientEnd,
-          ]}
-        />
-      )}
-      <Text style={styles.letter}>{letter}</Text>
-      {showHint && (
-        <>
-          <HintOutline />
+    <View style={styles.outerContainer}>
+      {showHint && <HintOutline />}
+      <View style={cellStyles}>
+        {feedbackBackground ? (
+          <View
+            style={[
+              StyleSheet.absoluteFill,
+              { backgroundColor: feedbackBackground },
+            ]}
+          />
+        ) : (
+          <SubtleGradient
+            colors={[
+              colors.tiles.defaultGradientStart,
+              colors.tiles.defaultGradientEnd,
+            ]}
+          />
+        )}
+        <Text style={styles.letter}>{letter}</Text>
+        {showHint && (
           <View style={styles.previewLetterWrapper}>
             <Text style={styles.previewLetter}>{hintLetter.toUpperCase()}</Text>
           </View>
-        </>
-      )}
+        )}
+      </View>
     </View>
   );
 
@@ -104,9 +104,14 @@ const styles = StyleSheet.create({
   pressableContainer: {
     flexGrow: 1,
   },
-  container: {
+  outerContainer: {
     flexGrow: 1,
     aspectRatio: 1,
+    position: "relative",
+  },
+  container: {
+    width: "100%",
+    height: "100%",
     borderWidth: 1,
     borderColor: colors.neutral.lightGray,
     justifyContent: "center",

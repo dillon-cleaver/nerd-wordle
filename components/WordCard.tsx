@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  Linking,
-  Platform,
-} from "react-native";
+import { StyleSheet, Text, View, Pressable, Linking } from "react-native";
 import { SubtleGradient } from "./base/SubtleGradient";
 import { Card } from "./base/Card";
 import {
@@ -15,9 +8,12 @@ import {
   fontFamily,
   fontSize,
   lineHeight,
-  shadow,
   spacing,
 } from "@/constants/styles";
+import {
+  getCardOverlayStyle,
+  cardShadowStyle,
+} from "@/utils/cardStyles";
 import {
   WORD_CARD_MAX_WIDTH,
   WORD_CARD_MIN_WIDTH,
@@ -52,72 +48,56 @@ export const WordCard = ({ collectedWord }: WordCardProps) => {
   const formattedDate = getShortDateString(completedDate);
 
   return (
-    <Card
-      containerStyle={[styles.container, getContainerOverlayStyle(accentColor)]}
-    >
-      <SubtleGradient
-        colors={[colors.wordCard.gradientStart, colors.wordCard.gradientEnd]}
-      />
-      <View style={styles.content}>
-        <View style={styles.answerEditionRow}>
-          <Text style={styles.answerText}>{answer}</Text>
-          <View style={styles.editionDateBlock}>
-            <Text style={styles.editionText}>#{editionNumber}</Text>
-            <Text style={styles.dateText}>{formattedDate}</Text>
+    <View style={cardShadowStyle}>
+      <Card
+        containerStyle={[styles.container, getCardOverlayStyle(accentColor)]}
+      >
+        <SubtleGradient
+          colors={[colors.wordCard.gradientStart, colors.wordCard.gradientEnd]}
+        />
+        <View style={styles.content}>
+          <View style={styles.answerEditionRow}>
+            <Text style={styles.answerText}>{answer}</Text>
+            <View style={styles.editionDateBlock}>
+              <Text style={styles.editionText}>#{editionNumber}</Text>
+              <Text style={styles.dateText}>{formattedDate}</Text>
+            </View>
+          </View>
+
+          <Text style={styles.summaryText}>{summary}</Text>
+
+          <View style={styles.wikipediaSection}>
+            <Pressable onPress={handleWikipediaPress}>
+              <Text style={styles.linkText}>Wikipedia →</Text>
+            </Pressable>
+          </View>
+
+          <View style={styles.badgeContainer}>
+            <View
+              style={[
+                styles.categoryBadge,
+                {
+                  backgroundColor: hexToRgba(
+                    accentColor,
+                    colors.wordCard.badgeBackgroundOpacity
+                  ),
+                  borderColor: hexToRgba(
+                    accentColor,
+                    colors.wordCard.badgeBorderOpacity
+                  ),
+                },
+              ]}
+            >
+              <Text style={[styles.categoryText, { color: accentColor }]}>
+                {formattedCategory}
+              </Text>
+            </View>
           </View>
         </View>
-
-        <Text style={styles.summaryText}>{summary}</Text>
-
-        <View style={styles.wikipediaSection}>
-          <Pressable onPress={handleWikipediaPress}>
-            <Text style={styles.linkText}>Wikipedia →</Text>
-          </Pressable>
-        </View>
-
-        <View style={styles.badgeContainer}>
-          <View
-            style={[
-              styles.categoryBadge,
-              {
-                backgroundColor: hexToRgba(
-                  accentColor,
-                  colors.wordCard.badgeBackgroundOpacity
-                ),
-                borderColor: hexToRgba(
-                  accentColor,
-                  colors.wordCard.badgeBorderOpacity
-                ),
-              },
-            ]}
-          >
-            <Text style={[styles.categoryText, { color: accentColor }]}>
-              {formattedCategory}
-            </Text>
-          </View>
-        </View>
-      </View>
-    </Card>
+      </Card>
+    </View>
   );
 };
-
-const getContainerOverlayStyle = (accentColor: string) => ({
-  borderColor: accentColor,
-  backgroundColor: "transparent" as const,
-  overflow: "hidden" as const,
-  ...Platform.select({
-    ios: {
-      shadowColor: shadow.wordCard.color,
-      shadowOffset: {
-        width: shadow.wordCard.offsetX,
-        height: shadow.wordCard.offsetY,
-      },
-      shadowOpacity: shadow.wordCard.opacity,
-      shadowRadius: shadow.wordCard.radius,
-    },
-    android: { elevation: shadow.wordCard.elevation },
-  }),
-});
 
 const styles = StyleSheet.create({
   container: {

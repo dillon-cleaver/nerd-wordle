@@ -17,10 +17,6 @@ const colors = {
     defaultGradientEnd: "#1a1e24",
     wrongPlace: "#DAA520",
   },
-  gradient: {
-    startPoint: { x: 0, y: 0 },
-    endPoint: { x: 1, y: 1 },
-  },
   neutral: {
     white: "#ffffff",
     background: "#1e212b",
@@ -126,6 +122,11 @@ const animation = {
   },
 } as const;
 
+const gradient = {
+  startPoint: { x: 0, y: 0 },
+  endPoint: { x: 1, y: 1 },
+} as const;
+
 const shadow = {
   wordCard: {
     color: colors.neutral.black,
@@ -146,5 +147,6 @@ export {
   borderWidth,
   borderRadius,
   animation,
+  gradient,
   shadow,
 };

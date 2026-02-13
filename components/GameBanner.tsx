@@ -1,11 +1,11 @@
-import { StyleSheet, View, Platform } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   borderWidth,
   borderRadius,
   colors,
-  shadow,
   spacing,
 } from "@/constants/styles";
+import { getCardOverlayStyle, cardShadowStyle } from "@/utils/cardStyles";
 import { SubtleGradient } from "./base/SubtleGradient";
 import { Card } from "./base/Card";
 import { WordEntry } from "@/types/word";
@@ -36,49 +36,32 @@ export const GameBanner = ({
     gameStatus === "won" ? colors.semantic.success : colors.semantic.warning;
 
   return (
-    <Card
-      containerStyle={[
-        styles.container,
-        {
-          borderColor: accentColor,
-          backgroundColor: "transparent",
-          overflow: "hidden",
-          ...Platform.select({
-            ios: {
-              shadowColor: shadow.wordCard.color,
-              shadowOffset: {
-                width: shadow.wordCard.offsetX,
-                height: shadow.wordCard.offsetY,
-              },
-              shadowOpacity: shadow.wordCard.opacity,
-              shadowRadius: shadow.wordCard.radius,
-            },
-            android: { elevation: shadow.wordCard.elevation },
-          }),
-        },
-      ]}
-    >
-      <SubtleGradient
-        colors={[colors.wordCard.gradientStart, colors.wordCard.gradientEnd]}
-      />
-      <View style={styles.content}>
-        <BannerMessage gameStatus={gameStatus} numGuesses={numGuesses} />
+    <View style={cardShadowStyle}>
+      <Card
+        containerStyle={[styles.container, getCardOverlayStyle(accentColor)]}
+      >
+        <SubtleGradient
+          colors={[colors.wordCard.gradientStart, colors.wordCard.gradientEnd]}
+        />
+        <View style={styles.content}>
+          <BannerMessage gameStatus={gameStatus} numGuesses={numGuesses} />
 
-        {gameStatus === "won" && answer && (
-          <CollectedWordText answer={answer} edition={edition} />
-        )}
+          {gameStatus === "won" && answer && (
+            <CollectedWordText answer={answer} edition={edition} />
+          )}
 
-        {gameStatus === "won" && <SeeWordsLink />}
+          {gameStatus === "won" && <SeeWordsLink />}
 
-        {gameStatus === "lost" && answer && (
-          <AnswerRevealText answer={answer} />
-        )}
+          {gameStatus === "lost" && answer && (
+            <AnswerRevealText answer={answer} />
+          )}
 
-        {gameStatus === "lost" && answerEntry && (
-          <WikipediaLink answerEntry={answerEntry} />
-        )}
-      </View>
-    </Card>
+          {gameStatus === "lost" && answerEntry && (
+            <WikipediaLink answerEntry={answerEntry} />
+          )}
+        </View>
+      </Card>
+    </View>
   );
 };
 
