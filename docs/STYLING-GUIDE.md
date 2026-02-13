@@ -21,7 +21,7 @@ All design tokens live in `constants/styles.ts`:
 |-------|---------|
 | `colors.wordCard` | Dark card gradient, text hierarchy, badge opacity |
 | `colors.tiles` | Tile gradient for LetterBox |
-| `colors.gradient` | Shared gradient direction (top-left → bottom-right) |
+| `gradient` | Shared gradient direction (top-left → bottom-right) |
 | `colors.categories` | Category accent colors |
 | `shadow.wordCard` | Card shadow (iOS + Android) |
 | `borderWidth`, `borderRadius` | Layout constants |
@@ -36,7 +36,7 @@ All design tokens live in `constants/styles.ts`:
 <SubtleGradient colors={[colors.wordCard.gradientStart, colors.wordCard.gradientEnd]} />
 ```
 
-Uses `colors.gradient.startPoint` and `colors.gradient.endPoint` (top-left to bottom-right).
+Uses `gradient.startPoint` and `gradient.endPoint` (top-level export, top-left to bottom-right).
 
 ### Card
 
