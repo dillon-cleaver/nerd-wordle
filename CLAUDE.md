@@ -89,10 +89,18 @@ pnpm run words:validate
 
 ## File Locations
 
-| Purpose                     | Location          |
-| --------------------------- | ----------------- |
-| Word data (source of truth) | `data/words.json` |
-| App screens                 | `app/`            |
-| Components                  | `components/`     |
-| Backend API                 | `functions/src/`  |
-| Documentation               | `docs/`           |
+| Purpose                     | Location                   |
+| --------------------------- | -------------------------- |
+| Word data (source of truth) | `data/words.json`          |
+| Design tokens (colors, spacing, etc.) | `constants/styles.ts` |
+| App screens                 | `app/`                     |
+| Components                  | `components/`              |
+| Base components (Card, SubtleGradient) | `components/base/` |
+| Backend API                 | `functions/src/`           |
+| Documentation               | `docs/`                    |
+
+## Design System
+
+- **Dark gradient cards**: WordCard, GameBanner use `SubtleGradient` + `colors.wordCard`
+- **Constants**: All styling in `constants/styles.ts`; use constants, avoid magic numbers
+- **Details**: See [docs/STYLING-GUIDE.md](docs/STYLING-GUIDE.md)

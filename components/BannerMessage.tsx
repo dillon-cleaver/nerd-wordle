@@ -21,7 +21,7 @@ export const BannerMessage = ({
 
 const styles = StyleSheet.create({
   bannerText: {
-    color: colors.neutral.black,
+    color: colors.neutral.white,
     fontSize: fontSize.title.base,
     lineHeight: lineHeight.title.base,
     fontFamily: fontFamily.bitter.bold,

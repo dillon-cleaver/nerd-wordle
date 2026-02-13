@@ -50,6 +50,7 @@
     "expo-dev-client": "~5.2.4",
     "expo-device": "~7.1.4",
     "expo-font": "~13.3.2",
+    "expo-linear-gradient": "^15.0.8",
     "expo-linking": "~7.1.7",
     "expo-router": "~5.1.10",
     "expo-splash-screen": "~0.30.10",
@@ -88,7 +89,9 @@
   "private": true,
   "expo": {
     "install": {
-      "exclude": ["expo-doctor"]
+      "exclude": [
+        "expo-doctor"
+      ]
     },
     "doctor": {
       "reactNativeDirectoryCheck": {
