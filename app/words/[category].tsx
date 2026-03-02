@@ -74,7 +74,7 @@ export default function CategoryWords() {
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity
-            onPress={() => router.back()}
+            onPress={() => router.navigate("/words")}
             style={styles.backButton}
             accessibilityLabel="Go back to words list"
             accessibilityRole="button"
@@ -101,7 +101,7 @@ export default function CategoryWords() {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity
-          onPress={() => router.back()}
+          onPress={() => router.navigate("/words")}
           style={styles.backButton}
           accessibilityLabel="Go back to words list"
           accessibilityRole="button"
