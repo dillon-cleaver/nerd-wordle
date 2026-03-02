@@ -1,5 +1,6 @@
 import * as admin from "firebase-admin";
 import { WORD_DATA } from "../data/words";
+import { getTodayDateString, getDateString } from "../shared/time";
 import { wordEntryToFirestore } from "../utils";
 
 // Initialize Firebase Admin SDK
@@ -14,8 +15,8 @@ const db = admin.firestore();
 /**
  * RESEED DAILY PUZZLES FROM TODAY
  *
- * Non-destructive: only writes new puzzle documents, never deletes existing ones.
- * Starts from today and schedules all nerd words (edition 1 → N) sequentially.
+ * Overwrites dailyPuzzles entries for today → today+N, never deletes existing documents.
+ * Starts from today (Central Time) and schedules all nerd words (edition 1 → N) sequentially.
  * Use when the existing schedule has expired and needs to restart from scratch.
  */
 async function reseedFromToday() {
@@ -29,7 +30,7 @@ async function reseedFromToday() {
   });
 
   const today = new Date();
-  const todayString = today.toISOString().split("T")[0];
+  const todayString = getTodayDateString();
 
   console.log(`🚀 Reseeding from today (${todayString})...`);
   console.log(`📝 Found ${wordsToSchedule.length} nerd words`);
@@ -40,7 +41,7 @@ async function reseedFromToday() {
     for (let i = 0; i < wordsToSchedule.length; i++) {
       const puzzleDate = new Date(today);
       puzzleDate.setDate(today.getDate() + i);
-      const dateString = puzzleDate.toISOString().split("T")[0];
+      const dateString = getDateString(puzzleDate);
 
       const word = wordsToSchedule[i];
       const puzzleRef = db.collection("dailyPuzzles").doc(dateString);
@@ -69,7 +70,7 @@ async function reseedFromToday() {
 
     const endDate = new Date(today);
     endDate.setDate(today.getDate() + wordsToSchedule.length - 1);
-    const endDateString = endDate.toISOString().split("T")[0];
+    const endDateString = getDateString(endDate);
 
     console.log(
       `\n✅ Scheduled ${wordsToSchedule.length} words through ${endDateString}`

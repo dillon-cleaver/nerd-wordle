@@ -35,7 +35,7 @@ If all scheduled puzzles have passed (app falls back to ZELDA every day):
 cd functions && pnpm run seed:puzzles:reseed-today && cd ..
 ```
 
-Writes edition 1 → N starting from **today**. Non-destructive — old puzzle documents and user data are never touched. The current schedule runs out on the last edition's date; this picks up from the present.
+Writes edition 1 → N starting from **today** (Central Time), overwriting any existing `dailyPuzzles` entries for those dates. Puzzle documents before today and all user data are never touched.
 
 ---
 
