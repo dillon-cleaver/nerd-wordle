@@ -18,6 +18,7 @@
     "seed:words:production": "pnpm run build && node lib/functions/src/migrations/seed-words.js",
     "seed:words:emulator": "pnpm run build && FIRESTORE_EMULATOR_HOST=${FIRESTORE_EMULATOR_HOST:-127.0.0.1:8080} node lib/functions/src/migrations/seed-words.js",
     "seed:puzzles": "pnpm run build && node lib/functions/src/migrations/seed-production-puzzles.js",
+    "seed:puzzles:reseed-today": "pnpm run build && node lib/functions/src/migrations/reseed-from-today.js",
     "migrate:from-prod": "pnpm run build && FIRESTORE_EMULATOR_HOST=${FIRESTORE_EMULATOR_HOST:-127.0.0.1:8080} node lib/functions/src/migrations/import-from-production.js"
   },
   "engines": {
