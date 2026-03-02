@@ -11,4 +11,6 @@ export const opacity = {
   moderate: 0.6,
   /** Low emphasis, placeholders, very subtle elements */
   low: 0.4,
+  /** Pressed state for touchable elements */
+  pressed: 0.7,
 } as const;

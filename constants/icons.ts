@@ -14,6 +14,12 @@ export const iconSizes = {
    * Used for: navigation, buttons, modals, drawer items
    */
   standard: 24,
+
+  /**
+   * Large icons - 32px
+   * Used for: prominent navigation elements, headers
+   */
+  large: 32,
 } as const;
 
 export type IconSize = (typeof iconSizes)[keyof typeof iconSizes];
