@@ -39,7 +39,7 @@ The letter tracking feature tracks which letters are guessed per row in the Word
 
 ### Storage Layer
 
-- `storage/letter-tracking.local.ts` - Local storage implementation (supports both web localStorage and native AsyncStorage)
+- `storage/letter-tracking.local.ts` - Local storage implementation (supports both web and native AsyncStorage)
 - `storage/letter-tracking.firestore.ts` - Firestore implementation for cloud sync
 - `storage/letter-tracking.ts` - Main storage interface that combines local and cloud storage
 
@@ -108,9 +108,9 @@ All the above methods are available through the GameContext as well.
 
 ## Storage Behavior
 
-1. **Local Storage**: Always saves data locally for offline support
+1. **Local Storage**: Always saves data locally for persistence
 
-   - Web: Uses `localStorage`
+   - Web: Uses browser's `localStorage` API (for web compatibility)
    - Native: Uses `AsyncStorage`
 
 2. **Cloud Storage**: Saves to Firestore if user is authenticated
@@ -127,7 +127,7 @@ All the above methods are available through the GameContext as well.
 
 The feature supports both web and native platforms:
 
-- **Web**: Uses `localStorage` for persistence
+- **Web**: Uses browser's `localStorage` API (for web compatibility)
 - **iOS/Android**: Uses `@react-native-async-storage/async-storage`
 - **Automatic detection**: Platform.OS is used to choose the correct storage method
 

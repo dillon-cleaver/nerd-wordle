@@ -1,6 +1,5 @@
 import { Text, StyleSheet } from "react-native";
 import { colors, fontFamily, fontSize, lineHeight } from "@/constants/styles";
-import { opacity } from "@/constants/opacity";
 
 type CollectedWordTextProps = {
   answer: string;
@@ -22,11 +21,12 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.bitter.bold,
     fontSize: fontSize.title.base,
     lineHeight: lineHeight.title.base,
+    color: colors.neutral.white,
   },
   subText: {
-    color: colors.neutral.black,
+    color: colors.wordCard.textSecondary,
     fontSize: fontSize.body.base,
-    fontFamily: fontFamily.openSans.medium,
-    opacity: opacity.subtle,
+    fontFamily: fontFamily.bitter.medium,
+    lineHeight: lineHeight.body.base,
   },
 });

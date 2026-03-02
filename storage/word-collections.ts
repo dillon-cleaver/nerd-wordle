@@ -9,19 +9,19 @@ import {
 // TODO: Create API functions for word collections (similar to puzzleHistoryApi)
 // import { wordCollectionsApi } from "@/utils/api";
 
-export const addToCollection = (
+export const addToCollection = async (
   wordId: WordId,
   edition: number,
   collectedDate: Date
-): void => {
+): Promise<void> => {
   // Check if already collected
-  const existing = getWordCollectionLocal(wordId, edition);
+  const existing = await getWordCollectionLocal(wordId, edition);
   if (existing) {
     return; // Already have this word+edition
   }
 
   // Load current collections
-  const currentCollections = loadWordCollectionsLocal();
+  const currentCollections = await loadWordCollectionsLocal();
 
   // Create new collection entry
   const newCollection: WordCollection = {
@@ -37,8 +37,8 @@ export const addToCollection = (
     lastUpdated: new Date(), // Update this timestamp
   };
 
-  // Save to localStorage for offline support
-  saveWordCollectionsLocal(updatedCollections);
+  // Save to local storage for offline support
+  await saveWordCollectionsLocal(updatedCollections);
 
   // TODO: Save to backend if user is authenticated
   // const user = getAuth().currentUser;
@@ -53,6 +53,9 @@ export const addToCollection = (
   // }
 };
 
-export const hasCollected = (wordId: WordId, edition: number): boolean => {
-  return getWordCollectionLocal(wordId, edition) !== undefined;
+export const hasCollected = async (
+  wordId: WordId,
+  edition: number
+): Promise<boolean> => {
+  return (await getWordCollectionLocal(wordId, edition)) !== undefined;
 };

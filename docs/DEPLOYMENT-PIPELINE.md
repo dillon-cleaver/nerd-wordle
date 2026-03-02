@@ -337,11 +337,16 @@ firebase login
 **Solution**:
 
 ```bash
-# Clear localStorage in browser console
-localStorage.removeItem("nerd-wordle-words_v1");
+# Clear AsyncStorage in browser console (React Native Debugger)
+# Or for web, clear the metadata key:
+localStorage.removeItem("words_metadata_v3");
 
 # Or clear all storage
 localStorage.clear();
+
+# Force refresh words on next app load
+# Set the clear storage flag in dev environment
+# See utils/dev-flags.ts shouldClearStorageOnStart()
 ```
 
 ### Build Size Issues

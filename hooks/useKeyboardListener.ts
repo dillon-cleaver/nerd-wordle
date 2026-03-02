@@ -33,7 +33,7 @@ export const useKeyboardListener = () => {
         handleKeyPress(key);
 
         if (isDebugLoggingEnabled()) {
-          console.log(`⌨️ Keyboard: Letter key pressed: ${key}`);
+          console.log(`Keyboard: Letter key pressed: ${key}`);
         }
       }
       // Handle Enter key
@@ -42,7 +42,7 @@ export const useKeyboardListener = () => {
         handleKeyPress("ENTER");
 
         if (isDebugLoggingEnabled()) {
-          console.log(`⌨️ Keyboard: Enter key pressed`);
+          console.log(`Keyboard: Enter key pressed`);
         }
       }
       // Handle Backspace/Delete
@@ -51,7 +51,7 @@ export const useKeyboardListener = () => {
         handleKeyPress("BACKSPACE");
 
         if (isDebugLoggingEnabled()) {
-          console.log(`⌨️ Keyboard: Backspace key pressed`);
+          console.log(`Keyboard: Backspace key pressed`);
         }
       }
     };
@@ -60,7 +60,7 @@ export const useKeyboardListener = () => {
     document.addEventListener("keydown", handleKeyDown);
 
     if (isDebugLoggingEnabled()) {
-      console.log(`⌨️ Keyboard: Listener attached for desktop device`);
+      console.log(`Keyboard: Listener attached for desktop device`);
     }
 
     // Cleanup function to remove event listener
@@ -68,7 +68,7 @@ export const useKeyboardListener = () => {
       document.removeEventListener("keydown", handleKeyDown);
 
       if (isDebugLoggingEnabled()) {
-        console.log(`⌨️ Keyboard: Listener removed`);
+        console.log(`Keyboard: Listener removed`);
       }
     };
   }, [handleKeyPress, gameStatus, isDesktop]);

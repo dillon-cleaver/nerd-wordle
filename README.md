@@ -14,7 +14,6 @@ A cross-platform word-guessing game featuring 3,800+ words from nerdy topics (mo
 - **Educational Integration** - Wikipedia links and hints for learning
 - **Cross-Platform** - iOS, Android, and web from single codebase
 - **User Progress Tracking** - Firebase-backed puzzle history and statistics
-- **Offline Support** - Play without internet connection
 
 ## Tech Stack
 
@@ -50,7 +49,7 @@ pnpm run dev
 - **Bundle Size**: 2.69MB (optimized from 3.2MB)
 - **Word Dictionary**: 243KB externalized to CDN
 - **Cache Strategy**: Browser HTTP cache with URL-based versioning
-- **localStorage**: 99.96% reduction (metadata only)
+- **AsyncStorage**: 99.96% reduction (metadata only)
 
 See [docs/CDN-OPTIMIZATION.md](docs/CDN-OPTIMIZATION.md) for architecture details.
 

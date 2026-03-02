@@ -41,9 +41,7 @@ export const useAccessibilityKeyboard = (callbacks: {
           }
 
           if (isDebugLoggingEnabled()) {
-            console.log(
-              "🔑 Accessibility: Escape key pressed - closing modals"
-            );
+            console.log("Accessibility: Escape key pressed - closing modals");
           }
           break;
 
@@ -57,9 +55,7 @@ export const useAccessibilityKeyboard = (callbacks: {
             }
 
             if (isDebugLoggingEnabled()) {
-              console.log(
-                "🔑 Accessibility: Ctrl+H pressed - opening info modal"
-              );
+              console.log("Accessibility: Ctrl+H pressed - opening info modal");
             }
           }
           break;
@@ -74,7 +70,7 @@ export const useAccessibilityKeyboard = (callbacks: {
             }
 
             if (isDebugLoggingEnabled()) {
-              console.log("🔑 Accessibility: Ctrl+G pressed - focusing game");
+              console.log("Accessibility: Ctrl+G pressed - focusing game");
             }
           }
           break;
@@ -88,7 +84,7 @@ export const useAccessibilityKeyboard = (callbacks: {
             }
 
             if (isDebugLoggingEnabled()) {
-              console.log("🔑 Accessibility: ? pressed - opening help");
+              console.log("Accessibility: ? pressed - opening help");
             }
           }
           break;
@@ -102,7 +98,7 @@ export const useAccessibilityKeyboard = (callbacks: {
     document.addEventListener("keydown", handleKeyDown);
 
     if (isDebugLoggingEnabled()) {
-      console.log("🔑 Accessibility keyboard shortcuts enabled");
+      console.log("Accessibility keyboard shortcuts enabled");
       console.log("   • Escape: Close modals");
       console.log("   • Ctrl+H or ?: Open help");
       console.log("   • Ctrl+G: Focus game");
@@ -112,7 +108,7 @@ export const useAccessibilityKeyboard = (callbacks: {
       document.removeEventListener("keydown", handleKeyDown);
 
       if (isDebugLoggingEnabled()) {
-        console.log("🔑 Accessibility keyboard shortcuts disabled");
+        console.log("Accessibility keyboard shortcuts disabled");
       }
     };
   }, [isDesktop, gameStatus, callbacks]);

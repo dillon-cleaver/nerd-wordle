@@ -1,10 +1,11 @@
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from "./firebaseConfig";
+import { getFirestoreInstance } from "./firebaseConfig";
 import type { User } from "firebase/auth";
 import type { UserProfile } from "@/types/user-profile";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 
 export async function createUserIfNotExists(user: User) {
+  const db = getFirestoreInstance();
   const userRef = doc(db, "users", user.uid);
   const userDoc = await getDoc(userRef);
 

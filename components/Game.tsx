@@ -4,7 +4,7 @@ import Animated, { FadeInUp } from "react-native-reanimated";
 import { GuessGrid } from "./GuessGrid";
 import { Keyboard } from "./Keyboard";
 import { GameContext } from "@/context/GameContext";
-import { spacing, animation } from "@/constants/styles";
+import { spacing, animation, colors } from "@/constants/styles";
 import { BannerCard } from "./BannerCard";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 import { useDevice } from "@/hooks/useDevice";
@@ -13,7 +13,7 @@ import { useKeyboardListener } from "@/hooks/useKeyboardListener";
 import { useAccessibilityKeyboard } from "@/hooks/useAccessibilityKeyboard";
 
 export const Game = () => {
-  const { category, answer, isLoading } = useContext(GameContext);
+  const { category, answer } = useContext(GameContext);
 
   const [hintModalVisible, setHintModalVisible] = useState(false);
 
@@ -46,13 +46,6 @@ export const Game = () => {
     }
   }, [answer, category]);
 
-  // The DrawerNavigationWrapper handles loading state display
-  // If loading, don't render the game content to avoid layout shifts
-  if (isLoading) {
-    return null;
-  }
-
-  // Always show the active game view with banner + grid + keyboard
   return (
     <View style={containerStyle}>
       <Animated.View
@@ -83,6 +76,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     gap: spacing.md,
     width: "100%",
+    backgroundColor: colors.neutral.background,
   },
   content: {
     alignItems: "center",

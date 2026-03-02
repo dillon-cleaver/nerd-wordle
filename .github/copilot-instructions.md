@@ -6,15 +6,15 @@
 
 NerdWord is a React Native/Expo word game with dual data systems:
 
-- **CDN-First Word Loading**: Words loaded from Firebase Hosting CDN (browser cache) with metadata-only localStorage
+- **CDN-First Word Loading**: Words loaded from Firebase Hosting CDN (browser cache) with metadata-only AsyncStorage
 - **Firebase Backend**: User auth, puzzle history, admin functions via Cloud Functions
 - **Context-Heavy State**: React Context providers manage game state, user data, word data, and puzzle history
 - **Expo Router**: File-based routing in `app/` directory with drawer navigation wrapper
 
 Key architectural decisions:
 
-- Word dictionary (3812 words, 243KB) externalized from bundle to CDN for instant updates
-- Browser HTTP cache handles word caching, not localStorage (99.96% storage reduction)
+- Word dictionary (~3800+ words, 243KB) externalized from bundle to CDN for instant updates (verify count with `pnpm run words:validate`)
+- Browser HTTP cache handles word caching, AsyncStorage stores only metadata (99.96% storage reduction)
 - Letter tracking system for detailed game analytics stored in Firestore
 - Environment-aware builds with dev/testing/production modes
 
@@ -24,30 +24,26 @@ Key architectural decisions:
 
 ```tsx
 // app/_layout.tsx - MUST maintain this exact nesting order
-<UserProvider>
-  {" "}
-  // Firebase auth state
-  <PuzzleHistoryProvider>
-    {" "}
-    // User's game history
-    <WordDataProvider>
-      {" "}
-      // CDN word loading
-      <GameProvider>
-        {" "}
-        // Current game state
-        <DrawerNavigationWrapper />
-      </GameProvider>
-    </WordDataProvider>
+<UserProvider>                      {/* Firebase auth state */}
+  <PuzzleHistoryProvider>           {/* User's game history */}
+    <Suspense fallback={...}>       {/* Loading state for word data */}
+      <WordDataProvider>            {/* CDN word loading */}
+        <GameProvider>              {/* Current game state */}
+          <GameReadyGate>           {/* Ensures game is ready before rendering */}
+            <DrawerNavigationWrapper />
+          </GameReadyGate>
+        </GameProvider>
+      </WordDataProvider>
+    </Suspense>
   </PuzzleHistoryProvider>
 </UserProvider>
 ```
 
 ### Word Data Loading Pattern
 
-- **Never** store full word data in localStorage - use `storage/words.local.ts` pattern
+- **Never** store full word data in AsyncStorage - use `storage/words.local.ts` pattern
 - Browser cache handles heavy lifting via HTTP headers
-- Only metadata (version, count, timestamp) stored locally
+- Only metadata (version, count, timestamp) stored in AsyncStorage
 - Always fetch from versioned CDN: `public/dict/v*/words.json`
 
 ### Environment Configuration
@@ -121,8 +117,12 @@ pnpm run words:deploy:all             # Deploy to both CDN + Firestore
 pnpm run words:verify [WORD]          # Verify deployment
 
 # Alternative: Deploy individually
-pnpm run words:deploy                 # CDN only (user-facing app)
-pnpm run words:firestore              # Firestore only (server operations)
+pnpm run words:deploy:cdn             # CDN only (user-facing app)
+pnpm run words:deploy:firestore       # Firestore only (server operations)
+
+# Quick status and help
+pnpm run words:status                 # Word count + recent commits
+pnpm run words:help                   # Show all word commands
 ```
 
 **CRITICAL: If words aren't showing in live app, check both systems:**
@@ -130,7 +130,7 @@ pnpm run words:firestore              # Firestore only (server operations)
 - CDN: Fast loading for users (primary)
 - Firestore: Server operations, admin functions (fallback)
 
-See `docs/word-management-guide.md` for complete details.
+See `docs/WORD-MANAGEMENT-GUIDE.md` for complete details.
 
 ## Validation Scenarios
 
@@ -161,7 +161,7 @@ cd functions && pnpm run build  # 5 seconds
 cd functions && npx eslint src/  # 3 seconds, should pass cleanly
 
 # 3. Test word management
-cd .. && pnpm run words:validate  # 1 second, should show 3812 words
+cd .. && pnpm run words:validate  # 1 second, shows current word count
 ```
 
 ### Word Data Changes
@@ -171,7 +171,7 @@ cd .. && pnpm run words:validate  # 1 second, should show 3812 words
 pnpm run words:validate  # 1 second
 
 # 2. Build dictionary for CDN
-pnpm run build:dictionary  # 1 second, creates public/dict/v3/words.json (243KB)
+pnpm run build:dictionary  # 1 second, creates public/dict/v*/words.json (243KB)
 
 # 3. Verify bundle excludes words
 pnpm run words:check-bundle  # Requires prior build
@@ -238,6 +238,24 @@ cd functions && pnpm run dev  # Runs tsc --watch
 cd functions && npx eslint src/
 ```
 
+### Backend Emulators
+
+```bash
+cd functions
+
+# Development with persistent data (recommended)
+pnpm run dev:emulator
+
+# Fresh start (no saved data)
+pnpm run dev:clean
+
+# Import production data for testing
+pnpm run dev:prod-data
+
+# Reset all emulator data
+pnpm run dev:reset
+```
+
 ### Production Builds
 
 ```bash
@@ -248,6 +266,29 @@ npx expo export --platform web
 # Backend build for deployment
 cd functions && pnpm run build
 ```
+
+### Deployment Commands
+
+```bash
+# Full deployment (backend + frontend)
+pnpm run deploy:all
+
+# Individual deployments
+pnpm run deploy:app              # Frontend (web) only
+pnpm run deploy:backend          # Backend functions only
+
+# Words only (no app rebuild needed)
+pnpm run words:deploy:all        # Both CDN + Firestore
+```
+
+### Daily Puzzles
+
+```bash
+# Schedule daily puzzles (run after adding new words)
+cd functions && pnpm run seed:puzzles && cd ..
+```
+
+The script automatically schedules words by edition number, starting tomorrow. See `docs/DAILY-PUZZLES.md` for details.
 
 ## Word Management
 
@@ -314,7 +355,7 @@ nerd-wordle/
 
 ### Frequently Modified Files
 
-- `data/words.json` - Single source of truth for all word data (3812 words, 243KB)
+- `data/words.json` - Single source of truth for all word data (~3800+ words, 243KB)
 - `app/` - Main application screens and navigation
 - `components/` - Reusable UI components
 - `functions/src/` - Backend API and database logic
@@ -391,3 +432,19 @@ node scripts/env-helper.js show
 - Individual pages: ~21KB each
 
 The build and timing values in these instructions have been validated and measured. Always use the specified timeout values to prevent premature cancellation of normal operations.
+
+## Additional Documentation
+
+For detailed information on specific features, see the `docs/` folder:
+
+- [DEVELOPMENT-GUIDE.md](../docs/DEVELOPMENT-GUIDE.md) - Quick start and common commands
+- [STYLING-GUIDE.md](../docs/STYLING-GUIDE.md) - Design system, constants, SubtleGradient
+- [WORD-MANAGEMENT-GUIDE.md](../docs/WORD-MANAGEMENT-GUIDE.md) - Complete word workflow
+- [WORD-MANAGEMENT-QUICK-REFERENCE.md](../docs/WORD-MANAGEMENT-QUICK-REFERENCE.md) - Quick command reference
+- [DAILY-PUZZLES.md](../docs/DAILY-PUZZLES.md) - Daily puzzle scheduling system
+- [CDN-OPTIMIZATION.md](../docs/CDN-OPTIMIZATION.md) - CDN architecture and caching
+- [DEPLOYMENT-PIPELINE.md](../docs/DEPLOYMENT-PIPELINE.md) - Full deployment guide
+- [API-TESTING-GUIDE.md](../docs/API-TESTING-GUIDE.md) - API endpoint testing
+- [ACCESSIBILITY-GUIDE.md](../docs/ACCESSIBILITY-GUIDE.md) - Keyboard shortcuts (Ctrl+H, Ctrl+G, Escape)
+- [LETTER-TRACKING-FEATURE.md](../docs/LETTER-TRACKING-FEATURE.md) - Game analytics data structure
+- [OAUTH-DOMAIN-MANAGEMENT.md](../docs/OAUTH-DOMAIN-MANAGEMENT.md) - OAuth configuration for deployments

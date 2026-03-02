@@ -1,20 +1,19 @@
-import "@/firebase/firebaseConfig";
-import { useEffect } from "react";
+import { Suspense } from "react";
+import { ActivityIndicator, View, StyleSheet, Platform } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import Head from "expo-router/head";
-import { useAuthListener } from "@/hooks/useAuthListener";
 import { UserProvider } from "@/context/UserContext";
 import { GameProvider } from "@/context/GameContext";
 import { PuzzleHistoryProvider } from "@/context/PuzzleHistoryContext";
 import { WordDataProvider } from "@/context/WordDataContext";
 import { DrawerNavigationWrapper } from "@/components/DrawerNavigationWrapper";
+import { GameReadyGate } from "@/components/GameReadyGate";
+import { colors } from "@/constants/styles";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  useAuthListener();
-
   const [loaded, error] = useFonts({
     "Bitter-Regular": require("../assets/fonts/Bitter-Regular.ttf"),
     "Bitter-Bold": require("../assets/fonts/Bitter-Bold.ttf"),
@@ -28,11 +27,8 @@ export default function RootLayout() {
     "OpenSans-Regular": require("../assets/fonts/OpenSans-Regular.ttf"),
   });
 
-  useEffect(() => {
-    if (loaded || error) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded, error]);
+  // Note: Splash screen hiding is now deferred to WordDataProvider
+  // This ensures we don't show a blank screen during initial word data load
 
   if (!loaded && !error) {
     return null;
@@ -44,24 +40,49 @@ export default function RootLayout() {
 function RootLayoutContent() {
   return (
     <>
-      <Head>
-        <title>NerdWord</title>
-        <meta
-          name="description"
-          content="A nerdy twist on the classic word game"
-        />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="theme-color" content="#1e212b" />
-      </Head>
+      {Platform.OS === "web" && (
+        <Head>
+          <title>NerdWord</title>
+          <meta
+            name="description"
+            content="A nerdy twist on the classic word game"
+          />
+          <link rel="icon" href="/favicon.ico" />
+          <meta name="theme-color" content={colors.neutral.background} />
+          <style>{`
+            html, body, #root, #__next {
+              background: ${colors.neutral.background};
+            }
+          `}</style>
+        </Head>
+      )}
       <UserProvider>
         <PuzzleHistoryProvider>
-          <WordDataProvider>
-            <GameProvider>
-              <DrawerNavigationWrapper />
-            </GameProvider>
-          </WordDataProvider>
+          <Suspense
+            fallback={
+              <View style={styles.container}>
+                <ActivityIndicator size="large" color={colors.neutral.white} />
+              </View>
+            }
+          >
+            <WordDataProvider>
+              <GameProvider>
+                <GameReadyGate>
+                  <DrawerNavigationWrapper />
+                </GameReadyGate>
+              </GameProvider>
+            </WordDataProvider>
+          </Suspense>
         </PuzzleHistoryProvider>
       </UserProvider>
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: colors.neutral.background,
+  },
+});

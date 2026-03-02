@@ -9,7 +9,8 @@ import { LetterGuess } from "@/types/letter-tracking";
 import { clearActivePuzzleState } from "@/storage/active-puzzle.local";
 import { isDebugLoggingEnabled } from "./dev-flags";
 import * as Crypto from "expo-crypto";
-import { User, getAuth } from "firebase/auth";
+import { User } from "firebase/auth";
+import { getAuthInstance } from "@/firebase/firebaseConfig";
 
 // Cross-platform UUID generation using expo-crypto
 const generatePuzzleResultId = () => Crypto.randomUUID();
@@ -44,8 +45,12 @@ export const handleGameCompletion = (
     updaters.setGameStatus("won");
     updaters.setHint(undefined);
 
-    // Clear active puzzle state since game is completed
-    clearActivePuzzleState();
+    // Clear active puzzle state since game is won
+    clearActivePuzzleState().catch((error) => {
+      if (isDebugLoggingEnabled()) {
+        console.error("Failed to clear active puzzle state:", error);
+      }
+    });
 
     const puzzleResultId = generatePuzzleResultId();
     const edition =
@@ -65,12 +70,13 @@ export const handleGameCompletion = (
       letterTracking,
     };
 
-    // Save result to both localStorage and backend (if authenticated)
+    // Save result to both local storage and backend (if authenticated)
     // This ensures the result is immediately available for the "already played" check
-    const currentUser = getAuth().currentUser;
+    const auth = getAuthInstance();
+    const currentUser = auth?.currentUser;
 
     if (isDebugLoggingEnabled()) {
-      console.log("🔍 Game completion debug (WIN):", {
+      console.log("Game completion debug (WIN):", {
         hasSavePuzzleResult: !!savePuzzleResult,
         hasCurrentUser: !!currentUser,
         currentUserEmail: currentUser?.email,
@@ -79,26 +85,26 @@ export const handleGameCompletion = (
     }
 
     if (savePuzzleResult && currentUser) {
-      // Use the context method which saves to both localStorage and backend
+      // Use the context method which saves to both local storage and backend
       if (isDebugLoggingEnabled()) {
-        console.log("📤 Using context method to save puzzle result");
+        console.log("Using context method to save puzzle result");
       }
       savePuzzleResult(currentUser, result).catch((error) => {
         if (isDebugLoggingEnabled()) {
           console.error(
-            "❌ Failed to save via context, falling back to dual save:",
+            "Failed to save via context, falling back to dual save:",
             error
           );
         }
-        // Fallback to dual save method (localStorage + backend)
-        savePuzzleResultDual(null, result).catch(() => {
-          // Final fallback to just localStorage
+        // Fallback to dual save method (local storage + backend)
+        savePuzzleResultDual(null, result).catch(async () => {
+          // Final fallback to just local storage
           try {
-            savePuzzleResultLocal(result);
+            await savePuzzleResultLocal(result);
           } catch (localError) {
             if (isDebugLoggingEnabled()) {
               console.error(
-                "❌ Final fallback localStorage save failed:",
+                "Final fallback local storage save failed:",
                 localError
               );
             }
@@ -106,14 +112,14 @@ export const handleGameCompletion = (
         });
       });
     } else {
-      // Use dual save method for both localStorage and backend
-      savePuzzleResultDual(null, result).catch(() => {
-        // Fallback to just localStorage if dual save fails
+      // Use dual save method for both local storage and backend
+      savePuzzleResultDual(null, result).catch(async () => {
+        // Fallback to just local storage if dual save fails
         try {
-          savePuzzleResultLocal(result);
+          await savePuzzleResultLocal(result);
         } catch (localError) {
           if (isDebugLoggingEnabled()) {
-            console.error("❌ Fallback localStorage save failed:", localError);
+            console.error("Fallback local storage save failed:", localError);
           }
         }
       });
@@ -121,7 +127,11 @@ export const handleGameCompletion = (
 
     // Add to collection for nerd words
     if (answerEntry.category !== "common") {
-      addToCollection(answerId, edition, new Date());
+      addToCollection(answerId, edition, new Date()).catch((error) => {
+        if (isDebugLoggingEnabled()) {
+          console.error("Failed to add word to collection:", error);
+        }
+      });
 
       // Only log in development mode
       if (isDebugLoggingEnabled()) {
@@ -136,7 +146,11 @@ export const handleGameCompletion = (
     updaters.setHint(undefined);
 
     // Clear active puzzle state since game is completed
-    clearActivePuzzleState();
+    clearActivePuzzleState().catch((error) => {
+      if (isDebugLoggingEnabled()) {
+        console.error("Failed to clear active puzzle state:", error);
+      }
+    });
 
     const edition =
       answerEntry.category === "common"
@@ -154,27 +168,28 @@ export const handleGameCompletion = (
       letterTracking,
     };
 
-    // Save result to both localStorage and backend (if authenticated)
+    // Save result to both local storage and backend (if authenticated)
     // This ensures the result is immediately available for the "already played" check
-    const currentUser = getAuth().currentUser;
+    const auth = getAuthInstance();
+    const currentUser = auth?.currentUser;
     if (savePuzzleResult && currentUser) {
-      // Use the context method which saves to both localStorage and backend
+      // Use the context method which saves to both local storage and backend
       savePuzzleResult(currentUser, result).catch((error) => {
         if (isDebugLoggingEnabled()) {
           console.error(
-            "❌ Failed to save via context, falling back to dual save:",
+            "Failed to save via context, falling back to dual save:",
             error
           );
         }
-        // Fallback to dual save method (localStorage + backend)
-        savePuzzleResultDual(null, result).catch(() => {
-          // Final fallback to just localStorage
+        // Fallback to dual save method (local storage + backend)
+        savePuzzleResultDual(null, result).catch(async () => {
+          // Final fallback to just local storage
           try {
-            savePuzzleResultLocal(result);
+            await savePuzzleResultLocal(result);
           } catch (localError) {
             if (isDebugLoggingEnabled()) {
               console.error(
-                "❌ Final fallback localStorage save failed:",
+                "Final fallback local storage save failed:",
                 localError
               );
             }
@@ -182,14 +197,14 @@ export const handleGameCompletion = (
         });
       });
     } else {
-      // Use dual save method for both localStorage and backend
-      savePuzzleResultDual(null, result).catch(() => {
-        // Fallback to just localStorage if dual save fails
+      // Use dual save method for both local storage and backend
+      savePuzzleResultDual(null, result).catch(async () => {
+        // Fallback to just local storage if dual save fails
         try {
-          savePuzzleResultLocal(result);
+          await savePuzzleResultLocal(result);
         } catch (localError) {
           if (isDebugLoggingEnabled()) {
-            console.error("❌ Fallback localStorage save failed:", localError);
+            console.error("Fallback local storage save failed:", localError);
           }
         }
       });

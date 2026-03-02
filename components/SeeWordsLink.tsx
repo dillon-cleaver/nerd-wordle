@@ -1,7 +1,6 @@
 import { Text, Pressable, StyleSheet } from "react-native";
 import { Link } from "expo-router";
 import { colors, fontFamily, fontSize, lineHeight } from "@/constants/styles";
-import { opacity } from "@/constants/opacity";
 import { SvgIcon } from "./base/SvgIcon";
 import { iconSizes } from "@/constants/icons";
 
@@ -12,7 +11,7 @@ export const SeeWordsLink = () => (
         See your <Text style={styles.nerdWordText}>NerdWord</Text>
       </Text>
       <SvgIcon
-        color={colors.neutral.black}
+        color={colors.wordCard.textMuted}
         name="chevron-right"
         size={iconSizes.small}
       />
@@ -29,12 +28,12 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.bitter.bold,
     fontSize: fontSize.body.base,
     lineHeight: lineHeight.body.base,
+    color: colors.neutral.white,
   },
   linkText: {
-    color: colors.neutral.black,
+    color: colors.wordCard.textMuted,
     fontSize: fontSize.body.base,
-    fontFamily: fontFamily.openSans.medium,
+    fontFamily: fontFamily.bitter.medium,
     lineHeight: lineHeight.body.base,
-    opacity: opacity.subtle,
   },
 });

@@ -1,6 +1,6 @@
 // app.config.ts
 import * as dotenv from "dotenv";
-dotenv.config({ path: ".env" }); // change to '.env.local' if that's what you use
+dotenv.config({ path: ".env.local", quiet: true });
 
 export default {
   expo: {
@@ -11,10 +11,14 @@ export default {
     icon: "./assets/images/icon.png",
     scheme: "nerd-wordle",
     userInterfaceStyle: "automatic",
-    newArchEnabled: true,
+    newArchEnabled: false,
 
-    ios: { supportsTablet: true },
+    ios: {
+      supportsTablet: true,
+      bundleIdentifier: "com.dilloncleaver.nerdwordle",
+    },
     android: {
+      package: "com.dilloncleaver.nerdwordle",
       adaptiveIcon: {
         foregroundImage: "./assets/images/adaptive-icon.png",
         backgroundColor: "#1e212b",

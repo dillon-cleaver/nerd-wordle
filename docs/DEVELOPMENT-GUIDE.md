@@ -5,7 +5,7 @@ Get backend and frontend running quickly.
 ## 🚀 Quick Start
 
 ```bash
-# 1. Install dependencies (takes ~90 seconds)
+# 1. Install dependencies (takes ~75 seconds)
 pnpm install
 cd functions && pnpm install && cd ..
 

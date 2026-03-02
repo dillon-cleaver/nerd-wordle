@@ -1,10 +1,7 @@
 import { WordCategory } from "@/types/word";
 import { CollectedWord } from "@/hooks/useCollectedWords";
-import {
-  convertCategory,
-  getCategoryColor,
-  getCategoryTextColor,
-} from "./game";
+import { convertCategory, getCategoryColor } from "./game";
+import { colors } from "@/constants/styles";
 
 export type CategoryInfo = {
   id: WordCategory | "all";
@@ -52,7 +49,10 @@ export const getCategoriesWithCounts = (
       id: category,
       displayName: convertCategory(category),
       backgroundColor: getCategoryColor(category),
-      textColor: getCategoryTextColor(category),
+      textColor:
+        category === "superheroes"
+          ? colors.neutral.white
+          : colors.neutral.black,
       wordCount: words.length,
       words,
     };

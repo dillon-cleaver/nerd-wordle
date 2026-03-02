@@ -1,4 +1,5 @@
 import { User } from "firebase/auth";
+import { Platform } from "react-native";
 import { DailyPuzzleSeed } from "@/utils/daily-puzzle";
 import {
   PuzzleHistoryResponse,
@@ -16,16 +17,20 @@ const isDevelopment = process.env.EXPO_PUBLIC_DEV_MODE === "true";
 
 // API URLs - configurable via environment variables
 const PRODUCTION_API_URL = "https://api-2no66svcwq-uc.a.run.app";
-const DEVELOPMENT_API_URL =
-  "http://127.0.0.1:5001/nerd-word-cfda3/us-central1/api";
+
+// For development, Android emulator needs 10.0.2.2 to access host machine's localhost
+const getDevApiUrl = () => {
+  const host = Platform.OS === "android" ? "10.0.2.2" : "127.0.0.1";
+  return `http://${host}:5001/nerd-word-cfda3/us-central1/api`;
+};
 
 const API_BASE_URL =
   process.env.EXPO_PUBLIC_API_URL ||
-  (isDevelopment ? DEVELOPMENT_API_URL : PRODUCTION_API_URL);
+  (isDevelopment ? getDevApiUrl() : PRODUCTION_API_URL);
 
 // Debug logging - only when debug logs are enabled
 if (isDebugLoggingEnabled()) {
-  console.log(`🔧 API Configuration:`, {
+  console.log(`API Configuration:`, {
     isDevelopment,
     NODE_ENV: process.env.NODE_ENV,
     EXPO_PUBLIC_DEV_MODE: process.env.EXPO_PUBLIC_DEV_MODE,

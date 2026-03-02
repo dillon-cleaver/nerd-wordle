@@ -49,7 +49,13 @@ export const handleSubmitGuessWithLetterTracking = (
     if (puzzleId) {
       const puzzleDate = extractDateFromPuzzleId(puzzleId);
       if (puzzleDate) {
-        saveActivePuzzleState(puzzleId, puzzleDate, allLetterGuesses);
+        saveActivePuzzleState(puzzleId, puzzleDate, allLetterGuesses).catch(
+          (error) => {
+            if (isDebugLoggingEnabled()) {
+              console.error("Failed to save active puzzle state:", error);
+            }
+          }
+        );
       } else {
         // Log warning for invalid puzzle ID format in debug mode
         if (isDebugLoggingEnabled()) {

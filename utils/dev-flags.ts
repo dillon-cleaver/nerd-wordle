@@ -52,9 +52,10 @@ export const isPuzzleHistoryDebugEnabled = (): boolean => {
 };
 
 /**
- * Check if local storage should be cleared on app start (dev only)
+ * Check if storage should be cleared on app start (dev only)
+ * Clears AsyncStorage, not browser localStorage
  */
-export const shouldClearLocalStorageOnStart = (): boolean => {
+export const shouldClearStorageOnStart = (): boolean => {
   return (
     process.env.EXPO_PUBLIC_CLEAR_STORAGE_ON_START === "true" &&
     isDevModeEnabled()

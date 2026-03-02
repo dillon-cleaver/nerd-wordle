@@ -140,7 +140,6 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     dailyPuzzleWordId: dailyPuzzle?.word?.id,
     answer,
     puzzleId,
-    hintIndex,
     getWordEntry,
     setGuesses,
     setLetterGuesses,

@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { ScrollView, StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { colors } from "@/constants/styles";
 import {
   SafeAreaView,
   SafeAreaViewProps,
@@ -41,6 +42,7 @@ export const BaseSafeAreaView = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.neutral.background,
   },
   scrollContent: {
     maxWidth: BASE_MAX_WIDTH,
