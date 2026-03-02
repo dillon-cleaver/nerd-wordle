@@ -1,5 +1,6 @@
 import * as admin from "firebase-admin";
 import { WORD_DATA } from "../data/words";
+import { getDateString } from "../shared/time";
 import { wordEntryToFirestore } from "../utils";
 
 // Initialize Firebase Admin SDK for emulator
@@ -76,7 +77,7 @@ async function seedProductionPuzzles() {
     startDate.setDate(startDate.getDate() + 1);
     console.log(
       `📝 Scheduling ${wordsToSchedule.length} new words starting ${
-        startDate.toISOString().split("T")[0]
+        getDateString(startDate)
       }`
     );
   }
@@ -87,7 +88,7 @@ async function seedProductionPuzzles() {
     for (let i = 0; i < wordsToSchedule.length; i++) {
       const puzzleDate = new Date(startDate);
       puzzleDate.setDate(startDate.getDate() + i);
-      const dateString = puzzleDate.toISOString().split("T")[0];
+      const dateString = getDateString(puzzleDate);
 
       const word = wordsToSchedule[i];
       const puzzleRef = db.collection("dailyPuzzles").doc(dateString);
@@ -114,15 +115,13 @@ async function seedProductionPuzzles() {
 
     await batch.commit();
 
-    const endDate = new Date(
-      startDate.getTime() + (wordsToSchedule.length - 1) * 24 * 60 * 60 * 1000
-    )
-      .toISOString()
-      .split("T")[0];
-
-    console.log(
-      `\n✅ Scheduled ${wordsToSchedule.length} words through ${endDate}`
+    const endDate = getDateString(
+      new Date(
+        startDate.getTime() + (wordsToSchedule.length - 1) * 24 * 60 * 60 * 1000
+      )
     );
+
+    console.log(`\n✅ Scheduled ${wordsToSchedule.length} words through ${endDate}`);
   } catch (error) {
     console.error("❌ Error seeding puzzles:", error);
     throw error;
