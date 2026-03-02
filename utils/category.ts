@@ -6,8 +6,8 @@ import { colors } from "@/constants/styles";
 export type CategoryInfo = {
   id: WordCategory | "all";
   displayName: string;
-  backgroundColor: string;
-  textColor: string;
+  accentColor: string;
+  isRainbow: boolean;
   wordCount: number;
   words: CollectedWord[];
 };
@@ -38,8 +38,12 @@ export const getCategoriesWithCounts = (
   >();
 
   collectedWords.forEach((word) => {
-    const existing = categoryMap.get(word.category) || [];
-    categoryMap.set(word.category, [...existing, word]);
+    const existing = categoryMap.get(word.category);
+    if (existing) {
+      existing.push(word);
+    } else {
+      categoryMap.set(word.category, [word]);
+    }
   });
 
   // Create category info objects
@@ -48,8 +52,8 @@ export const getCategoriesWithCounts = (
     return {
       id: category,
       displayName: convertCategory(category),
-      backgroundColor: getCategoryColor(category),
-      textColor: colors.neutral.white,
+      accentColor: getCategoryColor(category),
+      isRainbow: false,
       wordCount: words.length,
       words,
     };
@@ -59,8 +63,8 @@ export const getCategoriesWithCounts = (
   const allCategory: CategoryInfo = {
     id: "all",
     displayName: "All",
-    backgroundColor: "rainbow", // Special marker for rainbow gradient
-    textColor: "#ffffff",
+    accentColor: colors.neutral.white,
+    isRainbow: true,
     wordCount: collectedWords.length,
     words: collectedWords,
   };

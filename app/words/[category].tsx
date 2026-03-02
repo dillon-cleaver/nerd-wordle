@@ -67,7 +67,7 @@ export default function CategoryWords() {
     );
   }
 
-  const { words, displayName, backgroundColor } = categoryData;
+  const { words, displayName, accentColor } = categoryData;
 
   if (words.length === 0) {
     return (
@@ -81,22 +81,17 @@ export default function CategoryWords() {
           >
             <SvgIcon
               name="chevron-left"
-              size={iconSizes.standard}
+              size={iconSizes.large}
               color={colors.neutral.white}
             />
           </TouchableOpacity>
           <View style={styles.headerContent}>
             <Text style={styles.categoryTitle}>{displayName}</Text>
+            <Text style={styles.wordCountText}>0 words</Text>
           </View>
         </View>
         <View style={styles.centered}>
-          <PlaceholderCard
-            categoryColor={
-              backgroundColor === "rainbow"
-                ? colors.neutral.white
-                : backgroundColor
-            }
-          />
+          <PlaceholderCard categoryColor={accentColor} />
         </View>
       </View>
     );

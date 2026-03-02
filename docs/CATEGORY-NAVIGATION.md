@@ -13,12 +13,12 @@ The main words screen displays a vertical list of category cards:
 1. **All Category** (Special)
    - Displayed at the top of the list
    - Shows total count of all collected words
-   - Features a rainbow gradient background
+   - Dark gradient background with a rainbow gradient accent border
    - Tapping shows all collected words across all categories
 
 2. **Individual Categories**
    - Each category is displayed as a full-width card
-   - Background color matches the category's theme color
+   - Dark gradient background with a 2px category-colored accent border
    - Shows the count of collected words in that category
    - Categories displayed:
      - Video Games (Pink - #FF659A)
@@ -61,8 +61,8 @@ When a user taps on a category:
    - `CategoryInfo` type: Defines the structure of category data
 
 2. **`components/CategoryCard.tsx`**
-   - Displays a category with colored background
-   - Supports both solid colors and rainbow gradient
+   - Displays a category with dark gradient background and accent border
+   - Supports both solid accent colors and rainbow gradient border
    - Handles press events for navigation
    - Applies opacity on press for feedback
 
@@ -87,9 +87,9 @@ When a user taps on a category:
 1. **`constants/opacity.ts`**
    - Added `pressed: 0.7` for touchable feedback
 
-### Dependencies Added
+### Dependencies Used
 
-- `expo-linear-gradient`: For rainbow gradient on "All" category
+- `expo-linear-gradient`: Used for the rainbow gradient accent border on the "All" category card
 
 ## Navigation Flow
 

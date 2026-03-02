@@ -21,8 +21,7 @@ type CategoryCardProps = {
 };
 
 export const CategoryCard = ({ category, onPress }: CategoryCardProps) => {
-  const { displayName, backgroundColor, wordCount } = category;
-  const isRainbow = backgroundColor === "rainbow";
+  const { displayName, accentColor, isRainbow, wordCount } = category;
 
   const cardContent = (
     <>
@@ -64,7 +63,7 @@ export const CategoryCard = ({ category, onPress }: CategoryCardProps) => {
           <Card
             containerStyle={[
               styles.container,
-              getCardOverlayStyle(backgroundColor),
+              getCardOverlayStyle(accentColor),
             ]}
           >
             {cardContent}
