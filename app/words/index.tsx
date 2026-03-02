@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
   listContainerDesktop: {
     maxWidth: 600,
     alignSelf: "center",
-    paddingTop: 200,
   },
   centered: {
     flex: 1,

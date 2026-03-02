@@ -49,10 +49,7 @@ export const getCategoriesWithCounts = (
       id: category,
       displayName: convertCategory(category),
       backgroundColor: getCategoryColor(category),
-      textColor:
-        category === "superheroes"
-          ? colors.neutral.white
-          : colors.neutral.black,
+      textColor: colors.neutral.white,
       wordCount: words.length,
       words,
     };
