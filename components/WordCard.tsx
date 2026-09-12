@@ -70,9 +70,23 @@ export const WordCard = ({
         />
         <View style={[styles.content, isLocked && styles.lockedContent]}>
           <View style={styles.answerEditionRow}>
-            <Text style={[styles.answerText, isLocked && styles.lockedText]}>
-              {answer}
-            </Text>
+            <View style={styles.answerWithLock}>
+              {isLocked && (
+                <View
+                  style={styles.lockInlineBadge}
+                  accessibilityLabel="Locked — word not collected"
+                >
+                  <SvgIcon
+                    name="lock"
+                    size={iconSizes.standard}
+                    color={colors.neutral.lightGray}
+                  />
+                </View>
+              )}
+              <Text style={[styles.answerText, isLocked && styles.lockedText]}>
+                {answer}
+              </Text>
+            </View>
             <View style={styles.editionDateBlock}>
               <Text
                 style={[styles.editionText, isLocked && styles.lockedText]}
@@ -102,6 +116,7 @@ export const WordCard = ({
               <View
                 style={[
                   styles.categoryBadge,
+                  styles.lockedStatusBadge,
                   {
                     backgroundColor: hexToRgba(
                       colors.neutral.darkGray,
@@ -146,22 +161,6 @@ export const WordCard = ({
             )}
           </View>
         </View>
-
-        {isLocked && (
-          <View
-            style={styles.lockOverlay}
-            accessibilityLabel="Locked — word not collected"
-          >
-            <View style={styles.lockBadge}>
-              <SvgIcon
-                name="lock"
-                size={iconSizes.large}
-                color={colors.neutral.lightGray}
-              />
-              <Text style={styles.lockLabel}>Locked</Text>
-            </View>
-          </View>
-        )}
       </Card>
     </View>
   );
@@ -176,20 +175,37 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.card,
   },
   lockedCard: {
-    opacity: 0.85,
+    opacity: 0.92,
   },
   content: {
     padding: spacing.lg,
     gap: spacing.sm,
   },
   lockedContent: {
-    opacity: 0.55,
+    opacity: 0.7,
   },
   answerEditionRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
     marginBottom: spacing.md,
+  },
+  answerWithLock: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.sm,
+    flexShrink: 1,
+    paddingRight: spacing.sm,
+  },
+  lockInlineBadge: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(30, 33, 43, 0.9)",
+    borderWidth: borderWidth.badge,
+    borderColor: colors.wordCard.divider,
   },
   answerText: {
     fontSize: fontSize.title.xLarge,
@@ -239,6 +255,11 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.pill,
     borderWidth: borderWidth.badge,
   },
+  lockedStatusBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+  },
   categoryText: {
     fontSize: fontSize.body.small,
     fontFamily: fontFamily.bitter.bold,
@@ -248,29 +269,5 @@ const styles = StyleSheet.create({
   },
   lockedMuted: {
     color: colors.wordCard.textMuted,
-  },
-  lockOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.35)",
-  },
-  lockBadge: {
-    alignItems: "center",
-    gap: spacing.sm,
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.md,
-    borderRadius: borderRadius.lg,
-    backgroundColor: "rgba(30, 33, 43, 0.85)",
-    borderWidth: borderWidth.badge,
-    borderColor: colors.wordCard.divider,
-  },
-  lockLabel: {
-    fontSize: fontSize.body.small,
-    lineHeight: lineHeight.body.small,
-    fontFamily: fontFamily.bitter.bold,
-    color: colors.neutral.lightGray,
-    letterSpacing: 0.5,
-    textTransform: "uppercase",
   },
 });
