@@ -33,6 +33,10 @@ type GameContextType = {
   originalCategory: WordCategory;
   answer: WordId;
   answerEntry: WordEntry | null; // The full word entry from Firebase
+  /** YYYY-MM-DD of the loaded daily puzzle (game timezone) */
+  puzzleDate: string | null;
+  /** Hint rotation index for today's word */
+  hintIndex: number;
   handleKeyPress: (key: string) => void;
   handleSubmitGuess: () => void;
   // Loading state for async puzzle fetch
@@ -55,6 +59,8 @@ export const GameContext = createContext<GameContextType>({
   originalCategory: "fantasyAndSciFi",
   answer: "LOADING", // Placeholder while puzzle loads
   answerEntry: null, // Placeholder while puzzle loads
+  puzzleDate: null,
+  hintIndex: 0,
   handleKeyPress: () => {},
   handleSubmitGuess: () => {},
   isLoading: true,
@@ -215,6 +221,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         originalCategory,
         answer,
         answerEntry: dailyPuzzle?.word || null,
+        puzzleDate: dailyPuzzle?.date ?? null,
+        hintIndex,
         handleKeyPress: handleKeyPressCallback,
         handleSubmitGuess: handleSubmitGuessCallback,
         isLoading: isGameLoading,

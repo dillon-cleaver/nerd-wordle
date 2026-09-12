@@ -141,7 +141,7 @@ export const handleGameCompletion = (
       }
     }
   } else if (nextGuesses.length >= NUMBER_OF_GUESSES) {
-    // Player lost
+    // Player lost — record failure without adding the word to collection
     updaters.setGameStatus("lost");
     updaters.setHint(undefined);
 

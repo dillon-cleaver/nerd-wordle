@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Pressable } from "react-native";
 import {
   borderWidth,
   borderRadius,
@@ -8,60 +8,54 @@ import {
 import { getCardOverlayStyle, cardShadowStyle } from "@/utils/cardStyles";
 import { SubtleGradient } from "./base/SubtleGradient";
 import { Card } from "./base/Card";
-import { WordEntry } from "@/types/word";
 import { BannerMessage } from "./BannerMessage";
-import { CollectedWordText } from "./CollectedWordText";
-import { SeeWordsLink } from "./SeeWordsLink";
-import { AnswerRevealText } from "./AnswerRevealText";
-import { WikipediaLink } from "./WikipediaLink";
+import { BannerTapHint } from "./BannerTapHint";
 
 type GameBannerProps = {
   gameStatus: "won" | "running" | "lost";
   numGuesses?: number;
-  answer?: string;
-  edition?: number;
-  answerEntry?: WordEntry | null;
+  onPress?: () => void;
 };
 
 export const GameBanner = ({
   gameStatus,
   numGuesses,
-  answer,
-  edition,
-  answerEntry,
+  onPress,
 }: GameBannerProps) => {
   if (gameStatus === "running") return null;
 
   const accentColor =
     gameStatus === "won" ? colors.semantic.success : colors.semantic.warning;
 
+  const accessibilityLabel =
+    gameStatus === "won"
+      ? "Congratulations. Tap to view your WordCard."
+      : "Game over. Tap to reveal the answer.";
+
   return (
-    <View style={cardShadowStyle}>
-      <Card
-        containerStyle={[styles.container, getCardOverlayStyle(accentColor)]}
-      >
-        <SubtleGradient
-          colors={[colors.wordCard.gradientStart, colors.wordCard.gradientEnd]}
-        />
-        <View style={styles.content}>
-          <BannerMessage gameStatus={gameStatus} numGuesses={numGuesses} />
-
-          {gameStatus === "won" && answer && (
-            <CollectedWordText answer={answer} edition={edition} />
-          )}
-
-          {gameStatus === "won" && <SeeWordsLink />}
-
-          {gameStatus === "lost" && answer && (
-            <AnswerRevealText answer={answer} />
-          )}
-
-          {gameStatus === "lost" && answerEntry && (
-            <WikipediaLink answerEntry={answerEntry} />
-          )}
-        </View>
-      </Card>
-    </View>
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      disabled={!onPress}
+    >
+      <View style={cardShadowStyle}>
+        <Card
+          containerStyle={[styles.container, getCardOverlayStyle(accentColor)]}
+        >
+          <SubtleGradient
+            colors={[
+              colors.wordCard.gradientStart,
+              colors.wordCard.gradientEnd,
+            ]}
+          />
+          <View style={styles.content}>
+            <BannerMessage gameStatus={gameStatus} numGuesses={numGuesses} />
+            <BannerTapHint gameStatus={gameStatus} />
+          </View>
+        </Card>
+      </View>
+    </Pressable>
   );
 };
 
