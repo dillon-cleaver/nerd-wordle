@@ -33,7 +33,7 @@ type WordCardProps = {
   collectedWord: CollectedWord;
   /**
    * Locked cards are shown after a failed attempt — grayed out with a lock
-   * overlay and a "Not Collected" label. They are never added to collection.
+   * icon and a "Not Collected" label. They are never added to collection.
    */
   variant?: "collected" | "locked";
 };
