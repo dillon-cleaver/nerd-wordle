@@ -19,14 +19,19 @@ type BannerCardProps = {
 };
 
 export const BannerCard = ({ onPressBanner }: BannerCardProps) => {
-  const { gameStatus, guesses, puzzleDate } = useContext(GameContext);
+  const { gameStatus, guesses, puzzleDate, answer, answerEntry } =
+    useContext(GameContext);
   const { isDesktop, isTablet } = useDevice();
 
-  // Result modal is only available on the same calendar day as the attempt
+  // Fail reveal is only available on the same calendar day as the attempt
   const isSameDay =
     puzzleDate != null && puzzleDate === getTodayDateString();
-  const canOpenResult =
-    (gameStatus === "won" || gameStatus === "lost") && isSameDay;
+  const canRevealFail = gameStatus === "lost" && isSameDay;
+
+  const editionNumber =
+    answerEntry && answerEntry.category !== "common"
+      ? answerEntry.edition
+      : undefined;
 
   const containerStyle = [
     styles.container,
@@ -50,7 +55,9 @@ export const BannerCard = ({ onPressBanner }: BannerCardProps) => {
         <GameBanner
           gameStatus={gameStatus}
           numGuesses={guesses.length}
-          onPress={canOpenResult ? onPressBanner : undefined}
+          answer={answer}
+          edition={editionNumber}
+          onPress={canRevealFail ? onPressBanner : undefined}
         />
       </Animated.View>
     )

@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { BaseModal } from "./base/BaseModal";
 import { WordCard } from "./WordCard";
-import { SeeWordsLink } from "./SeeWordsLink";
 import { GameContext } from "@/context/GameContext";
 import { buildResultCardWord } from "@/utils/game-result-card";
 import {
@@ -20,9 +19,9 @@ type GameResultModalProps = {
 };
 
 /**
- * Shared win/loss result modal. Win shows a collected WordCard; loss shows the
- * same layout with a locked / not-collected treatment. Failure never adds the
- * word to the user's collection.
+ * Result modal for game completion. Loss shows a locked WordCard that was not
+ * collected. Win variant is kept for layout parity but the fail flow is the
+ * primary consumer (win banner restores inline collected UX).
  */
 export const GameResultModal = ({
   visible,
@@ -41,6 +40,9 @@ export const GameResultModal = ({
   const subtitle = isWin
     ? "This WordCard has been added to your collection."
     : "You ran out of guesses. This WordCard stays locked.";
+  const dialogLabel = isWin
+    ? "You won. Word collected."
+    : "Game over. Word not collected.";
 
   return (
     <BaseModal
@@ -49,17 +51,33 @@ export const GameResultModal = ({
       animationType="fade"
       showCloseButton={true}
       contentStyle={styles.modalContent}
+      accessibilityLabel={dialogLabel}
     >
-      <View style={styles.container}>
+      <View
+        style={styles.container}
+        accessibilityLiveRegion="polite"
+        importantForAccessibility="yes"
+      >
         <Text
           style={[
             styles.title,
-            { color: isWin ? colors.semantic.success : colors.semantic.warning },
+            {
+              color: isWin
+                ? colors.semantic.success
+                : colors.semantic.warning,
+            },
           ]}
+          accessibilityRole="header"
         >
           {title}
         </Text>
-        <Text style={styles.subtitle}>{subtitle}</Text>
+        <Text
+          style={styles.subtitle}
+          accessibilityRole="text"
+          accessibilityLiveRegion="polite"
+        >
+          {subtitle}
+        </Text>
 
         {resultWord ? (
           <WordCard
@@ -70,12 +88,6 @@ export const GameResultModal = ({
           <Text style={styles.fallback}>
             {answerEntry ? answerEntry.id : "Answer unavailable"}
           </Text>
-        )}
-
-        {isWin && (
-          <View style={styles.linkRow}>
-            <SeeWordsLink />
-          </View>
         )}
       </View>
     </BaseModal>
@@ -111,10 +123,6 @@ const styles = StyleSheet.create({
     lineHeight: lineHeight.title.medium,
     color: colors.neutral.white,
     textAlign: "center",
-  },
-  linkRow: {
-    marginTop: spacing.sm,
-    alignSelf: "flex-start",
   },
 });
 

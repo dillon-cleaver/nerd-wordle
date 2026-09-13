@@ -21,10 +21,8 @@ export const Game = () => {
 
   const { isDesktop } = useDevice();
 
-  // Enable keyboard input for desktop users
   useKeyboardListener();
 
-  // Enable accessibility shortcuts for hint modal
   useAccessibilityKeyboard({
     onEscape: () => {
       setHintModalVisible(false);
@@ -45,8 +43,9 @@ export const Game = () => {
     setHintModalVisible(false);
   };
 
+  // Fail-state only: win banner restores inline collected UX (no tap-to-reveal)
   const handlePressBanner = () => {
-    if (gameStatus === "won" || gameStatus === "lost") {
+    if (gameStatus === "lost") {
       setResultModalVisible(true);
     }
   };
@@ -61,15 +60,11 @@ export const Game = () => {
     }
   }, [answer, category]);
 
-  // Close result modal if game resets (e.g. new day)
   useEffect(() => {
-    if (gameStatus === "running") {
+    if (gameStatus !== "lost") {
       setResultModalVisible(false);
     }
   }, [gameStatus]);
-
-  const resultOutcome =
-    gameStatus === "won" || gameStatus === "lost" ? gameStatus : "lost";
 
   return (
     <View style={containerStyle}>
@@ -90,11 +85,11 @@ export const Game = () => {
         visible={hintModalVisible}
         onRequestClose={handleCloseHintModal}
       />
-      {(gameStatus === "won" || gameStatus === "lost") && (
+      {gameStatus === "lost" && (
         <GameResultModal
           visible={resultModalVisible}
           onRequestClose={handleCloseResultModal}
-          outcome={resultOutcome}
+          outcome="lost"
         />
       )}
     </View>

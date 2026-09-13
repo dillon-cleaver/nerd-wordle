@@ -3,12 +3,12 @@ import { NerdWordEntry, WordEntry } from "@/types/word";
 
 /**
  * Build a WordCard-compatible payload from today's answer without writing to
- * the user's collection. Used by the win/loss result modal.
+ * the user's collection. Used by the result modal.
  */
 export const buildResultCardWord = (
   answerEntry: WordEntry,
   guesses: number,
-  hintIndex = 0,
+  hintIndex: number,
   completedDate: Date = new Date()
 ): CollectedWord | null => {
   if (answerEntry.category === "common") {

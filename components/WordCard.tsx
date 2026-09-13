@@ -11,6 +11,7 @@ import {
   lineHeight,
   spacing,
 } from "@/constants/styles";
+import { opacity } from "@/constants/opacity";
 import {
   getCardOverlayStyle,
   cardShadowStyle,
@@ -33,7 +34,7 @@ type WordCardProps = {
   collectedWord: CollectedWord;
   /**
    * Locked cards are shown after a failed attempt — grayed out with a lock
-   * icon and a "Not Collected" label. They are never added to collection.
+   * overlay and a "Not Collected" label. They are never added to collection.
    */
   variant?: "collected" | "locked";
 };
@@ -51,6 +52,12 @@ export const WordCard = ({
     ? colors.neutral.darkGray
     : getCategoryColor(category);
   const formattedCategory = convertCategory(category);
+  const badgeAccent = isLocked ? colors.neutral.darkGray : accentColor;
+  const badgeBorder = isLocked ? colors.neutral.lightGray : accentColor;
+  const badgeLabel = isLocked ? "Not Collected" : formattedCategory;
+  const badgeTextColor = isLocked
+    ? colors.wordCard.textSecondary
+    : accentColor;
 
   const handleWikipediaPress = () => {
     if (wordEntry.wikipediaUrl) {
@@ -70,23 +77,9 @@ export const WordCard = ({
         />
         <View style={[styles.content, isLocked && styles.lockedContent]}>
           <View style={styles.answerEditionRow}>
-            <View style={styles.answerWithLock}>
-              {isLocked && (
-                <View
-                  style={styles.lockInlineBadge}
-                  accessibilityLabel="Locked — word not collected"
-                >
-                  <SvgIcon
-                    name="lock"
-                    size={iconSizes.standard}
-                    color={colors.neutral.lightGray}
-                  />
-                </View>
-              )}
-              <Text style={[styles.answerText, isLocked && styles.lockedText]}>
-                {answer}
-              </Text>
-            </View>
+            <Text style={[styles.answerText, isLocked && styles.lockedText]}>
+              {answer}
+            </Text>
             <View style={styles.editionDateBlock}>
               <Text
                 style={[styles.editionText, isLocked && styles.lockedText]}
@@ -112,55 +105,45 @@ export const WordCard = ({
           </View>
 
           <View style={styles.badgeContainer}>
-            {isLocked ? (
-              <View
-                style={[
-                  styles.categoryBadge,
-                  styles.lockedStatusBadge,
-                  {
-                    backgroundColor: hexToRgba(
-                      colors.neutral.darkGray,
-                      colors.wordCard.badgeBackgroundOpacity
-                    ),
-                    borderColor: hexToRgba(
-                      colors.neutral.lightGray,
-                      colors.wordCard.badgeBorderOpacity
-                    ),
-                  },
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.categoryText,
-                    { color: colors.wordCard.textSecondary },
-                  ]}
-                >
-                  Not Collected
-                </Text>
-              </View>
-            ) : (
-              <View
-                style={[
-                  styles.categoryBadge,
-                  {
-                    backgroundColor: hexToRgba(
-                      accentColor,
-                      colors.wordCard.badgeBackgroundOpacity
-                    ),
-                    borderColor: hexToRgba(
-                      accentColor,
-                      colors.wordCard.badgeBorderOpacity
-                    ),
-                  },
-                ]}
-              >
-                <Text style={[styles.categoryText, { color: accentColor }]}>
-                  {formattedCategory}
-                </Text>
-              </View>
-            )}
+            <View
+              style={[
+                styles.categoryBadge,
+                {
+                  backgroundColor: hexToRgba(
+                    badgeAccent,
+                    colors.wordCard.badgeBackgroundOpacity
+                  ),
+                  borderColor: hexToRgba(
+                    badgeBorder,
+                    colors.wordCard.badgeBorderOpacity
+                  ),
+                },
+              ]}
+            >
+              <Text style={[styles.categoryText, { color: badgeTextColor }]}>
+                {badgeLabel}
+              </Text>
+            </View>
           </View>
         </View>
+
+        {isLocked && (
+          <View
+            style={styles.lockOverlay}
+            pointerEvents="none"
+            accessible
+            accessibilityRole="image"
+            accessibilityLabel="Locked — word not collected"
+          >
+            <View style={styles.lockBadge}>
+              <SvgIcon
+                name="lock"
+                size={iconSizes.large}
+                color={colors.neutral.lightGray}
+              />
+            </View>
+          </View>
+        )}
       </Card>
     </View>
   );
@@ -175,14 +158,14 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.card,
   },
   lockedCard: {
-    opacity: 0.92,
+    opacity: opacity.subtle,
   },
   content: {
     padding: spacing.lg,
     gap: spacing.sm,
   },
   lockedContent: {
-    opacity: 0.7,
+    opacity: opacity.pressed,
   },
   answerEditionRow: {
     flexDirection: "row",
@@ -190,28 +173,13 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     marginBottom: spacing.md,
   },
-  answerWithLock: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: spacing.sm,
-    flexShrink: 1,
-    paddingRight: spacing.sm,
-  },
-  lockInlineBadge: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "rgba(30, 33, 43, 0.9)",
-    borderWidth: borderWidth.badge,
-    borderColor: colors.wordCard.divider,
-  },
   answerText: {
     fontSize: fontSize.title.xLarge,
     lineHeight: lineHeight.title.xLarge,
     fontFamily: fontFamily.bitter.bold,
     color: colors.neutral.white,
+    flexShrink: 1,
+    paddingRight: spacing.sm,
   },
   editionDateBlock: {
     alignItems: "flex-end",
@@ -255,11 +223,6 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.pill,
     borderWidth: borderWidth.badge,
   },
-  lockedStatusBadge: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: spacing.xs,
-  },
   categoryText: {
     fontSize: fontSize.body.small,
     fontFamily: fontFamily.bitter.bold,
@@ -269,5 +232,21 @@ const styles = StyleSheet.create({
   },
   lockedMuted: {
     color: colors.wordCard.textMuted,
+  },
+  lockOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: hexToRgba(colors.neutral.background, opacity.pressed),
+  },
+  lockBadge: {
+    width: spacing.xl + spacing.sm,
+    height: spacing.xl + spacing.sm,
+    borderRadius: (spacing.xl + spacing.sm) / 2,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.neutral.background,
+    borderWidth: borderWidth.badge,
+    borderColor: colors.wordCard.divider,
   },
 });
