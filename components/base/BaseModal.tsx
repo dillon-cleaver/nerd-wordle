@@ -29,6 +29,10 @@ type BaseModalProps = {
    * Show a close button (X) in the top-right corner
    */
   showCloseButton?: boolean;
+  /**
+   * Screen-reader label for the dialog (prefer outcome-specific copy)
+   */
+  accessibilityLabel?: string;
 };
 
 export const BaseModal = ({
@@ -39,6 +43,7 @@ export const BaseModal = ({
   contentStyle,
   disableBackdropDismiss = false,
   showCloseButton = false,
+  accessibilityLabel = "Modal dialog",
 }: BaseModalProps) => {
   return (
     <Modal
@@ -69,7 +74,8 @@ export const BaseModal = ({
         <View
           style={[styles.content, contentStyle]}
           accessibilityViewIsModal={true}
-          accessibilityLabel="Modal dialog"
+          accessibilityRole="summary"
+          accessibilityLabel={accessibilityLabel}
         >
           {showCloseButton && (
             <Pressable

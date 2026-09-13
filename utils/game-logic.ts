@@ -96,7 +96,8 @@ export const handleSubmitGuessWithLetterTracking = (
     updaters,
     hintIndex,
     letterTracking,
-    savePuzzleResult
+    savePuzzleResult,
+    puzzleId
   );
 };
 

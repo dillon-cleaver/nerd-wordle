@@ -9,22 +9,25 @@ import { BannerCard } from "./BannerCard";
 import { isDebugLoggingEnabled } from "@/utils/dev-flags";
 import { useDevice } from "@/hooks/useDevice";
 import { HintModal } from "./HintModal";
+import { GameResultModal } from "./GameResultModal";
 import { useKeyboardListener } from "@/hooks/useKeyboardListener";
 import { useAccessibilityKeyboard } from "@/hooks/useAccessibilityKeyboard";
 
 export const Game = () => {
-  const { category, answer } = useContext(GameContext);
+  const { category, answer, gameStatus } = useContext(GameContext);
 
   const [hintModalVisible, setHintModalVisible] = useState(false);
+  const [resultModalVisible, setResultModalVisible] = useState(false);
 
   const { isDesktop } = useDevice();
 
-  // Enable keyboard input for desktop users
   useKeyboardListener();
 
-  // Enable accessibility shortcuts for hint modal
   useAccessibilityKeyboard({
-    onEscape: () => setHintModalVisible(false),
+    onEscape: () => {
+      setHintModalVisible(false);
+      setResultModalVisible(false);
+    },
   });
 
   const containerStyle = [
@@ -40,11 +43,28 @@ export const Game = () => {
     setHintModalVisible(false);
   };
 
+  // Fail-state only: win banner restores inline collected UX (no tap-to-reveal)
+  const handlePressBanner = () => {
+    if (gameStatus === "lost") {
+      setResultModalVisible(true);
+    }
+  };
+
+  const handleCloseResultModal = () => {
+    setResultModalVisible(false);
+  };
+
   useEffect(() => {
     if (isDebugLoggingEnabled()) {
       console.info({ answer, category });
     }
   }, [answer, category]);
+
+  useEffect(() => {
+    if (gameStatus !== "lost") {
+      setResultModalVisible(false);
+    }
+  }, [gameStatus]);
 
   return (
     <View style={containerStyle}>
@@ -52,7 +72,7 @@ export const Game = () => {
         style={styles.content}
         entering={FadeInUp.duration(animation.duration.medium).springify()}
       >
-        <BannerCard />
+        <BannerCard onPressBanner={handlePressBanner} />
         <GuessGrid onPressHint={handlePressHint} />
       </Animated.View>
       <Animated.View
@@ -65,6 +85,13 @@ export const Game = () => {
         visible={hintModalVisible}
         onRequestClose={handleCloseHintModal}
       />
+      {gameStatus === "lost" && (
+        <GameResultModal
+          visible={resultModalVisible}
+          onRequestClose={handleCloseResultModal}
+          outcome="lost"
+        />
+      )}
     </View>
   );
 };

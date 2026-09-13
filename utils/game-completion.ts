@@ -1,6 +1,6 @@
 import { NUMBER_OF_GUESSES } from "@/constants/numbers";
 import { GameStateUpdaters } from "@/types/game";
-import { PuzzleResult } from "@/types/puzzle-result";
+import { PuzzleResult, PuzzleId } from "@/types/puzzle-result";
 import { savePuzzleResult as savePuzzleResultDual } from "@/storage/puzzle-results";
 import { savePuzzleResultLocal } from "@/storage/puzzle-results.local";
 import { addToCollection } from "@/storage/word-collections";
@@ -36,7 +36,8 @@ export const handleGameCompletion = (
   updaters: GameStateUpdaters,
   hintIndex: number,
   letterTracking: LetterGuess[],
-  savePuzzleResult?: (user: User, result: PuzzleResult) => Promise<void>
+  savePuzzleResult?: (user: User, result: PuzzleResult) => Promise<void>,
+  puzzleId?: PuzzleId
 ): void => {
   const answerId = answerEntry.id as WordId;
 
@@ -141,7 +142,7 @@ export const handleGameCompletion = (
       }
     }
   } else if (nextGuesses.length >= NUMBER_OF_GUESSES) {
-    // Player lost
+    // Player lost — record failure without adding the word to collection
     updaters.setGameStatus("lost");
     updaters.setHint(undefined);
 
@@ -157,7 +158,9 @@ export const handleGameCompletion = (
         ? 0
         : (answerEntry as NerdWordEntry).edition;
     const result: PuzzleResult = {
-      id: generatePuzzleResultId(),
+      // Canonical daily puzzle id (daily-YYYY-MM-DD) for fail analytics;
+      // wins keep a unique result UUID so existing win tracking is unchanged.
+      id: puzzleId ?? generatePuzzleResultId(),
       word: answerId,
       edition,
       date: new Date(),

@@ -12,15 +12,26 @@ import {
 } from "@/constants/dimensions";
 import { animation } from "@/constants/styles";
 import { useDevice } from "@/hooks/useDevice";
+import { getTodayDateString } from "@/utils/time";
 
-export const BannerCard = () => {
-  const { gameStatus, guesses, answer, answerEntry } = useContext(GameContext);
+type BannerCardProps = {
+  onPressBanner?: () => void;
+};
+
+export const BannerCard = ({ onPressBanner }: BannerCardProps) => {
+  const { gameStatus, guesses, puzzleDate, answer, answerEntry } =
+    useContext(GameContext);
+  const { isDesktop, isTablet } = useDevice();
+
+  // Fail reveal is only available on the same calendar day as the attempt
+  const isSameDay =
+    puzzleDate != null && puzzleDate === getTodayDateString();
+  const canRevealFail = gameStatus === "lost" && isSameDay;
+
   const editionNumber =
     answerEntry && answerEntry.category !== "common"
       ? answerEntry.edition
       : undefined;
-
-  const { isDesktop, isTablet } = useDevice();
 
   const containerStyle = [
     styles.container,
@@ -46,7 +57,7 @@ export const BannerCard = () => {
           numGuesses={guesses.length}
           answer={answer}
           edition={editionNumber}
-          answerEntry={answerEntry}
+          onPress={canRevealFail ? onPressBanner : undefined}
         />
       </Animated.View>
     )

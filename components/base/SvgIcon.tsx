@@ -1,5 +1,5 @@
 import React from "react";
-import Svg, { Path, Circle } from "react-native-svg";
+import Svg, { Path } from "react-native-svg";
 
 type IconName =
   | "close"
@@ -8,7 +8,8 @@ type IconName =
   | "trophy"
   | "menu"
   | "chevron-right"
-  | "chevron-left";
+  | "chevron-left"
+  | "lock";
 
 interface IconProps {
   name: IconName;
@@ -129,13 +130,24 @@ export const SvgIcon: React.FC<IconProps> = ({ name, size, color }) => {
           </Svg>
         );
 
-      default:
+      case "lock":
         return (
           <Svg width={size} height={size} viewBox="0 0 24 24">
-            <Circle cx="12" cy="12" r="10" fill={color} />
-            <Path d="M12 8v8m0-4h8" stroke="white" strokeWidth="2" />
+            <Path
+              d="M7 11V7C7 4.23858 9.23858 2 12 2C14.7614 2 17 4.23858 17 7V11M6 11H18C19.1046 11 20 11.8954 20 13V20C20 21.1046 19.1046 22 18 22H6C4.89543 22 4 21.1046 4 20V13C4 11.8954 4.89543 11 6 11Z"
+              stroke={color}
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+            />
           </Svg>
         );
+
+      default: {
+        const _exhaustive: never = name;
+        return _exhaustive;
+      }
     }
   };
 

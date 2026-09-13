@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Pressable, Linking } from "react-native";
 import { SubtleGradient } from "./base/SubtleGradient";
 import { Card } from "./base/Card";
+import { SvgIcon } from "./base/SvgIcon";
 import {
   colors,
   borderWidth,
@@ -10,6 +11,7 @@ import {
   lineHeight,
   spacing,
 } from "@/constants/styles";
+import { opacity } from "@/constants/opacity";
 import {
   getCardOverlayStyle,
   cardShadowStyle,
@@ -26,18 +28,36 @@ import {
 import { CollectedWord } from "@/hooks/useCollectedWords";
 import { getShortDateString } from "@/utils/time";
 import { hexToRgba } from "@/utils/color";
+import { iconSizes } from "@/constants/icons";
 
 type WordCardProps = {
   collectedWord: CollectedWord;
+  /**
+   * Locked cards are shown after a failed attempt — grayed out with a lock
+   * overlay and a "Not Collected" label. They are never added to collection.
+   */
+  variant?: "collected" | "locked";
 };
 
-export const WordCard = ({ collectedWord }: WordCardProps) => {
+export const WordCard = ({
+  collectedWord,
+  variant = "collected",
+}: WordCardProps) => {
   const { wordEntry, category, completedDate, editionNumber } = collectedWord;
   const answer = wordEntry.id;
+  const isLocked = variant === "locked";
 
   const summary = getSummaryForWord(wordEntry);
-  const accentColor = getCategoryColor(category);
+  const accentColor = isLocked
+    ? colors.neutral.darkGray
+    : getCategoryColor(category);
   const formattedCategory = convertCategory(category);
+  const badgeAccent = isLocked ? colors.neutral.darkGray : accentColor;
+  const badgeBorder = isLocked ? colors.neutral.lightGray : accentColor;
+  const badgeLabel = isLocked ? "Not Collected" : formattedCategory;
+  const badgeTextColor = isLocked
+    ? colors.wordCard.textSecondary
+    : accentColor;
 
   const handleWikipediaPress = () => {
     if (wordEntry.wikipediaUrl) {
@@ -48,27 +68,39 @@ export const WordCard = ({ collectedWord }: WordCardProps) => {
   const formattedDate = getShortDateString(completedDate);
 
   return (
-    <View style={cardShadowStyle}>
+    <View style={[cardShadowStyle, isLocked && styles.lockedCard]}>
       <Card
         containerStyle={[styles.container, getCardOverlayStyle(accentColor)]}
       >
         <SubtleGradient
           colors={[colors.wordCard.gradientStart, colors.wordCard.gradientEnd]}
         />
-        <View style={styles.content}>
+        <View style={[styles.content, isLocked && styles.lockedContent]}>
           <View style={styles.answerEditionRow}>
-            <Text style={styles.answerText}>{answer}</Text>
+            <Text style={[styles.answerText, isLocked && styles.lockedText]}>
+              {answer}
+            </Text>
             <View style={styles.editionDateBlock}>
-              <Text style={styles.editionText}>#{editionNumber}</Text>
-              <Text style={styles.dateText}>{formattedDate}</Text>
+              <Text
+                style={[styles.editionText, isLocked && styles.lockedText]}
+              >
+                #{editionNumber}
+              </Text>
+              <Text style={[styles.dateText, isLocked && styles.lockedMuted]}>
+                {formattedDate}
+              </Text>
             </View>
           </View>
 
-          <Text style={styles.summaryText}>{summary}</Text>
+          <Text style={[styles.summaryText, isLocked && styles.lockedMuted]}>
+            {summary}
+          </Text>
 
           <View style={styles.wikipediaSection}>
             <Pressable onPress={handleWikipediaPress}>
-              <Text style={styles.linkText}>Wikipedia →</Text>
+              <Text style={[styles.linkText, isLocked && styles.lockedMuted]}>
+                Wikipedia →
+              </Text>
             </Pressable>
           </View>
 
@@ -78,22 +110,40 @@ export const WordCard = ({ collectedWord }: WordCardProps) => {
                 styles.categoryBadge,
                 {
                   backgroundColor: hexToRgba(
-                    accentColor,
+                    badgeAccent,
                     colors.wordCard.badgeBackgroundOpacity
                   ),
                   borderColor: hexToRgba(
-                    accentColor,
+                    badgeBorder,
                     colors.wordCard.badgeBorderOpacity
                   ),
                 },
               ]}
             >
-              <Text style={[styles.categoryText, { color: accentColor }]}>
-                {formattedCategory}
+              <Text style={[styles.categoryText, { color: badgeTextColor }]}>
+                {badgeLabel}
               </Text>
             </View>
           </View>
         </View>
+
+        {isLocked && (
+          <View
+            style={styles.lockOverlay}
+            pointerEvents="none"
+            accessible
+            accessibilityRole="image"
+            accessibilityLabel="Locked — word not collected"
+          >
+            <View style={styles.lockBadge}>
+              <SvgIcon
+                name="lock"
+                size={iconSizes.large}
+                color={colors.neutral.lightGray}
+              />
+            </View>
+          </View>
+        )}
       </Card>
     </View>
   );
@@ -107,9 +157,15 @@ const styles = StyleSheet.create({
     borderWidth: borderWidth.wordCard,
     borderRadius: borderRadius.card,
   },
+  lockedCard: {
+    opacity: opacity.subtle,
+  },
   content: {
     padding: spacing.lg,
     gap: spacing.sm,
+  },
+  lockedContent: {
+    opacity: opacity.pressed,
   },
   answerEditionRow: {
     flexDirection: "row",
@@ -122,6 +178,8 @@ const styles = StyleSheet.create({
     lineHeight: lineHeight.title.xLarge,
     fontFamily: fontFamily.bitter.bold,
     color: colors.neutral.white,
+    flexShrink: 1,
+    paddingRight: spacing.sm,
   },
   editionDateBlock: {
     alignItems: "flex-end",
@@ -168,5 +226,27 @@ const styles = StyleSheet.create({
   categoryText: {
     fontSize: fontSize.body.small,
     fontFamily: fontFamily.bitter.bold,
+  },
+  lockedText: {
+    color: colors.wordCard.textSecondary,
+  },
+  lockedMuted: {
+    color: colors.wordCard.textMuted,
+  },
+  lockOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: hexToRgba(colors.neutral.background, opacity.pressed),
+  },
+  lockBadge: {
+    width: spacing.xl + spacing.sm,
+    height: spacing.xl + spacing.sm,
+    borderRadius: (spacing.xl + spacing.sm) / 2,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.neutral.background,
+    borderWidth: borderWidth.badge,
+    borderColor: colors.wordCard.divider,
   },
 });
